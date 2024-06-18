@@ -174,7 +174,7 @@
 //       defaultPinTheme: PinTheme(
 //         width: 50,
 //         height: 50,
-//         textStyle: TextStyle(
+//         textStyle: GoogleFonts.lato(
 //           fontSize: 25,
 //           color: brandOne,
 //         ),
@@ -186,7 +186,7 @@
 //       focusedPinTheme: PinTheme(
 //         width: 50,
 //         height: 50,
-//         textStyle: TextStyle(
+//         textStyle: GoogleFonts.lato(
 //           fontSize: 25,
 //           color: brandOne,
 //         ),
@@ -198,7 +198,7 @@
 //       submittedPinTheme: PinTheme(
 //         width: 50,
 //         height: 50,
-//         textStyle: TextStyle(
+//         textStyle: GoogleFonts.lato(
 //           fontSize: 25,
 //           color: brandOne,
 //         ),
@@ -210,7 +210,7 @@
 //       followingPinTheme: PinTheme(
 //         width: 50,
 //         height: 50,
-//         textStyle: TextStyle(
+//         textStyle: GoogleFonts.lato(
 //           fontSize: 25,
 //           color: brandOne,
 //         ),
@@ -319,13 +319,13 @@
 //                                                       .symmetric(
 //                                                       horizontal: 60,
 //                                                       vertical: 15),
-//                                                   textStyle: const TextStyle(
+//                                                   textStyle: const GoogleFonts.lato(
 //                                                       color: brandFour,
 //                                                       fontSize: 13),
 //                                                 ),
 //                                                 child: const Text(
 //                                                   "Fund Wallet",
-//                                                   style: TextStyle(
+//                                                   style: GoogleFonts.lato(
 //                                                     color: Colors.white,
 //                                                     fontWeight: FontWeight.w700,
 //                                                     fontSize: 16,
@@ -549,7 +549,7 @@
 //                                                                           60,
 //                                                                       vertical:
 //                                                                           15),
-//                                                                   textStyle: const TextStyle(
+//                                                                   textStyle: const GoogleFonts.lato(
 //                                                                       color:
 //                                                                           brandFour,
 //                                                                       fontSize:
@@ -559,7 +559,7 @@
 //                                                                     const Text(
 //                                                                   "Fund Wallet",
 //                                                                   style:
-//                                                                       TextStyle(
+//                                                                       GoogleFonts.lato(
 //                                                                     color: Colors
 //                                                                         .white,
 //                                                                     fontWeight:

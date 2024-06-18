@@ -42,15 +42,17 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: colorBlack,
-      style: GoogleFonts.lato(color: colorBlack),
+      cursorColor: Theme.of(context).colorScheme.primary,
+      style: GoogleFonts.lato(color: Theme.of(context).colorScheme.primary),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide:  BorderSide(
+                        color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -59,8 +61,10 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: const Color(0xffE0E0E0),
+          borderSide:  BorderSide(
+                       color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -151,9 +155,9 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                         const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.only(
+                    decoration:  BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
                       ),
@@ -168,7 +172,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                               'Forgot Password',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 24,
                               ),
@@ -176,7 +180,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                             Text(
                               'No worries, we’ll get you back on track.\nInput your email address below to receive an OTP. ',
                               style: GoogleFonts.lato(
-                                color: const Color(0xff4B4B4B),
+                                color: Theme.of(context).primaryColorLight,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                                 // fontFamily: "DefaultFontFamily",
@@ -198,7 +202,7 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                                         child: Text(
                                           'Email',
                                           style: GoogleFonts.lato(
-                                            color: colorBlack,
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
                                           ),

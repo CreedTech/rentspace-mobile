@@ -105,7 +105,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
     }
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -114,10 +114,10 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -125,10 +125,11 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: Text(
-                  rentController.rentModel!.rents![widget.current].rentName,
+                  rentController.rentModel!.rents![widget.current].rentName
+                      .capitalizeFirst!,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.lato(
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.w500,
                     fontSize: 24,
                   ),
@@ -150,7 +151,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
-                color: colorWhite,
+                color: Theme.of(context).canvasColor,
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
@@ -159,7 +160,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                   Text(
                     '${rentController.rentModel!.rents![widget.current].rentName} balance',
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w400,
                       fontSize: 12,
                     ),
@@ -182,36 +183,50 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
             Text(
               'Transactions',
               style: GoogleFonts.lato(
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
               ),
             ),
-            const Divider(
-              color: Color(0xffC9C9C9),
+            Divider(
+              color: Theme.of(context).dividerColor,
               thickness: 1,
             ),
             Expanded(
               child: (_payments.isEmpty)
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Image.asset(
-                          'assets/card_empty.png',
-                          height: 300.h,
-                        ),
-                        Center(
-                          child: Text(
-                            "No Rent history",
-                            style: GoogleFonts.lato(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold,
+                  ? Container(
+                      height: MediaQuery.of(context).size.height / 2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/icons/history_icon.png',
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? const Color(0xffffffff)
+                                    : const Color(0xffEEF8FF),
+                            height: 33.5.h,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: SizedBox(
+                              width: 180,
+                              child: Text(
+                                "Your interest history will be displayed here",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.lato(
+                                  fontSize: 14,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   : LiquidPullToRefresh(
                       height: 70,
@@ -232,7 +247,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                   DateFormat.MMMM().format(
                                       DateTime.parse('${entry.key}-01')),
                                   style: GoogleFonts.lato(
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -244,16 +260,16 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                       left: 12.75, top: 16, right: 12.75),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey
-                                              .withOpacity(0.5), // Shadow color
-                                          spreadRadius: 0.5, // Spread radius
-                                          blurRadius: 2, // Blur radius
-                                          offset: const Offset(0, 3), // Offset
-                                        ),
-                                      ],
-                                      color: colorWhite),
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //     color: Colors.grey
+                                      //         .withOpacity(0.5), // Shadow color
+                                      //     spreadRadius: 0.5, // Spread radius
+                                      //     blurRadius: 2, // Blur radius
+                                      //     offset: const Offset(0, 3), // Offset
+                                      //   ),
+                                      // ],
+                                      color: Theme.of(context).canvasColor),
                                   child: Column(
                                     children: [
                                       ...entry.value
@@ -363,8 +379,9 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                                             14,
                                                                         fontWeight:
                                                                             FontWeight.w500,
-                                                                        color:
-                                                                            colorBlack,
+                                                                        color: Theme.of(context)
+                                                                            .colorScheme
+                                                                            .primary,
                                                                       ),
                                                                     ),
                                                                     const SizedBox(
@@ -380,8 +397,8 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                                             12,
                                                                         fontWeight:
                                                                             FontWeight.w400,
-                                                                        color: const Color(
-                                                                            0xff4B4B4B),
+                                                                        color: Theme.of(context)
+                                                                            .primaryColorLight,
                                                                       ),
                                                                     ),
                                                                   ],
@@ -421,8 +438,9 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                                             14,
                                                                         fontWeight:
                                                                             FontWeight.w500,
-                                                                        color:
-                                                                            colorBlack,
+                                                                        color: Theme.of(context)
+                                                                            .colorScheme
+                                                                            .primary,
                                                                       ),
                                                                     ),
                                                             ],
@@ -432,9 +450,10 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                     ),
                                                   ),
                                                 ),
-                                                const Divider(
+                                                Divider(
                                                   thickness: 1,
-                                                  color: Color(0xffC9C9C9),
+                                                  color: Theme.of(context)
+                                                      .dividerColor,
                                                   indent: 17,
                                                   endIndent: 17,
                                                 ),
@@ -457,7 +476,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
           ],
         ),
       ),
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }
 

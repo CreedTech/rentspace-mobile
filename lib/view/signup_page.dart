@@ -84,6 +84,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final registerFormKey = GlobalKey<FormState>();
   final sessionStateStream = StreamController<SessionState>();
   final int minimumAge = 18;
+  List<String> genders = ['Male', 'Female'];
   String? selectedGender;
   late int genderValue;
   DateTime? _dateTime;
@@ -137,6 +138,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
@@ -158,7 +160,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     Text(
                       'No internet Connection',
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -169,7 +171,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
@@ -198,9 +200,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               await InternetConnectionChecker().hasConnection;
                           if (!isDeviceConnected && isAlertSet == false) {
                             // showDialogBox();
-                            if (context.mounted) {
-                              noInternetConnectionScreen(context);
-                            }
+                            noInternetConnectionScreen(context);
                             setState(() => isAlertSet = true);
                           }
                         },
@@ -316,11 +316,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     final username = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _usernameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       keyboardType: TextInputType.text,
       validator: validateUsername,
       decoration: InputDecoration(
@@ -334,7 +336,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         // ),
         // prefixText: "SPACER/",
         prefixStyle: GoogleFonts.lato(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           fontSize: 13,
           fontWeight: FontWeight.w400,
         ),
@@ -365,12 +367,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     //Phone number
     final phoneNumber = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _phoneController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validatePhone,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       maxLength: 11,
@@ -413,10 +417,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 //Address
     final referal = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _referalController,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         // label: Text(
@@ -463,11 +469,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     //firstname
     final firstname = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _firstnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         // label: Text(
@@ -513,10 +521,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     );
     final lastname = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _lastnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: const TextStyle(color: colorBlack, fontSize: 14),
+      style: GoogleFonts.lato(
+          color: Theme.of(context).colorScheme.primary, fontSize: 14),
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         // label: Text(
@@ -569,8 +578,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     final email = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
-      style: const TextStyle(color: colorBlack, fontSize: 14),
+      cursorColor: Theme.of(context).colorScheme.primary,
+      style: GoogleFonts.lato(
+          color: Theme.of(context).colorScheme.primary, fontSize: 14),
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -618,11 +628,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     //password field
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: const TextStyle(color: colorBlack, fontSize: 14),
+      style: GoogleFonts.lato(
+          color: Theme.of(context).colorScheme.primary, fontSize: 14),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -719,9 +730,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     final dob = TextFormField(
       controller: dateController,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       readOnly: true,
       onTap: _showDatePicker,
       // onTap: () => _selectDate(context),
@@ -732,9 +745,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         //   fontSize: 12,
         //   fontWeight: FontWeight.w400,
         // ),
-        suffixIcon: const Icon(
+        suffixIcon: Icon(
           Icons.calendar_today,
-          color: colorBlack,
+          color: Theme.of(context).colorScheme.primary,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -765,9 +778,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     final address = TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
 
       // minLines: 3,
       keyboardType: TextInputType.streetAddress,
@@ -804,19 +819,24 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     final gender = CustomDropdown(
       selectedStyle: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       excludeSelected: true,
       hintText: '',
       fillColor: Colors.transparent,
       listItemStyle: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
-      borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
+      borderSide:
+          BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
       items: const ['Male', 'Female'],
       controller: _genderController,
       fieldSuffixIcon: Icon(
         Iconsax.arrow_down5,
         size: 25.h,
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
       ),
       onChanged: (String? newValue) {
         print(_genderController.text);
@@ -830,11 +850,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
     final confirmPassword = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: repeatPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscurity,
-      style: GoogleFonts.lato(color: colorBlack, fontSize: 14),
+      style: GoogleFonts.lato(
+          color: Theme.of(context).colorScheme.primary, fontSize: 14),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -880,6 +901,167 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       },
     );
 
+    final genderSelect = TextFormField(
+      onTap: () {
+        showModalBottomSheet(
+          isDismissible: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          context: context,
+          builder: (BuildContext context) {
+            return FractionallySizedBox(
+              heightFactor: 0.45,
+              child: Container(
+                // height: 350,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(19)),
+                child: ListView(
+                  children: [
+                    Text(
+                      'Select Gender',
+                      style: GoogleFonts.lato(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).canvasColor,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: genders.length,
+                        itemBuilder: (context, idx) {
+                          return Column(
+                            children: [
+                              ListTileTheme(
+                                contentPadding: const EdgeInsets.only(
+                                    left: 13.0, right: 13.0, top: 4, bottom: 4),
+                                selectedColor:
+                                    Theme.of(context).colorScheme.secondary,
+                                child: ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        child: Text(
+                                          genders[idx],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.lato(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  // selected: _selectedCarrier == name[idx],
+                                  onTap: () {
+                                    print(_genderController.text);
+                                    setState(() {
+                                      selectedGender = genders[idx];
+                                      genderValue =
+                                          selectedGender == 'Male' ? 1 : 2;
+                                    });
+                                    print(genderValue);
+
+                                    _genderController.text = genders[idx];
+                                    // });
+
+                                    Navigator.pop(
+                                      context,
+                                    );
+
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                              (idx != genders.length - 1)
+                                  ? Divider(
+                                      color: Theme.of(context).dividerColor,
+                                      height: 1,
+                                      indent: 13,
+                                      endIndent: 13,
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+      readOnly: true,
+      // autovalidateMode: AutovalidateMode.onUserInteraction,
+      enableSuggestions: true,
+      cursorColor: colorBlack,
+      style: GoogleFonts.lato(
+        color: Theme.of(context).colorScheme.primary,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+
+      controller: _genderController,
+      textAlignVertical: TextAlignVertical.center,
+      // textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 1.0), // Change color to yellow
+        ),
+        filled: false,
+        fillColor: Colors.transparent,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+      ),
+      maxLines: 1,
+    );
+
     return UpgradeAlert(
       upgrader: Upgrader(
         showIgnore: false,
@@ -892,25 +1074,25 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         showReleaseNotes: true,
       ),
       child: Scaffold(
-        backgroundColor: const Color(0xffFAFAFA),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: const Color(0xffFAFAFA),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0.0,
           leading: GestureDetector(
             onTap: () {
               Get.back();
             },
-            child: const Icon(
+            child: Icon(
               Icons.arrow_back_ios,
               size: 27,
-              color: colorBlack,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
           centerTitle: true,
           title: Text(
             'Sign up',
             style: GoogleFonts.lato(
-              color: colorBlack,
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.w600,
               fontSize: 24,
             ),
@@ -944,7 +1126,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'First Name',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -965,7 +1147,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Last Name',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -986,7 +1168,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       //             child: Text(
                       //               'First Name',
                       //               style: GoogleFonts.lato(
-                      //                 color: colorBlack,
+                      //                 color: Theme.of(context).colorScheme.primary,
                       //                 fontWeight: FontWeight.w600,
                       //                 fontSize: 12,
                       //               ),
@@ -1007,7 +1189,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       //             child: Text(
                       //               'Last Name',
                       //               style: GoogleFonts.lato(
-                      //                 color: colorBlack,
+                      //                 color: Theme.of(context).colorScheme.primary,
                       //                 fontWeight: FontWeight.w600,
                       //                 fontSize: 12,
                       //                 // fontFamily: "DefaultFontFamily",
@@ -1027,7 +1209,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       //     //       child: Text(
                       //     //         'First Name',
                       //     //         style: GoogleFonts.lato(
-                      //     //           color: Theme.of(context).primaryColor,
+                      //     //           color: Theme.of(context).colorScheme.primary,
                       //     //           fontWeight: FontWeight.w600,
                       //     //           fontSize: 12,
                       //     //           // fontFamily: "DefaultFontFamily",
@@ -1046,7 +1228,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       //     //       child: Text(
                       //     //         'First Name',
                       //     //         style: GoogleFonts.lato(
-                      //     //           color: Theme.of(context).primaryColor,
+                      //     //           color: Theme.of(context).colorScheme.primary,
                       //     //           fontWeight: FontWeight.w600,
                       //     //           fontSize: 12,
                       //     //           // fontFamily: "DefaultFontFamily",
@@ -1068,7 +1250,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       //       child: Text(
                       //         'First Name',
                       //         style: GoogleFonts.lato(
-                      //           color: Theme.of(context).primaryColor,
+                      //           color: Theme.of(context).colorScheme.primary,
                       //           fontWeight: FontWeight.w600,
                       //           fontSize: 12,
                       //           // fontFamily: "DefaultFontFamily",
@@ -1090,7 +1272,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       //       child: Text(
                       //         'Last Name',
                       //         style: GoogleFonts.lato(
-                      //           color: Theme.of(context).primaryColor,
+                      //           color: Theme.of(context).colorScheme.primary,
                       //           fontWeight: FontWeight.w600,
                       //           fontSize: 12,
                       //           // fontFamily: "DefaultFontFamily",
@@ -1113,7 +1295,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'User Name',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -1134,7 +1316,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Email',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -1155,7 +1337,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Phone Number',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -1173,7 +1355,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Password',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -1224,7 +1406,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Confirm Password',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                               ),
@@ -1245,7 +1427,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Date Of Birth',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -1266,7 +1448,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Residential Address',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -1287,13 +1469,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Gender',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
                             ),
                           ),
-                          gender,
+                          genderSelect,
                         ],
                       ),
                       const SizedBox(
@@ -1308,7 +1490,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             child: Text(
                               'Referral Code(Optional)',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -1359,7 +1541,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                             'You agree to our ',
                             style: GoogleFonts.lato(
                               fontSize: 12,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
 
                               // fontFamily: "DefaultFontFamily",
                             ),

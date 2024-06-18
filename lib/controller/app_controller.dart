@@ -98,6 +98,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                 barrierDismissible: true,
                 builder: (BuildContext context) {
                   return AlertDialog(
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -117,9 +118,9 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                               crossAxisAlignment: WrapCrossAlignment.center,
                               // mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.info_outline_rounded,
-                                  color: colorBlack,
+                                  color: Theme.of(context).colorScheme.primary,
                                   size: 24,
                                 ),
                                 const SizedBox(
@@ -128,7 +129,8 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                                 Text(
                                   'Insufficient fund.',
                                   style: GoogleFonts.lato(
-                                    color: colorBlack,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     fontSize: 24,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -142,7 +144,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                               'You need to fund your wallet to perform this transaction.',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -264,6 +266,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
 
       return;
     } finally {
+      EasyLoading.dismiss();
       isLoading = false;
       // return;
     }
@@ -832,7 +835,7 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
                       ),
                       Text(
                         "Here is your Token: $electricToken",
-                        style: TextStyle(
+                        style: GoogleFonts.lato(
                           color: Theme.of(context).primaryColor,
                           fontSize: 22,
                           fontWeight: FontWeight.bold,

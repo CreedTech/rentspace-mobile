@@ -22,10 +22,10 @@ class _BankTransferState extends State<BankTransfer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -34,10 +34,10 @@ class _BankTransferState extends State<BankTransfer> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -45,7 +45,7 @@ class _BankTransferState extends State<BankTransfer> {
               Text(
                 'Bank Transfer',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -63,7 +63,7 @@ class _BankTransferState extends State<BankTransfer> {
               // height: 240,
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
               decoration: BoxDecoration(
-                color: colorWhite,
+                color: Theme.of(context).canvasColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -77,7 +77,7 @@ class _BankTransferState extends State<BankTransfer> {
                       Text(
                         'Account Number',
                         style: GoogleFonts.lato(
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
@@ -91,7 +91,7 @@ class _BankTransferState extends State<BankTransfer> {
                           Text(
                             userController.userModel!.userDetails![0].dvaNumber,
                             style: GoogleFonts.lato(
-                              color: brandOne,
+                              color: Theme.of(context).colorScheme.secondary,
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
@@ -121,7 +121,7 @@ class _BankTransferState extends State<BankTransfer> {
                                   'assets/icons/copy_icon.png',
                                   width: 24,
                                   height: 24,
-                                  color: colorBlack,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                               const SizedBox(
@@ -151,7 +151,7 @@ class _BankTransferState extends State<BankTransfer> {
                       Text(
                         'Bank',
                         style: GoogleFonts.lato(
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
@@ -162,7 +162,7 @@ class _BankTransferState extends State<BankTransfer> {
                       Text(
                         'Providus Bank',
                         style: GoogleFonts.lato(
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
@@ -179,7 +179,7 @@ class _BankTransferState extends State<BankTransfer> {
                       Text(
                         'Account Name',
                         style: GoogleFonts.lato(
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
@@ -192,7 +192,7 @@ class _BankTransferState extends State<BankTransfer> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.lato(
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),

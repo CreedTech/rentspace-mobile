@@ -71,7 +71,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
       controller: newPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: colorBlack,
       ),
       keyboardType: TextInputType.text,
@@ -122,7 +122,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
       controller: repeatPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: colorBlack,
       ),
       keyboardType: TextInputType.text,

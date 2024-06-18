@@ -35,16 +35,16 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: brandOne,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: brandOne,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
-           onTap: () {
-                  Get.back();
-                },
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
               const Icon(
@@ -324,7 +324,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 15.w, vertical: 20.h),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
@@ -334,15 +334,15 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: 15.w,
                               ),
-                              child: const MySeparator(
-                                color: brandOne,
+                              child: MySeparator(
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             SizedBox(
@@ -361,8 +361,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.white,
-                                  textColor: brandOne,
+                                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                                  textColor:
+                                      Theme.of(context).colorScheme.secondary,
                                   fontSize: 16.0,
                                 );
                               },
@@ -375,16 +376,19 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                     style: GoogleFonts.lato(
                                       fontSize: 30.0,
                                       fontWeight: FontWeight.w700,
-                                      color: Theme.of(context).primaryColor,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                   ),
                                   SizedBox(
                                     width: 10.w,
                                   ),
-                                  const Icon(
+                                  Icon(
                                     Icons.copy,
                                     size: 20,
-                                    color: brandOne,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 ],
                               ),
@@ -398,7 +402,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                           ],
@@ -421,7 +425,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                   minimumSize: Size(
                                       MediaQuery.of(context).size.width - 50,
                                       50),
-                                  backgroundColor: Colors.white,
+                                  backgroundColor:
+                                      Theme.of(context).scaffoldBackgroundColor,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
@@ -437,10 +442,12 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.share_outlined,
                                       size: 20,
-                                      color: brandOne,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                     const SizedBox(
                                       width: 10,
@@ -449,7 +456,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                       'Share and earn!',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.lato(
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -469,7 +478,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 15.w, vertical: 20.h),
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           children: [
@@ -478,7 +487,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                               style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             Padding(
@@ -486,7 +495,10 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 horizontal: 35.w,
                               ),
                               child: MySeparator(
-                                color: brandOne.withOpacity(0.2),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondary
+                                    .withOpacity(0.2),
                               ),
                             ),
                             SizedBox(
@@ -562,7 +574,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w700,
                                                 color: Theme.of(context)
-                                                    .primaryColor,
+                                                    .colorScheme
+                                                    .secondary,
                                               ),
                                             ),
                                           ],
@@ -572,8 +585,9 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                           style: GoogleFonts.lato(
                                             fontSize: 10,
                                             fontWeight: FontWeight.w300,
-                                            color:
-                                                Theme.of(context).primaryColor,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                           ),
                                         ),
                                         trailing: Container(
@@ -625,57 +639,14 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           // fontFamily: "DefaultFontFamily",
-                                          color: Theme.of(context).primaryColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
                                   ),
-                            // Row(
-                            //   crossAxisAlignment: CrossAxisAlignment.center,
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Container(
-                            //       width: 200,
-                            //       child: Text(
-                            //         ' ${userController.userModel!.userDetails![0].referredUsers[0]}',
-                            //         maxLines: 10,
-                            //         style: GoogleFonts.lato(
-                            //           fontSize: 30.0,
-                            //           // letterSpacing: 0.5,
-                            //           fontWeight: FontWeight.w700,
-                            //           // fontFamily: "DefaultFontFamily",
-                            //           color: Theme.of(context).primaryColor,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     InkWell(
-                            //       onTap: () {
-                            //         Clipboard.setData(
-                            //           ClipboardData(
-                            //             text: userController.userModel!
-                            //                 .userDetails![0].referralCode,
-                            //           ),
-                            //         );
-                            //         Fluttertoast.showToast(
-                            //           msg: "Copied to clipboard!",
-                            //           toastLength: Toast.LENGTH_SHORT,
-                            //           gravity: ToastGravity.CENTER,
-                            //           timeInSecForIosWeb: 1,
-                            //           backgroundColor: Colors.white,
-                            //           textColor: brandOne,
-                            //           fontSize: 16.0,
-                            //         );
-                            //       },
-                            //       child: Icon(
-                            //         Icons.copy,
-                            //         size: 16,
-                            //         color: brandOne,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-
                             SizedBox(
                               height: 10.h,
                             ),
@@ -691,9 +662,12 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                 'View All >>',
                                 style: GoogleFonts.lato(
                                   decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      Theme.of(context).colorScheme.primary,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700,
-                                  color: Theme.of(context).primaryColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 ),
                               ),
                             ),
@@ -717,7 +691,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //           // letterSpacing: 0.5,
               //           fontWeight: FontWeight.w700,
               //           // fontFamily: "DefaultFontFamily",
-              //           color: Theme.of(context).primaryColor,
+              //           color: brandOne,
               //         ),
               //       ),
               //       Text(
@@ -728,7 +702,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //           // letterSpacing: 1.0,
               //           fontWeight: FontWeight.w700,
               //           // fontFamily: "DefaultFontFamily",
-              //           color: Theme.of(context).primaryColor,
+              //           color: brandOne,
               //         ),
               //       ),
               //       Text(userController.userModel!.userDetails![0].referredUsers[0])
@@ -755,7 +729,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
               //       // fontFamily: "DefaultFontFamily",
               //       fontWeight: FontWeight.w600,
               //       // letterSpacing: 0.5,
-              //       color: Theme.of(context).primaryColor,
+              //       color: brandOne,
               //     ),
               //   ),
               // ),

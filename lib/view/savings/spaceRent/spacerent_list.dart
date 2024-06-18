@@ -47,7 +47,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
   final RentController rentController = Get.find();
 
   getSavings() {
-
     if (rentController.rentModel!.rents!.isNotEmpty) {
       for (int j = 0; j < rentController.rentModel!.rents!.length; j++) {
         rentBalance += rentController.rentModel!.rents![j].paidAmount;
@@ -111,21 +110,21 @@ class _RentSpaceListState extends State<RentSpaceList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
+          onTap: () {
+            Get.back();
+          },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -133,7 +132,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
               Text(
                 'Space Rent',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -284,7 +283,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                         child: Text(
                           'Ongoing Space Rent',
                           style: GoogleFonts.lato(
-                              fontSize: 16, fontWeight: FontWeight.w500),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.primary),
                         ),
                       ),
                       SizedBox(
@@ -315,7 +316,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                           textAlign: TextAlign.center,
                                           style: GoogleFonts.lato(
                                             fontSize: 12,
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -348,7 +351,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 14.w, vertical: 11.h),
                                       decoration: BoxDecoration(
-                                        color: colorWhite,
+                                        color: Theme.of(context).canvasColor,
                                         borderRadius:
                                             BorderRadius.circular(10.r),
                                       ),
@@ -362,11 +365,35 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                             children: [
                                               Flexible(
                                                 flex: 3,
-                                                child: Image.asset(
-                                                  'assets/spacerent_img.png',
-                                                  // scale: 2,
-                                                  width: 98.w,
-                                                  height: 69.h,
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 27,
+                                                      vertical: 12),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.rectangle,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    color: Theme.of(context)
+                                                                .brightness ==
+                                                            Brightness.dark
+                                                        ? const Color.fromRGBO(
+                                                            240, 255, 238, 100)
+                                                        : const Color.fromRGBO(
+                                                            240, 255, 238, 10),
+                                                  ),
+                                                  // child: const Icon(
+                                                  //   Iconsax.security,
+                                                  //   color: brandOne,
+                                                  // ),
+                                                  child: Image.asset(
+                                                    'assets/icons/house.png',
+                                                    width: 45,
+                                                    height: 45,
+                                                    // scale: 4,
+                                                    // color: brandOne,
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
@@ -393,8 +420,9 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                   .rents![index]
                                                                   .rentName
                                                                   .capitalize!,
-                                                              maxLines: 2,
+                                                              maxLines: 1,
                                                               // minFontSize: 2.0,
+                                                              overflow: TextOverflow.ellipsis,
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -404,8 +432,10 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                color:
-                                                                    colorDark,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .primary,
                                                               ),
                                                             ),
                                                             SizedBox(
@@ -445,7 +475,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                             color:
-                                                                                colorDark,
+                                                                                Theme.of(context).colorScheme.primary,
                                                                           ),
                                                                         ),
                                                                         AutoSizeText(
@@ -463,7 +493,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                             fontWeight:
                                                                                 FontWeight.w500,
                                                                             color:
-                                                                                const Color(0xff4B4B4B),
+                                                                                Theme.of(context).primaryColorLight,
                                                                           ),
                                                                         ),
                                                                       ],
@@ -499,7 +529,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                             color:
-                                                                                colorDark,
+                                                                                Theme.of(context).colorScheme.primary,
                                                                           ),
                                                                         ),
                                                                         AutoSizeText(
@@ -517,7 +547,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                             fontWeight:
                                                                                 FontWeight.w500,
                                                                             color:
-                                                                                const Color(0xff4B4B4B),
+                                                                                Theme.of(context).primaryColorLight,
                                                                           ),
                                                                         ),
                                                                       ],
@@ -550,7 +580,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                             color:
-                                                                                colorDark,
+                                                                                Theme.of(context).colorScheme.primary,
                                                                           ),
                                                                         ),
                                                                         AutoSizeText(
@@ -568,7 +598,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                                             fontWeight:
                                                                                 FontWeight.w500,
                                                                             color:
-                                                                                const Color(0xff4B4B4B),
+                                                                                Theme.of(context).primaryColorLight,
                                                                           ),
                                                                         ),
                                                                       ],
@@ -580,70 +610,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                             SizedBox(
                                                               height: 10.h,
                                                             ),
-                                                            // const MySeparator(),
-                                                            // SizedBox(
-                                                            //   height: 5.h,
-                                                            // ),
-                                                            // LinearPercentIndicator(
-                                                            //   animateFromLastPercent:
-                                                            //       true,
-                                                            //   backgroundColor:
-                                                            //       const Color(
-                                                            //           0xffDDFFD4),
-                                                            //   trailing:
-                                                            //       Container(
-                                                            //     padding: const EdgeInsets
-                                                            //         .symmetric(
-                                                            //         horizontal:
-                                                            //             20,
-                                                            //         vertical:
-                                                            //             5),
-                                                            //     decoration:
-                                                            //         BoxDecoration(
-                                                            //       color: const Color(
-                                                            //           0xff278210),
-                                                            //       borderRadius:
-                                                            //           BorderRadius
-                                                            //               .circular(
-                                                            //                   6),
-                                                            //     ),
-                                                            //     child: Text(
-                                                            //       ' ${((rentController.rentModel!.rents![index].paidAmount / rentController.rentModel!.rents![index].amount) * 100).toInt()}%',
-                                                            //       style: GoogleFonts
-                                                            //           .lato(
-                                                            //         color: Colors
-                                                            //             .white,
-                                                            //       ),
-                                                            //     ),
-                                                            //   ),
-                                                            //   percent: ((rentController
-                                                            //               .rentModel!
-                                                            //               .rents![
-                                                            //                   index]
-                                                            //               .paidAmount /
-                                                            //           rentController
-                                                            //               .rentModel!
-                                                            //               .rents![
-                                                            //                   index]
-                                                            //               .amount))
-                                                            //       .toDouble(),
-                                                            //   animation: true,
-                                                            //   barRadius:
-                                                            //       const Radius
-                                                            //           .circular(
-                                                            //           2.0),
-                                                            //   lineHeight:
-                                                            //       MediaQuery.of(
-                                                            //                   context)
-                                                            //               .size
-                                                            //               .width /
-                                                            //           40,
-                                                            //   fillColor: Colors
-                                                            //       .transparent,
-                                                            //   progressColor:
-                                                            //       const Color(
-                                                            //           0xff278210),
-                                                            // ),
                                                           ],
                                                         )),
                                                       ],
@@ -702,8 +668,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                               Text(
                                                 'Created: ',
                                                 style: GoogleFonts.lato(
-                                                  color:
-                                                      const Color(0xff4B4B4B),
+                                                  color: Theme.of(context)
+                                                      .primaryColorLight,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -712,8 +678,8 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                 rentController.rentModel!
                                                     .rents![index].date,
                                                 style: GoogleFonts.lato(
-                                                  color:
-                                                      const Color(0xff4B4B4B),
+                                                  color: Theme.of(context)
+                                                      .primaryColorLight,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w500,
                                                 ),

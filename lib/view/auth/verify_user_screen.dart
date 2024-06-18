@@ -247,7 +247,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   ),
                                 ),
                                 Text(
-                                  'One-Time Password sent to your email \n ${obscureEmail(widget.email)}',
+                                  'One-Time Password sent to your email \n ${widget.email}',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                     color: const Color(0xff4E4B4B),

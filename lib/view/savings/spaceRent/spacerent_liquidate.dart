@@ -620,13 +620,13 @@
 //           value: _currentBankName,
 //           hint: Text(
 //             'Choose bank',
-//             style: TextStyle(
+//             style: GoogleFonts.lato(
 //               fontSize: MediaQuery.of(context).size.height / 60,
 //               color: Theme.of(context).primaryColor,
 //             ),
 //           ),
 //           dropdownColor: Theme.of(context).canvasColor,
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             fontSize: MediaQuery.of(context).size.height / 60,
 //             color: Theme.of(context).primaryColor,
 //           ),
@@ -661,13 +661,13 @@
 //           value: _currentBankName,
 //           hint: Text(
 //             'Choose bank',
-//             style: TextStyle(
+//             style: GoogleFonts.lato(
 //               fontSize: MediaQuery.of(context).size.height / 60,
 //               color: Theme.of(context).primaryColor,
 //             ),
 //           ),
 //           dropdownColor: Theme.of(context).canvasColor,
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             fontSize: MediaQuery.of(context).size.height / 60,
 //             color: Theme.of(context).primaryColor,
 //           ),
@@ -693,7 +693,7 @@
 //     final accountNumber = TextFormField(
 //       enableSuggestions: true,
 //       cursorColor: Colors.black,
-//       style: const TextStyle(
+//       style: const GoogleFonts.lato(
 //         color: Colors.black,
 //       ),
 //       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -724,7 +724,7 @@
 //         filled: true,
 //         fillColor: brandThree,
 //         hintText: 'Enter your account number...',
-//         hintStyle: const TextStyle(
+//         hintStyle: const GoogleFonts.lato(
 //           color: Colors.grey,
 //         ),
 //       ),
@@ -741,13 +741,13 @@
 //           value: liquidateReason,
 //           hint: Text(
 //             'Tell us why',
-//             style: TextStyle(
+//             style: GoogleFonts.lato(
 //               fontSize: MediaQuery.of(context).size.height / 60,
 //               color: Theme.of(context).primaryColor,
 //             ),
 //           ),
 //           dropdownColor: Theme.of(context).canvasColor,
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             fontSize: MediaQuery.of(context).size.height / 60,
 //             color: Theme.of(context).primaryColor,
 //           ),
@@ -784,13 +784,13 @@
 //           value: liquidateLocation,
 //           hint: Text(
 //             'Where should we send your withdrawal?',
-//             style: TextStyle(
+//             style: GoogleFonts.lato(
 //               fontSize: MediaQuery.of(context).size.height / 60,
 //               color: Theme.of(context).primaryColor,
 //             ),
 //           ),
 //           dropdownColor: Theme.of(context).canvasColor,
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             fontSize: MediaQuery.of(context).size.height / 60,
 //             color: Theme.of(context).primaryColor,
 //           ),
@@ -819,19 +819,19 @@
 //       controller: _amountController,
 //       autovalidateMode: AutovalidateMode.onUserInteraction,
 //       validator: validateAmount,
-//       style: const TextStyle(
+//       style: const GoogleFonts.lato(
 //         color: Colors.black,
 //       ),
 //       keyboardType: TextInputType.number,
 //       decoration: InputDecoration(
 //         label: const Text(
 //           "Enter amount",
-//           style: TextStyle(
+//           style: GoogleFonts.lato(
 //             color: Colors.grey,
 //           ),
 //         ),
 //         prefixText: "₦",
-//         prefixStyle: const TextStyle(
+//         prefixStyle: const GoogleFonts.lato(
 //           color: Colors.grey,
 //           fontSize: 13,
 //         ),
@@ -851,7 +851,7 @@
 //         filled: true,
 //         fillColor: brandThree,
 //         hintText: 'Amount in Naira',
-//         hintStyle: const TextStyle(
+//         hintStyle: const GoogleFonts.lato(
 //           color: Colors.grey,
 //           fontSize: 13,
 //         ),
@@ -1095,7 +1095,7 @@
 //                                               ),
 //                                               Text(
 //                                                 'Enter PIN to Proceed',
-//                                                 style: TextStyle(
+//                                                 style: GoogleFonts.lato(
 //                                                   fontSize: 18,
 //                                                   fontFamily:
 //                                                       "DefaultFontFamily",
@@ -1108,7 +1108,7 @@
 //                                                 defaultPinTheme: PinTheme(
 //                                                   width: 30,
 //                                                   height: 30,
-//                                                   textStyle: TextStyle(
+//                                                   textStyle: GoogleFonts.lato(
 //                                                     fontSize: 20,
 //                                                     color: Theme.of(context)
 //                                                         .primaryColor,
@@ -1134,7 +1134,7 @@
 //                                               ),
 //                                               Text(
 //                                                 '(₦20 charges applied)',
-//                                                 style: TextStyle(
+//                                                 style: GoogleFonts.lato(
 //                                                   fontSize: 14,
 //                                                   fontFamily:
 //                                                       "DefaultFontFamily",
@@ -1230,7 +1230,7 @@
 //                                                 ),
 //                                                 Text(
 //                                                   'Enter PIN to Proceed',
-//                                                   style: TextStyle(
+//                                                   style: GoogleFonts.lato(
 //                                                     fontSize: 18,
 //                                                     fontFamily:
 //                                                         "DefaultFontFamily",
@@ -1243,7 +1243,7 @@
 //                                                   defaultPinTheme: PinTheme(
 //                                                     width: 30,
 //                                                     height: 30,
-//                                                     textStyle: TextStyle(
+//                                                     textStyle: GoogleFonts.lato(
 //                                                       fontSize: 20,
 //                                                       color: Theme.of(context)
 //                                                           .primaryColor,
@@ -1269,7 +1269,7 @@
 //                                                 ),
 //                                                 Text(
 //                                                   '(₦20 charges applied)',
-//                                                   style: TextStyle(
+//                                                   style: GoogleFonts.lato(
 //                                                     fontSize: 14,
 //                                                     fontFamily:
 //                                                         "DefaultFontFamily",
@@ -1359,7 +1359,7 @@
 //                                                 ),
 //                                                 Text(
 //                                                   'Enter PIN to Proceed',
-//                                                   style: TextStyle(
+//                                                   style: GoogleFonts.lato(
 //                                                     fontSize: 18,
 //                                                     fontFamily:
 //                                                         "DefaultFontFamily",
@@ -1372,7 +1372,7 @@
 //                                                   defaultPinTheme: PinTheme(
 //                                                     width: 30,
 //                                                     height: 30,
-//                                                     textStyle: TextStyle(
+//                                                     textStyle: GoogleFonts.lato(
 //                                                       fontSize: 20,
 //                                                       color: Theme.of(context)
 //                                                           .primaryColor,
@@ -1398,7 +1398,7 @@
 //                                                 ),
 //                                                 Text(
 //                                                   '(₦20 charges applied)',
-//                                                   style: TextStyle(
+//                                                   style: GoogleFonts.lato(
 //                                                     fontSize: 14,
 //                                                     fontFamily:
 //                                                         "DefaultFontFamily",

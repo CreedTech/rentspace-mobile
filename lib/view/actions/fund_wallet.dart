@@ -11,17 +11,16 @@ class FundWallet extends StatefulWidget {
 
   @override
   State<FundWallet> createState() => _FundWalletState();
-  // _FundWalletState createState() => _FundWalletState();
 }
 
 class _FundWalletState extends State<FundWallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -30,10 +29,10 @@ class _FundWalletState extends State<FundWallet> {
           },
           child: Row(
             children: [
-              const Icon(
+               Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -41,7 +40,7 @@ class _FundWalletState extends State<FundWallet> {
               Text(
                 'Add Money',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -59,7 +58,7 @@ class _FundWalletState extends State<FundWallet> {
                 Text(
                   'Choose how you want to fund your wallet',
                   style: GoogleFonts.lato(
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -72,7 +71,7 @@ class _FundWalletState extends State<FundWallet> {
                     Get.to(const BankTransfer());
                   },
                   contentPadding: const EdgeInsets.only(left: 15, right: 11),
-                  tileColor: colorWhite,
+                  tileColor: Theme.of(context).canvasColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                       10,
@@ -86,7 +85,7 @@ class _FundWalletState extends State<FundWallet> {
                   title: Text(
                     'Bank Transfer',
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -94,15 +93,15 @@ class _FundWalletState extends State<FundWallet> {
                   subtitle: Text(
                     'From your bank app or internet bank',
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  trailing: const Icon(
+                  trailing:  Icon(
                     Icons.keyboard_arrow_right_outlined,
                     size: 20,
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 const SizedBox(
@@ -110,7 +109,7 @@ class _FundWalletState extends State<FundWallet> {
                 ),
                 ListTile(
                   contentPadding: const EdgeInsets.only(left: 15, right: 11),
-                  tileColor: colorWhite,
+                  tileColor: Theme.of(context).canvasColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                       10,
@@ -124,7 +123,7 @@ class _FundWalletState extends State<FundWallet> {
                   title: Text(
                     'USSD',
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -132,7 +131,7 @@ class _FundWalletState extends State<FundWallet> {
                   subtitle: Text(
                     'Use your banks ussd code',
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
@@ -162,7 +161,7 @@ class _FundWalletState extends State<FundWallet> {
                   // trailing: const Icon(
                   //   Icons.keyboard_arrow_right_outlined,
                   //   size: 20,
-                  //   color: colorBlack,
+                  //   color: Theme.of(context).colorScheme.primary,
                   // ),
                 ),
                 const SizedBox(
@@ -170,7 +169,7 @@ class _FundWalletState extends State<FundWallet> {
                 ),
                 ListTile(
                   contentPadding: const EdgeInsets.only(left: 15, right: 11),
-                  tileColor: colorWhite,
+                  tileColor: Theme.of(context).canvasColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                       10,
@@ -184,7 +183,7 @@ class _FundWalletState extends State<FundWallet> {
                   title: Text(
                     'Card',
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -192,7 +191,7 @@ class _FundWalletState extends State<FundWallet> {
                   subtitle: Text(
                     'From your debit card',
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),

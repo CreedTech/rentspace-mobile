@@ -106,12 +106,13 @@ class _HomePageState extends State<HomePage> {
             barrierDismissible: false,
             builder: (BuildContext context) {
               return AlertDialog(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 title: Text(
                   'Welcome Spacer!',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(
                     fontSize: 20,
-                    color: brandOne,
+                    color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                           "I'm Ava. I'm happy to see you on our platform and will help you get started on the app. Take a few moments to see the basics.",
                           style: GoogleFonts.lato(
                             fontSize: 11,
-                            color: brandOne,
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -159,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                             elevation: 0,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 40.w, vertical: 15.h),
-                            textStyle: const TextStyle(
+                            textStyle:  GoogleFonts.lato(
                                 color: Colors.white, fontSize: 17),
                           ),
                           child: Text(
@@ -409,6 +410,7 @@ class _HomePageState extends State<HomePage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
@@ -430,7 +432,7 @@ class _HomePageState extends State<HomePage> {
                     Text(
                       'No internet Connection',
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -441,7 +443,7 @@ class _HomePageState extends State<HomePage> {
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
@@ -627,23 +629,24 @@ class _HomePageState extends State<HomePage> {
           bottomNavigationBar: Container(
             margin:
                 const EdgeInsets.only(bottom: 35, top: 20, left: 20, right: 20),
-            height: 80,
+            height: (MediaQuery.of(context).size.height >= 1000) ? 120 : 80,
             decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: brandOne.withOpacity(.15),
-                  blurRadius: 30,
-                  offset: const Offset(0, 10),
-                ),
-              ],
+              color: Theme.of(context).canvasColor,
+              // boxShadow: [
+              //   BoxShadow(
+              //     color: brandOne.withOpacity(.15),
+              //     blurRadius: 30,
+              //     offset: const Offset(0, 10),
+              //   ),
+              // ],
               borderRadius: BorderRadius.circular(10),
             ),
             child: ListView.builder(
               itemCount: 4,
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * .024),
+                  horizontal: MediaQuery.of(context).size.width * .024,
+                  vertical: 0),
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
                   setState(
@@ -680,7 +683,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Showcase(
                       key: showCaseCounter[index],
-                      // titleTextStyle: TextStyle(),
+                      // titleTextStyle: GoogleFonts.lato(),
                       title: showCaseTitle[index],
                       description: showCaseDesc[index],
                       disableAnimation: false,
@@ -722,156 +725,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          // bottomNavigationBar: BottomNavigationBar(
-          //   items: <BottomNavigationBarItem>[
-          //     BottomNavigationBarItem(
-          //       icon:
-          //           // _selectedIndex == 0
-          //           //     ? const Icon(Iconsax.home5)
-          //           //     : const Icon(Iconsax.home),
-          //           Showcase(
-          //         key: counter._one,
-          //         // titleTextStyle: TextStyle(),
-          //         title: 'Home',
-          //         description: 'All your dashboard in one place.',
-          //         disableAnimation: false,
-          //         showcaseBackgroundColor: brandOne,
-          //         showArrow: true,
-          //         textColor: Colors.white,
-          //         overlayPadding: const EdgeInsets.all(5),
-          //         animationDuration: const Duration(seconds: 2),
-          //         child: _selectedIndex == 0
-          //             ? Icon(Iconsax.home5, size: 25)
-          //             : Icon(Iconsax.home, size: 25),
-          //         // Image.asset(
-          //         //   "assets/icons/home_icon.png",
-          //         //   height: 30,
-          //         //   width: 30,
-          //         //   color: _selectedIndex == 0 ? brandOne : navigationcolorText,
-          //         // )
-          //         // ,
-          //       ),
-          //       label: "Home",
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Showcase(
-          //         key: counter._two,
-          //         title: 'Savings',
-          //         textColor: Colors.white,
-          //         description: 'Create, manange and grow your savings',
-          //         disableAnimation: false,
-          //         showcaseBackgroundColor: brandOne,
-          //         showArrow: true,
-          //         overlayPadding: const EdgeInsets.all(5),
-          //         animationDuration: const Duration(seconds: 2),
-          //         child: _selectedIndex == 1
-          //             ? Icon(Iconsax.activity5, size: 25)
-          //             : Icon(Iconsax.activity, size: 25),
-          //       ),
-          //       label: "Savings",
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Showcase(
-          //         key: counter._three,
-          //         title: 'Portfolio',
-          //         textColor: Colors.white,
-          //         description:
-          //             'Build your portfolio, improve your finance health',
-          //         disableAnimation: false,
-          //         showcaseBackgroundColor: brandOne,
-          //         showArrow: true,
-          //         overlayPadding: const EdgeInsets.all(5),
-          //         animationDuration: const Duration(seconds: 2),
-          //         child: _selectedIndex == 2
-          //             ? Image.asset(
-          //                 "assets/icons/carbon_portfolio.png",
-          //                 // height: 28,
-          //                 width: 25,
-          //                 color: Theme.of(context).colorScheme.secondary,
-          //               )
-          //             : Image.asset(
-          //                 "assets/icons/carbon_portfolio.png",
-          //                 // height: 28,
-          //                 width: 25,
-          //                 color: navigationcolorText,
-          //               ),
-          //       ),
-          //       label: "Portfolio",
-          //     ),
-          //     // BottomNavigationBarItem(
-          //     //   icon: Showcase(
-          //     //     key: counter._four,
-          //     //     title: 'Utility',
-          //     //     textColor: Colors.white,
-          //     //     description:
-          //     //         'Pay your bills directly from your wallet and earn SpacePoint!',
-          //     //     disableAnimation: false,
-          //     //     showcaseBackgroundColor: brandOne,
-          //     //     showArrow: true,
-          //     //     overlayPadding: const EdgeInsets.all(5),
-          //     //     animationDuration: const Duration(seconds: 2),
-          //     //     child: _selectedIndex == 3
-          //     //         ? Image.asset(
-          //     //             "assets/icons/utility_icon.png",
-          //     //             // height: 28,
-          //     //             width: 20,
-          //     //             color: Theme.of(context).colorScheme.secondary,
-          //     //           )
-          //     //         : Image.asset(
-          //     //             "assets/icons/utility_icon.png",
-          //     //             height: 20,
-          //     //             width: 20,
-          //     //             color: navigationcolorText,
-          //     //           ),
-          //     //   ),
-          //     //   label: "Utility",
-          //     // ),
-
-          //     BottomNavigationBarItem(
-          //       icon: Showcase(
-          //         key: counter._five,
-          //         title: 'Profile',
-          //         textColor: Colors.white,
-          //         description: 'Manage your account information',
-          //         disableAnimation: false,
-          //         showcaseBackgroundColor: brandOne,
-          //         showArrow: true,
-          //         overlayPadding: const EdgeInsets.all(5),
-          //         animationDuration: const Duration(seconds: 2),
-          //         child: _selectedIndex == 4
-          //             ? Icon(
-          //                 Icons.person,
-          //                 size: 25,
-          //               )
-          //             : Icon(Icons.person_outline, size: 25),
-          //       ),
-          //       label: "Profile",
-          //     ),
-          //   ],
-          //   currentIndex: _selectedIndex,
-          //   // showUnselectedLabels: true,
-          //   showSelectedLabels: true,
-
-          //   selectedItemColor: brandOne,
-          //   backgroundColor: navigationcolorText,
-          //   showUnselectedLabels: true,
-          //   unselectedIconTheme: const IconThemeData(
-          //     color: navigationcolorText,
-          //   ),
-          //   unselectedItemColor: navigationcolorText,
-          //   unselectedLabelStyle:
-          //       GoogleFonts.lato(color: navigationcolorText),
-          //   selectedIconTheme: IconThemeData(
-          //     color: Theme.of(context).colorScheme.secondary,
-          //   ),
-          //   selectedLabelStyle: GoogleFonts.lato(
-          //     color: Theme.of(context).colorScheme.secondary,
-          //     fontSize: 10,
-          //     fontWeight: FontWeight.w600,
-          //   ),
-          //   onTap: _onItemTapped,
-          //   key: _bottomNavigationKey,
-          // ),
         ),
       ),
     );

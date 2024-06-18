@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_loader.dart';
@@ -35,6 +37,9 @@ class WithdrawContinuationPage extends StatefulWidget {
 class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
+  final TextEditingController _bankController = TextEditingController();
+  final TextEditingController _accountNumberController =
+      TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _narrationController = TextEditingController();
   final withdrawalContdFormKey = GlobalKey<FormState>();
@@ -64,7 +69,8 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
   void initState() {
     super.initState();
     getConnectivity();
-
+    _bankController.text = widget.bankName.toUpperCase();
+    _accountNumberController.text = widget.accountNumber.toString();
     fetchUserData();
   }
 
@@ -87,6 +93,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
@@ -108,7 +115,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                     Text(
                       'No internet Connection',
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -119,7 +126,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
@@ -151,7 +158,6 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                             noInternetConnectionScreen(context);
                             setState(() => isAlertSet = true);
                           }
-                          // fetchUserData();
                         },
                         child: Text(
                           "Try Again",
@@ -205,16 +211,17 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
       controller: _amountController,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
+      inputFormatters: [ThousandsFormatter()],
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
         fontWeight: FontWeight.w400,
       ),
       keyboardType: TextInputType.number,
-      onChanged: (String) {
-        // setState(() {});
-      },
+      // onChanged: (String) {
+      //   // setState(() {});
+      // },
       // onChanged: (value) {
       //   setState(() {
       //     // Check if the text field is empty
@@ -236,7 +243,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
         // ),
         prefixText: "₦ ",
         prefixStyle: GoogleFonts.roboto(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
@@ -271,9 +278,9 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
       enableSuggestions: true,
       controller: _narrationController,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
         fontWeight: FontWeight.w400,
       ),
@@ -282,6 +289,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
         setState(() {});
       },
       maxLength: 35,
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -310,73 +318,60 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
     );
 
     final accountNumber = TextFormField(
+      // enabled: false,
       readOnly: true,
-      enableSuggestions: true,
-      cursorColor: colorBlack,
-      style: GoogleFonts.lato(
-        color: colorBlack,
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-      ),
       autovalidateMode: AutovalidateMode.disabled,
+      enableSuggestions: true,
+      cursorColor: Theme.of(context).colorScheme.primary,
+      style: GoogleFonts.lato(
+          color: Theme.of(context).colorScheme.primary, fontSize: 14),
 
-      // validator: validateNumber,
-      // maxLengthEnforcement: MaxLengthEnforcement.enforced,
-      // controller: _accountNumberController,
-      keyboardType: TextInputType.number,
-      // onChanged: (e) {
-      //   _checkFieldsAndHitApi();
-      // },
-      // onEditingComplete: handleEditingComplete(editedValue),
-
-      // maxLength: 10,
+      controller: _accountNumberController,
+      textAlignVertical: TextAlignVertical.center,
+      // textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        label: Text(
-          widget.accountNumber,
-          style: GoogleFonts.lato(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        //prefix: Icon(Icons.email),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color.fromRGBO(189, 189, 189, 30)
+                  : const Color.fromRGBO(189, 189, 189, 100),
+              width: 1.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+              color: Colors.red, width: 2.0), // Change color to yellow
         ),
-        contentPadding: const EdgeInsets.all(14),
         filled: false,
-        enabled: false,
-        // hintText: 'Enter 10 digits Account Number',
-        // hintStyle: GoogleFonts.lato(
-        //   color: Colors.grey,
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.w400,
-        // ),
+        fillColor: Colors.transparent,
+        contentPadding: const EdgeInsets.all(14),
       ),
+      maxLines: 1,
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -385,10 +380,10 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -396,7 +391,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
               Text(
                 'Withdraw',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -428,7 +423,10 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),
                             decoration: BoxDecoration(
-                              color: colorWhite,
+                              color: (Theme.of(context).brightness ==
+                                      Brightness.dark)
+                                  ? colorWhite.withOpacity(0.2)
+                                  : colorWhite,
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: RichText(
@@ -441,7 +439,9 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                   TextSpan(
                                       text: 'Space Wallet: ',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w400,
                                         fontSize: 14,
                                       )),
@@ -449,7 +449,9 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                     text: currencyFormat.format(walletController
                                         .walletModel!.wallet![0].mainBalance),
                                     style: GoogleFonts.roboto(
-                                      color: brandOne,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 14,
                                     ),
@@ -463,10 +465,10 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                           ),
                           Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.info_outline,
                                 size: 24,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                               const SizedBox(
                                 width: 5,
@@ -476,14 +478,17 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                 child: RichText(
                                   text: TextSpan(
                                     style: GoogleFonts.lato(
-                                      color: Colors.black54,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontSize: 14,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: 'Please note that there is a',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w400,
                                           fontSize: 12,
                                         ),
@@ -491,7 +496,9 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                       TextSpan(
                                         text: ' ₦20',
                                         style: GoogleFonts.roboto(
-                                          color: brandOne,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
                                         ),
@@ -499,7 +506,9 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                       TextSpan(
                                         text: ' charge on all transfer.',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w400,
                                           fontSize: 12,
                                         ),
@@ -518,7 +527,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                             style: GoogleFonts.lato(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                           const SizedBox(
@@ -547,23 +556,29 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                             child: Text(
                                               'Select Bank',
                                               style: GoogleFonts.lato(
-                                                  color: colorBlack,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 12),
                                             ),
                                           ),
                                           TextFormField(
-                                            enabled: false,
+                                            // enabled: false,
                                             readOnly: true,
                                             autovalidateMode:
                                                 AutovalidateMode.disabled,
                                             enableSuggestions: true,
-                                            cursorColor: colorBlack,
+                                            cursorColor: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             style: GoogleFonts.lato(
-                                                color: colorBlack,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
                                                 fontSize: 14),
 
-                                            // controller: widget.bankName,
+                                            controller: _bankController,
                                             textAlignVertical:
                                                 TextAlignVertical.center,
                                             // textCapitalization: TextCapitalization.sentences,
@@ -573,22 +588,40 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                               border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
-                                                borderSide: const BorderSide(
-                                                  color: Color(0xffE0E0E0),
+                                                borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.dark
+                                                      ? const Color.fromRGBO(
+                                                          189, 189, 189, 30)
+                                                      : const Color.fromRGBO(
+                                                          189, 189, 189, 100),
                                                 ),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
-                                                borderSide: const BorderSide(
-                                                    color: brandOne,
+                                                borderSide: BorderSide(
+                                                    color: Theme.of(context)
+                                                                .brightness ==
+                                                            Brightness.dark
+                                                        ? const Color.fromRGBO(
+                                                            189, 189, 189, 30)
+                                                        : const Color.fromRGBO(
+                                                            189, 189, 189, 100),
                                                     width: 1.0),
                                               ),
                                               enabledBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
-                                                borderSide: const BorderSide(
-                                                  color: Color(0xffE0E0E0),
+                                                borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                              .brightness ==
+                                                          Brightness.dark
+                                                      ? const Color.fromRGBO(
+                                                          189, 189, 189, 30)
+                                                      : const Color.fromRGBO(
+                                                          189, 189, 189, 100),
                                                 ),
                                               ),
                                               errorBorder: OutlineInputBorder(
@@ -610,13 +643,13 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                                   // Ensure the image fits inside the circle
                                                 ),
                                               ),
-                                              label: Text(
-                                                widget.bankName.toUpperCase(),
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
+                                              // label: Text(
+                                              //   widget.bankName.toUpperCase(),
+                                              //   style: GoogleFonts.lato(
+                                              //     fontSize: 14,
+                                              //     fontWeight: FontWeight.w400,
+                                              //   ),
+                                              // ),
                                               filled: false,
                                               fillColor: Colors.transparent,
                                               contentPadding:
@@ -642,7 +675,9 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                             child: Text(
                                               'Account Number',
                                               style: GoogleFonts.lato(
-                                                  color: colorBlack,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 12),
                                             ),
@@ -665,7 +700,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                           decoration: BoxDecoration(
                                             color: const Color(0xffEEF8FF),
                                             borderRadius:
-                                                BorderRadius.circular(15),
+                                                BorderRadius.circular(5),
                                           ),
                                           child: Text(
                                             widget.accountHolderName,
@@ -692,7 +727,9 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                       child: Text(
                                         'Amount',
                                         style: GoogleFonts.lato(
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 12),
                                       ),
@@ -712,7 +749,9 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                       child: Text(
                                         'Narration',
                                         style: GoogleFonts.lato(
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 12),
                                       ),

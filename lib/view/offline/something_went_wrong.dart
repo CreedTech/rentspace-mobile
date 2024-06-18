@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../constants/colors.dart';
+
 class SomethingWentWrong extends StatefulWidget {
   final VoidCallback onTap;
   const SomethingWentWrong({super.key, required this.onTap});
@@ -32,14 +34,14 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Theme.of(context)
-                                  .primaryColor
+                                  .colorScheme.secondary
                                   .withOpacity(0.2)),
                           child: Padding(
                             padding: EdgeInsets.all(15.h),
                             child: Icon(
                               Iconsax.emoji_sad,
                               size: 55,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                           ),
                         ),
@@ -53,7 +55,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                           style: GoogleFonts.lato(
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ),
@@ -65,7 +67,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                         // textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
                           fontSize: 14,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -74,7 +76,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                         // textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
                           fontSize: 14,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -83,7 +85,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
                         // textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
                           fontSize: 14,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -100,7 +102,7 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width - 50, 50),
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: brandTwo,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(

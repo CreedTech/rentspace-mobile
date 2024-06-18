@@ -103,7 +103,7 @@
 //                                       title: Text(
 //                                         tankController.tank[index].planName +
 //                                             changeOne,
-//                                         style: TextStyle(
+//                                         style: GoogleFonts.lato(
 //                                           fontSize: 18,
 //                                           color: Colors.white,
 //                                         ),
@@ -120,7 +120,7 @@
 //                                           nairaFormaet.format(tankController
 //                                                   .tank[index].targetAmount) +
 //                                               " Fixed",
-//                                           style: TextStyle(
+//                                           style: GoogleFonts.lato(
 //                                             fontSize: 12,
 //                                             fontFamily: "DefaultFontFamily",
 //                                             color: Colors.white,
@@ -159,7 +159,7 @@
 //                                           ),
 //                                         ),
 //                                         title: "View details",
-//                                         textStyle: TextStyle(
+//                                         textStyle: GoogleFonts.lato(
 //                                           color: Colors.black,
 //                                           fontFamily: "DefaultFontFamily",
 //                                         ),
@@ -175,7 +175,7 @@
 //                                           children: [
 //                                             Text(
 //                                               'SpaceTank ID: ${tankController.tank[index].tankId}',
-//                                               style: TextStyle(
+//                                               style: GoogleFonts.lato(
 //                                                 fontFamily: "DefaultFontFamily",
 //                                                 color: Colors.black,
 //                                               ),
@@ -185,7 +185,7 @@
 //                                             ),
 //                                             Text(
 //                                               'Created: ${tankController.tank[index].date}',
-//                                               style: TextStyle(
+//                                               style: GoogleFonts.lato(
 //                                                 color: Colors.black,
 //                                               ),
 //                                             ),
@@ -194,7 +194,7 @@
 //                                             ),
 //                                             Text(
 //                                               'Duration: ${tankController.tank[index].duration} months',
-//                                               style: TextStyle(
+//                                               style: GoogleFonts.lato(
 //                                                 color: Colors.black,
 //                                                 fontFamily: "DefaultFontFamily",
 //                                               ),
@@ -204,7 +204,7 @@
 //                                             ),
 //                                             Text(
 //                                               'Upfront: ${nairaFormaet.format(double.parse(tankController.tank[index].upfront.toString()))}',
-//                                               style: TextStyle(
+//                                               style: GoogleFonts.lato(
 //                                                 color: Colors.black,
 //                                                 fontFamily: "DefaultFontFamily",
 //                                               ),
@@ -214,7 +214,7 @@
 //                                             ),
 //                                             Text(
 //                                               'Liquidation date: ${tankController.tank[index].endDate}',
-//                                               style: TextStyle(
+//                                               style: GoogleFonts.lato(
 //                                                 color: Colors.black,
 //                                                 fontFamily: "DefaultFontFamily",
 //                                               ),
@@ -224,7 +224,7 @@
 //                                             ),
 //                                             Text(
 //                                               'Amount: ${nairaFormaet.format(double.parse(tankController.tank[index].targetAmount.toString()))}',
-//                                               style: TextStyle(
+//                                               style: GoogleFonts.lato(
 //                                                 color: Colors.black,
 //                                                 fontFamily: "DefaultFontFamily",
 //                                               ),
@@ -249,7 +249,7 @@
 //                     : Center(
 //                         child: Text(
 //                           "Nothing to show here",
-//                           style: TextStyle(
+//                           style: GoogleFonts.lato(
 //                             fontSize: 22,
 //                             fontFamily: "DefaultFontFamily",
 //                             color: Colors.red,

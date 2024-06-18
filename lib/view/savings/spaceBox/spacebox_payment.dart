@@ -130,7 +130,7 @@ class _SpaceBoxPaymentState extends State<SpaceBoxPayment> {
       //             children: [
       //               Text(
       //                 _mssg,
-      //                 style: TextStyle(
+      //                 style: GoogleFonts.lato(
       //                   fontSize: 20,
       //                   fontFamily: "DefaultFontFamily",
       //                   color: Theme.of(context).primaryColor,
@@ -142,7 +142,7 @@ class _SpaceBoxPaymentState extends State<SpaceBoxPayment> {
       //             padding: const EdgeInsets.all(20.0),
       //             child: Text(
       //               _mssgBody,
-      //               style: TextStyle(
+      //               style: GoogleFonts.lato(
       //                 fontSize: 15,
       //                 fontFamily: "DefaultFontFamily",
       //                 color: Theme.of(context).primaryColor,

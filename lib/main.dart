@@ -24,7 +24,10 @@ import 'package:rentspace/view/FirstPage.dart';
 import 'package:rentspace/view/actions/idle_page.dart';
 import 'api/global_services.dart';
 import 'constants/component_constannt.dart';
+import 'controller/theme/theme_controller.dart';
 import 'core/helper/helper_routes.dart';
+import 'modules/initial_binding.dart';
+import 'theme/theme.dart';
 import 'view/splash_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -55,8 +58,9 @@ Future<void> main() async {
     await Hive.initFlutter();
     // // // // // // // // print('Hive Intialized');
   }
-  await openHiveBox('userInfo');
+  // await openHiveBox('userInfo');
   await openHiveBox('dataBundles');
+  await openHiveBox('settings');
   // Get.put(UserController());
   //widgets initializing
   WidgetsFlutterBinding.ensureInitialized();
@@ -114,193 +118,23 @@ Future<void> main() async {
 
 // if application is in background
   FirebaseMessaging.onMessageOpenedApp.listen(
-    (RemoteMessage message) async {
-      // Navigate to appropriate screen based on notification type
-      // String notificationType = message.data['notificationType'];
-      // switch (notificationType) {
-      //   case 'news':
-
-      //     // Navigate to NewsScreen
-      //     Navigator.push(
-      //       _navigatorKey.currentState!.context,
-      //       MaterialPageRoute(
-      //         builder: (context) => NewNotificationPage(
-      //           message: message.data,
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   case 'payment':
-
-      //     // Navigate to EventScreen
-      //     Navigator.push(
-      //       _navigatorKey.currentState!.context,
-      //       MaterialPageRoute(
-      //         builder: (context) => NewNotificationPage(
-      //           message: message.data,
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   case 'fail':
-
-      //     // Navigate to EventScreen
-      //     Navigator.push(
-      //       _navigatorKey.currentState!.context,
-      //       MaterialPageRoute(
-      //         builder: (context) => NewNotificationPage(
-      //           message: message.data,
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   // Add more cases for other notification types as needed
-      //   default:
-      //     // Handle unknown notification types
-      //     Get.to(FirstPage());
-      //     break;
-      // }
-
-      // try {
-      //   if (message.notification?.titleLocKey != null &&
-      //       message.notification?.titleLocKey != null) {
-      //     // Navigate to NewNotificationPage
-      //     Get.to(NewNotificationPage(message: message.notification!.title!));
-      //   } else {
-      //     // Navigate to FirstPage
-      //     Navigator.push(
-      //       _navigatorKey.currentState!.context,
-      //       MaterialPageRoute(
-      //         builder: (context) => FirstPage(),
-      //       ),
-      //     );
-      //   }
-      // } catch (e) {
-      // }
-    },
+    (RemoteMessage message) async {},
   );
 
   FirebaseMessaging.onMessage.listen(
     (RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
-      // AndroidNotification? android = message.notification!.android;
-      // String notificationType = message.data['notificationType'];
-      // switch (notificationType) {
-      //   case 'news':
-
-      //     // Navigate to NewsScreen
-      //     Navigator.push(
-      //       _navigatorKey.currentState!.context,
-      //       MaterialPageRoute(
-      //         builder: (context) => NewNotificationPage(
-      //           message: message.data,
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   case 'payment':
-
-      //     // Navigate to EventScreen
-      //     Navigator.push(
-      //       _navigatorKey.currentState!.context,
-      //       MaterialPageRoute(
-      //         builder: (context) => NewNotificationPage(
-      //           message: message.data,
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   case 'fail':
-
-      //     // Navigate to EventScreen
-      //     Navigator.push(
-      //       _navigatorKey.currentState!.context,
-      //       MaterialPageRoute(
-      //         builder: (context) => NewNotificationPage(
-      //           message: message.data,
-      //         ),
-      //       ),
-      //     );
-      //     break;
-      //   // Add more cases for other notification types as needed
-      //   default:
-      //     // Handle unknown notification types
-      //     Get.to(FirstPage());
-      //     break;
-      // }
 
       displayNotification(notification, message.data);
-      // showDialog(
-      //   context: _navigatorKey.currentState!.context,
-      //   builder: (BuildContext context) {
-      //     return NotificationDialog(notificationData: message.data);
-      //   },
-      // );
-      // If `onMessage` is triggered with a notification, construct our own
-      // local notification to show to users using the created channel.
-      // if (notification != null && android != null) {
-      //   flutterLocalNotificationsPlugin.show(
-      //     notification.hashCode,
-      //     notification.title,
-      //     notification.body,
-      //     payload: message.notification!.body,
-      //     const NotificationDetails(
-      //       android: AndroidNotificationDetails(
-      //         'high_importance_channel',
-      //         'Rentspace Notifications',
-      //         priority: Priority.max,
-      //         importance: Importance.max,
-      //         channelDescription: 'Notifications for rentspace activities',
-      //         // icon: android?.smallIcon,
-      //         // other properties...
-      //       ),
-      //       iOS: DarwinNotificationDetails(
-      //           presentAlert: true,
-      //           presentBanner: true,
-      //           presentSound: true,
-      //           presentBadge: true,
-      //           interruptionLevel: InterruptionLevel.critical),
-      //     ),
-      //   );
-      // }
     },
   );
 
 // If app is closed or terminated
   FirebaseMessaging.instance.getInitialMessage().then(
     (RemoteMessage? message) async {
-      // RemoteNotification? notification = message?.notification;
-      // AndroidNotification? android = message?.notification!.android;
       if (message != null) {
         displayNotification(message.notification, message.data);
       }
-      // if (notification != null && android != null) {
-      //   flutterLocalNotificationsPlugin.show(
-      //     notification.hashCode,
-      //     notification.title,
-      //     notification.body,
-      //     payload: message!.notification!.body,
-      //     const NotificationDetails(
-      //       android: AndroidNotificationDetails(
-      //         'high_importance_channel',
-      //         'Rentspace Notifications',
-      //         priority: Priority.max,
-      //         importance: Importance.max,
-      //         channelDescription: 'Notifications for rentspace activities',
-
-      //         // icon: android?.smallIcon,
-      //         // other properties...
-      //       ),
-      //       iOS: DarwinNotificationDetails(
-      //           presentAlert: true,
-      //           presentBanner: true,
-      //           presentSound: true,
-      //           presentBadge: true,
-      //           interruptionLevel: InterruptionLevel.critical),
-      //     ),
-      //     // payload: message!.data['body'],
-      //   );
-      // }
     },
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -398,7 +232,9 @@ void displayNotification(
       'Rentspace Notifications',
       priority: Priority.max,
       importance: Importance.max,
+    
       channelDescription: 'Notifications for rentspace activities',
+      playSound: true,
 
       // icon: android?.smallIcon,
       // other properties...
@@ -409,6 +245,8 @@ void displayNotification(
             presentBanner: true,
             presentSound: true,
             presentBadge: true,
+            
+            
             interruptionLevel: InterruptionLevel.critical);
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
@@ -418,6 +256,7 @@ void displayNotification(
         notification.hashCode,
         notification.title,
         notification.body,
+        
         // notification.
         platformChannelSpecifics,
         payload: data.toString());
@@ -470,6 +309,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeMode _selectedTheme = ThemeMode.system;
+    // Createing theme instance For Getting the ThemeMode Stage from the ThemeController
+    final ThemeController _themeController = Get.put(ThemeController());
     final sessionConfig = SessionConfig(
       invalidateSessionForAppLostFocus: const Duration(minutes: 1),
       invalidateSessionForUserInactivity: const Duration(minutes: 5),
@@ -496,28 +338,31 @@ class _MyAppState extends State<MyApp> {
     setUpScreenUtils(context);
     setStatusBar();
     // ToastContext().init(context);
-    return SessionTimeoutManager(
-      userActivityDebounceDuration: const Duration(seconds: 1),
-      sessionConfig: sessionConfig,
-      sessionStateStream: sessionStateStream.stream,
-      child: MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
-        child: GetMaterialApp(
-          theme: Themes().lightTheme,
-          // darkTheme: Themes().darkTheme,
-          themeMode: ThemeServices().getThemeMode(),
-          debugShowCheckedModeBanner: false,
-          navigatorKey: _sessionNavigatorKey,
-          title: 'RentSpace',
-          // initialRoute: root,
-          home: SplashScreen(
-            sessionStateStream: sessionStateStream,
+    // return Obx(() {
+      return SessionTimeoutManager(
+        userActivityDebounceDuration: const Duration(seconds: 1),
+        sessionConfig: sessionConfig,
+        sessionStateStream: sessionStateStream.stream,
+        child: MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1)),
+          child: GetMaterialApp(
+            theme: CustomTheme.lightTheme, // CustomThemeData for Light Theme
+            darkTheme: CustomTheme.darkTheme,
+            themeMode: _themeController.themeStateFromHiveSettingBox,
+            debugShowCheckedModeBanner: false,
+            navigatorKey: _sessionNavigatorKey,
+            title: 'RentSpace',
+            initialBinding: InitialBinding(),
+            home: SplashScreen(
+              sessionStateStream: sessionStateStream,
+            ),
+            onGenerateRoute: RouterGenerator().generate,
+            onUnknownRoute: RouterGenerator.onUnknownRoute,
+            builder: EasyLoading.init(),
           ),
-          onGenerateRoute: RouterGenerator().generate,
-          onUnknownRoute: RouterGenerator.onUnknownRoute,
-          builder: EasyLoading.init(),
         ),
-      ),
-    );
+      );
+    // });
   }
 }

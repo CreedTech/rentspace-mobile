@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/actions/change_transaction_pin_otp_page.dart';
@@ -831,11 +832,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         return;
       } else if (response.success == false &&
           response.message.contains("User not found")) {
+        EasyLoading.dismiss();
         message = "User not found";
         customErrorDialog(context, 'Error', message);
 
         return;
       } else {
+        EasyLoading.dismiss();
         // to capture other errors later
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
@@ -851,6 +854,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       return;
     } finally {
       isLoading = false;
+      EasyLoading.dismiss();
     }
   }
 
@@ -1255,6 +1259,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future logout(BuildContext context) async {
+    final box = Hive.box('settings');
+
     isLoading = true;
     String message;
     try {
@@ -1278,6 +1284,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
         await GetStorage().erase();
         await prefs.clear();
+        await box.clear();
 
         await GlobalService.sharedPreferencesManager.removeToken();
         await GlobalService.sharedPreferencesManager.deleteLoginInfo();

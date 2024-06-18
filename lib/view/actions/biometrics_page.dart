@@ -206,7 +206,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
                                 ),
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 50, vertical: 15),
-                                textStyle: const TextStyle(
+                                textStyle:  GoogleFonts.lato(
                                     color: brandFour, fontSize: 13),
                               ),
                               child: Text(
@@ -258,7 +258,7 @@ class _BiometricsPageState extends State<BiometricsPage> {
               //       children: [
               //         Text(
               //           screenInfo,
-              //           style: TextStyle(
+              //           style: GoogleFonts.lato(
               //             fontSize: 20,
               //             fontWeight: FontWeight.bold,
               //             fontFamily: "DefaultFontFamily",

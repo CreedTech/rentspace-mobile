@@ -378,7 +378,7 @@
 //                                                                               8),
 //                                                                 ),
 //                                                                 textStyle:
-//                                                                     const TextStyle(
+//                                                                     const GoogleFonts.lato(
 //                                                                         color:
 //                                                                             brandFour,
 //                                                                         fontSize:
@@ -399,7 +399,7 @@
 //                                                                   Text(
 //                                                                     "Open File",
 //                                                                     style:
-//                                                                         TextStyle(
+//                                                                         GoogleFonts.lato(
 //                                                                       color: Colors
 //                                                                           .white,
 //                                                                       fontWeight:
@@ -478,7 +478,7 @@
 //                                   children: [
 //                                     Text(
 //                                       'Selected File',
-//                                       style: TextStyle(
+//                                       style: GoogleFonts.lato(
 //                                         color: Colors.grey.shade400,
 //                                         fontSize: 15,
 //                                       ),
@@ -530,7 +530,7 @@
 //                                                   ),
 //                                                   Text(
 //                                                     '${(_platformFile!.size / 1024).ceil()} KB',
-//                                                     style: TextStyle(
+//                                                     style: GoogleFonts.lato(
 //                                                       fontSize: 13,
 //                                                       color:
 //                                                           Colors.grey.shade800,
@@ -562,7 +562,7 @@
 //                       //           children: [
 //                       //             Text(
 //                       //               'Selected File',
-//                       //               style: TextStyle(
+//                       //               style: GoogleFonts.lato(
 //                       //                 color: Colors.grey.shade400,
 //                       //                 fontSize: 15,
 //                       //               ),
@@ -613,7 +613,7 @@
 //                       //                           ),
 //                       //                           Text(
 //                       //                             '${(_platformFile!.size / 1024).ceil()} KB',
-//                       //                             style: TextStyle(
+//                       //                             style: GoogleFonts.lato(
 //                       //                               fontSize: 13,
 //                       //                               color: Colors.grey.shade800,
 //                       //                             ),

@@ -44,7 +44,9 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
         borderRadius: const BorderRadius.all(
           Radius.circular(50),
         ),
-        color: _currentPage == index ? brandOne : const Color(0xffB6E0FF),
+        color: _currentPage == index
+            ? Theme.of(context).colorScheme.secondary
+            : const Color(0xffB6E0FF),
       ),
       margin: const EdgeInsets.only(right: 5),
       height: 5,
@@ -68,10 +70,10 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors[_currentPage],
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: colorWhite,
+        backgroundColor: Theme.of(context).canvasColor,
         centerTitle: true,
         title: Image.asset(
           'assets/logoColored.png',
@@ -111,7 +113,9 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                 style: GoogleFonts.lato(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 24,
-                                    color: brandOne),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
                               ),
                               SizedBox(height: 10.h),
                               Text(
@@ -120,7 +124,7 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   height: 1.5714,
-                                  color: const Color(0xff4E4B4B),
+                                  color: Theme.of(context).primaryColorLight,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -173,7 +177,6 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                         ),
                                       ),
                                     ),
-                                  
                                     Padding(
                                       padding:
                                           EdgeInsets.symmetric(vertical: 16.h),
@@ -247,37 +250,6 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                     ),
                                   ),
                                 ),
-
-                                // Padding(
-                                //   padding:
-                                //       EdgeInsets.symmetric(horizontal: 20.w),
-                                //   child: GestureDetector(
-                                //     onTap: () {
-                                //       _controller.nextPage(
-                                //         duration:
-                                //             const Duration(milliseconds: 200),
-                                //         curve: Curves.easeIn,
-                                //       );
-                                //     },
-                                //     child: Container(
-                                //       // width: MediaQuery.of(context).size.width,
-                                //       height: 50,
-                                //       padding:
-                                //           EdgeInsets.symmetric(vertical: 15.h),
-                                //       alignment: Alignment.center,
-                                //       decoration: const BoxDecoration(
-                                //         color: brandTwo,
-                                //         borderRadius: BorderRadius.all(
-                                //             Radius.circular(10)),
-                                //       ),
-                                //       child: const Text(
-                                //         'Continue',
-                                //         style: TextStyle(
-                                //             fontSize: 14, color: Colors.white),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
                               ),
                       ],
                     ),
@@ -288,176 +260,6 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
           ],
         ),
       ),
-      // body: Column(
-      //   children: [
-      //     Expanded(
-      //       flex: 3,
-      //       child: PageView.builder(
-      //         physics: const BouncingScrollPhysics(),
-      //         controller: _controller,
-      //         onPageChanged: (value) => setState(() => _currentPage = value),
-      //         itemCount: contents.length,
-      //         itemBuilder: (context, i) {
-      //           return Container(
-      //             decoration: BoxDecoration(
-      //               image: DecorationImage(
-      //                 image: AssetImage(contents[i].image),
-      //                 fit: BoxFit.cover,
-      //               ),
-      //             ),
-      //             child: Padding(
-      //               padding: EdgeInsets.symmetric(horizontal: 16),
-      //               child: Column(
-      //                 children: [
-      //                   Padding(
-      //                     padding: const EdgeInsets.only(top: 40),
-      //                     child: Image.asset(
-      //                       'assets/icons/RentSpaceWhite.png',
-      //                       // width: 140,
-      //                       height: 53,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     height: 30,
-      //                   ),
-      //                   Expanded(
-      //                     flex: 2,
-      //                     child: Column(
-      //                       mainAxisAlignment: MainAxisAlignment.end,
-      //                       children: [
-      //                         _currentPage + 1 == contents.length
-      //                             ? Column(
-      //                                 children: [
-      //                                   Padding(
-      //                                     padding: const EdgeInsets.all(3),
-      //                                     child: ElevatedButton(
-      //                                       onPressed: () {
-      //                                         // Navigator.of(context).pushNamed(getStarted);
-      //                                         Get.to(const SignupPage());
-      //                                       },
-      //                                       style: ElevatedButton.styleFrom(
-      //                                         backgroundColor:
-      //                                             const Color(0xff40AAD9),
-      //                                         shape: RoundedRectangleBorder(
-      //                                           borderRadius:
-      //                                               BorderRadius.circular(8),
-      //                                         ),
-      //                                         minimumSize: Size(300.w, 50.h),
-      //                                         // padding:
-      //                                         //      EdgeInsets.symmetric(
-      //                                         //         horizontal: (MediaQuery.of(context).size.width <= 550) ? 70.w :100.w,
-      //                                         //         vertical: 15.h),
-      //                                         // textStyle: const TextStyle(
-      //                                         //     color: brandFour,
-      //                                         //     fontSize: 13),
-      //                                       ),
-      //                                       child: AutoSizeText(
-      //                                         maxLines: 1,
-      //                                         "Create an account",
-      //                                         minFontSize: 10,
-      //                                         maxFontSize: 14,
-      //                                         style: GoogleFonts.lato(
-      //                                             color: Colors.white,
-      //                                             fontWeight: FontWeight.w600,
-      //                                             // fontSize: 14,
-      //                                             fontSize: 14),
-      //                                         // ),
-      //                                       ),
-      //                                     ),
-      //                                   ),
-      //                                   Padding(
-      //                                     padding: const EdgeInsets.only(
-      //                                         top: 3, bottom: 10),
-      //                                     child: ElevatedButton(
-      //                                       onPressed: () {
-      //                                         // Navigator.of(context).push(Material);
-      //                                         Get.to(
-      //                                           LoginPage(
-      //                                             sessionStateStream:
-      //                                                 sessionStateStream,
-      //                                             // loggedOutReason: "Logged out because of user inactivity",
-      //                                           ),
-      //                                         );
-      //                                       },
-      //                                       style: ElevatedButton.styleFrom(
-      //                                         backgroundColor: Colors.white,
-      //                                         shape: RoundedRectangleBorder(
-      //                                           borderRadius:
-      //                                               BorderRadius.circular(8),
-      //                                         ),
-      //                                         minimumSize: Size(300.w, 50.h),
-      //                                       ),
-      //                                       child: AutoSizeText(
-      //                                         maxLines: 1,
-      //                                         "Sign In",
-      //                                         minFontSize: 10,
-      //                                         maxFontSize: 14,
-      //                                         style: GoogleFonts.lato(
-      //                                             color: Colors.black,
-      //                                             fontWeight: FontWeight.w600,
-      //                                             // fontSize: 14,
-      //                                             fontSize: 14),
-      //                                         // ),
-      //                                       ),
-      //                                     ),
-      //                                   ),
-      //                                 ],
-      //                               )
-      //                             : Padding(
-      //                                 padding: const EdgeInsets.all(10),
-      //                                 child: ElevatedButton(
-      //                                   onPressed: () {
-      //                                     _controller.nextPage(
-      //                                       duration: const Duration(
-      //                                           milliseconds: 200),
-      //                                       curve: Curves.easeIn,
-      //                                     );
-      //                                     // Navigator.of(context).pushNamed(getStarted);
-      //                                   },
-      //                                   style: ElevatedButton.styleFrom(
-      //                                     backgroundColor: Colors.white,
-      //                                     shape: RoundedRectangleBorder(
-      //                                       borderRadius:
-      //                                           BorderRadius.circular(8),
-      //                                     ),
-      //                                     minimumSize: Size(300.w, 50.h),
-      //                                   ),
-      //                                   child: AutoSizeText(
-      //                                     maxLines: 1,
-      //                                     "Get Started",
-      //                                     minFontSize: 10,
-      //                                     maxFontSize: 14,
-      //                                     style: GoogleFonts.lato(
-      //                                         color: Colors.black,
-      //                                         fontWeight: FontWeight.w600,
-      //                                         fontSize: 14),
-      //                                   ),
-      //                                 ),
-      //                               ),
-      //                         Padding(
-      //                           padding: const EdgeInsets.all(8.0),
-      //                           child: Row(
-      //                             mainAxisAlignment: MainAxisAlignment.center,
-      //                             children: List.generate(
-      //                               contents.length,
-      //                               (int index) => _buildDots(
-      //                                 index: index,
-      //                               ),
-      //                             ),
-      //                           ),
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   )
-      //                 ],
-      //               ),
-      //             ),
-      //           );
-      //         },
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

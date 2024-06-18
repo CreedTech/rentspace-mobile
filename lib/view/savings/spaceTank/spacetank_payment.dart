@@ -125,7 +125,7 @@
 //                   children: [
 //                     Text(
 //                       _mssg,
-//                       style: TextStyle(
+//                       style: GoogleFonts.lato(
 //                         fontFamily: "DefaultFontFamily",
 //                         fontSize: 20,
 //                         color: Theme.of(context).primaryColor,

@@ -61,7 +61,7 @@
 //               padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
 //               child: Text(
 //                 "This SpaceTank is fixed for ${tankController.tank[widget.index].duration} months. Your liquidation date is ${tankController.tank[widget.index].endDate}. Your savings will be disbursed after this date.",
-//                 style: TextStyle(
+//                 style: GoogleFonts.lato(
 //                   fontSize: 25,
 //                   fontFamily: "DefaultFontFamily",
 //                   letterSpacing: 0.5,

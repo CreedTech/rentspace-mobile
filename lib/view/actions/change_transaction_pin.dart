@@ -49,10 +49,10 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -61,10 +61,10 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
           },
           child: Row(
             children: [
-              const Icon(
+               Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -72,7 +72,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
               Text(
                 'Change Transaction Pin',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -98,7 +98,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                       Text(
                         'Input your new Transaction Pin',
                         style: GoogleFonts.lato(
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w500,
                           fontSize: 14,
                         ),
@@ -121,7 +121,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                     child: Text(
                                       'Pin',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context).colorScheme.primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),
@@ -223,7 +223,7 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                     child: Text(
                                       'Confirm Pin',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context).colorScheme.primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),

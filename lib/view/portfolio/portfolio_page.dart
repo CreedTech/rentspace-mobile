@@ -91,10 +91,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: Row(
@@ -102,7 +102,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             Text(
               'Portfolio',
               style: GoogleFonts.lato(
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w500,
                 fontSize: 24,
               ),
@@ -330,7 +330,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     "Actions",
                     style: GoogleFonts.lato(
                       fontSize: 16.0,
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -339,7 +339,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: colorWhite,
+                      color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
@@ -357,7 +357,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             title: Text(
                               'Ask for Loan',
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -368,7 +368,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 fontSize: 12.0,
                                 // letterSpacing: 0.5,
 
-                                color: const Color(0xff4B4B4B),
+                                color: Theme.of(context).primaryColorLight,
                               ),
                             ),
                             onTap: () {
@@ -378,6 +378,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                       barrierDismissible: true,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
+                                          backgroundColor: Theme.of(context)
+                                              .scaffoldBackgroundColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(16),
@@ -399,10 +401,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                       WrapCrossAlignment.center,
                                                   // mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
-                                                    const Icon(
+                                                    Icon(
                                                       Icons
                                                           .info_outline_rounded,
-                                                      color: colorBlack,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                       size: 24,
                                                     ),
                                                     const SizedBox(
@@ -411,7 +415,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                     Text(
                                                       'Oops!',
                                                       style: GoogleFonts.lato(
-                                                        color: colorBlack,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                         fontSize: 24,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -426,7 +432,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                   'You are yet to create a Space Rent plan.\nPlease create a Space Rent plan to have access to our loan service.',
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts.lato(
-                                                    color: colorBlack,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w400,
                                                   ),
@@ -535,6 +543,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                           barrierDismissible: true,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
+                                              backgroundColor: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(16),
@@ -557,10 +567,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                               .center,
                                                       // mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
-                                                        const Icon(
+                                                        Icon(
                                                           Icons
                                                               .info_outline_rounded,
-                                                          color: colorBlack,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary,
                                                           size: 24,
                                                         ),
                                                         const SizedBox(
@@ -570,7 +583,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                           'Oops!',
                                                           style:
                                                               GoogleFonts.lato(
-                                                            color: colorBlack,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .primary,
                                                             fontSize: 24,
                                                             fontWeight:
                                                                 FontWeight.w500,
@@ -582,11 +598,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                       height: 14,
                                                     ),
                                                     Text(
-                                                      'You currently do not qualify for a rent loan\n.Please continue to save consistently up to 70% of your Space Rent to qualify.',
+                                                      'You currently do not qualify for a rent loan.\nPlease continue to save consistently up to 70% of your Space Rent to qualify.',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: GoogleFonts.lato(
-                                                        color: colorBlack,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                         fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.w400,
@@ -653,16 +671,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               // Get.to(const ProfilePage());
                               // Navigator.pushNamed(context, RouteList.profile);
                             },
-                            trailing: const Icon(
+                            trailing: Icon(
                               Icons.keyboard_arrow_right,
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                               size: 20,
                             ),
                           ),
                         ),
-                        const Divider(
+                        Divider(
                           thickness: 1,
-                          color: Color(0xffC9C9C9),
+                          color: Theme.of(context).dividerColor,
                           indent: 17,
                           endIndent: 17,
                         ),
@@ -684,7 +702,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               title: Text(
                                 'Make Loan Payment',
                                 style: GoogleFonts.lato(
-                                  color: colorBlack,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -695,7 +713,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   fontSize: 12.0,
                                   // letterSpacing: 0.5,
 
-                                  color: const Color(0xff4B4B4B),
+                                  color: Theme.of(context).primaryColorLight,
                                 ),
                               ),
                               onTap: () {
@@ -705,6 +723,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                         barrierDismissible: true,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
+                                            backgroundColor: Theme.of(context)
+                                                .scaffoldBackgroundColor,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(16),
@@ -727,10 +747,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                             .center,
                                                     // mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
-                                                      const Icon(
+                                                      Icon(
                                                         Icons
                                                             .info_outline_rounded,
-                                                        color: colorBlack,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
                                                         size: 24,
                                                       ),
                                                       const SizedBox(
@@ -739,7 +761,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                       Text(
                                                         'Oops!',
                                                         style: GoogleFonts.lato(
-                                                          color: colorBlack,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary,
                                                           fontSize: 24,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -754,7 +779,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                     'No loan payment to be made.\nYou currently do not have any outstanding loan payments.',
                                                     textAlign: TextAlign.center,
                                                     style: GoogleFonts.lato(
-                                                      color: colorBlack,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.w400,
@@ -812,17 +839,17 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                         })
                                     : const SizedBox();
                               },
-                              trailing: const Icon(
+                              trailing: Icon(
                                 Icons.keyboard_arrow_right,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 size: 20,
                               ),
                             ),
                           ),
                         ),
-                        const Divider(
+                        Divider(
                           thickness: 1,
-                          color: Color(0xffC9C9C9),
+                          color: Theme.of(context).dividerColor,
                           indent: 17,
                           endIndent: 17,
                         ),
@@ -844,7 +871,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               title: Text(
                                 'Portfolio Overview',
                                 style: GoogleFonts.lato(
-                                  color: colorBlack,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -855,23 +882,23 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   fontSize: 12.0,
                                   // letterSpacing: 0.5,
 
-                                  color: const Color(0xff4B4B4B),
+                                  color: Theme.of(context).primaryColorLight,
                                 ),
                               ),
                               onTap: () {
                                 Get.to(PortfolioOverview());
                               },
-                              trailing: const Icon(
+                              trailing: Icon(
                                 Icons.keyboard_arrow_right,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 size: 20,
                               ),
                             ),
                           ),
                         ),
-                        const Divider(
+                        Divider(
                           thickness: 1,
-                          color: Color(0xffC9C9C9),
+                          color: Theme.of(context).dividerColor,
                           indent: 17,
                           endIndent: 17,
                         ),
@@ -893,7 +920,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               title: Text(
                                 'Credit Score',
                                 style: GoogleFonts.lato(
-                                  color: colorBlack,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -904,7 +931,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                   fontSize: 12.0,
                                   // letterSpacing: 0.5,
 
-                                  color: const Color(0xff4B4B4B),
+                                  color: Theme.of(context).primaryColorLight,
                                 ),
                               ),
                               onTap: () {

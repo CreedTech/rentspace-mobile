@@ -59,22 +59,42 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
 
   String? _selectedCarrier;
   String? _selectedImage;
+  bool isFormValid = false;
   // String? billType;
   // String _userInput = '';
 
   bool showInvalidAmountAlert = false;
   bool showInvalidRecipientNumberAlert = false;
 
-  // void validateUsersInput() {
-  //   if (airtimeformKey.currentState!.validate()) {
-  //     int amount = int.parse(amountController.text);
-  //     String number = recipientController.text;
-  //     // String bill = billType!;
-  //     // String biller = _selectedCarrier!;
+  void validateUsersInput() {
+    FocusScope.of(context).unfocus();
+    var billerLists = Hive.box('Airtime');
+    var storedData = billerLists.get('Airtime');
+    //  storedData['data'];
+    // print(_selectedCarrier!);
+    var outputList = storedData['data']
+        .where((o) => o['name'] == _selectedCarrier!)
+        .toList();
+    print('output list ${outputList}');
 
-  //     // confirmPayment(context, amount, number, bill, biller);
-  //   }
-  // }
+    print(outputList[0]['name']);
+    // print(amountController.text);
+    // print(billType!);
+    // print(_selectedCarrier!);
+
+    Get.to(
+      AirtimeConfirmation(
+        number: recipientController.text,
+        amount: int.parse(amountController.text),
+        image: _selectedImage!,
+        billerId: outputList[0]['id'],
+        name: outputList[0]['name'],
+        divisionId: outputList[0]['division'],
+        productId: outputList[0]['product'],
+        category: outputList[0]['category'],
+      ),
+    );
+  }
 
   String getCurrency() {
     var format =
@@ -203,6 +223,14 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
         phoneNumber.startsWith("0810");
   }
 
+// Update the validation status whenever the form fields change
+  void _updateFormValidity() {
+    setState(() {
+      // Check if all form fields are valid
+      isFormValid = airtimeformKey.currentState!.validate();
+    });
+  }
+
   Future<bool> fetchUserData({bool refresh = true}) async {
     EasyLoading.show(
       indicator: const CustomLoader(),
@@ -222,6 +250,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
   @override
   void dispose() {
     super.dispose();
+    // Remove the listener to avoid memory leaks
+    // amountController.removeListener(_updateFormValidity);
+    // recipientController.removeListener(_updateFormValidity);
+    // selectnetworkController.removeListener(_updateFormValidity);
     amountController.dispose();
     recipientController.dispose();
     selectnetworkController.dispose();
@@ -231,6 +263,11 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
   void initState() {
     super.initState();
     fetchUserData();
+    // // Add a listener to the form fields to update validation status
+    // amountController.addListener(_updateFormValidity);
+    // recipientController.addListener(_updateFormValidity);
+    // selectnetworkController.addListener(_updateFormValidity);
+    // airtimeformKey.currentState!.addListener(_updateFormValidity);
     // recipientController.addListener(() {
     //   setState(() {
     //     _selectedCarrier = getCarrier(recipientController.text);
@@ -249,14 +286,14 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
       onTap: () {
         showModalBottomSheet(
           isDismissible: true,
-          backgroundColor: const Color(0xffF6F6F8),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           context: context,
           builder: (BuildContext context) {
             return Container(
               height: 350,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               decoration: BoxDecoration(
-                  color: const Color(0xffF6F6F8),
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(19)),
               child: ListView(
                 children: [
@@ -264,7 +301,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                     'Select Network',
                     style: GoogleFonts.lato(
                         fontSize: 16,
-                        color: colorBlack,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(
@@ -272,7 +309,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: ListView.builder(
@@ -328,7 +365,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                         style: GoogleFonts.lato(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
-                                            color: colorDark),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary),
                                       ),
                                     ),
                                   ],
@@ -371,8 +410,8 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                         .utilities![idx]
                                         .name
                                         .length)
-                                ? const Divider(
-                                    color: Color(0xffC9C9C9),
+                                ? Divider(
+                                    color: Theme.of(context).dividerColor,
                                     height: 1,
                                     indent: 13,
                                     endIndent: 13,
@@ -392,9 +431,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
       readOnly: true,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),
@@ -406,8 +445,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -416,8 +457,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -444,10 +487,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                 ),
               )
             : null,
-        suffixIcon: const Icon(
+        suffixIcon: Icon(
           Icons.keyboard_arrow_down,
           size: 24,
-          color: colorBlack,
+          color: Theme.of(context).colorScheme.primary,
         ),
         filled: false,
         fillColor: Colors.transparent,
@@ -463,10 +506,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -475,10 +518,10 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -486,7 +529,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
               Text(
                 'Airtime',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -515,7 +558,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 10),
                             decoration: BoxDecoration(
-                              color: colorWhite,
+                              color: Theme.of(context).canvasColor,
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Row(
@@ -523,7 +566,8 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                 Text(
                                   'Space Points:',
                                   style: GoogleFonts.lato(
-                                    color: colorBlack,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14,
                                   ),
@@ -564,7 +608,8 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                   child: Text(
                                     'Select an amount',
                                     style: GoogleFonts.lato(
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -624,7 +669,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                       child: Text(
                                         'Amount',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12,
                                         ),
@@ -632,9 +679,13 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                     ),
                                     TextFormField(
                                       enableSuggestions: true,
-                                      cursorColor: colorBlack,
+                                      cursorColor:
+                                          Theme.of(context).colorScheme.primary,
                                       style: GoogleFonts.lato(
-                                          color: colorBlack, fontSize: 14),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          fontSize: 14),
                                       // autovalidateMode:
                                       //     AutovalidateMode.onUserInteraction,
                                       controller: amountController,
@@ -677,22 +728,34 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: brandOne,
+                                          borderSide: BorderSide(
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? const Color.fromRGBO(
+                                                        189, 189, 189, 30)
+                                                    : const Color.fromRGBO(
+                                                        189, 189, 189, 100),
                                           ),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                            color: Color(0xffBDBDBD),
+                                            color: brandOne,
                                           ),
                                         ),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xffBDBDBD),
+                                          borderSide: BorderSide(
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? const Color.fromRGBO(
+                                                        189, 189, 189, 30)
+                                                    : const Color.fromRGBO(
+                                                        189, 189, 189, 100),
                                           ),
                                         ),
                                         errorBorder: OutlineInputBorder(
@@ -705,7 +768,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                         ),
                                         prefixText: "₦ ",
                                         prefixStyle: GoogleFonts.roboto(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -747,7 +812,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                       child: Text(
                                         'Select Network',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
                                         ),
@@ -768,7 +835,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                       child: Text(
                                         'Number',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
                                         ),
@@ -776,9 +845,12 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                     ),
                                     TextFormField(
                                       enableSuggestions: true,
-                                      cursorColor: colorBlack,
+                                      cursorColor:
+                                          Theme.of(context).colorScheme.primary,
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -817,29 +889,6 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                               text.isNotEmpty &&
                                               text.length == 11;
                                         });
-
-                                        // if (_selectedCarrier == 'MTN'.toUpperCase()) {
-                                        //   setState(() {
-                                        //     _selectedImage = 'assets/utility/mtn.jpg';
-                                        //   });
-                                        // } else if ((_selectedCarrier ==
-                                        //     'Glo'.toUpperCase())) {
-                                        //   setState(() {
-                                        //     _selectedImage = "assets/utility/glo.jpg";
-                                        //   });
-                                        // } else if ((_selectedCarrier ==
-                                        //     '9mobile'.toUpperCase())) {
-                                        //   setState(() {
-                                        //     _selectedImage =
-                                        //         "assets/utility/9mobile.jpg";
-                                        //   });
-                                        // } else if ((_selectedCarrier ==
-                                        //     'Airtel'.toUpperCase())) {
-                                        //   setState(() {
-                                        //     _selectedImage =
-                                        //         "assets/utility/airtel.jpg";
-                                        //   });
-                                        // }
                                       },
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
@@ -856,8 +905,14 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xffE0E0E0),
+                                          borderSide: BorderSide(
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? const Color.fromRGBO(
+                                                        189, 189, 189, 30)
+                                                    : const Color.fromRGBO(
+                                                        189, 189, 189, 100),
                                           ),
                                         ),
                                         focusedBorder: OutlineInputBorder(
@@ -869,8 +924,14 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xffE0E0E0),
+                                          borderSide: BorderSide(
+                                            color:
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? const Color.fromRGBO(
+                                                        189, 189, 189, 30)
+                                                    : const Color.fromRGBO(
+                                                        189, 189, 189, 100),
                                           ),
                                         ),
                                         errorBorder: OutlineInputBorder(
@@ -903,6 +964,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                     alignment: Alignment.bottomCenter,
                     child: CustomButton(
                       text: 'Proceed',
+                      // onTap: isFormValid ? () => validateUsersInput() : null,
                       onTap: () async {
                         if (airtimeformKey.currentState != null &&
                             airtimeformKey.currentState!.validate()) {
@@ -960,7 +1022,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
         width: 100.w,
         height: 55.h,
         decoration: BoxDecoration(
-          color: const Color(0xffEEF8FF),
+          color: Theme.of(context).canvasColor,
           borderRadius: BorderRadius.circular(7.r),
         ),
         child: Center(
@@ -969,7 +1031,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
             child: Text(
               '₦$amount',
               style: GoogleFonts.roboto(
-                color: brandOne,
+                color: Theme.of(context).colorScheme.secondary,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -980,892 +1042,4 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
       ),
     );
   }
-
-  // Future<void> confirmPayment(BuildContext context, int amount, String number,
-  //     String bill, String biller) async {
-  //   final appState = ref.watch(appControllerProvider.notifier);
-  //   validatePinOne(pinOneValue) {
-  //     if (pinOneValue.isEmpty) {
-  //       return 'pin cannot be empty';
-  //     }
-  //     if (pinOneValue.length < 4) {
-  //       return 'pin is incomplete';
-  //     }
-  //     if (int.tryParse(pinOneValue) == null) {
-  //       return 'enter valid number';
-  //     }
-  //     return null;
-  //   }
-
-  //   print(bill);
-
-  //   showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         elevation: 0,
-  //         contentPadding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
-  //         alignment: Alignment.bottomCenter,
-  //         insetPadding: const EdgeInsets.all(0),
-  //         title: Padding(
-  //           padding: const EdgeInsets.only(top: 0),
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //             children: [
-  //               const SizedBox(),
-  //               Text(
-  //                 ch8t.format(amount),
-  //                 textAlign: TextAlign.center,
-  //                 style: GoogleFonts.roboto(
-  //                   fontWeight: FontWeight.w700,
-  //                   fontSize: 30,
-  //                   color: brandOne,
-  //                 ),
-  //               ),
-  //               alert(context),
-  //             ],
-  //           ),
-  //         ),
-  //         shape: const RoundedRectangleBorder(
-  //             // borderRadius: BorderRadius.circular(20.0.r),
-  //             borderRadius: BorderRadius.only(
-  //           topRight: Radius.circular(16),
-  //           topLeft: Radius.circular(16),
-  //         )),
-  //         content: SizedBox(
-  //           height: 400.h,
-  //           // width: 390.h,
-  //           child: Container(
-  //             width: 400.w,
-  //             child: Column(
-  //               children: [
-  //                 Stack(children: [
-  //                   SizedBox(
-  //                     height: 18.h,
-  //                   ),
-  //                   Align(
-  //                     alignment: Alignment.topLeft,
-  //                     child: Padding(
-  //                       padding: EdgeInsets.symmetric(
-  //                           vertical: 15.h, horizontal: 15.h),
-  //                       child: Column(
-  //                         children: [
-  //                           Row(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                             children: [
-  //                               Text(
-  //                                 'Provider Network',
-  //                                 style: GoogleFonts.lato(
-  //                                   color: brandTwo,
-  //                                   fontSize: 12,
-  //                                   fontWeight: FontWeight.w500,
-  //                                 ),
-  //                               ),
-  //                               Row(
-  //                                 mainAxisAlignment: MainAxisAlignment.center,
-  //                                 crossAxisAlignment: CrossAxisAlignment.center,
-  //                                 children: [
-  //                                   ClipRRect(
-  //                                     borderRadius:
-  //                                         BorderRadius.circular(100.0),
-  //                                     child: Image.asset(
-  //                                       _selectedImage!,
-  //                                       height: 20.h,
-  //                                       width: 20.h,
-  //                                     ),
-  //                                   ),
-  //                                   SizedBox(
-  //                                     width: 9.w,
-  //                                   ),
-  //                                   Text(
-  //                                     _selectedCarrier!,
-  //                                     textAlign: TextAlign.center,
-  //                                     style: GoogleFonts.lato(
-  //                                       color: brandOne,
-  //                                       fontSize: 12,
-  //                                       fontWeight: FontWeight.w600,
-  //                                     ),
-  //                                   ),
-  //                                 ],
-  //                               )
-  //                             ],
-  //                           ),
-  //                           SizedBox(
-  //                             height: 11.h,
-  //                           ),
-  //                           Row(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                             children: [
-  //                               Text(
-  //                                 'Recipient Number',
-  //                                 style: GoogleFonts.lato(
-  //                                   color: brandTwo,
-  //                                   fontSize: 12,
-  //                                   fontWeight: FontWeight.w500,
-  //                                 ),
-  //                               ),
-  //                               Text(
-  //                                 number,
-  //                                 style: GoogleFonts.lato(
-  //                                   color: brandOne,
-  //                                   fontSize: 12,
-  //                                   fontWeight: FontWeight.w600,
-  //                                 ),
-  //                               )
-  //                             ],
-  //                           ),
-  //                           SizedBox(
-  //                             height: 16.h,
-  //                           ),
-  //                           Row(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                             children: [
-  //                               Text(
-  //                                 'Amount',
-  //                                 style: GoogleFonts.lato(
-  //                                   color: brandTwo,
-  //                                   fontSize: 12,
-  //                                   fontWeight: FontWeight.w500,
-  //                                 ),
-  //                               ),
-  //                               Text(
-  //                                 ch8t.format(amount),
-  //                                 style: GoogleFonts.roboto(
-  //                                   color: brandOne,
-  //                                   fontSize: 12,
-  //                                   fontWeight: FontWeight.w600,
-  //                                 ),
-  //                               )
-  //                             ],
-  //                           ),
-  //                           SizedBox(
-  //                             height: 11.h,
-  //                           ),
-  //                           Row(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                             children: [
-  //                               Text(
-  //                                 'Transaction Fee',
-  //                                 style: GoogleFonts.lato(
-  //                                   color: brandTwo,
-  //                                   fontSize: 12,
-  //                                   fontWeight: FontWeight.w500,
-  //                                 ),
-  //                               ),
-  //                               Text(
-  //                                 ch8t.format(0),
-  //                                 style: GoogleFonts.roboto(
-  //                                   color: brandOne,
-  //                                   fontSize: 12,
-  //                                   fontWeight: FontWeight.w600,
-  //                                 ),
-  //                               )
-  //                             ],
-  //                           ),
-  //                           SizedBox(
-  //                             height: 15.h,
-  //                           ),
-  //                           Row(
-  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                             children: [
-  //                               Text(
-  //                                 'Payment Method',
-  //                                 style: GoogleFonts.lato(
-  //                                   color: brandOne,
-  //                                   fontSize: 16,
-  //                                   fontWeight: FontWeight.w500,
-  //                                 ),
-  //                               ),
-  //                               // Column(
-  //                               //   crossAxisAlignment: CrossAxisAlignment.end,
-  //                               //   children: [
-  //                               //     Text(
-  //                               //       'Space Wallet',
-  //                               //       style: GoogleFonts.lato(
-  //                               //         color: brandOne,
-  //                               //         fontSize: 15,
-  //                               //         fontWeight: FontWeight.w600,
-  //                               //       ),
-  //                               //     ),
-  //                               //     Text(
-  //                               //       ch8t.format(userController.userModel!
-  //                               //           .userDetails![0].wallet.mainBalance),
-  //                               //       style: GoogleFonts.lato(
-  //                               //         color: brandOne,
-  //                               //         fontSize: 15,
-  //                               //         fontWeight: FontWeight.w600,
-  //                               //       ),
-  //                               //     ),
-  //                               //   ],
-  //                               // )
-  //                             ],
-  //                           ),
-  //                           SizedBox(
-  //                             height: 11.h,
-  //                           ),
-  //                           Container(
-  //                             width: double.infinity,
-  //                             padding: EdgeInsets.symmetric(vertical: 5.h),
-  //                             decoration: BoxDecoration(
-  //                               color: brandTwo.withOpacity(0.05),
-  //                               borderRadius: BorderRadius.circular(15),
-  //                             ),
-  //                             child: ListTile(
-  //                               leading: Icon(
-  //                                 Icons.wallet,
-  //                                 color: ((amount) >
-  //                                         walletController.walletModel!
-  //                                             .wallet![0].mainBalance)
-  //                                     ? Colors.grey
-  //                                     : brandOne,
-  //                                 size: 25,
-  //                               ),
-  //                               title: RichText(
-  //                                 // textAlign: TextAlign.center,
-  //                                 text: TextSpan(
-  //                                   style: GoogleFonts.lato(
-  //                                     fontWeight: FontWeight.w700,
-  //                                     fontSize: 14,
-  //                                   ),
-  //                                   children: <TextSpan>[
-  //                                     TextSpan(
-  //                                       text: "Balance",
-  //                                       style: GoogleFonts.lato(
-  //                                         color: ((amount) >
-  //                                                 walletController.walletModel!
-  //                                                     .wallet![0].mainBalance)
-  //                                             ? Colors.grey
-  //                                             : brandOne,
-  //                                         fontWeight: FontWeight.w700,
-  //                                         fontSize: 14,
-  //                                       ),
-  //                                     ),
-  //                                     TextSpan(
-  //                                       text:
-  //                                           '(${ch8t.format(walletController.walletModel!.wallet![0].mainBalance)})',
-  //                                       style: GoogleFonts.roboto(
-  //                                         color: ((amount) >
-  //                                                 walletController.walletModel!
-  //                                                     .wallet![0].mainBalance)
-  //                                             ? Colors.grey
-  //                                             : brandOne,
-  //                                         fontWeight: FontWeight.w500,
-  //                                         fontSize: 14,
-  //                                       ),
-  //                                     ),
-  //                                   ],
-  //                                 ),
-  //                               ),
-  //                               subtitle: ((amount) >
-  //                                       walletController.walletModel!.wallet![0]
-  //                                           .mainBalance)
-  //                                   ? Text(
-  //                                       'Insufficient Balance',
-  //                                       style: GoogleFonts.lato(
-  //                                         color: Colors.grey,
-  //                                         fontWeight: FontWeight.w500,
-  //                                         fontSize: 12,
-  //                                       ),
-  //                                     )
-  //                                   : null,
-  //                               trailing: ((amount) >
-  //                                       walletController.walletModel!.wallet![0]
-  //                                           .mainBalance)
-  //                                   ? GestureDetector(
-  //                                       onTap: () {
-  //                                         Get.to(const FundWallet());
-  //                                       },
-  //                                       child: Wrap(
-  //                                         alignment: WrapAlignment.end,
-  //                                         crossAxisAlignment:
-  //                                             WrapCrossAlignment.end,
-  //                                         children: [
-  //                                           Text(
-  //                                             'Top up',
-  //                                             textAlign: TextAlign.center,
-  //                                             style: GoogleFonts.lato(
-  //                                               color: brandOne,
-  //                                               fontWeight: FontWeight.w500,
-  //                                               fontSize: 12,
-  //                                             ),
-  //                                           ),
-  //                                           const Icon(
-  //                                             Icons.arrow_forward_ios,
-  //                                             color: brandOne,
-  //                                             size: 20,
-  //                                           )
-  //                                         ],
-  //                                       ),
-  //                                     )
-  //                                   : const Icon(
-  //                                       Icons.check,
-  //                                       color: brandOne,
-  //                                       size: 20,
-  //                                     ),
-  //                             ),
-  //                           ),
-  //                           SizedBox(
-  //                             height: 35.h,
-  //                           ),
-  //                           ElevatedButton(
-  //                             style: ElevatedButton.styleFrom(
-  //                               minimumSize: const Size(250, 50),
-  //                               backgroundColor: (((amount) >
-  //                                       walletController.walletModel!.wallet![0]
-  //                                           .mainBalance))
-  //                                   ? Colors.grey
-  //                                   : brandOne,
-  //                               elevation: 0,
-  //                               shape: RoundedRectangleBorder(
-  //                                 borderRadius: BorderRadius.circular(
-  //                                   50,
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                             onPressed: ((amount) >
-  //                                     walletController
-  //                                         .walletModel!.wallet![0].mainBalance)
-  //                                 ? null
-  //                                 : () async {
-  //                                     FocusScope.of(context).unfocus();
-  //                                     Get.bottomSheet(
-  //                                       isDismissible: true,
-  //                                       SizedBox(
-  //                                         width:
-  //                                             MediaQuery.of(context).size.width,
-  //                                         height: 400.h,
-  //                                         child: ClipRRect(
-  //                                           borderRadius:
-  //                                               const BorderRadius.only(
-  //                                             topLeft: Radius.circular(30.0),
-  //                                             topRight: Radius.circular(30.0),
-  //                                           ),
-  //                                           child: Container(
-  //                                             color:
-  //                                                 Theme.of(context).canvasColor,
-  //                                             padding:
-  //                                                 const EdgeInsets.fromLTRB(
-  //                                                     10, 5, 10, 5),
-  //                                             child: Column(
-  //                                               crossAxisAlignment:
-  //                                                   CrossAxisAlignment.center,
-  //                                               mainAxisAlignment:
-  //                                                   MainAxisAlignment.center,
-  //                                               children: [
-  //                                                 // const SizedBox(
-  //                                                 //   height: 50,
-  //                                                 // ),
-
-  //                                                 SizedBox(
-  //                                                   height: 20.h,
-  //                                                 ),
-  //                                                 Pinput(
-  //                                                   useNativeKeyboard: false,
-  //                                                   obscureText: true,
-  //                                                   defaultPinTheme: PinTheme(
-  //                                                     width: 50,
-  //                                                     height: 50,
-  //                                                     textStyle:
-  //                                                         GoogleFonts.lato(
-  //                                                       color: brandOne,
-  //                                                       fontSize: 28,
-  //                                                     ),
-  //                                                     decoration: BoxDecoration(
-  //                                                       border: Border.all(
-  //                                                           color: Colors.grey,
-  //                                                           width: 1.0),
-  //                                                       borderRadius:
-  //                                                           BorderRadius
-  //                                                               .circular(5),
-  //                                                     ),
-  //                                                   ),
-  //                                                   focusedPinTheme: PinTheme(
-  //                                                     width: 50,
-  //                                                     height: 50,
-  //                                                     textStyle:
-  //                                                         const TextStyle(
-  //                                                       fontSize: 25,
-  //                                                       color: brandOne,
-  //                                                     ),
-  //                                                     decoration: BoxDecoration(
-  //                                                       border: Border.all(
-  //                                                           color: brandOne,
-  //                                                           width: 1.0),
-  //                                                       borderRadius:
-  //                                                           BorderRadius
-  //                                                               .circular(5),
-  //                                                     ),
-  //                                                   ),
-  //                                                   submittedPinTheme: PinTheme(
-  //                                                     width: 50,
-  //                                                     height: 50,
-  //                                                     textStyle:
-  //                                                         const TextStyle(
-  //                                                       fontSize: 25,
-  //                                                       color: brandOne,
-  //                                                     ),
-  //                                                     decoration: BoxDecoration(
-  //                                                       border: Border.all(
-  //                                                           color: brandOne,
-  //                                                           width: 1.0),
-  //                                                       borderRadius:
-  //                                                           BorderRadius
-  //                                                               .circular(5),
-  //                                                     ),
-  //                                                   ),
-  //                                                   followingPinTheme: PinTheme(
-  //                                                     width: 50,
-  //                                                     height: 50,
-  //                                                     textStyle:
-  //                                                         const TextStyle(
-  //                                                       fontSize: 25,
-  //                                                       color: brandOne,
-  //                                                     ),
-  //                                                     decoration: BoxDecoration(
-  //                                                       border: Border.all(
-  //                                                           color: brandTwo,
-  //                                                           width: 1.0),
-  //                                                       borderRadius:
-  //                                                           BorderRadius
-  //                                                               .circular(5),
-  //                                                     ),
-  //                                                   ),
-
-  //                                                   onCompleted: (String val) {
-  //                                                     if (BCrypt.checkpw(
-  //                                                       _aPinController.text
-  //                                                           .trim()
-  //                                                           .toString(),
-  //                                                       userController
-  //                                                           .userModel!
-  //                                                           .userDetails![0]
-  //                                                           .wallet
-  //                                                           .pin,
-  //                                                     )) {
-  //                                                       // _aPinController.clear();
-  //                                                       Get.back();
-  //                                                       print(_aPinController
-  //                                                           .text
-  //                                                           .trim()
-  //                                                           .toString());
-  //                                                       // _doWallet();
-  //                                                       appState.buyAirtime(
-  //                                                           context,
-  //                                                           amount,
-  //                                                           number.toString(),
-  //                                                           bill,
-  //                                                           biller);
-  //                                                     } else {
-  //                                                       _aPinController.clear();
-  //                                                       if (context.mounted) {
-  //                                                         customErrorDialog(
-  //                                                             context,
-  //                                                             "Invalid PIN",
-  //                                                             'Enter correct PIN to proceed');
-  //                                                       }
-  //                                                     }
-  //                                                   },
-  //                                                   // validator: validatePinOne,
-  //                                                   // onChanged: validatePinOne,
-  //                                                   controller: _aPinController,
-  //                                                   length: 4,
-  //                                                   closeKeyboardWhenCompleted:
-  //                                                       true,
-  //                                                   keyboardType:
-  //                                                       TextInputType.number,
-  //                                                 ),
-  //                                                 NumericKeyboard(
-  //                                                   onKeyboardTap:
-  //                                                       (String value) {
-  //                                                     setState(() {
-  //                                                       _aPinController.text =
-  //                                                           _aPinController
-  //                                                                   .text +
-  //                                                               value;
-  //                                                     });
-  //                                                     print(value);
-  //                                                     print(
-  //                                                         _aPinController.text);
-  //                                                   },
-  //                                                   textStyle: GoogleFonts.lato(
-  //                                                     color: brandOne,
-  //                                                     fontSize: 24,
-  //                                                   ),
-  //                                                   rightButtonFn: () {
-  //                                                     if (_aPinController
-  //                                                         .text.isEmpty) return;
-  //                                                     setState(() {
-  //                                                       _aPinController.text =
-  //                                                           _aPinController.text
-  //                                                               .substring(
-  //                                                                   0,
-  //                                                                   _aPinController
-  //                                                                           .text
-  //                                                                           .length -
-  //                                                                       1);
-  //                                                     });
-  //                                                   },
-  //                                                   rightButtonLongPressFn: () {
-  //                                                     if (_aPinController
-  //                                                         .text.isEmpty) return;
-  //                                                     setState(() {
-  //                                                       _aPinController.text =
-  //                                                           '';
-  //                                                     });
-  //                                                   },
-  //                                                   rightIcon: const Icon(
-  //                                                     Icons.backspace_outlined,
-  //                                                     color: Colors.red,
-  //                                                   ),
-  //                                                   mainAxisAlignment:
-  //                                                       MainAxisAlignment
-  //                                                           .spaceBetween,
-  //                                                 ),
-  //                                               ],
-  //                                             ),
-  //                                           ),
-  //                                         ),
-  //                                       ),
-  //                                     );
-  //                                   },
-  //                             child: Text(
-  //                               'Pay',
-  //                               textAlign: TextAlign.center,
-  //                               style: GoogleFonts.lato(
-  //                                 color: Colors.white,
-  //                                 fontSize: 16,
-  //                                 fontWeight: FontWeight.w700,
-  //                               ),
-  //                             ),
-  //                           ),
-  //                           // GestureDetector(
-  //                           //   onTap: () {
-  //                           //     Get.bottomSheet(
-  //                           //       isDismissible: true,
-  //                           //       SizedBox(
-  //                           //         width: MediaQuery.of(context).size.width,
-  //                           //         height: 350,
-  //                           //         child: ClipRRect(
-  //                           //           borderRadius: const BorderRadius.only(
-  //                           //             topLeft: Radius.circular(30.0),
-  //                           //             topRight: Radius.circular(30.0),
-  //                           //           ),
-  //                           //           child: Container(
-  //                           //             color: Theme.of(context).canvasColor,
-  //                           //             padding: const EdgeInsets.fromLTRB(
-  //                           //                 10, 5, 10, 5),
-  //                           //             child: Column(
-  //                           //               crossAxisAlignment:
-  //                           //                   CrossAxisAlignment.center,
-  //                           //               children: [
-  //                           //                 const SizedBox(
-  //                           //                   height: 50,
-  //                           //                 ),
-  //                           //                 Text(
-  //                           //                   'Enter PIN to Proceed',
-  //                           //                   style: GoogleFonts.lato(
-  //                           //                       fontSize: 18,
-  //                           //                       color: Theme.of(context)
-  //                           //                           .primaryColor,
-  //                           //                       fontWeight: FontWeight.w700),
-  //                           //                   textAlign: TextAlign.center,
-  //                           //                 ),
-  //                           //                 const SizedBox(
-  //                           //                   height: 20,
-  //                           //                 ),
-  //                           //                 Pinput(
-  //                           //                   obscureText: true,
-  //                           //                   defaultPinTheme: PinTheme(
-  //                           //                     width: 50,
-  //                           //                     height: 50,
-  //                           //                     textStyle: const TextStyle(
-  //                           //                       fontSize: 20,
-  //                           //                       color: brandOne,
-  //                           //                     ),
-  //                           //                     decoration: BoxDecoration(
-  //                           //                       border: Border.all(
-  //                           //                           color: brandTwo,
-  //                           //                           width: 1.0),
-  //                           //                       borderRadius:
-  //                           //                           BorderRadius.circular(5),
-  //                           //                     ),
-  //                           //                   ),
-  //                           //                   onCompleted: (String val) {
-  //                           //                     if (BCrypt.checkpw(
-  //                           //                       _aPinController.text
-  //                           //                           .trim()
-  //                           //                           .toString(),
-  //                           //                       userController
-  //                           //                           .userModel!
-  //                           //                           .userDetails![0]
-  //                           //                           .wallet
-  //                           //                           .pin,
-  //                           //                     )) {
-  //                           //                       _aPinController.clear();
-  //                           //                       Get.back();
-  //                           //                       // _doWallet();
-  //                           //                       appState.buyAirtime(
-  //                           //                           context,
-  //                           //                           amount,
-  //                           //                           number.toString(),
-  //                           //                           bill,
-  //                           //                           biller);
-  //                           //                     } else {
-  //                           //                       _aPinController.clear();
-  //                           //                       if (context.mounted) {
-  //                           //                         customErrorDialog(
-  //                           //                             context,
-  //                           //                             "Invalid PIN",
-  //                           //                             'Enter correct PIN to proceed');
-  //                           //                       }
-  //                           //                     }
-  //                           //                   },
-  //                           //                   validator: validatePinOne,
-  //                           //                   onChanged: validatePinOne,
-  //                           //                   controller: _aPinController,
-  //                           //                   length: 4,
-  //                           //                   closeKeyboardWhenCompleted: true,
-  //                           //                   keyboardType:
-  //                           //                       TextInputType.number,
-  //                           //                 ),
-  //                           //                 const SizedBox(
-  //                           //                   height: 20,
-  //                           //                 ),
-  //                           //                 const SizedBox(
-  //                           //                   height: 40,
-  //                           //                 ),
-  //                           //                 ElevatedButton(
-  //                           //                   style: ElevatedButton.styleFrom(
-  //                           //                     minimumSize:
-  //                           //                         const Size(300, 50),
-  //                           //                     backgroundColor: brandOne,
-  //                           //                     elevation: 0,
-  //                           //                     shape: RoundedRectangleBorder(
-  //                           //                       borderRadius:
-  //                           //                           BorderRadius.circular(
-  //                           //                         10,
-  //                           //                       ),
-  //                           //                     ),
-  //                           //                   ),
-  //                           //                   onPressed: () {
-  //                           //                     if (BCrypt.checkpw(
-  //                           //                       _aPinController.text
-  //                           //                           .trim()
-  //                           //                           .toString(),
-  //                           //                       userController
-  //                           //                           .userModel!
-  //                           //                           .userDetails![0]
-  //                           //                           .wallet
-  //                           //                           .pin,
-  //                           //                     )) {
-  //                           //                       _aPinController.clear();
-  //                           //                       Get.back();
-  //                           //                       // _doWallet();
-  //                           //                       appState.buyAirtime(
-  //                           //                           context,
-  //                           //                           amount,
-  //                           //                           number.toString(),
-  //                           //                           bill,
-  //                           //                           biller);
-  //                           //                     } else {
-  //                           //                       _aPinController.clear();
-  //                           //                       if (context.mounted) {
-  //                           //                         customErrorDialog(
-  //                           //                             context,
-  //                           //                             "Invalid PIN",
-  //                           //                             'Enter correct PIN to proceed');
-  //                           //                       }
-  //                           //                     }
-  //                           //                   },
-  //                           //                   child: Text(
-  //                           //                     'Proceed to Payment',
-  //                           //                     textAlign: TextAlign.center,
-  //                           //                     style: GoogleFonts.lato(
-  //                           //                       color: Colors.white,
-  //                           //                       fontSize: 16,
-  //                           //                       fontWeight: FontWeight.w700,
-  //                           //                     ),
-  //                           //                   ),
-  //                           //                 ),
-  //                           //               ],
-  //                           //             ),
-  //                           //           ),
-  //                           //         ),
-  //                           //       ),
-  //                           //     );
-  //                           //   },
-  //                           //   child: Container(
-  //                           //     decoration: BoxDecoration(
-  //                           //         color: brandOne,
-  //                           //         borderRadius: BorderRadius.circular(15)),
-  //                           //     child: Padding(
-  //                           //       padding: const EdgeInsets.all(13),
-  //                           //       child: Align(
-  //                           //         child: Text(
-  //                           //           'Pay',
-  //                           //           textAlign: TextAlign.center,
-  //                           //           style: GoogleFonts.lato(
-  //                           //             color: Colors.white,
-  //                           //             fontSize: 19,
-  //                           //             fontWeight: FontWeight.w600,
-  //                           //           ),
-  //                           //         ),
-  //                           //       ),
-  //                           //     ),
-  //                           //   ),
-  //                           // ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ]),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // GestureDetector alert(BuildContext context) {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       showDialog(
-  //           context: context,
-  //           barrierDismissible: false,
-  //           builder: (BuildContext context) {
-  //             return AlertDialog(
-  //               title: null,
-  //               elevation: 0,
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(16.h),
-  //               ),
-  //               content: SizedBox(
-  //                 height: 200.h,
-  //                 width: 400.h,
-  //                 child: SingleChildScrollView(
-  //                     child: Column(
-  //                   children: [
-  //                     // GestureDetector(
-  //                     //   onTap: () {
-  //                     //     Navigator.of(context).pop();
-  //                     //   },
-  //                     //   child: Align(
-  //                     //     alignment: Alignment.topRight,
-  //                     //     child: Container(
-  //                     //       decoration: BoxDecoration(
-  //                     //         borderRadius: BorderRadius.circular(30.h),
-  //                     //         color: Colors.red,
-  //                     //       ),
-  //                     //       child: Padding(
-  //                     //         padding: EdgeInsets.all(10.h),
-  //                     //         child: Icon(
-  //                     //           Iconsax.close_circle,
-  //                     //           color: Colors.red,
-  //                     //           size: 20,
-  //                     //         ),
-  //                     //       ),
-  //                     //     ),
-  //                     //   ),
-  //                     // ),
-  //                     SizedBox(
-  //                       height: 10.h,
-  //                     ),
-  //                     Text(
-  //                       'Payment Not completed',
-  //                       style: GoogleFonts.lato(
-  //                         color: brandOne,
-  //                         fontWeight: FontWeight.w700,
-  //                         fontSize: 18,
-  //                       ),
-  //                     ),
-  //                     SizedBox(
-  //                       height: 3.h,
-  //                     ),
-  //                     Text(
-  //                       'Do you want to cancel this payment?',
-  //                       textAlign: TextAlign.center,
-  //                       style: GoogleFonts.lato(
-  //                           color: brandOne,
-  //                           fontSize: 12,
-  //                           fontWeight: FontWeight.w500),
-  //                     ),
-  //                     SizedBox(
-  //                       height: 20.h,
-  //                     ),
-  //                     Column(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                       children: [
-  //                         ElevatedButton(
-  //                           style: ElevatedButton.styleFrom(
-  //                             minimumSize: const Size(300, 50),
-  //                             backgroundColor: brandOne,
-  //                             elevation: 0,
-  //                             shape: RoundedRectangleBorder(
-  //                               borderRadius: BorderRadius.circular(
-  //                                 50,
-  //                               ),
-  //                             ),
-  //                           ),
-  //                           onPressed: () {
-  //                             FocusScope.of(context).unfocus();
-  //                             Navigator.of(context).pop();
-  //                           },
-  //                           child: Text(
-  //                             'Proceed to Pay',
-  //                             textAlign: TextAlign.center,
-  //                             style: GoogleFonts.lato(
-  //                               color: Colors.white,
-  //                               fontSize: 16,
-  //                               fontWeight: FontWeight.w700,
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         SizedBox(
-  //                           height: 15.h,
-  //                         ),
-  //                         ElevatedButton(
-  //                           style: ElevatedButton.styleFrom(
-  //                             minimumSize: const Size(300, 50),
-  //                             backgroundColor: Colors.white,
-  //                             elevation: 0,
-  //                             shape: RoundedRectangleBorder(
-  //                               borderRadius: BorderRadius.circular(
-  //                                 50,
-  //                               ),
-  //                               side:
-  //                                   const BorderSide(color: brandOne, width: 1),
-  //                             ),
-  //                           ),
-  //                           onPressed: () {
-  //                             Navigator.of(context).pop();
-  //                             Navigator.of(context).pop();
-  //                           },
-  //                           child: Text(
-  //                             'Cancel',
-  //                             textAlign: TextAlign.center,
-  //                             style: GoogleFonts.lato(
-  //                               color: brandOne,
-  //                               fontSize: 16,
-  //                               fontWeight: FontWeight.w700,
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ],
-  //                 )),
-  //               ),
-  //             );
-  //           });
-  //     },
-  //     child: const Icon(
-  //       Icons.close,
-  //       color: brandOne,
-  //       size: 20,
-  //     ),
-  //   );
-  // }
 }

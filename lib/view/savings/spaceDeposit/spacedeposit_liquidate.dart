@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -552,13 +553,13 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
           value: _currentBankName,
           hint: Text(
             'Choose bank',
-            style: TextStyle(
+            style: GoogleFonts.lato(
               fontSize: MediaQuery.of(context).size.height / 60,
               color: Theme.of(context).primaryColor,
             ),
           ),
           dropdownColor: Theme.of(context).canvasColor,
-          style: TextStyle(
+          style: GoogleFonts.lato(
             fontSize: MediaQuery.of(context).size.height / 60,
             color: Theme.of(context).primaryColor,
           ),
@@ -593,13 +594,13 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
           value: _currentBankName,
           hint: Text(
             'Choose bank',
-            style: TextStyle(
+            style: GoogleFonts.lato(
               fontSize: MediaQuery.of(context).size.height / 60,
               color: Theme.of(context).primaryColor,
             ),
           ),
           dropdownColor: Theme.of(context).canvasColor,
-          style: TextStyle(
+          style: GoogleFonts.lato(
             fontSize: MediaQuery.of(context).size.height / 60,
             color: Theme.of(context).primaryColor,
           ),
@@ -625,7 +626,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
     final accountNumber = TextFormField(
       enableSuggestions: true,
       cursorColor: Colors.black,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Colors.black,
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -656,7 +657,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
         filled: true,
         fillColor: brandThree,
         hintText: 'Enter your account number...',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
         ),
       ),
@@ -673,13 +674,13 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
           value: liquidateReason,
           hint: Text(
             'Tell us why',
-            style: TextStyle(
+            style: GoogleFonts.lato(
               fontSize: MediaQuery.of(context).size.height / 60,
               color: Theme.of(context).primaryColor,
             ),
           ),
           dropdownColor: Theme.of(context).canvasColor,
-          style: TextStyle(
+          style: GoogleFonts.lato(
             fontSize: MediaQuery.of(context).size.height / 60,
             color: Theme.of(context).primaryColor,
           ),
@@ -716,13 +717,13 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
           value: liquidateLocation,
           hint: Text(
             'Where should we send your withdrawal?',
-            style: TextStyle(
+            style: GoogleFonts.lato(
               fontSize: MediaQuery.of(context).size.height / 60,
               color: Theme.of(context).primaryColor,
             ),
           ),
           dropdownColor: Theme.of(context).canvasColor,
-          style: TextStyle(
+          style: GoogleFonts.lato(
             fontSize: MediaQuery.of(context).size.height / 60,
             color: Theme.of(context).primaryColor,
           ),
@@ -751,19 +752,19 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateAmount,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         label: Text(
           "Enter amount",
-          style: TextStyle(
+          style: GoogleFonts.lato(
             color: Colors.grey,
           ),
         ),
         prefixText: "₦",
-        prefixStyle: TextStyle(
+        prefixStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -783,7 +784,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
         filled: true,
         fillColor: brandThree,
         hintText: 'Amount in Naira',
-        hintStyle: TextStyle(
+        hintStyle: GoogleFonts.lato(
           color: Colors.grey,
           fontSize: 13,
         ),
@@ -829,7 +830,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                     (widget.isWallet)
       //                         ? Text(
       //                             "Note that the withdrawal process will be according to our Terms of use",
-      //                             style: TextStyle(
+      //                             style: GoogleFonts.lato(
       //                               fontSize: 20,
       //                               fontFamily: "DefaultFontFamily",
       //                               letterSpacing: 2.0,
@@ -838,7 +839,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                           )
       //                         : Text(
       //                             "Note that the liquidation process will be according to our Terms of use",
-      //                             style: TextStyle(
+      //                             style: GoogleFonts.lato(
       //                               fontSize: 20,
       //                               fontFamily: "DefaultFontFamily",
       //                               letterSpacing: 0.5,
@@ -854,7 +855,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                               ((int.tryParse(accountToUse))! +
       //                                   (deductibleInterest) -
       //                                   (20))),
-      //                       style: TextStyle(
+      //                       style: GoogleFonts.lato(
       //                         fontSize: 16,
       //                         fontFamily: "DefaultFontFamily",
       //                         color: Theme.of(context).primaryColor,
@@ -869,7 +870,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                       child: (widget.isWallet)
       //                           ? Text(
       //                               "Why do you want to withdraw?",
-      //                               style: TextStyle(
+      //                               style: GoogleFonts.lato(
       //                                 fontSize: 14,
       //                                 fontFamily: "DefaultFontFamily",
       //                                 //letterSpacing: 2.0,
@@ -878,7 +879,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                             )
       //                           : Text(
       //                               "Why do you want to liquidate?",
-      //                               style: TextStyle(
+      //                               style: GoogleFonts.lato(
       //                                 fontSize: 14,
       //                                 fontFamily: "DefaultFontFamily",
       //                                 //letterSpacing: 2.0,
@@ -896,7 +897,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                 15.0, 2, 15.0, 2),
       //                             child: Text(
       //                               "Where should we send your withdrawal?",
-      //                               style: TextStyle(
+      //                               style: GoogleFonts.lato(
       //                                 fontSize: 14,
       //                                 fontFamily: "DefaultFontFamily",
       //                                 //letterSpacing: 2.0,
@@ -930,7 +931,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                           20.0, 10, 20.0, 10),
       //                                       child: Text(
       //                                         "Loading banks...",
-      //                                         style: TextStyle(
+      //                                         style: GoogleFonts.lato(
       //                                           fontSize: 16,
       //                                           fontFamily: "DefaultFontFamily",
       //                                           //letterSpacing: 2.0,
@@ -954,7 +955,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                     20.0, 10, 20.0, 10),
       //                                 child: Text(
       //                                   _bankAccountName,
-      //                                   style: TextStyle(
+      //                                   style: GoogleFonts.lato(
       //                                     fontSize: 16.0,
       //                                     fontFamily: "DefaultFontFamily",
       //                                     letterSpacing: 0.5,
@@ -975,7 +976,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                       child: (widget.isWallet)
       //                           ? Text(
       //                               "How much do you want to withdraw?",
-      //                               style: TextStyle(
+      //                               style: GoogleFonts.lato(
       //                                 fontSize: 14,
       //                                 fontFamily: "DefaultFontFamily",
       //                                 //letterSpacing: 2.0,
@@ -984,7 +985,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                             )
       //                           : Text(
       //                               "How much do you want to liquidate?",
-      //                               style: TextStyle(
+      //                               style: GoogleFonts.lato(
       //                                 fontSize: 14,
       //                                 fontFamily: "DefaultFontFamily",
       //                                 //letterSpacing: 2.0,
@@ -1004,14 +1005,14 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                       child: (widget.isWallet)
       //                           ? Text(
       //                               'Withdraw',
-      //                               style: TextStyle(
+      //                               style: GoogleFonts.lato(
       //                                 color: Colors.white,
       //                                 fontFamily: "DefaultFontFamily",
       //                               ),
       //                             )
       //                           : Text(
       //                               'Liquidate',
-      //                               style: TextStyle(
+      //                               style: GoogleFonts.lato(
       //                                 color: Colors.white,
       //                                 fontFamily: "DefaultFontFamily",
       //                               ),
@@ -1054,7 +1055,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                         ),
       //                                         Text(
       //                                           'Enter PIN to Proceed',
-      //                                           style: TextStyle(
+      //                                           style: GoogleFonts.lato(
       //                                             fontSize: 18,
       //                                             fontFamily:
       //                                                 "DefaultFontFamily",
@@ -1067,7 +1068,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                           defaultPinTheme: PinTheme(
       //                                             width: 30,
       //                                             height: 30,
-      //                                             textStyle: TextStyle(
+      //                                             textStyle: GoogleFonts.lato(
       //                                               fontSize: 20,
       //                                               color: Theme.of(context)
       //                                                   .primaryColor,
@@ -1093,7 +1094,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                         ),
       //                                         Text(
       //                                           '(₦20 charges applied)',
-      //                                           style: TextStyle(
+      //                                           style: GoogleFonts.lato(
       //                                             fontSize: 14,
       //                                             fontFamily:
       //                                                 "DefaultFontFamily",
@@ -1181,7 +1182,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                           ),
       //                                           Text(
       //                                             'Enter PIN to Proceed',
-      //                                             style: TextStyle(
+      //                                             style: GoogleFonts.lato(
       //                                               fontSize: 18,
       //                                               fontFamily:
       //                                                   "DefaultFontFamily",
@@ -1194,7 +1195,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                             defaultPinTheme: PinTheme(
       //                                               width: 30,
       //                                               height: 30,
-      //                                               textStyle: TextStyle(
+      //                                               textStyle: GoogleFonts.lato(
       //                                                 fontSize: 20,
       //                                                 color: Theme.of(context)
       //                                                     .primaryColor,
@@ -1220,7 +1221,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                           ),
       //                                           Text(
       //                                             '(₦20 charges applied)',
-      //                                             style: TextStyle(
+      //                                             style: GoogleFonts.lato(
       //                                               fontSize: 14,
       //                                               fontFamily:
       //                                                   "DefaultFontFamily",
@@ -1303,7 +1304,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                           ),
       //                                           Text(
       //                                             'Enter PIN to Proceed',
-      //                                             style: TextStyle(
+      //                                             style: GoogleFonts.lato(
       //                                               fontSize: 18,
       //                                               fontFamily:
       //                                                   "DefaultFontFamily",
@@ -1316,7 +1317,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                             defaultPinTheme: PinTheme(
       //                                               width: 30,
       //                                               height: 30,
-      //                                               textStyle: TextStyle(
+      //                                               textStyle: GoogleFonts.lato(
       //                                                 fontSize: 20,
       //                                                 color: Theme.of(context)
       //                                                     .primaryColor,
@@ -1342,7 +1343,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                                           ),
       //                                           Text(
       //                                             '(₦20 charges applied)',
-      //                                             style: TextStyle(
+      //                                             style: GoogleFonts.lato(
       //                                               fontSize: 14,
       //                                               fontFamily:
       //                                                   "DefaultFontFamily",
@@ -1452,7 +1453,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                       children: [
       //                         Text(
       //                           "Processing...",
-      //                           style: TextStyle(
+      //                           style: GoogleFonts.lato(
       //                             fontSize: 20,
       //                             fontFamily: "DefaultFontFamily",
       //                             color: Theme.of(context).primaryColor,
@@ -1495,7 +1496,7 @@ class _DepositLiquidateState extends State<DepositLiquidate> {
       //                   child: Flexible(
       //                     child: Text(
       //                       "kindly confirm your BVN to perform this action.",
-      //                       style: TextStyle(
+      //                       style: GoogleFonts.lato(
       //                         fontSize: 16.0,
       //                         letterSpacing: 0.5,
       //                         fontFamily: "DefaultFontFamily",

@@ -29,7 +29,7 @@ class _SpaceDepositHistoryState extends State<SpaceDepositHistory> {
     super.initState();
     setState(() {
       // _payments =
-          // depositController.deposit[widget.current].history.reversed.toList();
+      // depositController.deposit[widget.current].history.reversed.toList();
     });
   }
 
@@ -73,7 +73,7 @@ class _SpaceDepositHistoryState extends State<SpaceDepositHistory> {
       //           children: [
       //             Text(
       //               'Transaction history',
-      //               style: TextStyle(
+      //               style: GoogleFonts.lato(
       //                 color: Theme.of(context).primaryColor,
       //                 fontWeight: FontWeight.bold,
       //                 fontSize: 16,
@@ -97,7 +97,7 @@ class _SpaceDepositHistoryState extends State<SpaceDepositHistory> {
       //             return Center(
       //               child: Text(
       //                 "Nothing to show",
-      //                 style: TextStyle(
+      //                 style: GoogleFonts.lato(
       //                   fontSize: 20,
       //                   color: brandOne,
       //                   fontFamily: "DefaultFontFamily",
@@ -126,7 +126,7 @@ class _SpaceDepositHistoryState extends State<SpaceDepositHistory> {
       //                         ),
       //                         Text(
       //                           _payments[index],
-      //                           style: TextStyle(
+      //                           style: GoogleFonts.lato(
       //                             fontSize: 20,
       //                             fontFamily: "DefaultFontFamily",
       //                             color: Theme.of(context).primaryColor,
@@ -147,7 +147,6 @@ class _SpaceDepositHistoryState extends State<SpaceDepositHistory> {
       //     ],
       //   ),
       // ),
-    
     );
   }
 }

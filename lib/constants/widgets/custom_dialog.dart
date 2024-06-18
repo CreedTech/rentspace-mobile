@@ -12,6 +12,7 @@ import 'package:rentspace/controller/app_controller.dart';
 import 'package:rentspace/view/FirstPage.dart';
 import 'package:rentspace/view/login_page.dart';
 
+import '../../view/actions/fund_wallet.dart';
 import 'paint/custom_paint.dart';
 
 void resendVerification(
@@ -21,6 +22,7 @@ void resendVerification(
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: null,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -41,7 +43,7 @@ void resendVerification(
                   Text(
                     message,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
@@ -53,7 +55,7 @@ void resendVerification(
                     subText,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
                       // letterSpacing: 0.3,
                       fontWeight: FontWeight.w400,
@@ -75,8 +77,8 @@ void resendVerification(
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 15),
-                      textStyle:
-                          const TextStyle(color: Colors.white, fontSize: 17),
+                      textStyle:  GoogleFonts.lato(
+                          color: Colors.white, fontSize: 17),
                     ),
                     child: Text(
                       "Okay",
@@ -105,6 +107,7 @@ void verification(BuildContext context, String message, String subText,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: null,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -125,7 +128,7 @@ void verification(BuildContext context, String message, String subText,
                   Text(
                     message,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
@@ -137,7 +140,7 @@ void verification(BuildContext context, String message, String subText,
                     subText,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
                       // letterSpacing: 0.3,
                       fontWeight: FontWeight.w400,
@@ -167,8 +170,10 @@ void verification(BuildContext context, String message, String subText,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 15),
-                      textStyle:
-                          const TextStyle(color: Colors.white, fontSize: 17),
+                      textStyle: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
                     ),
                     child: Text(
                       redirectText,
@@ -197,6 +202,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: null,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -223,7 +229,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                   Text(
                     message,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
@@ -235,7 +241,7 @@ void redirectingAlert(BuildContext context, String message, String subText,
                     subText,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
                       // letterSpacing: 0.3,
                       fontWeight: FontWeight.w400,
@@ -264,8 +270,8 @@ void redirectingAlert(BuildContext context, String message, String subText,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 15),
-                      textStyle:
-                          const TextStyle(color: Colors.white, fontSize: 17),
+                      textStyle:  GoogleFonts.lato(
+                          color: Colors.white, fontSize: 17),
                     ),
                     child: Text(
                       redirectText,
@@ -294,6 +300,7 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: null,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -320,7 +327,7 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
                   Text(
                     message,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
@@ -332,7 +339,7 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
                     subText,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 14,
                       // letterSpacing: 0.3,
                       fontWeight: FontWeight.w400,
@@ -361,8 +368,8 @@ void pinRedirectingAlert(BuildContext context, String message, String subText,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 15),
-                      textStyle:
-                          const TextStyle(color: Colors.white, fontSize: 17),
+                      textStyle:  GoogleFonts.lato(
+                          color: Colors.white, fontSize: 17),
                     ),
                     child: Text(
                       redirectText,
@@ -394,7 +401,7 @@ void errorDialog(BuildContext context, String message, String subText) {
           topRight: Radius.circular(30.0),
         ),
         child: Container(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -472,16 +479,19 @@ void errorDialog(BuildContext context, String message, String subText) {
 void customErrorDialog(
     BuildContext context, String message, String subText) async {
   showDialog(
+      barrierColor: const Color.fromRGBO(74, 74, 74, 100),
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           title: null,
           scrollable: true,
-          elevation: 0,
+          // elevation: 0,
           content: SizedBox(
             // height: 220.h,
             width: MediaQuery.of(context).size.width,
@@ -492,9 +502,9 @@ void customErrorDialog(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.info_outline_rounded,
-                      color: colorBlack,
+                      color: Theme.of(context).colorScheme.primary,
                       size: 24,
                     ),
                     const SizedBox(
@@ -503,7 +513,7 @@ void customErrorDialog(
                     Text(
                       message,
                       style: GoogleFonts.lato(
-                        color: colorBlack,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
                       ),
@@ -517,7 +527,7 @@ void customErrorDialog(
                   subText,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                   ),
@@ -567,6 +577,7 @@ void customSuccessDialog(
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -587,27 +598,27 @@ void customSuccessDialog(
                       'assets/icons/success_icon.png',
                       width: 24,
                     ),
-                    const SizedBox(
-                      width: 4,
+                    SizedBox(
+                      width: 4.w,
                     ),
                     Text(
                       message,
                       style: GoogleFonts.lato(
-                        color: colorBlack,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 14,
+                SizedBox(
+                  height: 14.h,
                 ),
                 Text(
                   subText,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                   ),
@@ -658,6 +669,7 @@ void customRedirectingSuccessDialog(
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -684,7 +696,7 @@ void customRedirectingSuccessDialog(
                     Text(
                       message,
                       style: GoogleFonts.lato(
-                        color: colorBlack,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
                       ),
@@ -698,7 +710,7 @@ void customRedirectingSuccessDialog(
                   subText,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(
-                    color: colorBlack,
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                   ),
@@ -749,11 +761,11 @@ void setProfilePictuteDialog(BuildContext context, dynamic onTap) {
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
-      return AlertDialog.adaptive(
+      return AlertDialog(
         contentPadding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
         elevation: 0.h,
         alignment: Alignment.bottomCenter,
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.h),
@@ -800,7 +812,7 @@ void setProfilePictuteDialog(BuildContext context, dynamic onTap) {
                   child: Text(
                     'Tap to Change',
                     style: GoogleFonts.lato(
-                      color: brandOne,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 17,
                       fontWeight: FontWeight.w500,
                     ),
@@ -827,7 +839,7 @@ Future<void> successfulReceipt(
       builder: (BuildContext context) {
         return AlertDialog(
           title: null,
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0.0,
           insetPadding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.h),
           alignment: Alignment.bottomCenter,
@@ -955,6 +967,7 @@ void sessionAlert(BuildContext context, String message, String subText,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: null,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -1022,8 +1035,8 @@ void sessionAlert(BuildContext context, String message, String subText,
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 15),
-                      textStyle:
-                          const TextStyle(color: Colors.white, fontSize: 17),
+                      textStyle:  GoogleFonts.lato(
+                          color: Colors.white, fontSize: 17),
                     ),
                     child: Text(
                       redirectText,
@@ -1047,16 +1060,16 @@ void sessionAlert(BuildContext context, String message, String subText,
 Future<dynamic> multipleLoginRedirectModal() {
   final sessionStateStream = StreamController<SessionState>();
   return Get.dialog(
-    barrierDismissible: false,
+    barrierDismissible: true,
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
+            decoration: BoxDecoration(
+              color: Theme.of(Get.context!).scaffoldBackgroundColor,
+              borderRadius: const BorderRadius.all(
                 Radius.circular(20),
               ),
             ),
@@ -1070,9 +1083,9 @@ Future<dynamic> multipleLoginRedirectModal() {
                     runAlignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.error,
-                        color: colorBlack,
+                        color: Theme.of(Get.context!).colorScheme.primary,
                         size: 24,
                       ),
                       const SizedBox(
@@ -1082,7 +1095,7 @@ Future<dynamic> multipleLoginRedirectModal() {
                         "Multiple Device Login Attempt",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
-                          color: colorBlack,
+                          color: Theme.of(Get.context!).colorScheme.primary,
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
                         ),
@@ -1094,7 +1107,7 @@ Future<dynamic> multipleLoginRedirectModal() {
                     "Your Rentspace Account has been logged in on another device. Multiple Device login may lead to theft.",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                      color: colorBlack,
+                      color: Theme.of(Get.context!).colorScheme.primary,
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                     ),
@@ -1132,4 +1145,99 @@ Future<dynamic> multipleLoginRedirectModal() {
       ],
     ),
   );
+}
+
+Future<dynamic> insufficientFundsDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: null,
+          scrollable: true,
+          elevation: 0,
+          content: SizedBox(
+            // height: 220.h,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+              child: Column(
+                children: [
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.info_outline_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 24,
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        'Insufficient fund.',
+                        style: GoogleFonts.lato(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Text(
+                    'You need to fund your wallet to perform this transaction.',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.lato(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 29,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize:
+                            Size(MediaQuery.of(context).size.width - 50, 50),
+                        backgroundColor: brandTwo,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Get.to(const FundWallet());
+                      },
+                      child: Text(
+                        'Ok',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.lato(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
 }

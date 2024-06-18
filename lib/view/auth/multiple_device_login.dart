@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/view/auth/multiple_device_login_otp_page.dart';
@@ -48,16 +49,16 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                   right: -50,
                   child: Image.asset(
                     'assets/logo_transparent.png',
-                    width: 205.47,
-                    height: 292.51,
+                    width: 205.47.w,
+                    height: 292.51.h,
                   ),
                 ),
                 Positioned(
-                  top: 40,
+                  top: 40.h,
                   left: 0,
                   right: 0,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 55),
+                    padding: EdgeInsets.only(top: 55.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -65,10 +66,10 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                         Image.asset(
                           'assets/logo_main.png',
                           width: 168,
-                          height: 50.4,
+                          height: 50.4.h,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 12, left: 30),
+                          padding: EdgeInsets.only(bottom: 12.h, left: 30),
                           child: Text(
                             'your financial power...',
                             style: GoogleFonts.lato(
@@ -84,18 +85,18 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                   ),
                 ),
                 Positioned(
-                  top: MediaQuery.of(context).size.height  / 4,
+                  top: MediaQuery.of(context).size.height / 4,
                   left: 0,
                   right: 0,
                   bottom: 0,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 40, horizontal: 24),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 40.h, horizontal: 24),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
                       ),
@@ -106,20 +107,20 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 60),
+                            SizedBox(height: 60.h),
                             Center(
                               child: Image.asset(
                                 'assets/login_error.png',
                                 width: 78,
-                                height: 84,
+                                height: 84.h,
                               ),
                             ),
-                            const SizedBox(height: 30),
+                            SizedBox(height: 30.h),
                             Text(
                               'Oops!',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.lato(
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 24,
                               ),
@@ -127,14 +128,14 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                             Text(
                               "It seems you are currently logged in on another device.\nClick 'Sign out of other devices' below to continue.",
                               style: GoogleFonts.lato(
-                                color: const Color(0xff4B4B4B),
+                                color: Theme.of(context).primaryColorLight,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                                 // fontFamily: "DefaultFontFamily",
                               ),
                             ),
-                            const SizedBox(
-                              height: 40,
+                            SizedBox(
+                              height: 40.h,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -189,7 +190,9 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                                         style: GoogleFonts.lato(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,
-                                          color: colorDark,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                     ),
@@ -204,7 +207,6 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                           child: Column(
                             children: [
                               Container(
-                                // width: MediaQuery.of(context).size.width * 2,
                                 alignment: Alignment.center,
                                 // height: 110.h,
                                 child: Column(
@@ -238,7 +240,9 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                                         style: GoogleFonts.lato(
                                           color: (signOutDevices == true)
                                               ? colorWhite
-                                              : colorBlack,
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -247,8 +251,8 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(
-                                height: 20,
+                              SizedBox(
+                                height: 20.h,
                               ),
                               Container(
                                 // width: MediaQuery.of(context).size.width * 2,
@@ -286,8 +290,8 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
+                              SizedBox(
+                                height: 10.h,
                               ),
                             ],
                           ),

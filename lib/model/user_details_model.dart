@@ -1,6 +1,8 @@
 import 'wallet_model.dart';
 import 'withdrawal_account_model.dart';
 
+// part 'user_details_model.g.dart';
+
 class UserModel {
   UserModel({
     required this.userDetails,
@@ -55,14 +57,11 @@ class UserDetailsModel {
   final bool hasVerifiedKyc;
   final bool hasVerifiedPhone;
   final int loanAmount;
-  // TODO  change to final string
   final String dvaName;
   final String dvaNumber;
   final String dvaUsername;
-  //  final String Idimage;
   final int referrals;
   final num referralPoints;
-  // TODO  change to number
   final num utilityPoints;
   final dynamic financeHealth;
   final String status;
@@ -71,27 +70,15 @@ class UserDetailsModel {
   final dynamic totalDebts;
   final dynamic totalProfits;
   final dynamic totalSavings;
-  // TODO  change to final string
   final String cardCVV;
   final String cardDigit;
   final String cardExpire;
-  // TODO ADD TO BACKEND
-  //  final bool cardHolder;
   final String date;
   final String createdAt;
   final String updatedAt;
-  //  final String userWalletBalance;
-  //  final String userWalletNumber;
-  //  final String referrar_id;
-  //  final String otp;
-  //  final int otpExpireIn;
-  //  final String accountDate;
-  //  final String accountName;
-  //  final String accountNumber;
-  //  final String referalId;
-  // TODO  change to final string
   final String rentspaceID;
   final String avatar;
+  final bool imageUpdated;
   final List<dynamic> activities;
   final List<dynamic> walletHistories;
   final List<dynamic> referredUsers;
@@ -100,7 +87,6 @@ class UserDetailsModel {
 
   UserDetailsModel({
     required this.kyc,
-    // required this.Idimage,
     required this.dvaName,
     required this.dvaNumber,
     required this.dvaUsername,
@@ -110,8 +96,6 @@ class UserDetailsModel {
     required this.cardDigit,
     required this.cardExpire,
     required this.isPinSet,
-    // TODO ADD TO BACKEND
-    // required this.cardHolder,
     required this.id,
     required this.email,
     required this.userName,
@@ -145,18 +129,10 @@ class UserDetailsModel {
     required this.date,
     required this.createdAt,
     required this.updatedAt,
-    // required this.referrar_id,
-    // required this.otp,
-    // required this.otpExpireIn,
     required this.rentspaceID,
     required this.avatar,
+    required this.imageUpdated,
     required this.referralPoints,
-    // required this.userWalletBalance,
-    // required this.userWalletNumber,
-    // required this.accountDate,
-    // required this.accountName,
-    // required this.accountNumber,
-    // required this.referalId,
     required this.wallet,
     required this.withdrawalAccount,
     required this.activities,
@@ -167,6 +143,7 @@ class UserDetailsModel {
   factory UserDetailsModel.fromJson(Map<String, dynamic> json) =>
       UserDetailsModel(
         avatar: json['avatar']['url'],
+        imageUpdated: json['avatar']['updated'],
         id: json["_id"],
         email: json["email"],
         userName: json["userName"],
@@ -202,8 +179,6 @@ class UserDetailsModel {
         date: json["date"],
         createdAt: json["createdAt"],
         updatedAt: json["updatedAt"],
-        // TODO ADD TO BACKEND
-        // cardHolder: json["card_holder"],
         dvaName: json["dva_name"],
         dvaNumber: json["dva_number"],
         dvaUsername: json["dva_username"],
@@ -212,19 +187,8 @@ class UserDetailsModel {
         utilityPoints: json["utility_points"],
         cardCVV: json["card_cvv"],
         cardDigit: json["card_digit"],
-        // Idimage: json["id_card"],
         cardExpire: json["card_expire"],
-        // referrar_id: json["referrar_id"],
-        // otp: json["otp"],
-        // otpExpireIn: json["otpExpireIn"],
-        // userWalletNumber: json['wallet_id'],
-        // referalId: json["referal_id"],
         rentspaceID: json["rentspace_id"],
-        // userWalletBalance: json['wallet_balance'] ?? '',
-        // accountNumber: json["account_number"] ?? '',
-        // accountName: json["account_name"] ?? '',
-        // accountDate: json["account_date"] ?? '',
-        // activities: Activities.fromJson(json["activities"]),
         wallet: Wallet.fromJson(json["wallet"]),
         withdrawalAccount: json['withdrawalAccount'] != null
             ? WithdrawalAccount.fromJson(json['withdrawalAccount'])
@@ -251,7 +215,6 @@ class UserDetailsModel {
         "referralPoints": referralPoints,
         "isPinSet": isPinSet,
         "active": active,
-        // "id_card": Idimage,
         "kyc": kyc,
         "bvn": bvn,
         "has_bvn": hasBvn,
@@ -277,21 +240,9 @@ class UserDetailsModel {
         "dva_username": dvaUsername,
         "referrals": referrals,
         "utility_points": utilityPoints,
-        // "card_cvv": cardCVV,
-        // "card_digit": cardDigit,
-        // "card_expire": cardExpire,
-        // "referal_id": referalId,
-        // "otp": otp,
         "rentspace_id": rentspaceID,
         "avatar": avatar,
-        // "wallet_balance": userWalletBalance,
-        // "wallet_id": userWalletNumber,
-        // "referrar_id": referrar_id,
-        // "otpExpireIn": otpExpireIn,
-        // "account_date": accountDate,
-        // "account_name": accountName,
-        // "card_holder": cardHolder,
-        // "account_number": accountNumber,
+        "imageUpdated": imageUpdated,
         "activities": activities,
         "walletHistories": walletHistories,
         "referredUsers": referredUsers,

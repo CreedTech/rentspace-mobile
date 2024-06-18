@@ -851,7 +851,7 @@
 //                                                     focusedPinTheme: PinTheme(
 //                                                       width: 50,
 //                                                       height: 50,
-//                                                       textStyle: TextStyle(
+//                                                       textStyle: GoogleFonts.lato(
 //                                                         fontSize: 25,
 //                                                         color: brandOne,
 //                                                       ),
@@ -867,7 +867,7 @@
 //                                                     submittedPinTheme: PinTheme(
 //                                                       width: 50,
 //                                                       height: 50,
-//                                                       textStyle: TextStyle(
+//                                                       textStyle: GoogleFonts.lato(
 //                                                         fontSize: 25,
 //                                                         color: brandOne,
 //                                                       ),
@@ -883,7 +883,7 @@
 //                                                     followingPinTheme: PinTheme(
 //                                                       width: 50,
 //                                                       height: 50,
-//                                                       textStyle: TextStyle(
+//                                                       textStyle: GoogleFonts.lato(
 //                                                         fontSize: 25,
 //                                                         color: brandOne,
 //                                                       ),
@@ -1037,7 +1037,7 @@
 //                             //                   defaultPinTheme: PinTheme(
 //                             //                     width: 50,
 //                             //                     height: 50,
-//                             //                     textStyle: const TextStyle(
+//                             //                     textStyle: const GoogleFonts.lato(
 //                             //                       fontSize: 20,
 //                             //                       color: brandOne,
 //                             //                     ),

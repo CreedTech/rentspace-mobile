@@ -427,14 +427,14 @@
 //     //         isDismissible: true,
 //     //         bottomSheetTitle: const Text(
 //     //           'List of Banks',
-//     //           style: TextStyle(
+//     //           style: GoogleFonts.lato(
 //     //             fontWeight: FontWeight.bold,
 //     //             fontSize: 20.0,
 //     //           ),
 //     //         ),
 //     //         submitButtonChild: const Text(
 //     //           'Done',
-//     //           style: TextStyle(
+//     //           style: GoogleFonts.lato(
 //     //             fontSize: 16,
 //     //             fontWeight: FontWeight.bold,
 //     //           ),

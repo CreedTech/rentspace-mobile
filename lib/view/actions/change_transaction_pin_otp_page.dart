@@ -81,10 +81,10 @@ class _ChangetransactionPinOtpPageState
     final authState = ref.read(authControllerProvider.notifier);
     String formattedTime = '$_minutes:${_seconds.toString().padLeft(2, '0')}';
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -93,10 +93,10 @@ class _ChangetransactionPinOtpPageState
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -104,7 +104,7 @@ class _ChangetransactionPinOtpPageState
               Text(
                 'Change Transaction Pin',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -131,7 +131,7 @@ class _ChangetransactionPinOtpPageState
                         child: Text(
                           'Verify OTP sent to your mail to change your Transaction Pin. Click ‘Send OTP’ to get the code',
                           style: GoogleFonts.lato(
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
                           ),
@@ -153,7 +153,8 @@ class _ChangetransactionPinOtpPageState
                                   child: Text(
                                     'Enter OTP',
                                     style: GoogleFonts.lato(
-                                      color: colorBlack,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12,
                                     ),
@@ -161,10 +162,13 @@ class _ChangetransactionPinOtpPageState
                                 ),
                                 TextFormField(
                                   enableSuggestions: true,
-                                  cursorColor: colorBlack,
+                                  cursorColor:
+                                      Theme.of(context).colorScheme.primary,
                                   keyboardType: TextInputType.number,
                                   style: GoogleFonts.lato(
-                                      color: colorBlack, fontSize: 14),
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontSize: 14),
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   controller: otpController,
@@ -232,7 +236,9 @@ class _ChangetransactionPinOtpPageState
                                     Text(
                                       'Didn\'t receive the OTP? ',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -250,7 +256,8 @@ class _ChangetransactionPinOtpPageState
                                         child: Text(
                                           'Resend OTP',
                                           style: GoogleFonts.lato(
-                                            color: const Color(0xff6E6E6E),
+                                            color: Theme.of(context)
+                                                .primaryColorLight,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
                                           ),
@@ -260,7 +267,8 @@ class _ChangetransactionPinOtpPageState
                                       Text(
                                         '($formattedTime)',
                                         style: GoogleFonts.lato(
-                                          color: const Color(0xff6E6E6E),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,
                                         ),

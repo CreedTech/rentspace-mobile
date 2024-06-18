@@ -116,7 +116,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
           verifyAccountError =
               'Account verification failed. Please check the details and try again';
         });
-        _updateMessage();
+        // _updateMessage();
         // if (context.mounted) {
         //   customErrorDialog(context, 'Error!', "Invalid account number");
         // }
@@ -130,13 +130,14 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
         _bankAccountName = "";
         isChecking = false;
         hasError = false;
-        verifyAccountError = "";
+        verifyAccountError =
+            "Account verification failed. Please check the details and try again";
       });
       _updateMessage();
 
-      if (context.mounted) {
-        customErrorDialog(context, 'Error', 'Something Went Wrong');
-      }
+      // if (context.mounted) {
+      //   customErrorDialog(context, 'Error', 'Something Went Wrong');
+      // }
 
       print(
           'Request failed with status: ${response.statusCode}, ${response.body}');
@@ -197,6 +198,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
@@ -218,7 +220,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                     Text(
                       'No internet Connection',
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -229,7 +231,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
@@ -261,7 +263,6 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                             noInternetConnectionScreen(context);
                             setState(() => isAlertSet = true);
                           }
-                          // fetchUserData();
                         },
                         child: Text(
                           "Try Again",
@@ -311,9 +312,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
 
     final accountNumber = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
         fontWeight: FontWeight.w400,
       ),
@@ -366,10 +367,10 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: GestureDetector(
@@ -378,10 +379,10 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
           },
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(
                 width: 4.h,
@@ -389,7 +390,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
               Text(
                 'Withdraw',
                 style: GoogleFonts.lato(
-                  color: colorBlack,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w500,
                   fontSize: 24,
                 ),
@@ -421,7 +422,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                             style: GoogleFonts.lato(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                           const SizedBox(
@@ -432,7 +433,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                             style: GoogleFonts.lato(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                           const SizedBox(
@@ -440,10 +441,10 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                           ),
                           Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.info_outline,
                                 size: 24,
-                                color: colorBlack,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                               const SizedBox(
                                 width: 5,
@@ -461,7 +462,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                         text:
                                             'Please add an account that is linked to your BVN',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w400,
                                           fontSize: 12,
                                         ),
@@ -490,7 +493,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                       child: Text(
                                         'Select Bank',
                                         style: GoogleFonts.lato(
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 12),
                                       ),
@@ -502,8 +507,8 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                           _bankAccountName = '';
                                         });
                                         showModalBottomSheet(
-                                          backgroundColor:
-                                              const Color(0xffF6F6F8),
+                                          backgroundColor: Theme.of(context)
+                                              .scaffoldBackgroundColor,
                                           isDismissible: false,
                                           enableDrag: true,
                                           isScrollControlled: true,
@@ -534,9 +539,13 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                       // autovalidateMode:
                                       //     AutovalidateMode.onUserInteraction,
                                       enableSuggestions: true,
-                                      cursorColor: colorBlack,
+                                      cursorColor:
+                                          Theme.of(context).colorScheme.primary,
                                       style: GoogleFonts.lato(
-                                          color: colorBlack, fontSize: 14),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          fontSize: 14),
 
                                       controller: _bankController,
                                       textAlignVertical:
@@ -581,10 +590,12 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                             // Ensure the image fits inside the circle
                                           ),
                                         ),
-                                        suffixIcon: const Icon(
+                                        suffixIcon: Icon(
                                           Icons.keyboard_arrow_down,
                                           size: 24,
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                         filled: false,
                                         fillColor: Colors.transparent,
@@ -614,7 +625,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                       child: Text(
                                         'Account Number',
                                         style: GoogleFonts.lato(
-                                            color: colorBlack,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 12),
                                       ),
@@ -638,7 +651,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                             decoration: BoxDecoration(
                                               color: const Color(0xffEEF8FF),
                                               borderRadius:
-                                                  BorderRadius.circular(15),
+                                                  BorderRadius.circular(5),
                                             ),
                                             child: Row(
                                               children: [
@@ -689,7 +702,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                           decoration: BoxDecoration(
                                             color: Colors.red.withOpacity(0.2),
                                             borderRadius:
-                                                BorderRadius.circular(15),
+                                                BorderRadius.circular(5),
                                           ),
                                           child: Text(
                                             verifyAccountError,
@@ -715,7 +728,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                           decoration: BoxDecoration(
                                             color: const Color(0xffEEF8FF),
                                             borderRadius:
-                                                BorderRadius.circular(15),
+                                                BorderRadius.circular(5),
                                           ),
                                           child: Text(
                                             _bankAccountName.capitalize!,
@@ -774,7 +787,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
     // Perform additional actions based on the selected bank
     selectedBankCode = selectedCode;
     selectedBankName = selectedBank;
-    print('Bank selected in MyApp: $selectedBank');
+    // print('Bank selected in MyApp: $selectedBank');
     // You can add more actions here
   }
 }
@@ -846,7 +859,7 @@ class _BankSelectionState extends State<BankSelection> {
       heightFactor: 0.8,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Padding(
@@ -862,7 +875,7 @@ class _BankSelectionState extends State<BankSelection> {
                       Text(
                         'Select Bank',
                         style: GoogleFonts.lato(
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.w500,
                             fontSize: 24),
                       ),
@@ -870,10 +883,10 @@ class _BankSelectionState extends State<BankSelection> {
                           onTap: () {
                             Navigator.of(context).pop();
                           },
-                          child: const Icon(
+                          child: Icon(
                             Icons.close,
                             size: 24,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                           )),
                     ],
                   ),
@@ -881,10 +894,12 @@ class _BankSelectionState extends State<BankSelection> {
                     height: 18,
                   ),
                   Container(
-                    color: const Color(0xffEBEBEB),
+                    color: Theme.of(context).canvasColor,
                     child: TextFormField(
-                      style: GoogleFonts.lato(color: colorBlack, fontSize: 14),
-                      cursorColor: colorBlack,
+                      style: GoogleFonts.lato(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 14),
+                      cursorColor: Theme.of(context).colorScheme.primary,
                       controller: _searchController,
                       onChanged: (query) => _filterBanks(query),
                       // onChanged:
@@ -903,9 +918,9 @@ class _BankSelectionState extends State<BankSelection> {
                       decoration: InputDecoration(
                         filled: false,
                         contentPadding: const EdgeInsets.all(3),
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Icons.search_outlined,
-                          color: colorBlack,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 24,
                         ),
                         // suffixIcon: _searchController.text.isNotEmpty
@@ -917,9 +932,10 @@ class _BankSelectionState extends State<BankSelection> {
                         suffixIcon: _searchController.text
                                 .isNotEmpty // Show clear button only when typing
                             ? IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Iconsax.close_circle5,
                                   size: 18,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                                 onPressed: () {
                                   FocusScope.of(context).unfocus();
@@ -953,8 +969,8 @@ class _BankSelectionState extends State<BankSelection> {
                           borderSide:
                               const BorderSide(color: Colors.red, width: 1.0),
                         ),
-                        hintStyle: const TextStyle(
-                          color: colorBlack,
+                        hintStyle: GoogleFonts.lato(
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
@@ -976,8 +992,7 @@ class _BankSelectionState extends State<BankSelection> {
                     final bankEntry = filteredBankEntries[idx];
                     String bankCode = filteredBankEntries[idx].key;
                     String bankName = filteredBankEntries[idx].value;
-                    print('bankName');
-                    print(bankName);
+
                     // final bankName =
                     //     filteredBanks(
                     //             searchQuery)[
@@ -1010,7 +1025,9 @@ class _BankSelectionState extends State<BankSelection> {
                                   style: GoogleFonts.lato(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
-                                      color: colorBlack),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
                                 ),
                               ),
                               onTap: () {
@@ -1024,11 +1041,11 @@ class _BankSelectionState extends State<BankSelection> {
                             ),
                           );
                         }),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Divider(
                             thickness: 1,
-                            color: Color(0xffC9C9C9),
+                            color: Theme.of(context).dividerColor,
                             height: 1,
                           ),
                         ),

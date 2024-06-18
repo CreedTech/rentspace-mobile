@@ -197,7 +197,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       cursorColor: Theme.of(context).primaryColor,
       controller: _fullNameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.name,
@@ -248,7 +248,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       cursorColor: Theme.of(context).primaryColor,
       controller: _employerController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.text,
@@ -299,7 +299,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       controller: _emailController,
@@ -351,7 +351,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
 
@@ -405,7 +405,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
       cursorColor: Theme.of(context).primaryColor,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
 
@@ -461,7 +461,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       controller: _phoneNumberController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validatePhone,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.phone,
@@ -515,7 +515,7 @@ class _KYCFormPageState extends State<KYCFormPage> {
       controller: _landlordNumberController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateLandlordPhone,
-      style: TextStyle(
+      style: GoogleFonts.lato(
         color: Theme.of(context).primaryColor,
       ),
       keyboardType: TextInputType.phone,
@@ -1567,7 +1567,7 @@ Widget widgetOption(
             alignment: Alignment.center,
             child: Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style:  GoogleFonts.lato(fontWeight: FontWeight.bold),
             ),
           ),
           Row(

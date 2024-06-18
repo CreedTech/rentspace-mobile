@@ -448,13 +448,13 @@
 //               //                                             horizontal: 40,
 //               //                                             vertical: 15),
 //               //                                         textStyle:
-//               //                                             const TextStyle(
+//               //                                             const GoogleFonts.lato(
 //               //                                                 color: brandFour,
 //               //                                                 fontSize: 13),
 //               //                                       ),
 //               //                                       child: const Text(
 //               //                                         "Yes",
-//               //                                         style: TextStyle(
+//               //                                         style: GoogleFonts.lato(
 //               //                                           color: Colors.white,
 //               //                                           fontWeight:
 //               //                                               FontWeight.w700,
@@ -487,13 +487,13 @@
 //               //                                             horizontal: 40,
 //               //                                             vertical: 15),
 //               //                                         textStyle:
-//               //                                             const TextStyle(
+//               //                                             const GoogleFonts.lato(
 //               //                                                 color: brandFour,
 //               //                                                 fontSize: 13),
 //               //                                       ),
 //               //                                       child: const Text(
 //               //                                         "No",
-//               //                                         style: TextStyle(
+//               //                                         style: GoogleFonts.lato(
 //               //                                           color: Colors.white,
 //               //                                           fontWeight:
 //               //                                               FontWeight.w700,

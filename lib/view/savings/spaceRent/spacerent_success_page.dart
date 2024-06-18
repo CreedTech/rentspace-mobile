@@ -73,12 +73,15 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                       children: [
                         Image.asset(
                           'assets/icons/house.png',
-                          height: 56.h,
+                          height: 56,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 24.5.h, bottom: 12.h),
+                          padding: EdgeInsets.only(top: 24.5.h, bottom: 12.h,left: 16,right: 16),
                           child: Text(
                             widget.rentName.capitalize!,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.lato(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
@@ -142,9 +145,9 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                       padding: const EdgeInsets.symmetric(vertical: 60),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(
-                        color: colorWhite,
-                        borderRadius: BorderRadius.only(
+                      decoration:  BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                         ),
@@ -168,7 +171,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                                   style: GoogleFonts.lato(
                                     fontSize: 24,
                                     fontWeight: FontWeight.w700,
-                                    color: brandOne,
+                                    color: Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                                 SizedBox(
@@ -180,7 +183,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                                   style: GoogleFonts.lato(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
-                                    color: colorDark,
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ],

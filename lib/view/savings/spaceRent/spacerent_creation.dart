@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/main.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_confirmation.dart';
 
 import '../../../constants/colors.dart';
@@ -272,6 +273,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
             elevation: 0.0,
             alignment: Alignment.bottomCenter,
@@ -293,7 +295,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                     Text(
                       'No internet Connection',
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
@@ -304,7 +306,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                       "Uh-oh! It looks like you're not connected. Please check your connection and try again.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                          color: brandOne,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
@@ -570,14 +572,16 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
     final rentName = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _rentNameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateName,
       // update the state variable when the text changes
       // onChanged: (text) => setState(() => _nameValue = text),
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       keyboardType: TextInputType.text,
       inputFormatters: const [],
       decoration: InputDecoration(
@@ -591,8 +595,10 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -601,8 +607,10 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -642,7 +650,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         setState(() => _amountValue = text);
       },
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       keyboardType: TextInputType.number,
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
@@ -656,8 +666,10 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -666,8 +678,10 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -677,7 +691,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         ),
         prefixText: "₦ ",
         prefixStyle: GoogleFonts.roboto(
-          color: Colors.black,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? colorWhite
+              : Colors.black,
           fontSize: 13,
           fontWeight: FontWeight.w600,
         ),
@@ -696,7 +712,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       cursorColor: Theme.of(context).primaryColor,
       validator: validateEndDate,
       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       readOnly: true,
       // onTap: _showDatePicker,
       onTap: () => selectEndDate(context),
@@ -707,14 +725,16 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
-        suffixIcon: const Icon(
+        suffixIcon: Icon(
           Icons.calendar_today,
-          color: colorBlack,
+          color: Theme.of(context).colorScheme.primary,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -723,8 +743,10 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -737,11 +759,328 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       ),
     );
 
+    final frequencySelect = TextFormField(
+      onTap: () {
+        showModalBottomSheet(
+          isDismissible: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          context: context,
+          builder: (BuildContext context) {
+            return FractionallySizedBox(
+              heightFactor: 0.45,
+              child: Container(
+                // height: 350,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(19)),
+                child: ListView(
+                  children: [
+                    Text(
+                      'Select Frequency',
+                      style: GoogleFonts.lato(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).canvasColor,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: intervalLabels.length,
+                        itemBuilder: (context, idx) {
+                          return Column(
+                            children: [
+                              ListTileTheme(
+                                contentPadding: const EdgeInsets.only(
+                                    left: 13.0, right: 13.0, top: 4, bottom: 4),
+                                selectedColor:
+                                    Theme.of(context).colorScheme.secondary,
+                                child: ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        child: Text(
+                                          intervalLabels[idx],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.lato(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  // selected: _selectedCarrier == name[idx],
+                                  onTap: () {
+                                    setState(() {
+                                      idSelected = true;
+                                    });
+
+                                    _intervalController.text =
+                                        intervalLabels[idx];
+                                    // });
+
+                                    Navigator.pop(
+                                      context,
+                                    );
+
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                              (idx != intervalLabels.length - 1)
+                                  ? Divider(
+                                      color: Theme.of(context).dividerColor,
+                                      height: 1,
+                                      indent: 13,
+                                      endIndent: 13,
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+      readOnly: true,
+      // autovalidateMode: AutovalidateMode.onUserInteraction,
+      enableSuggestions: true,
+      cursorColor: colorBlack,
+      style: GoogleFonts.lato(
+        color: Theme.of(context).colorScheme.primary,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+
+      controller: _intervalController,
+      textAlignVertical: TextAlignVertical.center,
+      // textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 1.0), // Change color to yellow
+        ),
+        filled: false,
+        fillColor: Colors.transparent,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+      ),
+      maxLines: 1,
+    );
+    final durationSelect = TextFormField(
+      onTap: () {
+        showModalBottomSheet(
+          isDismissible: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          context: context,
+          builder: (BuildContext context) {
+            return FractionallySizedBox(
+              heightFactor: 0.7,
+              child: Container(
+                // height: 350,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(19)),
+                child: ListView(
+                  children: [
+                    Text(
+                      'Select Duration',
+                      style: GoogleFonts.lato(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).canvasColor,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: durations.length,
+                        itemBuilder: (context, idx) {
+                          return Column(
+                            children: [
+                              ListTileTheme(
+                                contentPadding: const EdgeInsets.only(
+                                    left: 13.0, right: 13.0, top: 4, bottom: 4),
+                                selectedColor:
+                                    Theme.of(context).colorScheme.secondary,
+                                child: ListTile(
+                                  title: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        child: Text(
+                                          durations[idx],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.lato(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  // selected: _selectedCarrier == name[idx],
+                                  onTap: () {
+                                    setState(() {
+                                      idSelected = true;
+                                      _duration = int.parse(
+                                          durations[idx].split(' ')[0]);
+                                      // durationType = _intervalController.text;
+                                    });
+
+                                    _durationController.text = durations[idx];
+                                    // });
+
+                                    Navigator.pop(
+                                      context,
+                                    );
+
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                              (idx != durations.length - 1)
+                                  ? Divider(
+                                      color: Theme.of(context).dividerColor,
+                                      height: 1,
+                                      indent: 13,
+                                      endIndent: 13,
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+      readOnly: true,
+      // autovalidateMode: AutovalidateMode.onUserInteraction,
+      enableSuggestions: true,
+      cursorColor: colorBlack,
+      style: GoogleFonts.lato(
+        color: Theme.of(context).colorScheme.primary,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+
+      controller: _durationController,
+      textAlignVertical: TextAlignVertical.center,
+      // textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: brandOne, width: 1.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+              color: Colors.red, width: 1.0), // Change color to yellow
+        ),
+        filled: false,
+        fillColor: Colors.transparent,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+      ),
+      maxLines: 1,
+    );
+
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F8),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xffF6F6F8),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
         title: Row(
@@ -751,10 +1090,10 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                 resetCalculator();
                 Get.back();
               },
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             SizedBox(
@@ -763,7 +1102,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
             Text(
               'Create Space Rent',
               style: GoogleFonts.lato(
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.w500,
                 fontSize: 24,
               ),
@@ -802,7 +1141,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                     child: Text(
                                       'Space Rent Name',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),
@@ -823,7 +1164,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                     child: Text(
                                       'Rent Amount',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),
@@ -842,61 +1185,11 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 4, horizontal: 3),
                                     child: Text(
-                                      'Select Frequency',
-                                      style: GoogleFonts.lato(
-                                        color: colorBlack,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  CustomDropdown(
-                                    selectedStyle: GoogleFonts.lato(
-                                        color: colorBlack,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                    // hintText: 'Select frequency',
-                                    hintStyle: GoogleFonts.lato(fontSize: 12),
-                                    excludeSelected: true,
-                                    fillColor: Colors.transparent,
-                                    listItemStyle: GoogleFonts.lato(
-                                        color: colorBlack,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                    items: intervalLabels,
-                                    controller: _intervalController,
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                    fieldSuffixIcon: Icon(
-                                      Iconsax.arrow_down5,
-                                      size: 25.h,
-                                      color: colorBlack,
-                                    ),
-                                    onChanged: (String val) {
-                                      setState(() {
-                                        idSelected = true;
-                                        // durationType = _intervalController.text;
-                                        // durationType = _intervalController.text;
-                                      });
-                    
-                                      // print(val);
-                                    },
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 3),
-                                    child: Text(
                                       'Start Date',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),
@@ -915,47 +1208,73 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 4, horizontal: 3),
                                     child: Text(
-                                      'Select Duration',
+                                      'Select Frequency',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),
                                     ),
                                   ),
-                                  CustomDropdown(
-                                    selectedStyle: GoogleFonts.lato(
-                                        color: colorBlack,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                    // hintText: 'Select Duration',
-                                    hintStyle: GoogleFonts.lato(fontSize: 12),
-                                    excludeSelected: true,
-                                    fillColor: Colors.transparent,
-                                    listItemStyle: GoogleFonts.lato(
-                                        color: colorBlack,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                    items: durations,
-                                    controller: _durationController,
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                    fieldSuffixIcon: Icon(
-                                      Iconsax.arrow_down5,
-                                      size: 25.h,
-                                      color: colorBlack,
+                                  frequencySelect,
+                                  // CustomDropdown(
+                                  //   selectedStyle: GoogleFonts.lato(
+                                  //       color: Theme.of(context)
+                                  //           .colorScheme
+                                  //           .primary,
+                                  //       fontSize: 14,
+                                  //       fontWeight: FontWeight.w500),
+                                  //   // hintText: 'Select frequency',
+                                  //   hintStyle: GoogleFonts.lato(fontSize: 12),
+                                  //   excludeSelected: true,
+                                  //   fillColor: Colors.transparent,
+                                  //   listItemStyle: GoogleFonts.lato(
+                                  //       color: Theme.of(context)
+                                  //           .colorScheme
+                                  //           .primary,
+                                  //       fontSize: 14,
+                                  //       fontWeight: FontWeight.w500),
+                                  //   items: intervalLabels,
+                                  //   controller: _intervalController,
+                                  //   borderSide: BorderSide(
+                                  //       color: Theme.of(context).primaryColor),
+                                  //   fieldSuffixIcon: Icon(
+                                  //     Iconsax.arrow_down5,
+                                  //     size: 25.h,
+                                  //     color:
+                                  //         Theme.of(context).colorScheme.primary,
+                                  //   ),
+                                  //   onChanged: (String val) {
+                                  //     setState(() {
+                                  //       idSelected = true;
+                                  //     });
+                                  //   },
+                                  // ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 3),
+                                    child: Text(
+                                      'Select Duration',
+                                      style: GoogleFonts.lato(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                      ),
                                     ),
-                                    onChanged: (String val) {
-                                      print(val.split(' ')[0]);
-                                      setState(() {
-                                        idSelected = true;
-                                        _duration = int.parse(val.split(' ')[0]);
-                                        // durationType = _intervalController.text;
-                                      });
-                    
-                                      print(_duration);
-                                    },
                                   ),
+                                  durationSelect,
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -967,44 +1286,45 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                             ],
                           ),
                         ),
-                     const SizedBox(height: 30,),
+                        const SizedBox(
+                          height: 30,
+                        ),
                       ],
                     ),
                   ],
                 ),
-                   Align(
-                      alignment: Alignment.bottomCenter,
-                      child: CustomButton(
-                        text: 'Proceed',
-                        onTap: () async {
-                          FocusScope.of(context).unfocus();
-                          if (rentFormKey.currentState!.validate()) {
-                            await calculateRent(double.tryParse(_rentAmountController
-                                    .text
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CustomButton(
+                    text: 'Proceed',
+                    onTap: () async {
+                      FocusScope.of(context).unfocus();
+                      if (rentFormKey.currentState!.validate()) {
+                        await calculateRent(double.tryParse(
+                                _rentAmountController.text
                                     .trim()
                                     .replaceAll(',', '')))
-                                .then((value) {
-                              Get.to(
-                                SpaceRentConfirmationPage(
-                                  rentValue: _rentValue,
-                                  savingsValue: _savingValue,
-                                  startDate: _endDateController.text,
-                                  receivalDate: receivalDate,
-                                  durationType: _intervalController.text,
-                                  paymentCount: paymentCount,
-                                  rentName: _rentNameController.text,
-                                  duration: _duration,
-                                ),
-                              );
-                            });
-                          } else {
-                            customErrorDialog(context, "Invalid",
-                                "Please Fill All Required Fields");
-                          }
-                        },
-                      ),
-                    )
-                 
+                            .then((value) {
+                          Get.to(
+                            SpaceRentConfirmationPage(
+                              rentValue: _rentValue,
+                              savingsValue: _savingValue,
+                              startDate: _endDateController.text,
+                              receivalDate: receivalDate,
+                              durationType: _intervalController.text,
+                              paymentCount: paymentCount,
+                              rentName: _rentNameController.text,
+                              duration: _duration,
+                            ),
+                          );
+                        });
+                      } else {
+                        customErrorDialog(context, "Invalid",
+                            "Please Fill All Required Fields");
+                      }
+                    },
+                  ),
+                )
               ],
             ),
           ),
