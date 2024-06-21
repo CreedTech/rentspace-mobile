@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 // import 'package:iconsax/iconsax.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
-import 'package:rentspace/view/actions/change_password.dart';
+import 'package:rentspace/view/auth/password/change_password.dart';
 import 'package:rentspace/view/dashboard/withdrawal_account.dart';
 // import 'package:rentspace/view/actions/change_pin_intro.dart';
 // import 'package:rentspace/view/actions/forgot_pin_intro.dart';
@@ -89,14 +89,14 @@ class _SecurityState extends ConsumerState<Security> {
                         left: 17, top: 10, right: 17, bottom: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1), // Shadow color
-                          spreadRadius: 0.5, // Spread radius
-                          blurRadius: 2, // Blur radius
-                          offset: const Offset(0, 3), // Offset
-                        ),
-                      ],
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.grey.withOpacity(0.1), // Shadow color
+                      //     spreadRadius: 0.5, // Spread radius
+                      //     blurRadius: 2, // Blur radius
+                      //     offset: const Offset(0, 3), // Offset
+                      //   ),
+                      // ],
                       color: Theme.of(context).canvasColor,
                     ),
                     child: Column(

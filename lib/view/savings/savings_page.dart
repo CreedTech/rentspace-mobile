@@ -16,7 +16,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/user_controller.dart';
-import '../../controller/wallet_controller.dart';
+import '../../controller/wallet/wallet_controller.dart';
 
 class SavingsPage extends StatefulWidget {
   SavingsPage({

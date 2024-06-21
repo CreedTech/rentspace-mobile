@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:rentspace/view/actions/transaction_receipt.dart';
+import 'package:rentspace/view/receipts/transaction_receipt.dart';
 
 import '../../constants/colors.dart';
 import 'dashboard.dart';

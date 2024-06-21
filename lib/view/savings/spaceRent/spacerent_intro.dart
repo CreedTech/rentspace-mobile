@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
 // import 'package:rentspace/view/savings/spaceRent/spacerent_subscription.dart';
-import 'package:rentspace/view/terms_and_conditions.dart';
+import 'package:rentspace/view/terms_and_conditions/terms_and_conditions.dart';
 
 import '../../dashboard/dashboard.dart';
 
@@ -100,15 +100,15 @@ class _SpaceRentIntroState extends State<SpaceRentIntro> {
                 height: 70.h,
               ),
               // (Theme.of)
-              (themeChange.isSavedDarkMode())
-                  ? Image.asset(
-                      "assets/space_rent_intro_one.png",
-                      width: MediaQuery.of(context).size.width,
-                    )
-                  : Image.asset(
-                      "assets/space_rent_intro.png",
-                      width: MediaQuery.of(context).size.width,
-                    ),
+              // (themeChange.isSavedDarkMode())
+              //     ? Image.asset(
+              //         "assets/space_rent_intro_one.png",
+              //         width: MediaQuery.of(context).size.width,
+              //       )
+              //     : Image.asset(
+              //         "assets/space_rent_intro.png",
+              //         width: MediaQuery.of(context).size.width,
+              //       ),
               const SizedBox(
                 height: 70,
               ),

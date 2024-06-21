@@ -17,7 +17,7 @@ import 'package:pattern_formatter/pattern_formatter.dart';
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
-import '../../controller/wallet_controller.dart';
+import '../../controller/wallet/wallet_controller.dart';
 import 'transfer_confirmation_page.dart';
 
 class WithdrawContinuationPage extends StatefulWidget {

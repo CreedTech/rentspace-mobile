@@ -16,7 +16,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
-import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:rentspace/main.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_confirmation.dart';
 
@@ -24,7 +24,7 @@ import '../../../constants/colors.dart';
 import '../../../constants/widgets/custom_button.dart';
 import '../../../constants/widgets/custom_dialog.dart';
 import '../../../constants/widgets/custom_loader.dart';
-import '../../../controller/app_controller.dart';
+import '../../../controller/app/app_controller.dart';
 import '../../../controller/auth/user_controller.dart';
 
 class SpaceRentCreation extends ConsumerStatefulWidget {

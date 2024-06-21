@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:rentspace/controller/auth/user_controller.dart';
 
 import '../../../controller/rent/rent_controller.dart';
-import '../../actions/transaction_receipt.dart';
+import '../../receipts/transaction_receipt.dart';
 import 'spacerent_list.dart';
 
 class SpaceRentHistory extends StatefulWidget {
@@ -205,7 +205,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                             color:
                                 Theme.of(context).brightness == Brightness.dark
                                     ? const Color(0xffffffff)
-                                    : const Color(0xffEEF8FF),
+                                    : null,
                             height: 33.5.h,
                           ),
                           const SizedBox(
@@ -215,7 +215,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                             child: SizedBox(
                               width: 180,
                               child: Text(
-                                "Your interest history will be displayed here",
+                                "Your rent history will be displayed here",
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.lato(
                                   fontSize: 14,

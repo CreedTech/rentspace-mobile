@@ -13,7 +13,7 @@ import 'package:rentspace/model/user_details_model.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:rentspace/view/dashboard/withdraw_continuation_page.dart';
-import 'package:rentspace/view/login_page.dart';
+import 'package:rentspace/view/auth/registration/login_page.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/widgets/custom_dialog.dart';

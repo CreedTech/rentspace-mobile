@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_payment.dart';
-import 'package:rentspace/view/terms_and_conditions.dart';
+import 'package:rentspace/view/terms_and_conditions/terms_and_conditions.dart';
 
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';

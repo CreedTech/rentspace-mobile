@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rentspace/view/actions/referral_record.dart';
-import 'package:rentspace/view/actions/transaction_receipt.dart';
+import 'package:rentspace/view/referral/referral_record.dart';
+import 'package:rentspace/view/receipts/transaction_receipt.dart';
 import 'package:rentspace/view/dashboard/personal_details.dart';
 import 'package:rentspace/view/dashboard/withdraw_page.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
-import 'package:rentspace/view/signup_page.dart';
+import 'package:rentspace/view/auth/registration/signup_page.dart';
 import 'package:rentspace/view/utility/airtime.dart';
 import 'package:rentspace/view/utility/cable.dart';
 import 'package:rentspace/view/utility/data.dart';

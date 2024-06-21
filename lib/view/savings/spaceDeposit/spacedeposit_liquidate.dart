@@ -7,7 +7,7 @@ import 'package:rentspace/constants/colors.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/view/actions/onboarding_page.dart';
+import 'package:rentspace/view/onboarding/bvn_page.dart';
 
 import 'dart:async';
 import 'dart:math';

@@ -24,7 +24,7 @@ ThemeData LightThemeData() {
     // cardColor: colorWhite,
     primaryColorLight: Color(0xff4B4B4B),
     textSelectionTheme: const TextSelectionThemeData(
-      selectionColor: Color(0xffF6F6F8), // Color of the selection highlight
+      selectionColor: brandOne, // Color of the selection highlight
       // cursorColor: brandOne, // Color of the text cursor
       selectionHandleColor: brandOne,
     ),
@@ -34,7 +34,7 @@ ThemeData LightThemeData() {
       secondary: brandOne,
       primary: colorBlack,
       brightness: Brightness.light,
-      background: Colors.white,
+      background: brandOne,
     ),
   );
 }

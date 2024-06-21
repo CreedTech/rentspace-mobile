@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../constants/colors.dart';
-import '../FirstPage.dart';
+import '../onboarding/FirstPage.dart';
 
 class WithdrawalSuccessfulScreen extends StatefulWidget {
   const WithdrawalSuccessfulScreen({

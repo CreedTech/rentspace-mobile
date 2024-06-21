@@ -11,8 +11,8 @@ import 'package:rentspace/constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
-import '../../controller/utility_response_controller.dart';
-import '../../controller/wallet_controller.dart';
+import '../../controller/utility/utility_response_controller.dart';
+import '../../controller/wallet/wallet_controller.dart';
 // import 'package:http/http.dart' as http;
 
 import 'airtime_confirmation.dart';

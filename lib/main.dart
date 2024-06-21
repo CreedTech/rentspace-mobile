@@ -17,18 +17,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/theme.dart';
-import 'package:rentspace/constants/theme_services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rentspace/view/FirstPage.dart';
-import 'package:rentspace/view/actions/idle_page.dart';
+import 'package:rentspace/view/onboarding/FirstPage.dart';
+import 'package:rentspace/view/onboarding/idle_page.dart';
 import 'api/global_services.dart';
-import 'constants/component_constannt.dart';
+import 'constants/component_constant.dart';
 import 'controller/theme/theme_controller.dart';
 import 'core/helper/helper_routes.dart';
 import 'modules/initial_binding.dart';
 import 'theme/theme.dart';
-import 'view/splash_screen.dart';
+import 'view/onboarding/splash_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
 int id = 0;
@@ -232,7 +231,7 @@ void displayNotification(
       'Rentspace Notifications',
       priority: Priority.max,
       importance: Importance.max,
-    
+
       channelDescription: 'Notifications for rentspace activities',
       playSound: true,
 
@@ -245,8 +244,6 @@ void displayNotification(
             presentBanner: true,
             presentSound: true,
             presentBadge: true,
-            
-            
             interruptionLevel: InterruptionLevel.critical);
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
@@ -256,7 +253,7 @@ void displayNotification(
         notification.hashCode,
         notification.title,
         notification.body,
-        
+
         // notification.
         platformChannelSpecifics,
         payload: data.toString());
@@ -339,30 +336,49 @@ class _MyAppState extends State<MyApp> {
     setStatusBar();
     // ToastContext().init(context);
     // return Obx(() {
-      return SessionTimeoutManager(
-        userActivityDebounceDuration: const Duration(seconds: 1),
-        sessionConfig: sessionConfig,
-        sessionStateStream: sessionStateStream.stream,
-        child: MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: const TextScaler.linear(1)),
-          child: GetMaterialApp(
-            theme: CustomTheme.lightTheme, // CustomThemeData for Light Theme
-            darkTheme: CustomTheme.darkTheme,
-            themeMode: _themeController.themeStateFromHiveSettingBox,
-            debugShowCheckedModeBanner: false,
-            navigatorKey: _sessionNavigatorKey,
-            title: 'RentSpace',
-            initialBinding: InitialBinding(),
-            home: SplashScreen(
-              sessionStateStream: sessionStateStream,
-            ),
-            onGenerateRoute: RouterGenerator().generate,
-            onUnknownRoute: RouterGenerator.onUnknownRoute,
-            builder: EasyLoading.init(),
-          ),
+    return MediaQuery(
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1)),
+      child: GetMaterialApp(
+        theme: CustomTheme.lightTheme, // CustomThemeData for Light Theme
+        darkTheme: CustomTheme.darkTheme,
+        themeMode: _themeController.themeStateFromHiveSettingBox,
+        debugShowCheckedModeBanner: false,
+        navigatorKey: _sessionNavigatorKey,
+        title: 'RentSpace',
+        initialBinding: InitialBinding(),
+        home: SplashScreen(
+          sessionStateStream: sessionStateStream,
         ),
-      );
+        onGenerateRoute: RouterGenerator().generate,
+        onUnknownRoute: RouterGenerator.onUnknownRoute,
+        builder: EasyLoading.init(),
+      ),
+    );
+    // return SessionTimeoutManager(
+    //   userActivityDebounceDuration: const Duration(seconds: 1),
+    //   sessionConfig: sessionConfig,
+    //   sessionStateStream: sessionStateStream.stream,
+    //   child: MediaQuery(
+    //     data: MediaQuery.of(context)
+    //         .copyWith(textScaler: const TextScaler.linear(1)),
+    //     child: GetMaterialApp(
+    //       theme: CustomTheme.lightTheme, // CustomThemeData for Light Theme
+    //       darkTheme: CustomTheme.darkTheme,
+    //       themeMode: _themeController.themeStateFromHiveSettingBox,
+    //       debugShowCheckedModeBanner: false,
+    //       navigatorKey: _sessionNavigatorKey,
+    //       title: 'RentSpace',
+    //       initialBinding: InitialBinding(),
+    //       home: SplashScreen(
+    //         sessionStateStream: sessionStateStream,
+    //       ),
+    //       onGenerateRoute: RouterGenerator().generate,
+    //       onUnknownRoute: RouterGenerator.onUnknownRoute,
+    //       builder: EasyLoading.init(),
+    //     ),
+    //   ),
+    // );
     // });
   }
 }

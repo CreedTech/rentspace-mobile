@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,12 +10,11 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
-import 'package:rentspace/view/actions/contact_us.dart';
+import 'package:rentspace/view/contact/contact_us.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 // import 'package:rentspace/controller/rent_controller.dart';
 // import 'package:rentspace/controller/user_controller.dart';
 import 'package:rentspace/view/kyc/kyc_intro.dart';
-import 'package:rentspace/view/loan/loan_page.dart';
 import 'package:rentspace/view/portfolio/finance_health.dart';
 //import 'package:rentspace/view/savings/spaceRent/spacerent_history.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,6 +27,8 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../constants/widgets/separator.dart';
+import '../loan/loan_details.dart';
+import '../loan/loans_page.dart';
 // import '../kyc/kyc_form_page.dart';
 
 class PortfolioPage extends StatefulWidget {
@@ -99,12 +101,15 @@ class _PortfolioPageState extends State<PortfolioPage> {
         centerTitle: false,
         title: Row(
           children: [
-            Text(
-              'Portfolio',
-              style: GoogleFonts.lato(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+            Padding(
+              padding: EdgeInsets.only(left: 10.w),
+              child: Text(
+                'Portfolio',
+                style: GoogleFonts.lato(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
               ),
             ),
           ],
@@ -112,7 +117,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(ContactUsPage());
+              Get.to(const ContactUsPage());
             },
             child: Padding(
               padding: EdgeInsets.only(right: 23.w),
@@ -169,12 +174,19 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            const Icon(
-                              Iconsax.clock,
-                              color: colorWhite,
-                              size: 24,
-                              weight: 100,
-                            )
+                            GestureDetector(
+                              onTap: (double.parse(_loanAmount) > 0)
+                                  ? () {
+                                      Get.to(const LoansPage());
+                                    }
+                                  : null,
+                              child: const Icon(
+                                Iconsax.clock,
+                                color: colorWhite,
+                                size: 24,
+                                weight: 100,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -306,7 +318,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  if (double.parse(_loanAmount) > 0) {
+                                    Get.to(const LoanDetails());
+                                  }
+                                },
                                 child: Text(
                                   'Payment Info',
                                   textAlign: TextAlign.center,
@@ -667,7 +683,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                   .hasVerifiedKyc ==
                                               false)
                                           ? Get.to(const KYCIntroPage())
-                                          : Get.to(const LoanPage());
+                                          : Get.to(const LoansPage());
                               // Get.to(const ProfilePage());
                               // Navigator.pushNamed(context, RouteList.profile);
                             },

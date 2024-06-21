@@ -35,7 +35,6 @@ class ApiClient {
   /// Method to send data to backend, don't edit this code  *
   Future<http.Response> postData(String url, body) async {
     print('got to api client');
-    print(AppConstants.BASE_URL + url);
 
     try {
       final response = await http.post(

@@ -7,7 +7,7 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/core/helper/helper_route_path.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 
-import '../../FirstPage.dart';
+import '../../onboarding/FirstPage.dart';
 
 class SpaceRentSuccessPage extends StatefulWidget {
   const SpaceRentSuccessPage(

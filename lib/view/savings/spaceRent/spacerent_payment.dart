@@ -13,7 +13,7 @@ import 'dart:convert';
 import '../../../api/global_services.dart';
 import '../../../constants/app_constants.dart';
 import '../../../constants/widgets/custom_dialog.dart';
-import '../../FirstPage.dart';
+import '../../onboarding/FirstPage.dart';
 
 String fundedAmount = "0";
 var now = DateTime.now();

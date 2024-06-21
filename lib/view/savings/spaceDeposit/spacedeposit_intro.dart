@@ -100,19 +100,19 @@ class _SpaceDepositIntroState extends State<SpaceDepositIntro> {
             SizedBox(
               height: 70.h,
             ),
-            (themeChange.isSavedDarkMode())
-                ? Center(
-                    child: Image.asset(
-                      "assets/deposit_bg_dark.png",
-                      width: MediaQuery.of(context).size.width / 1.5,
-                    ),
-                  )
-                : Center(
-                    child: Image.asset(
-                      "assets/deposit_bg_white.png",
-                      width: MediaQuery.of(context).size.width / 1.5,
-                    ),
-                  ),
+            // (themeChange.isSavedDarkMode())
+            //     ? Center(
+            //         child: Image.asset(
+            //           "assets/deposit_bg_dark.png",
+            //           width: MediaQuery.of(context).size.width / 1.5,
+            //         ),
+            //       )
+            //     : Center(
+            //         child: Image.asset(
+            //           "assets/deposit_bg_white.png",
+            //           width: MediaQuery.of(context).size.width / 1.5,
+            //         ),
+            //       ),
 
             SizedBox(
               height: 85.h,

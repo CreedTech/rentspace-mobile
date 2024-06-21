@@ -18,13 +18,13 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:intl/intl.dart';
 // import 'package:rentspace/controller/app_controller.dart';
-import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:rentspace/view/utility/airtime_confirmation.dart';
 
 import '../../constants/widgets/custom_button.dart';
 import '../../constants/widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
-import '../../controller/utility_response_controller.dart';
+import '../../controller/utility/utility_response_controller.dart';
 
 class AirtimePage extends ConsumerStatefulWidget {
   const AirtimePage({super.key});

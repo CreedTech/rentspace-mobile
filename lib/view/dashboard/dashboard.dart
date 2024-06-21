@@ -28,13 +28,12 @@ import 'package:rentspace/constants/widgets/custom_loader.dart';
 // import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
-import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:rentspace/model/user_details_model.dart';
-import 'package:rentspace/view/FirstPage.dart';
-import 'package:rentspace/view/actions/contact_us.dart';
-import 'package:rentspace/view/actions/fund_wallet.dart';
+import 'package:rentspace/view/onboarding/FirstPage.dart';
+import 'package:rentspace/view/contact/contact_us.dart';
+import 'package:rentspace/view/wallet_funding/fund_wallet.dart';
 import 'package:rentspace/view/dashboard/all_activities.dart';
-import 'package:rentspace/constants/theme_services.dart';
 import 'package:get_storage/get_storage.dart';
 // import 'package:rentspace/view/dashboard/settings.dart';
 import 'package:rentspace/view/dashboard/transfer.dart';
@@ -58,10 +57,10 @@ import '../../core/helper/helper_route_path.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../provider/task_provider.dart';
-import '../actions/transaction_pin.dart';
-import '../actions/transaction_receipt.dart';
-import '../actions/transaction_receipt_dva.dart';
-import '../actions/transaction_receipt_transfer.dart';
+import '../auth/pin/transaction_pin.dart';
+import '../receipts/transaction_receipt.dart';
+import '../receipts/transaction_receipt_dva.dart';
+import '../receipts/transaction_receipt_transfer.dart';
 import 'withdraw_page.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
@@ -74,7 +73,6 @@ class Dashboard extends ConsumerStatefulWidget {
 }
 
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
-final themeChange = Get.put(ThemeServices());
 final UserController userController = Get.put(UserController());
 // final ActivitiesController activitiesController =
 //     Get.put(ActivitiesController());

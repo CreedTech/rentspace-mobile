@@ -22,8 +22,8 @@ import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/user_controller.dart';
-import '../../controller/wallet_controller.dart';
-import '../actions/onboarding_page.dart';
+import '../../controller/wallet/wallet_controller.dart';
+import '../onboarding/bvn_page.dart';
 import 'bank_select_overlay.dart';
 import 'package:http/http.dart' as http;
 

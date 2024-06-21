@@ -19,7 +19,7 @@ import 'package:intl/intl.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
-import 'package:rentspace/controller/wallet_controller.dart';
+import 'package:rentspace/controller/wallet/wallet_controller.dart';
 // import 'package:rentspace/controller/utility_controller.dart';
 // import 'package:rentspace/controller/withdrawal_controller.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';

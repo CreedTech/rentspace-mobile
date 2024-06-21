@@ -154,7 +154,7 @@ class _SpaceRentInterestHistoryPageState
                           'assets/icons/history_icon.png',
                           color: Theme.of(context).brightness == Brightness.dark
                               ? const Color(0xffffffff)
-                              : const Color(0xffEEF8FF),
+                              : null,
                           height: 33.5.h,
                         ),
                         const SizedBox(

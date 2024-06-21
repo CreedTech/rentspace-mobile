@@ -16,10 +16,10 @@ import 'package:rentspace/constants/colors.dart';
 // import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
-import 'package:rentspace/controller/wallet_controller.dart';
-import 'package:rentspace/view/FirstPage.dart';
+import 'package:rentspace/controller/wallet/wallet_controller.dart';
+import 'package:rentspace/view/onboarding/FirstPage.dart';
 // import 'package:rentspace/controller/user_controller.dart';
-import 'package:rentspace/view/actions/onboarding_page.dart';
+import 'package:rentspace/view/onboarding/bvn_page.dart';
 
 import 'dart:async';
 import 'dart:math';

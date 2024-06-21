@@ -9,16 +9,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
-import 'package:rentspace/controller/airtime_controller.dart';
+import 'package:rentspace/controller/utility/airtime_controller.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/widgets/custom_button.dart';
 import '../../constants/widgets/custom_dialog.dart';
 import '../../constants/widgets/custom_loader.dart';
-import '../../controller/app_controller.dart';
+import '../../controller/app/app_controller.dart';
 import '../../controller/auth/user_controller.dart';
-import '../../controller/utility_response_controller.dart';
-import '../../controller/wallet_controller.dart';
+import '../../controller/utility/utility_response_controller.dart';
+import '../../controller/wallet/wallet_controller.dart';
 
 class AirtimeConfirmation extends ConsumerStatefulWidget {
   const AirtimeConfirmation({

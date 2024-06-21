@@ -7,17 +7,18 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/view/credit_score/credit_score_page.dart';
 import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_interest_histories.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controller/rent/rent_controller.dart';
-import '../../actions/transaction_receipt.dart';
-import '../../actions/transaction_receipt_dva.dart';
-import '../../actions/transaction_receipt_transfer.dart';
+import '../../receipts/transaction_receipt.dart';
+import '../../receipts/transaction_receipt_dva.dart';
+import '../../receipts/transaction_receipt_transfer.dart';
 import '../../dashboard/dashboard.dart';
 import '../../kyc/kyc_intro.dart';
-import '../../loan/loan_page.dart';
 import 'spacerent_history.dart';
 
 class SpaceRentPage extends StatefulWidget {
@@ -91,7 +92,6 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
           ),
         ),
       ),
-      //
       body: Obx(() => Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: ListView(
@@ -446,7 +446,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 rentController
                                     .rentModel!.rents![widget.current].amount) *
                             100)
-                        .toInt() >=
+                        .toInt() <=
                     70))
                   SizedBox(
                     height: 20.h,
@@ -455,7 +455,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     rentController.rentModel!
                                         .rents![widget.current].amount) *
                                 100)
-                            .toInt() >=
+                            .toInt() <=
                         70)
                     ? Container(
                         width: MediaQuery.of(context).size.width,
@@ -503,26 +503,35 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                             const Spacer(),
                             Flexible(
                               flex: 2,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Image.asset(
-                                    'assets/coins.png',
-                                    width: 55,
-                                    height: 53,
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(
+                                        MediaQuery.of(context).size.width - 50,
+                                        40),
+                                    backgroundColor: brandTwo,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        10,
+                                      ),
+                                    ),
                                   ),
-                                  // SizedBox(
-                                  //   height: 8.h,
-                                  // ),
-                                  Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    size: 20,
+                                  onPressed: () {
+                                    forfeitInterestModal(
+                                        context, widget.current);
+                                  },
+                                  child: Text(
+                                    'Apply',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.lato(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ],
@@ -532,6 +541,85 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 SizedBox(
                   height: 20.h,
                 ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   // height: 92.h,
+                //   padding: const EdgeInsets.all(17),
+                //   decoration: BoxDecoration(
+                //     color: Theme.of(context).canvasColor,
+                //     borderRadius: BorderRadius.circular(10.r),
+                //   ),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Flexible(
+                //         flex: 4,
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Text(
+                //               'Credit Score',
+                //               style: GoogleFonts.lato(
+                //                 fontSize: 14,
+                //                 fontWeight: FontWeight.w600,
+                //                 color: Theme.of(context).colorScheme.primary,
+                //               ),
+                //             ),
+                //             SizedBox(
+                //               height: 3.h,
+                //             ),
+                //             Text(
+                //               'Your credit score result is ready. Click view to see your score. ',
+                //               style: GoogleFonts.lato(
+                //                 fontSize: 12,
+                //                 fontWeight: FontWeight.w400,
+                //                 color: Theme.of(context).colorScheme.primary,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       const Spacer(),
+                //       Flexible(
+                //         flex: 2,
+                //         child: Align(
+                //           alignment: Alignment.bottomCenter,
+                //           child: ElevatedButton(
+                //             style: ElevatedButton.styleFrom(
+                //               minimumSize: Size(
+                //                   MediaQuery.of(context).size.width - 50, 40),
+                //               backgroundColor: brandTwo,
+                //               elevation: 0,
+                //               shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(
+                //                   10,
+                //                 ),
+                //               ),
+                //             ),
+                //             onPressed: () {
+                //               Get.to(const CreditScorePage());
+                //             },
+                //             child: Text(
+                //               'View',
+                //               textAlign: TextAlign.center,
+                //               style: GoogleFonts.lato(
+                //                 color: Colors.white,
+                //                 fontSize: 12,
+                //                 fontWeight: FontWeight.w500,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -576,7 +664,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                               color: Theme.of(context).brightness ==
                                       Brightness.dark
                                   ? const Color(0xffffffff)
-                                  : const Color(0xffEEF8FF),
+                                  : null,
                               height: 33.5.h,
                             ),
                             const SizedBox(
@@ -812,7 +900,6 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
               ],
             ),
           )),
-
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }

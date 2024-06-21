@@ -11,7 +11,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
 import '../../constants/widgets/custom_dialog.dart';
-import '../home_page.dart';
+import '../onboarding/home_page.dart';
 
 String fundedAmount = "0";
 var now = DateTime.now();

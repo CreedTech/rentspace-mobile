@@ -6,9 +6,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/view/FirstPage.dart';
+import 'package:rentspace/view/onboarding/FirstPage.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
-import 'package:rentspace/view/loan/loan_page.dart';
 
 import '../../constants/colors.dart';
 
