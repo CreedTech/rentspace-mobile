@@ -352,8 +352,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
@@ -577,9 +576,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                              color: Colors.red,
-                                              width:
-                                                  1.0), // Change color to yellow
+                                              color: Colors.red, width: 1.0),
                                         ),
                                         prefixIcon: Padding(
                                           padding: const EdgeInsets.symmetric(

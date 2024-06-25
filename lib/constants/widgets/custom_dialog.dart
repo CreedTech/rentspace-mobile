@@ -1317,6 +1317,7 @@ void forfeitInterestModal(BuildContext context, int currentIndex) {
                         ),
                       ),
                       onPressed: () {
+                        Get.back();
                         Get.to(LoanApplicationPage(
                           current: currentIndex,
                         ));

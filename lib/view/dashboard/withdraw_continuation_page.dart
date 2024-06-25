@@ -266,8 +266,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -309,8 +308,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -357,8 +355,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 2.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 2.0),
         ),
         filled: false,
         fillColor: Colors.transparent,
@@ -629,8 +626,7 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                                     BorderRadius.circular(10),
                                                 borderSide: const BorderSide(
                                                     color: Colors.red,
-                                                    width:
-                                                        2.0), // Change color to yellow
+                                                    width: 2.0),
                                               ),
                                               prefixIcon: Padding(
                                                 padding:

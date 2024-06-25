@@ -781,8 +781,7 @@ class _CableScreenState extends State<CableScreen> {
                                 errorBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: const BorderSide(
-                                      color: Colors.red,
-                                      width: 1.0), // Change color to yellow
+                                      color: Colors.red, width: 1.0),
                                 ),
                                 prefixIcon: (_selectedImage != null)
                                     ? Padding(
@@ -917,8 +916,7 @@ class _CableScreenState extends State<CableScreen> {
                                   errorBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: const BorderSide(
-                                        color: Colors.red,
-                                        width: 1.0), // Change color to yellow
+                                        color: Colors.red, width: 1.0),
                                   ),
                                   filled: false,
                                   contentPadding: const EdgeInsets.all(14),
@@ -1050,8 +1048,7 @@ class _CableScreenState extends State<CableScreen> {
                                   errorBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
                                     borderSide: const BorderSide(
-                                        color: Colors.red,
-                                        width: 1.0), // Change color to yellow
+                                        color: Colors.red, width: 1.0),
                                   ),
                                   filled: false,
                                   contentPadding: const EdgeInsets.all(14),

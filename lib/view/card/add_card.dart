@@ -319,7 +319,7 @@
 //     //     ),
 //     //     errorBorder: const OutlineInputBorder(
 //     //       borderSide: BorderSide(
-//     //           color: Colors.red, width: 1.0), // Change color to yellow
+//     //           color: Colors.red, width: 1.0), 
 //     //     ),
 //     //     contentPadding: const EdgeInsets.all(14),
 //     //   ),
@@ -405,7 +405,7 @@
 //     //     ),
 //     //     errorBorder: const OutlineInputBorder(
 //     //       borderSide: BorderSide(
-//     //           color: Colors.red, width: 1.0), // Change color to yellow
+//     //           color: Colors.red, width: 1.0), 
 //     //     ),
 //     //     contentPadding: const EdgeInsets.all(14),
 //     //     filled: false,
@@ -522,7 +522,7 @@
 //         errorBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15.0),
 //           borderSide: const BorderSide(
-//               color: Colors.red, width: 1.0), // Change color to yellow
+//               color: Colors.red, width: 1.0), 
 //         ),
 //         filled: false,
 //         contentPadding: const EdgeInsets.all(14),
@@ -633,7 +633,7 @@
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide: const BorderSide(
 //                                 color: Colors.red,
-//                                 width: 1.0), // Change color to yellow
+//                                 width: 1.0), 
 //                           ),
 //                           labelText: 'Number',
 //                           hintText: 'XXXX XXXX XXXX XXXX',
@@ -667,7 +667,7 @@
 //                               borderRadius: BorderRadius.circular(15.0),
 //                               borderSide: const BorderSide(
 //                                   color: Colors.red,
-//                                   width: 1.0), // Change color to yellow
+//                                   width: 1.0), 
 //                             ),
 //                             hintStyle: GoogleFonts.lato(
 //                               color: Theme.of(context).primaryColor,
@@ -706,7 +706,7 @@
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide: const BorderSide(
 //                                 color: Colors.red,
-//                                 width: 1.0), // Change color to yellow
+//                                 width: 1.0), 
 //                           ),
 //                           labelText: 'CVV',
 //                           hintText: 'XXX',
@@ -740,7 +740,7 @@
 //                             borderRadius: BorderRadius.circular(15.0),
 //                             borderSide: const BorderSide(
 //                                 color: Colors.red,
-//                                 width: 1.0), // Change color to yellow
+//                                 width: 1.0), 
 //                           ),
 //                           labelText: 'Card Holder',
 //                           contentPadding: const EdgeInsets.all(14),

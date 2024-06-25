@@ -8,17 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
-import 'package:rentspace/view/credit_score/credit_score_page.dart';
-import 'package:rentspace/view/savings/spaceDeposit/spacedeposit_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_interest_histories.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controller/rent/rent_controller.dart';
 import '../../receipts/transaction_receipt.dart';
-import '../../receipts/transaction_receipt_dva.dart';
-import '../../receipts/transaction_receipt_transfer.dart';
-import '../../dashboard/dashboard.dart';
-import '../../kyc/kyc_intro.dart';
+
 import 'spacerent_history.dart';
 
 class SpaceRentPage extends StatefulWidget {
@@ -445,8 +440,8 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     .paidAmount /
                                 rentController
                                     .rentModel!.rents![widget.current].amount) *
-                            100)
-                        .toInt() <=
+                            100) 
+                        .toInt() >=
                     70))
                   SizedBox(
                     height: 20.h,
@@ -455,7 +450,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     rentController.rentModel!
                                         .rents![widget.current].amount) *
                                 100)
-                            .toInt() <=
+                            .toInt() >=
                         70)
                     ? Container(
                         width: MediaQuery.of(context).size.width,

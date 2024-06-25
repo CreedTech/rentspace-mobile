@@ -1099,7 +1099,7 @@
 //                             borderRadius: BorderRadius.circular(15),
 //                             borderSide: const BorderSide(
 //                                 color: Colors.red,
-//                                 width: 1.0), // Change color to yellow
+//                                 width: 1.0), 
 //                           ),
 //                           filled: false,
 //                           contentPadding: const EdgeInsets.all(14),
@@ -1276,7 +1276,7 @@
 //                                                   borderSide: const BorderSide(
 //                                                       color: Colors.red,
 //                                                       width:
-//                                                           2.0), // Change color to yellow
+//                                                           2.0), 
 //                                                 ),
 //                                                 filled: false,
 //                                                 contentPadding:
@@ -1866,7 +1866,7 @@
 //                                                     borderSide: const BorderSide(
 //                                                         color: Colors.red,
 //                                                         width:
-//                                                             2.0), // Change color to yellow
+//                                                             2.0), 
 //                                                   ),
 //                                                   filled: false,
 //                                                   contentPadding:
@@ -2110,7 +2110,7 @@
 //                                               borderSide: const BorderSide(
 //                                                   color: Colors.red,
 //                                                   width:
-//                                                       2.0), // Change color to yellow
+//                                                       2.0), 
 //                                             ),
 //                                             filled: false,
 //                                             contentPadding:
@@ -2397,7 +2397,7 @@
 //         errorBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15),
 //           borderSide: const BorderSide(
-//               color: Colors.red, width: 1.0), // Change color to yellow
+//               color: Colors.red, width: 1.0), 
 //         ),
 //         prefixText: "₦ ",
 //         prefixStyle: GoogleFonts.lato(
@@ -2455,7 +2455,7 @@
 //         errorBorder: OutlineInputBorder(
 //           borderRadius: BorderRadius.circular(15),
 //           borderSide: const BorderSide(
-//               color: Colors.red, width: 1.0), // Change color to yellow
+//               color: Colors.red, width: 1.0), 
 //         ),
 //         filled: false,
 //         contentPadding: const EdgeInsets.all(14),

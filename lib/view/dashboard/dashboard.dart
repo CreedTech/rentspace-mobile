@@ -92,7 +92,7 @@ String formattedDate = formatter.format(now);
 // String _isSet = "false";
 var dum1 = "".obs;
 String previousAnnouncementText = '';
-bool hideBalance = false;
+bool showBalance = true;
 int currentPos = 0;
 
 class _DashboardConsumerState extends ConsumerState<Dashboard> {
@@ -273,7 +273,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
     getConnectivity();
     // print("isLoading");
-    hideBalance = false;
+    showBalance = true;
     // print(userController.isLoading.value);
 
     greeting();
@@ -426,11 +426,11 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                         GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              hideBalance = !hideBalance;
+                                              showBalance = !showBalance;
                                             });
                                           },
                                           child: Icon(
-                                            hideBalance
+                                            showBalance
                                                 ? Iconsax.eye
                                                 : Iconsax.eye_slash,
                                             color: colorWhite,
@@ -440,7 +440,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                       ],
                                     ),
                                     Text(
-                                      hideBalance
+                                      showBalance
                                           ? nairaFormaet
                                               .format((selectedIndex ==
                                                           rentspaceProducts[0]

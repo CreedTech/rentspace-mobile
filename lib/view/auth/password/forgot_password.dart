@@ -49,8 +49,8 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide:  BorderSide(
-                        color: Theme.of(context).brightness == Brightness.dark
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
                 ? const Color.fromRGBO(189, 189, 189, 30)
                 : const Color.fromRGBO(189, 189, 189, 100),
           ),
@@ -61,16 +61,15 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide:  BorderSide(
-                       color: Theme.of(context).brightness == Brightness.dark
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
                 ? const Color.fromRGBO(189, 189, 189, 30)
                 : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -151,11 +150,11 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                   right: 0,
                   bottom: 0,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 40, horizontal: 24),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -194,7 +193,8 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                               child: Column(
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -202,7 +202,9 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                                         child: Text(
                                           'Email',
                                           style: GoogleFonts.lato(
-                                            color: Theme.of(context).colorScheme.primary,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
                                           ),

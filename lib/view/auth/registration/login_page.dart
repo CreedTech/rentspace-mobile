@@ -165,8 +165,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),

@@ -302,8 +302,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -897,8 +896,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle:
-                                                           GoogleFonts
-                                                              .lato(
+                                                          GoogleFonts.lato(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
@@ -915,8 +913,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle:
-                                                           GoogleFonts
-                                                              .lato(
+                                                          GoogleFonts.lato(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
@@ -933,8 +930,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle:
-                                                           GoogleFonts
-                                                              .lato(
+                                                          GoogleFonts.lato(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),
@@ -951,8 +947,7 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
                                                       width: 50,
                                                       height: 50,
                                                       textStyle:
-                                                           GoogleFonts
-                                                              .lato(
+                                                          GoogleFonts.lato(
                                                         fontSize: 25,
                                                         color: brandOne,
                                                       ),

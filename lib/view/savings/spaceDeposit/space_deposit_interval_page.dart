@@ -603,9 +603,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                       errorBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15),
                                         borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width:
-                                                2.0), // Change color to yellow
+                                            color: Colors.red, width: 2.0),
                                       ),
                                       filled: false,
                                       contentPadding: const EdgeInsets.all(14),
@@ -679,9 +677,7 @@ class _SpaceDepositIntervalPageState extends State<SpaceDepositIntervalPage> {
                                       errorBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(15),
                                         borderSide: const BorderSide(
-                                            color: Colors.red,
-                                            width:
-                                                2.0), // Change color to yellow
+                                            color: Colors.red, width: 2.0),
                                       ),
                                       filled: false,
                                       contentPadding: const EdgeInsets.all(14),

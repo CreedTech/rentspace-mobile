@@ -460,8 +460,7 @@ class _TransferPageState extends State<TransferPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -498,8 +497,7 @@ class _TransferPageState extends State<TransferPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -545,8 +543,7 @@ class _TransferPageState extends State<TransferPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
@@ -606,8 +603,7 @@ class _TransferPageState extends State<TransferPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         contentPadding: const EdgeInsets.all(14),
         filled: false,
@@ -1059,7 +1055,7 @@ class _TransferPageState extends State<TransferPage> {
                                                                             2.0),
                                                               ),
                                                               hintStyle:
-                                                                   GoogleFonts
+                                                                  GoogleFonts
                                                                       .lato(
                                                                 color:
                                                                     colorBlack,
@@ -1273,8 +1269,7 @@ class _TransferPageState extends State<TransferPage> {
                                     errorBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: const BorderSide(
-                                          color: Colors.red,
-                                          width: 1.0), // Change color to yellow
+                                          color: Colors.red, width: 1.0),
                                     ),
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.symmetric(

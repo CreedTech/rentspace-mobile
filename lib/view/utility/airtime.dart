@@ -465,23 +465,20 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         prefixIcon: (_selectedImage != null)
             ? Padding(
                 padding: const EdgeInsets.only(right: 10, left: 15),
                 child: CircleAvatar(
-                  radius: 14, // Adjust the radius as needed
-                  backgroundColor: Colors
-                      .transparent, // Ensure the background is transparent
+                  radius: 14,
+                  backgroundColor: Colors.transparent,
                   child: ClipOval(
                     child: Image.asset(
                       _selectedImage!,
                       width: 28,
                       height: 28,
-                      fit: BoxFit
-                          .cover, // Ensure the image fits inside the circle
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -762,9 +759,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                              color: Colors.red,
-                                              width:
-                                                  1.0), // Change color to yellow
+                                              color: Colors.red, width: 1.0),
                                         ),
                                         prefixText: "₦ ",
                                         prefixStyle: GoogleFonts.roboto(
@@ -938,9 +933,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           borderSide: const BorderSide(
-                                              color: Colors.red,
-                                              width:
-                                                  1.0), // Change color to yellow
+                                              color: Colors.red, width: 1.0),
                                         ),
                                         filled: false,
                                         contentPadding:

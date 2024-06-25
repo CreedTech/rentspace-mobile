@@ -57,10 +57,9 @@ Future<void> main() async {
     await Hive.initFlutter();
     // // // // // // // // print('Hive Intialized');
   }
-  // await openHiveBox('userInfo');
   await openHiveBox('dataBundles');
   await openHiveBox('settings');
-  // Get.put(UserController());
+  await openHiveBox('loanFormData');
   //widgets initializing
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -182,7 +181,6 @@ Future<void> initNotifications() async {
     android: initializationSettingsAndroid,
     iOS: initializationSettingsIOS,
   );
-  // await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onDidReceiveNotificationResponse:
@@ -190,23 +188,8 @@ Future<void> initNotifications() async {
     switch (notificationResponse.notificationResponseType) {
       case NotificationResponseType.selectedNotification:
         selectNotificationStream.add(notificationResponse.payload);
-        // Get.to(const NotificationsPage());
-        // // // // // // // // print("onMessageOpened here: ${notificationResponse.payload}");
-        // // // // // // // // print('payload before routing');
-        // // // // // // // // // print(notificationResponse.payload);
+
         Get.to(const FirstPage());
-        // Get.to(NewNotificationPage(
-        //     message: notificationResponse.payload));
-        // Get.to(SettingsPage());
-        // Navigator.push(
-        //     _navigatorKey.currentState!.context,
-        //     MaterialPageRoute(
-        //       builder: (context) => FirstPage(),
-        //       //  NewNotificationPage(
-        //       //   message: notificationResponse.payload!,
-        //       // ),
-        //       // settings: const RouteSettings(name: newNotification),
-        //     ));
 
         break;
       case NotificationResponseType.selectedNotificationAction:
@@ -290,8 +273,6 @@ class _MyAppState extends State<MyApp> {
   final _sessionNavigatorKey = GlobalKey<NavigatorState>();
   NavigatorState get _sessionNavigator => _sessionNavigatorKey.currentState!;
 
-  /// Make this stream available throughout the widget tree with with any state management library
-  /// like bloc, provider, GetX, ..
   final sessionStateStream = StreamController<SessionState>();
 
   @override
@@ -355,30 +336,6 @@ class _MyAppState extends State<MyApp> {
         builder: EasyLoading.init(),
       ),
     );
-    // return SessionTimeoutManager(
-    //   userActivityDebounceDuration: const Duration(seconds: 1),
-    //   sessionConfig: sessionConfig,
-    //   sessionStateStream: sessionStateStream.stream,
-    //   child: MediaQuery(
-    //     data: MediaQuery.of(context)
-    //         .copyWith(textScaler: const TextScaler.linear(1)),
-    //     child: GetMaterialApp(
-    //       theme: CustomTheme.lightTheme, // CustomThemeData for Light Theme
-    //       darkTheme: CustomTheme.darkTheme,
-    //       themeMode: _themeController.themeStateFromHiveSettingBox,
-    //       debugShowCheckedModeBanner: false,
-    //       navigatorKey: _sessionNavigatorKey,
-    //       title: 'RentSpace',
-    //       initialBinding: InitialBinding(),
-    //       home: SplashScreen(
-    //         sessionStateStream: sessionStateStream,
-    //       ),
-    //       onGenerateRoute: RouterGenerator().generate,
-    //       onUnknownRoute: RouterGenerator.onUnknownRoute,
-    //       builder: EasyLoading.init(),
-    //     ),
-    //   ),
-    // );
-    // });
+
   }
 }

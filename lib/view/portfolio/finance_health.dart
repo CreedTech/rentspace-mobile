@@ -171,7 +171,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
       controller: _incomeController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateIncome,
-      style:  GoogleFonts.lato(
+      style: GoogleFonts.lato(
         color: Colors.black,
       ),
       keyboardType: TextInputType.number,
@@ -208,8 +208,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(
-              color: Colors.red, width: 1.0), // Change color to yellow
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
         filled: false,
         contentPadding: const EdgeInsets.all(14),
@@ -237,7 +236,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
             color: Theme.of(context).primaryColor,
           ),
         ),
-        title:  Text(
+        title: Text(
           'Finance Health',
           style: GoogleFonts.lato(
             color: brandOne,
