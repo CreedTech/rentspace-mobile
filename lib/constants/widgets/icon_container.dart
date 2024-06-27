@@ -37,7 +37,7 @@ class IconsContainer extends StatelessWidget {
             Text(
               IconsName,
               style: GoogleFonts.lato(
-                color: colorBlack,
+                color: Theme.of(context).colorScheme.primary,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),

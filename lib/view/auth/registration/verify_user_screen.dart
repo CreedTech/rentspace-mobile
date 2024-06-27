@@ -171,25 +171,25 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
     );
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xffFAFAFA),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back_ios,
             size: 27,
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Email Verification',
           style: GoogleFonts.lato(
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.w500,
             fontSize: 24,
           ),
@@ -239,7 +239,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   child: Text(
                                     'Enter OTP',
                                     style: GoogleFonts.lato(
-                                      color: Theme.of(context).primaryColor,
+                                      color: Theme.of(context).colorScheme.secondary,
                                       fontWeight: FontWeight.w700,
                                       fontSize: 20,
                                       // fontFamily: "DefaultFontFamily",
@@ -250,7 +250,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   'One-Time Password sent to your email \n ${widget.email}',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
-                                    color: const Color(0xff4E4B4B),
+                                    color: Theme.of(context).primaryColorLight,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14,
                                   ),
@@ -280,7 +280,9 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                     TextSpan(
                                       text: "Didn’t receive code? ",
                                       style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400),
                                     ),

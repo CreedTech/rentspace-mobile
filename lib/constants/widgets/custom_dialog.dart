@@ -1195,7 +1195,7 @@ Future<dynamic> insufficientFundsDialog(BuildContext context) {
                     height: 14,
                   ),
                   Text(
-                    'You need to fund your wallet to perform this transaction.',
+                    'Please fund your space wallet account and try again.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                       color: Theme.of(context).colorScheme.primary,

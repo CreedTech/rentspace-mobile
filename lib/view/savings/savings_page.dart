@@ -675,9 +675,9 @@ class _SavingsPageState extends State<SavingsPage> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          trailing: const Icon(
+                          trailing:  Icon(
                             Iconsax.arrow_right_3,
-                            color: colorBlack,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 20,
                           ),
                         ),

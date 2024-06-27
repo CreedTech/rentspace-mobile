@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/widgets/custom_button.dart';
+import 'package:rentspace/view/credit_score/contest_result_page.dart';
+import 'package:rentspace/view/credit_score/rating_breakdown_page.dart';
 import 'package:rentspace/view/loan/available_loans_page.dart';
 
 import '../dashboard/dashboard.dart';
@@ -207,7 +209,9 @@ class _CreditScorePageState extends State<CreditScorePage> {
                             minVerticalPadding: 0,
                             // horizontalTitleGap: 0,
                             minLeadingWidth: 0,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(const ContestResultPage());
+                            },
                             title: Text(
                               "Contest Result",
                               style: GoogleFonts.lato(
@@ -239,7 +243,9 @@ class _CreditScorePageState extends State<CreditScorePage> {
                             minVerticalPadding: 0,
                             // horizontalTitleGap: 0,
                             minLeadingWidth: 0,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(const RatingbreakdownPage());
+                            },
                             title: Text(
                               'See Breakdown',
                               style: GoogleFonts.lato(

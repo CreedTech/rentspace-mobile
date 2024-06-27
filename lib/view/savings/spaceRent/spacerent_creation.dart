@@ -869,7 +869,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       readOnly: true,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
         color: Theme.of(context).colorScheme.primary,
         fontSize: 14,
@@ -1027,7 +1027,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       readOnly: true,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       style: GoogleFonts.lato(
         color: Theme.of(context).colorScheme.primary,
         fontSize: 14,

@@ -67,19 +67,21 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     //password field
     final password = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: newPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -88,8 +90,10 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -107,7 +111,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           },
           child: Icon(
             obscureText ? Iconsax.eye_slash : Iconsax.eye,
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
             size: 24,
           ),
         ),
@@ -118,19 +122,21 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
     );
     final confirmPassword = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: repeatPasswordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       style: GoogleFonts.lato(
-        color: colorBlack,
+        color: Theme.of(context).colorScheme.primary,
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -139,8 +145,10 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+          borderSide: BorderSide(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color.fromRGBO(189, 189, 189, 30)
+                : const Color.fromRGBO(189, 189, 189, 100),
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -158,7 +166,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
           },
           child: Icon(
             obscureText ? Iconsax.eye_slash : Iconsax.eye,
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
             size: 24,
           ),
         ),
@@ -237,9 +245,9 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                       const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: colorWhite,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).canvasColor,
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
@@ -254,7 +262,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                             'Create New Password',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: colorBlack,
+                              color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w500,
                               fontSize: 24,
                             ),
@@ -262,7 +270,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                           Text(
                             'Email verified successfully!\nCreate new password to gain access to your account.',
                             style: GoogleFonts.lato(
-                              color: const Color(0xff4B4B4B),
+                              color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                               // fontFamily: "DefaultFontFamily",
@@ -284,7 +292,9 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                                       child: Text(
                                         'Password',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
                                         ),
@@ -305,7 +315,9 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                                       child: Text(
                                         'Confirm Password',
                                         style: GoogleFonts.lato(
-                                          color: colorBlack,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14,
                                         ),

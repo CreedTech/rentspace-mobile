@@ -7,6 +7,7 @@ ThemeData DarkThemeData() {
     primaryColor: Colors.white,
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xff1C1C1C),
+      surfaceTintColor: Colors.transparent,
     ),
     scaffoldBackgroundColor: const Color(0xff1C1C1C),
     unselectedWidgetColor: Colors.white,
@@ -15,7 +16,7 @@ ThemeData DarkThemeData() {
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
-     textSelectionTheme: const TextSelectionThemeData(
+    textSelectionTheme: const TextSelectionThemeData(
       selectionColor: colorWhite, // Color of the selection highlight
       // cursorColor: brandOne, // Color of the text cursor
       selectionHandleColor: colorWhite,
@@ -27,7 +28,7 @@ ThemeData DarkThemeData() {
       background: brandTwo,
     ),
     dividerColor: const Color(0xff414141),
-    canvasColor: const Color(0xff282828), 
+    canvasColor: const Color(0xff282828),
     cardColor: const Color.fromRGBO(255, 255, 255, 0.05),
     primaryColorLight: const Color(0xffD6D6D6),
   );

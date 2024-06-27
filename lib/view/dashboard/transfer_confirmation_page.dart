@@ -15,7 +15,6 @@ import '../../constants/widgets/custom_loader.dart';
 import '../../controller/app/app_controller.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/wallet/wallet_controller.dart';
-import '../sucess/withdrawal_success_screen.dart';
 
 class TransferConfirmationPage extends ConsumerStatefulWidget {
   const TransferConfirmationPage(

@@ -8,10 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/view/loan/loan_details.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_interest_histories.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controller/rent/rent_controller.dart';
+import '../../credit_score/credit_score_page.dart';
 import '../../receipts/transaction_receipt.dart';
 
 import 'spacerent_history.dart';
@@ -99,7 +101,11 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                         Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: const Color(0xff278210),
+                            color: (rentController.rentModel!
+                                        .rents![widget.current].completed ==
+                                    false)
+                                ? const Color(0xff278210)
+                                : Color(0xff556750),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Stack(
@@ -132,13 +138,43 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          '${rentController.rentModel!.rents![widget.current].rentName.capitalizeFirst!} Balance',
-                                          style: GoogleFonts.lato(
-                                            fontSize: 12,
-                                            color: colorWhite,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(
+                                              flex: 4,
+                                              child: Text(
+                                                '${rentController.rentModel!.rents![widget.current].rentName.capitalizeFirst!} Balance',
+                                                style: GoogleFonts.lato(
+                                                  fontSize: 12,
+                                                  color: colorWhite,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                            if ((rentController
+                                                    .rentModel!
+                                                    .rents![widget.current]
+                                                    .completed ==
+                                                true))
+                                              Flexible(
+                                                flex: 4,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: 15.w),
+                                                  child: Text(
+                                                    'Paid to Landlord',
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 12,
+                                                      color: colorWhite,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
                                         ),
                                         Text(
                                           nairaFormaet
@@ -162,8 +198,13 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                             padding: EdgeInsets.only(
                                                 left: 0, right: 19.w),
                                             animateFromLastPercent: true,
-                                            backgroundColor:
-                                                const Color(0xff134107),
+                                            backgroundColor: (rentController
+                                                        .rentModel!
+                                                        .rents![widget.current]
+                                                        .completed ==
+                                                    false)
+                                                ? const Color(0xff134107)
+                                                : colorWhite,
                                             trailing: Text(
                                               ' ${((rentController.rentModel!.rents![widget.current].paidAmount / rentController.rentModel!.rents![widget.current].amount) * 100).toInt()}%',
                                               style: GoogleFonts.lato(
@@ -226,7 +267,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                width: 106.w,
+                                                width: 100.w,
                                                 child: Text(
                                                   nairaFormaet.format(
                                                       rentController
@@ -271,7 +312,14 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                 ),
                                               ),
                                               Text(
-                                                '${_calculateDaysDifference(rentController.rentModel!.rents![widget.current].dueDate, rentController.rentModel!.rents![widget.current].date).toString()} Days',
+                                                ((rentController
+                                                            .rentModel!
+                                                            .rents![
+                                                                widget.current]
+                                                            .completed ==
+                                                        false))
+                                                    ? '${_calculateDaysDifference(rentController.rentModel!.rents![widget.current].dueDate, rentController.rentModel!.rents![widget.current].date).toString()} Days'
+                                                    : 'Completed',
                                                 style: GoogleFonts.lato(
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.w600,
@@ -357,90 +405,95 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                     ),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  // height: 92.h,
-                  padding: const EdgeInsets.all(17),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Saving Schedule',
-                            style: GoogleFonts.lato(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
+                if (rentController
+                        .rentModel!.rents![widget.current].completed ==
+                    false)
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    // height: 92.h,
+                    padding: const EdgeInsets.all(17),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).canvasColor,
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Saving Schedule',
+                              style: GoogleFonts.lato(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 9.h,
-                          ),
-                          Text(
-                            '${ch8t.format(rentController.rentModel!.rents![widget.current].intervalAmount)}/${rentController.rentModel!.rents![widget.current].interval.toLowerCase()}',
-                            style: GoogleFonts.roboto(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Theme.of(context).colorScheme.primary,
+                            SizedBox(
+                              height: 9.h,
                             ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '',
-                            style: GoogleFonts.lato(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xff4B4B4B),
+                            Text(
+                              '${ch8t.format(rentController.rentModel!.rents![widget.current].intervalAmount)}/${rentController.rentModel!.rents![widget.current].interval.toLowerCase()}',
+                              style: GoogleFonts.roboto(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          RichText(
-                            text: TextSpan(
-                                style: GoogleFonts.lato(
-                                  // fontWeight: FontWeight.w700,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 12,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Next Payment: ',
-                                    style: GoogleFonts.lato(
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '',
+                              style: GoogleFonts.lato(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8.h,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                  style: GoogleFonts.lato(
+                                    // fontWeight: FontWeight.w700,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontSize: 12,
                                   ),
-                                  TextSpan(
-                                    text: rentController.rentModel!
-                                        .rents![widget.current].nextDate,
-                                    style: GoogleFonts.lato(
-                                      fontWeight: FontWeight.w700,
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: 'Next Payment: ',
+                                      style: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
-                                  ),
-                                ]),
-                          ),
-                        ],
-                      ),
-                    ],
+                                    TextSpan(
+                                      text: rentController.rentModel!
+                                          .rents![widget.current].nextDate,
+                                      style: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+
                 if ((((rentController.rentModel!.rents![widget.current]
                                     .paidAmount /
                                 rentController
                                     .rentModel!.rents![widget.current].amount) *
-                            100) 
+                            100)
                         .toInt() >=
                     70))
                   SizedBox(
@@ -536,6 +589,93 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 SizedBox(
                   height: 20.h,
                 ),
+
+                // ============= OUTSTANDING LOAN BEGINS ==============
+
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   // height: 92.h,
+                //   padding: const EdgeInsets.all(17),
+                //   decoration: BoxDecoration(
+                //     color: Theme.of(context).canvasColor,
+                //     borderRadius: BorderRadius.circular(10.r),
+                //   ),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Flexible(
+                //         flex: 5,
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Text(
+                //               'Outstanding Loan',
+                //               style: GoogleFonts.lato(
+                //                 fontSize: 14,
+                //                 fontWeight: FontWeight.w600,
+                //                 color: Theme.of(context).colorScheme.primary,
+                //               ),
+                //             ),
+                //             SizedBox(
+                //               height: 3.h,
+                //             ),
+                //             Text(
+                //               'You have an outstanding loan on beta rent. Click to view ',
+                //               style: GoogleFonts.lato(
+                //                 fontSize: 12,
+                //                 fontWeight: FontWeight.w400,
+                //                 color: Theme.of(context).colorScheme.primary,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       const Spacer(),
+                //       Flexible(
+                //         flex: 2,
+                //         child: Align(
+                //           alignment: Alignment.bottomCenter,
+                //           child: ElevatedButton(
+                //             style: ElevatedButton.styleFrom(
+                //               minimumSize: Size(
+                //                   MediaQuery.of(context).size.width - 50, 40),
+                //               backgroundColor: brandTwo,
+                //               elevation: 0,
+                //               shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(
+                //                   10,
+                //                 ),
+                //               ),
+                //             ),
+                //             onPressed: () {
+                //               Get.to(LoanDetails());
+                //               // forfeitInterestModal(context, widget.current);
+                //             },
+                //             child: Text(
+                //               'View',
+                //               textAlign: TextAlign.center,
+                //               style: GoogleFonts.lato(
+                //                 color: Colors.white,
+                //                 fontSize: 12,
+                //                 fontWeight: FontWeight.w500,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
+
+                // ============= OUTSTANDING LOAN ENDS ==============
+
+                // ======== CREDIT SCORE BEGINS ==========
+
                 // Container(
                 //   width: MediaQuery.of(context).size.width,
                 //   // height: 92.h,
@@ -614,6 +754,64 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 // SizedBox(
                 //   height: 20.h,
                 // ),
+
+                // ======== CREDIT SCORE END =========
+
+                // ============ LOAN IN PROGRESS BEGINS =============
+
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   // height: 92.h,
+                //   padding: const EdgeInsets.all(17),
+                //   decoration: BoxDecoration(
+                //     color: Theme.of(context).canvasColor,
+                //     borderRadius: BorderRadius.circular(10.r),
+                //   ),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Flexible(
+                //         flex: 10,
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Text(
+                //               'Loan in Progress',
+                //               style: GoogleFonts.lato(
+                //                 fontSize: 14,
+                //                 fontWeight: FontWeight.w600,
+                //                 color: Theme.of(context).colorScheme.primary,
+                //               ),
+                //             ),
+                //             SizedBox(
+                //               height: 3.h,
+                //             ),
+                //             Text(
+                //               'Your loan is being processed and will be disbursed shortly. ',
+                //               style: GoogleFonts.lato(
+                //                 fontSize: 12,
+                //                 fontWeight: FontWeight.w400,
+                //                 color: Theme.of(context).colorScheme.primary,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       const Spacer(),
+                //       const Flexible(
+                //         flex: 1,
+                //         child: SizedBox(),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
+
+                // =========== LOAN IN PROGRESS ENDS ===============
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

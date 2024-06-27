@@ -191,16 +191,15 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
       if (int.tryParse(amountValue.trim().replaceAll(',', '')) == null) {
         return 'enter valid number';
       }
-      if (int.tryParse(amountValue)!.isNegative) {
-        return 'enter valid number';
-      }
+
       if (int.tryParse(amountValue.trim().replaceAll(',', '')) == 0) {
         return 'number cannot be zero';
       }
-      if (int.tryParse(amountValue)! < 10) {
+      if (int.tryParse(amountValue.trim().replaceAll(',', ''))! < 10) {
         return 'minimum amount is ₦10.00';
       }
-      if ((amountValueDouble! + 20) > mainBalanceDouble!) {
+      if ((int.tryParse(amountValue.trim().replaceAll(',', ''))! + 20) >
+          mainBalanceDouble!) {
         return 'Insufficient balance';
       }
       return null;
@@ -219,35 +218,14 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
         fontWeight: FontWeight.w400,
       ),
       keyboardType: TextInputType.number,
-      // onChanged: (String) {
-      //   // setState(() {});
-      // },
-      // onChanged: (value) {
-      //   setState(() {
-      //     // Check if the text field is empty
-      //     isTextFieldEmpty = value.isNotEmpty &&
-      //         int.tryParse(value) != null &&
-      //         int.parse(value) >= 10 &&
-      //         !(int.tryParse(value)!.isNegative) &&
-      //         int.tryParse(value.trim().replaceAll(',', '')) != 0;
-      //   });
-      // },
+
       decoration: InputDecoration(
-        // label: Text(
-        //   "Enter amount",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
         prefixText: "₦ ",
         prefixStyle: GoogleFonts.roboto(
           color: Theme.of(context).colorScheme.primary,
           fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
-
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
@@ -407,198 +385,192 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
               vertical: 15.h,
               horizontal: 24.h,
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: (Theme.of(context).brightness ==
-                                      Brightness.dark)
-                                  ? colorWhite.withOpacity(0.2)
-                                  : colorWhite,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: RichText(
-                              text: TextSpan(
-                                style: GoogleFonts.lato(
-                                  color: Colors.black54,
-                                  fontSize: 14,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: (Theme.of(context).brightness ==
+                                        Brightness.dark)
+                                    ? colorWhite.withOpacity(0.2)
+                                    : colorWhite,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: GoogleFonts.lato(
+                                    color: Colors.black54,
+                                    fontSize: 14,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: 'Space Wallet: ',
+                                        style: GoogleFonts.lato(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                        )),
+                                    TextSpan(
+                                      text: currencyFormat.format(
+                                          walletController.walletModel!
+                                              .wallet![0].mainBalance),
+                                      style: GoogleFonts.roboto(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: 'Space Wallet: ',
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.info_outline,
+                                  size: 24,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.4,
+                                  child: RichText(
+                                    text: TextSpan(
                                       style: GoogleFonts.lato(
                                         color: Theme.of(context)
                                             .colorScheme
                                             .primary,
-                                        fontWeight: FontWeight.w400,
                                         fontSize: 14,
-                                      )),
-                                  TextSpan(
-                                    text: currencyFormat.format(walletController
-                                        .walletModel!.wallet![0].mainBalance),
-                                    style: GoogleFonts.roboto(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Please note that there is a',
+                                          style: GoogleFonts.lato(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' ₦20',
+                                          style: GoogleFonts.roboto(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' charge on all transfer.',
+                                          style: GoogleFonts.lato(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.info_outline,
-                                size: 24,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 1.4,
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: GoogleFonts.lato(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      fontSize: 14,
-                                    ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: 'Please note that there is a',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' ₦20',
-                                        style: GoogleFonts.roboto(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' charge on all transfer.',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Withdrawal Account',
-                            style: GoogleFonts.lato(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Theme.of(context).colorScheme.primary,
+                              ],
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Form(
-                            key: withdrawalContdFormKey,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Column(
-                                  children: [
-                                    Opacity(
-                                      opacity: 0.6,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3.h, horizontal: 3.w),
-                                            child: Text(
-                                              'Select Bank',
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Withdrawal Account',
+                              style: GoogleFonts.lato(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Form(
+                              key: withdrawalContdFormKey,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Opacity(
+                                        opacity: 0.6,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3.h,
+                                                  horizontal: 3.w),
+                                              child: Text(
+                                                'Select Bank',
+                                                style: GoogleFonts.lato(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                            TextFormField(
+                                              // enabled: false,
+                                              readOnly: true,
+                                              autovalidateMode:
+                                                  AutovalidateMode.disabled,
+                                              enableSuggestions: true,
+                                              cursorColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                               style: GoogleFonts.lato(
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .primary,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
-                                            ),
-                                          ),
-                                          TextFormField(
-                                            // enabled: false,
-                                            readOnly: true,
-                                            autovalidateMode:
-                                                AutovalidateMode.disabled,
-                                            enableSuggestions: true,
-                                            cursorColor: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            style: GoogleFonts.lato(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                                fontSize: 14),
+                                                  fontSize: 14),
 
-                                            controller: _bankController,
-                                            textAlignVertical:
-                                                TextAlignVertical.center,
-                                            // textCapitalization: TextCapitalization.sentences,
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                              .brightness ==
-                                                          Brightness.dark
-                                                      ? const Color.fromRGBO(
-                                                          189, 189, 189, 30)
-                                                      : const Color.fromRGBO(
-                                                          189, 189, 189, 100),
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
+                                              controller: _bankController,
+                                              textAlignVertical:
+                                                  TextAlignVertical.center,
+                                              // textCapitalization: TextCapitalization.sentences,
+                                              keyboardType:
+                                                  TextInputType.emailAddress,
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
                                                     color: Theme.of(context)
                                                                 .brightness ==
                                                             Brightness.dark
@@ -606,166 +578,191 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                                                             189, 189, 189, 30)
                                                         : const Color.fromRGBO(
                                                             189, 189, 189, 100),
-                                                    width: 1.0),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                              .brightness ==
-                                                          Brightness.dark
-                                                      ? const Color.fromRGBO(
-                                                          189, 189, 189, 30)
-                                                      : const Color.fromRGBO(
-                                                          189, 189, 189, 100),
+                                                  ),
                                                 ),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: const BorderSide(
-                                                    color: Colors.red,
-                                                    width: 2.0),
-                                              ),
-                                              prefixIcon: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 18,
-                                                        vertical: 12),
-                                                child: Image.asset(
-                                                  'assets/icons/bank_icon.png',
-                                                  width: 26,
-                                                  // Ensure the image fits inside the circle
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Theme.of(context)
+                                                                  .brightness ==
+                                                              Brightness.dark
+                                                          ? const Color
+                                                              .fromRGBO(
+                                                              189, 189, 189, 30)
+                                                          : const Color
+                                                              .fromRGBO(189,
+                                                              189, 189, 100),
+                                                      width: 1.0),
                                                 ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                    color: Theme.of(context)
+                                                                .brightness ==
+                                                            Brightness.dark
+                                                        ? const Color.fromRGBO(
+                                                            189, 189, 189, 30)
+                                                        : const Color.fromRGBO(
+                                                            189, 189, 189, 100),
+                                                  ),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.red,
+                                                      width: 2.0),
+                                                ),
+                                                prefixIcon: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 12),
+                                                  child: Image.asset(
+                                                    'assets/icons/bank_icon.png',
+                                                    width: 26,
+                                                    // Ensure the image fits inside the circle
+                                                  ),
+                                                ),
+                                                // label: Text(
+                                                //   widget.bankName.toUpperCase(),
+                                                //   style: GoogleFonts.lato(
+                                                //     fontSize: 14,
+                                                //     fontWeight: FontWeight.w400,
+                                                //   ),
+                                                // ),
+                                                filled: false,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    const EdgeInsets.all(14),
                                               ),
-                                              // label: Text(
-                                              //   widget.bankName.toUpperCase(),
-                                              //   style: GoogleFonts.lato(
-                                              //     fontSize: 14,
-                                              //     fontWeight: FontWeight.w400,
-                                              //   ),
-                                              // ),
-                                              filled: false,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  const EdgeInsets.all(14),
+                                              maxLines: 1,
                                             ),
-                                            maxLines: 1,
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Opacity(
-                                      opacity: 0.6,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 3.h, horizontal: 3.w),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Opacity(
+                                        opacity: 0.6,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3.h,
+                                                  horizontal: 3.w),
+                                              child: Text(
+                                                'Account Number',
+                                                style: GoogleFonts.lato(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                            accountNumber
+                                          ],
+                                        ),
+                                      ),
+                                      Opacity(
+                                        opacity: 0.6,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            top: 5,
+                                          ),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15, vertical: 5),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffEEF8FF),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
                                             child: Text(
-                                              'Account Number',
+                                              widget.accountHolderName,
                                               style: GoogleFonts.lato(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12),
+                                                color: brandOne,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ),
-                                          accountNumber
-                                        ],
-                                      ),
-                                    ),
-                                    Opacity(
-                                      opacity: 0.6,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 5,
                                         ),
-                                        child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 5),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xffEEF8FF),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: Text(
-                                            widget.accountHolderName,
-                                            style: GoogleFonts.lato(
-                                              color: brandOne,
-                                              fontSize: 12,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 3.h, horizontal: 3.w),
+                                        child: Text(
+                                          'Amount',
+                                          style: GoogleFonts.lato(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                               fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
+                                              fontSize: 12),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'Amount',
-                                        style: GoogleFonts.lato(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12),
+                                      amount
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 3.h, horizontal: 3.w),
+                                        child: Text(
+                                          'Narration',
+                                          style: GoogleFonts.lato(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12),
+                                        ),
                                       ),
-                                    ),
-                                    amount
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'Narration',
-                                        style: GoogleFonts.lato(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12),
-                                      ),
-                                    ),
-                                    narration
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 140.h,
-                                ),
-                              ],
+                                      narration
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 140.h,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Align(
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20.h),
+                  child: Align(
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -779,27 +776,24 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                           ),
                         ),
                       ),
-                      onPressed: withdrawalContdFormKey.currentState != null &&
-                              withdrawalContdFormKey.currentState!.validate()
-                          ? () async {
-                              FocusScope.of(context).unfocus();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      TransferConfirmationPage(
-                                    bankName: widget.bankName,
-                                    accountNumber: widget.accountNumber,
-                                    bankCode: widget.bankCode,
-                                    accountName: widget.accountHolderName,
-                                    amount: _amountController.text,
-                                    narration: _narrationController.text ?? '',
-                                  ),
-                                ),
-                              );
-                              // Proceed with the action
-                            }
-                          : null,
+                      onPressed: () async {
+                        FocusScope.of(context).unfocus();
+                        if (withdrawalContdFormKey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TransferConfirmationPage(
+                                bankName: widget.bankName,
+                                accountNumber: widget.accountNumber,
+                                bankCode: widget.bankCode,
+                                accountName: widget.accountHolderName,
+                                amount: _amountController.text,
+                                narration: _narrationController.text ?? '',
+                              ),
+                            ),
+                          );
+                        }
+                      },
                       child: Text(
                         'Proceed',
                         textAlign: TextAlign.center,
@@ -811,8 +805,8 @@ class _WithdrawContinuationPageState extends State<WithdrawContinuationPage> {
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

@@ -19,6 +19,7 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/theme.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rentspace/model/loan_form_model.dart';
 import 'package:rentspace/view/onboarding/FirstPage.dart';
 import 'package:rentspace/view/onboarding/idle_page.dart';
 import 'api/global_services.dart';
@@ -55,11 +56,11 @@ Future<void> main() async {
     await Hive.initFlutter('rentspace');
   } else {
     await Hive.initFlutter();
+    Hive.registerAdapter(LoanFormDataAdapter());
     // // // // // // // // print('Hive Intialized');
   }
   await openHiveBox('dataBundles');
   await openHiveBox('settings');
-  await openHiveBox('loanFormData');
   //widgets initializing
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -336,6 +337,5 @@ class _MyAppState extends State<MyApp> {
         builder: EasyLoading.init(),
       ),
     );
-
   }
 }

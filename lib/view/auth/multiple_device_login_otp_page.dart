@@ -232,7 +232,7 @@ class _MultipleDeviceLoginOtpPageState
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
-                                            ]),
+                                            ],),
                                       ),
                                       SizedBox(
                                         height: 32.h,
@@ -369,7 +369,7 @@ class _MultipleDeviceLoginOtpPageState
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 14),
                                               ),
-                                      ]),
+                                      ],),
                                     ),
                                   ),
                                 ),

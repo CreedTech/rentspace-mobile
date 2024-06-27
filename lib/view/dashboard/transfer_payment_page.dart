@@ -219,9 +219,9 @@ class _TransferPaymentPageState extends ConsumerState<TransferPaymentPage> {
       if (int.tryParse(amountValue.trim().replaceAll(',', '')) == null) {
         return 'enter valid number';
       }
-      if (int.tryParse(amountValue)!.isNegative) {
-        return 'enter valid number';
-      }
+      // if (int.tryParse(amountValue)!.isNegative) {
+      //   return 'enter valid number';
+      // }
       if (int.tryParse(amountValue.trim().replaceAll(',', '')) == 0) {
         return 'number cannot be zero';
       }

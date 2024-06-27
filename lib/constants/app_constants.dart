@@ -67,12 +67,15 @@ class AppConstants {
   static const VFD_PAY_BILL = '/api/pay-vfd-bill';
   static const VFD_VALIDATE_CUSTOMER = '/api/validate-vfd-customer';
 
-
   // PROVIIDUS APIS
-  static const PROVIDUS_CREATE_DVA = '/api/providus/create-providus-reserved-account';
+  static const PROVIDUS_CREATE_DVA =
+      '/api/providus/create-providus-reserved-account';
   static const PROVIDUS_GET_NIP_ACCOUNT_INFO = '/api/providus/get-nip-account';
-  static const PROVIDUS_CREATE_WITHDRAWAL_ACCOUNT = '/api/user/create-withdrawal-account';
-  static const PROVIDUS_WALLET_WITHDRAWAL = '/api/wallet/providus-wallet-withdrawal';
+  static const PROVIDUS_CREATE_WITHDRAWAL_ACCOUNT =
+      '/api/user/create-withdrawal-account';
+  static const PROVIDUS_WALLET_WITHDRAWAL =
+      '/api/wallet/providus-wallet-withdrawal';
 
-
+// LOANS
+  static const APPLY_FOR_LOAN = '/api/loan/apply';
 }

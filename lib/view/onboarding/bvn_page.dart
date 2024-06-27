@@ -92,12 +92,14 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
     //Phone number
     final bvn = TextFormField(
       enableSuggestions: true,
-      cursorColor: colorBlack,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _bvnController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateBvn,
-       style: GoogleFonts.lato(
-          color: colorBlack, fontSize: 14, fontWeight: FontWeight.w500),
+      style: GoogleFonts.lato(
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 14,
+          fontWeight: FontWeight.w500),
       keyboardType: TextInputType.phone,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       // maxLength: 11,
@@ -138,25 +140,25 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
     );
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back_ios,
             size: 27,
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         centerTitle: true,
         title: Text(
           'BVN Verification',
           style: GoogleFonts.lato(
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.w500,
             fontSize: 24,
           ),
@@ -220,7 +222,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                             'Please input your 11-digit BVN number. Verification may require a few minutes.',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: const Color(0xff4E4B4B),
+                              color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                               // fontFamily: "DefaultFontFamily",
@@ -238,7 +240,8 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                                 child: Text(
                                   'Bvn',
                                   style: GoogleFonts.lato(
-                                    color: colorBlack,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 12,
                                   ),
@@ -256,10 +259,10 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.info_outline,
                                   size: 24,
-                                  color: Color(0xff4E4B4B),
+                                  color: Theme.of(context).primaryColorLight,
                                 ),
                                 SizedBox(
                                   width: 10.w,
@@ -268,7 +271,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                                   'Please confirm number before proceeding',
                                   softWrap: true,
                                   style: GoogleFonts.lato(
-                                    color: const Color(0xff4E4B4B),
+                                    color: Theme.of(context).primaryColorLight,
                                     fontSize: 14,
                                     // fontStyle: FontStyle.italic,
                                     fontWeight: FontWeight.w400,

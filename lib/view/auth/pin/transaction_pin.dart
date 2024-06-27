@@ -57,25 +57,25 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
     final authState = ref.watch(authControllerProvider.notifier);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xffFAFAFA),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
             Get.back();
           },
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back_ios,
             size: 27,
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         centerTitle: true,
         title: Text(
           'Transaction Pin',
           style: GoogleFonts.lato(
-            color: colorBlack,
+            color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.w500,
             fontSize: 24,
           ),
@@ -140,7 +140,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                             'Set up your personalized 4-digit PIN for transaction authorization.',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: const Color(0xff4E4B4B),
+                              color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                               // fontFamily: "DefaultFontFamily",
@@ -160,7 +160,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                     child: Text(
                                       'Pin',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),
@@ -177,7 +179,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                           horizontal: 5),
                                       textStyle: GoogleFonts.lato(
                                         fontSize: 25,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
@@ -193,11 +197,15 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                           horizontal: 5),
                                       textStyle: GoogleFonts.lato(
                                         fontSize: 25,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: brandOne, width: 1.0),
+                                       border: Border.all(
+                                                  color:
+                                                      const Color(0xffBDBDBD),
+                                                  width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -208,11 +216,15 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                           horizontal: 5),
                                       textStyle: GoogleFonts.lato(
                                         fontSize: 25,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: brandOne, width: 1.0),
+                                       border: Border.all(
+                                                  color:
+                                                      const Color(0xffBDBDBD),
+                                                  width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -223,7 +235,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                           horizontal: 5),
                                       textStyle: GoogleFonts.lato(
                                         fontSize: 25,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
@@ -262,7 +276,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                     child: Text(
                                       'Confirm Pin',
                                       style: GoogleFonts.lato(
-                                        color: colorBlack,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),
@@ -279,7 +295,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                           horizontal: 5),
                                       textStyle: GoogleFonts.lato(
                                         fontSize: 25,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
@@ -295,11 +313,15 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                           horizontal: 5),
                                       textStyle: GoogleFonts.lato(
                                         fontSize: 25,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: brandOne, width: 1.0),
+                                       border: Border.all(
+                                                  color:
+                                                      const Color(0xffBDBDBD),
+                                                  width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -310,11 +332,14 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                           horizontal: 5),
                                       textStyle: GoogleFonts.lato(
                                         fontSize: 25,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: brandOne, width: 1.0),
+                                            color: const Color(0xffBDBDBD),
+                                            width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -325,7 +350,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                           horizontal: 5),
                                       textStyle: GoogleFonts.lato(
                                         fontSize: 25,
-                                        color: brandOne,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                       decoration: BoxDecoration(
                                         border: Border.all(

@@ -187,7 +187,9 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                           Text(
                                             'Already have an account? ',
                                             style: GoogleFonts.lato(
-                                              color: const Color(0xff272727),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                             ),
