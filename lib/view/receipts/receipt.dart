@@ -1,9 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -19,9 +19,7 @@ import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:share_plus/share_plus.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 
 class Receipt extends StatefulWidget {
   const Receipt({super.key, required this.type});
@@ -32,7 +30,7 @@ class Receipt extends StatefulWidget {
 }
 
 class _ReceiptState extends State<Receipt> {
-  GlobalKey _globalKey = GlobalKey();
+  final GlobalKey _globalKey = GlobalKey();
   Future<Uint8List?> _capturePng() async {
     try {
       RenderRepaintBoundary boundary = _globalKey.currentContext!
@@ -42,37 +40,12 @@ class _ReceiptState extends State<Receipt> {
           await image.toByteData(format: ui.ImageByteFormat.png);
       return byteData?.buffer.asUint8List();
     } catch (e) {
-      print('Error capturing image: $e');
+      if (kDebugMode) {
+        print('Error capturing image: $e');
+      }
       return null;
     }
   }
-
-  //   Future<Uint8List?> _capturePng() async {
-  //   try {
-  //     RenderRepaintBoundary boundary = _globalKey.currentContext!
-  //         .findRenderObject() as RenderRepaintBoundary;
-  //     ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-  //     ByteData? byteData =
-  //         await image.toByteData(format: ui.ImageByteFormat.png);
-  //     return byteData?.buffer.asUint8List();
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
-
-  // Future<void> _downloadImage() async {
-  //   final pngBytes = await _capturePng();
-  //   if (pngBytes != null) {
-  //     final tempDir = await getTemporaryDirectory();
-  //     final file = File('${tempDir.path}/screenshot.png');
-  //     await file.writeAsBytes(pngBytes);
-
-  //     // Share or download the image
-  //     // Here we use share for simplicity, you can modify it for your needs
-  //     await Share.shareFiles([file.path], text: 'Here is the screenshot');
-  //   }
-  // }
 
   Future<void> _downloadImage() async {
     RenderRepaintBoundary boundary =
@@ -83,48 +56,11 @@ class _ReceiptState extends State<Receipt> {
     if (byteData != null) {
       final result =
           await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
-      print(result);
+      if (kDebugMode) {
+        print(result);
+      }
     }
-    // final pngBytes = await _capturePng();
-    // if (pngBytes != null) {
-    //   final tempDir = await getTemporaryDirectory();
-    //   final file = File('${tempDir.path}/screenshot.png');
-    //   await file.writeAsBytes(pngBytes);
-
-    //   // Save the image to the device's photo library
-    //   final saved = await GallerySaver.saveImage(file.path);
-
-    //   if (saved!) {
-    //     // Image saved successfully
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text('Image downloaded and saved to gallery')),
-    //     );
-    //   } else {
-    //     // Failed to save image
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text('Failed to save image')),
-    //     );
-    //   }
-    // } else {
-    //   print('Failed to capture image.');
-    // }
   }
-  // Future<void> _downloadImage() async {
-  //   final pngBytes = await _capturePng();
-  //   if (pngBytes != null) {
-  //     final tempDir = await getTemporaryDirectory();
-  //     final file = File('${tempDir.path}/screenshot.png');
-  //     await file.writeAsBytes(pngBytes);
-
-  //     // // Here you can display a notification or any feedback to the user
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Image downloaded to ${file.path}')),
-  //     );
-  //     print('done');
-  //   } else {
-  //     print('Failed to capture image.');
-  //   }
-  // }
 
   Future<void> _sharePdf() async {
     final pngBytes = await _capturePng();
@@ -148,7 +84,9 @@ class _ReceiptState extends State<Receipt> {
 
       await Share.shareFiles([file.path]);
     } else {
-      print('Failed to capture image for PDF.');
+      if (kDebugMode) {
+        print('Failed to capture image for PDF.');
+      }
     }
   }
 
@@ -158,10 +96,10 @@ class _ReceiptState extends State<Receipt> {
       final tempDir = await getTemporaryDirectory();
       final file = File('${tempDir.path}/screenshot.png');
       await file.writeAsBytes(pngBytes);
-
-      // await Share.shareFiles([file.path], text: 'Here is the screenshot');
     } else {
-      print('Failed to capture image.');
+      if (kDebugMode) {
+        print('Failed to capture image.');
+      }
     }
   }
 
@@ -169,26 +107,13 @@ class _ReceiptState extends State<Receipt> {
   void initState() {
     super.initState();
     captureInfo();
-    // setState(() {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //     if (widget.type == 'share') {
-    //       print('Sharing PDF');
-    //       await _sharePdf();
-    //     } else {
-    //       print('Downloading Image');
-    //       _downloadImage();
-    //     }
-    //   });
-    // });
   }
 
   Future<void> captureInfo() async {
     await Future.delayed(const Duration(seconds: 1));
     if (widget.type == 'share') {
-      print('Sharing PDF');
       await _sharePdf();
     } else {
-      print('Downloading Image');
       _downloadImage();
     }
   }
@@ -199,15 +124,11 @@ class _ReceiptState extends State<Receipt> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments;
-    // print('arguments ==========================');
-    // print(arguments);
     Map<String, dynamic>? transactionData;
 
     // Check if arguments are not null and of the correct type
     if (arguments != null && arguments is Map<String, dynamic>) {
       transactionData = arguments;
-      // print('transactionData ==========================');
-      // print(transactionData);
     }
 
     final bankCode = transactionData!['bankName'] ??
@@ -270,7 +191,7 @@ class _ReceiptState extends State<Receipt> {
                             ),
                             Text(
                               currencyFormat.format(
-                                (transactionData!['amount']),
+                                (transactionData['amount']),
                               ),
                               style: GoogleFonts.roboto(
                                 fontSize: 24,
@@ -393,7 +314,8 @@ class _ReceiptState extends State<Receipt> {
                                                         .toLowerCase() ==
                                                     'bill')
                                                 ? transactionData[
-                                                    'userUtilityNumber'] ?? '00000000000'
+                                                        'userUtilityNumber'] ??
+                                                    '00000000000'
                                                 : '${transactionData['accountName'] ?? 'Rentspace'}'
                                                     .capitalize,
                                             textAlign: TextAlign.end,

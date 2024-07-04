@@ -1,25 +1,20 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/app_constants.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:rentspace/constants/widgets/custom_loader.dart';
+import 'package:rentspace/widgets/custom_loader.dart';
 import 'dart:convert';
-// import 'package:rentspace/controller/user_controller.dart';
 import 'dart:math';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:io';
-// import 'package:rentspace/constants/theme_services.dart';
-// import 'package:get_storage/get_storage.dart';
-// import 'dart:io';
-// import 'package:rentspace/view/savings/spaceRent/spacerent_payment.dart';
-
 import '../../api/global_services.dart';
-import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/wallet/wallet_controller.dart';
+import '../../widgets/custom_dialogs/index.dart';
 
 class WalletFunding extends StatefulWidget {
   int amount, numPayment;
@@ -51,35 +46,14 @@ class _WalletFundingState extends State<WalletFunding> {
   String walletBalance = '0';
   int intWalletBalance = 0;
   String walletID = '';
-  // bool _isLoading = true;
   bool canGoBack = false;
   bool hasCreatedPayment = false;
   bool hasDoneWebview = false;
-  var _chars = '1234567890';
-  Random _rnd = Random();
+  final _chars = '1234567890';
+  final Random _rnd = Random();
   String _payUrl = "";
   String _mssg = "Initiating payment...";
   String _mssgBody = "";
-
-  // getCurrentUser() async {
-  //   var collection = FirebaseFirestore.instance.collection('accounts');
-  //   var docSnapshot = await collection.doc(userId).get();
-  //   if (docSnapshot.exists) {
-  //     Map<String, dynamic>? data = docSnapshot.data();
-  //     setState(() {
-  //       userFirst = data?['firstname'];
-  //       userLast = data?['lastname'];
-  //       userMail = data?['email'];
-  //       userPhone = data?['phone'];
-  //       walletID = data?['wallet_id'];
-  //       cardCvv = data?['card_cvv'];
-  //       cardDigit = data?['card_digit'];
-  //       cardExpire = data?['card_expire'];
-  //       walletBalance = data?['wallet_balance'];
-  //       intWalletBalance = int.tryParse(walletBalance)!;
-  //     });
-  //   }
-  // }
 
   String getRandom(int length) => String.fromCharCodes(
         Iterable.generate(
@@ -93,8 +67,7 @@ class _WalletFundingState extends State<WalletFunding> {
   createPayment() async {
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
-    const String apiUrl = AppConstants.CREATE_PAYMENT;
-    // const String bearerToken = 'sk_5e03078e1a38fc96de55b1ffaa712ccb1e30965d';
+    // const String apiUrl = AppConstants.CREATE_PAYMENT;
     final response = await http.post(
       Uri.parse(AppConstants.BASE_URL + AppConstants.CREATE_PAYMENT),
       headers: {
@@ -106,7 +79,6 @@ class _WalletFundingState extends State<WalletFunding> {
         "email": userController.userModel!.userDetails![0].email.toString(),
         "country": "NG",
         "currency": "NGN",
-        // "initiate_type": "inline",
         "payment_methods": "card",
       }),
     );
@@ -127,15 +99,16 @@ class _WalletFundingState extends State<WalletFunding> {
         _mssg = "Payment failed!";
         _mssgBody = jsonResponse["message"].toString();
       });
-      print(
-          'Request failed with status: ${response.statusCode}, ${response.body}');
+      if (kDebugMode) {
+        print(
+            'Request failed with status: ${response.statusCode}, ${response.body}');
+      }
     }
   }
 
   @override
   void initState() {
     super.initState();
-    // getCurrentUser();
     setState(() {
       canGoBack = false;
       hasCreatedPayment = false;
@@ -163,13 +136,13 @@ class _WalletFundingState extends State<WalletFunding> {
           child: Icon(
             Icons.close,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         title: Text(
           'Top Up With Card',
           style: GoogleFonts.lato(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
@@ -190,7 +163,7 @@ class _WalletFundingState extends State<WalletFunding> {
                       _mssg,
                       style: GoogleFonts.lato(
                         fontSize: 20,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     const SizedBox(
@@ -211,14 +184,6 @@ class _WalletFundingState extends State<WalletFunding> {
                 if (context.mounted) {
                   customErrorDialog(context, 'Error', e.toString());
                 }
-                // Get.snackbar(
-                //   "Error",
-                //   e.toString(),
-                //   animationDuration: const Duration(seconds: 2),
-                //   backgroundColor: Colors.red,
-                //   colorText: Colors.white,
-                //   snackPosition: SnackPosition.BOTTOM,
-                // );
               },
               userAgent: 'random',
               onPageFinished: (val) {

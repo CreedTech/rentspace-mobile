@@ -8,11 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
-// import 'package:rentspace/controller/user_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
-import 'package:rentspace/constants/widgets/separator.dart';
-// import 'package:rentspace/view/loan/loan_page.dart';
+import 'package:rentspace/widgets/separator.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../controller/auth/user_controller.dart';
@@ -361,7 +359,8 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,
-                                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                                  backgroundColor:
+                                      Theme.of(context).scaffoldBackgroundColor,
                                   textColor:
                                       Theme.of(context).colorScheme.secondary,
                                   fontSize: 16.0,
@@ -678,133 +677,6 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                   ],
                 ),
               ),
-
-              // Padding(
-              //   padding: const EdgeInsets.all(10.0),
-              //   child: Column(
-              //     children: [
-              //       // Todo: work on this part ==========
-              //       Text(
-              //         'REFERRAL CODE: ${userController.userModel!.userDetails![0].referralCode}',
-              //         style: GoogleFonts.lato(
-              //           fontSize: 16.0,
-              //           // letterSpacing: 0.5,
-              //           fontWeight: FontWeight.w700,
-              //           // fontFamily: "DefaultFontFamily",
-              //           color: brandOne,
-              //         ),
-              //       ),
-              //       Text(
-              //         'NO OF REFERRED USERS: ${userController.userModel!.userDetails![0].referrals}'
-              //             .toString(),
-              //         style: GoogleFonts.lato(
-              //           fontSize: 14.0,
-              //           // letterSpacing: 1.0,
-              //           fontWeight: FontWeight.w700,
-              //           // fontFamily: "DefaultFontFamily",
-              //           color: brandOne,
-              //         ),
-              //       ),
-              //       Text(userController.userModel!.userDetails![0].referredUsers[0])
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // Image.asset(
-              //   "assets/share.png",
-              //   width: MediaQuery.of(context).size.width,
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(20.0),
-              //   child: Text(
-              //     "Participate in our exclusive program and seize the opportunity to earn 500 naira simply by referring friends through your unique code and getting them to save using the Space Rent . As you introduce more friends to our platform, your earnings increase – and the best part is that the money is paid directly to your space wallet.",
-              //     textAlign: TextAlign.center,
-              //     style: GoogleFonts.lato(
-              //       fontSize: 16.0,
-              //       // fontFamily: "DefaultFontFamily",
-              //       fontWeight: FontWeight.w600,
-              //       // letterSpacing: 0.5,
-              //       color: brandOne,
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(40.0),
-              //   child: Align(
-              //     alignment: Alignment.bottomCenter,
-              //     child: Container(
-              //       // width: MediaQuery.of(context).size.width * 2,
-              //       alignment: Alignment.center,
-              //       // height: 110.h,
-              //       child: Column(
-              //         children: [
-              //           ElevatedButton(
-              //             style: ElevatedButton.styleFrom(
-              //               minimumSize: const Size(300, 50),
-              //               backgroundColor: brandOne,
-              //               elevation: 0,
-              //               shape: RoundedRectangleBorder(
-              //                 borderRadius: BorderRadius.circular(
-              //                   10,
-              //                 ),
-              //               ),
-              //             ),
-              //             onPressed: () {
-              //               Clipboard.setData(
-              //                 ClipboardData(
-              //                   text:
-              //                       "Sign up with my code: ${userController.userModel!.userDetails![0].referralCode} to earn a free point!",
-              //                 ),
-              //               );
-              //               Fluttertoast.showToast(
-              //                 msg:
-              //                     "Your referal code has been copied to clipboard!",
-              //                 toastLength: Toast.LENGTH_SHORT,
-              //                 gravity: ToastGravity.CENTER,
-              //                 timeInSecForIosWeb: 1,
-              //                 backgroundColor: brandOne,
-              //                 textColor: Colors.white,
-              //                 fontSize: 16.0,
-              //               );
-              //               Share.share(
-              //                   "Hello, click this link https://play.google.com/store/apps/details?id=com.rentspace.app.android to download RentSpace and use my referal code, ${userController.userModel!.userDetails![0].referralCode} to sign up and earn a point!");
-              //             },
-              //             child: Row(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: [
-              //                 const Icon(
-              //                   Icons.share_outlined,
-              //                   size: 30,
-              //                   color: Colors.white,
-              //                 ),
-              //                 const SizedBox(
-              //                   width: 10,
-              //                 ),
-              //                 Text(
-              //                   'Share now!',
-              //                   textAlign: TextAlign.center,
-              //                   style: GoogleFonts.lato(
-              //                     color: Colors.white,
-              //                     fontSize: 16,
-              //                     fontWeight: FontWeight.w700,
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ],

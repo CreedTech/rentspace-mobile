@@ -1,28 +1,20 @@
 import 'dart:io';
 
-// import 'package:animated_custom_dropdown/custom_dropdown.dart';
-// import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:iconsax/iconsax.dart';
-// import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
-// import 'package:pinput/pinput.dart';
-// import 'package:rentspace/constants/airtime_constants.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:intl/intl.dart';
-// import 'package:rentspace/controller/app_controller.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:rentspace/view/utility/airtime_confirmation.dart';
 
-import '../../constants/widgets/custom_button.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/utility/utility_response_controller.dart';
 
@@ -70,17 +62,9 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
     FocusScope.of(context).unfocus();
     var billerLists = Hive.box('Airtime');
     var storedData = billerLists.get('Airtime');
-    //  storedData['data'];
-    // print(_selectedCarrier!);
     var outputList = storedData['data']
         .where((o) => o['name'] == _selectedCarrier!)
         .toList();
-    print('output list ${outputList}');
-
-    print(outputList[0]['name']);
-    // print(amountController.text);
-    // print(billType!);
-    // print(_selectedCarrier!);
 
     Get.to(
       AirtimeConfirmation(
@@ -223,14 +207,6 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
         phoneNumber.startsWith("0810");
   }
 
-// Update the validation status whenever the form fields change
-  void _updateFormValidity() {
-    setState(() {
-      // Check if all form fields are valid
-      isFormValid = airtimeformKey.currentState!.validate();
-    });
-  }
-
   Future<bool> fetchUserData({bool refresh = true}) async {
     EasyLoading.show(
       indicator: const CustomLoader(),
@@ -239,9 +215,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
     );
     if (refresh) {
       await userController.fetchData();
-      // await walletController.fetchWallet();
       await utilityResponseController.fetchUtilitiesResponse('Airtime');
-      // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
     return true;
@@ -969,12 +943,6 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                           var outputList = storedData['data']
                               .where((o) => o['name'] == _selectedCarrier!)
                               .toList();
-                          print('output list ${outputList}');
-
-                          print(outputList[0]['name']);
-                          // print(amountController.text);
-                          // print(billType!);
-                          // print(_selectedCarrier!);
 
                           Get.to(
                             AirtimeConfirmation(

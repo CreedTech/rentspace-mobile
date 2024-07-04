@@ -7,14 +7,12 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/auth/auth_controller.dart';
-
-//String status = "Reset Password";
+import '../../../widgets/custom_text_field_widget.dart';
 
 class ForgotPassword extends ConsumerStatefulWidget {
   const ForgotPassword({super.key});
 
   @override
-  // _ForgotPasswordState createState() => _ForgotPasswordState();
   ConsumerState<ForgotPassword> createState() => _ForgotPasswordConsumerState();
 }
 
@@ -36,62 +34,6 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
-    //Validator
-
-    //email field
-    final email = TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      style: GoogleFonts.lato(color: Theme.of(context).colorScheme.primary),
-      controller: _emailController,
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1.0),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      maxLines: 1,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter an email address.';
-        }
-
-        // Regular expression for a valid email address
-        final emailRegex =
-            RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
-
-        if (!emailRegex.hasMatch(value)) {
-          return 'Please enter a valid email address.';
-        }
-
-        return null;
-      },
-    );
-
     return Scaffold(
       backgroundColor: brandOne,
       body: SingleChildScrollView(
@@ -182,7 +124,6 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                                 color: Theme.of(context).primaryColorLight,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                // fontFamily: "DefaultFontFamily",
                               ),
                             ),
                             const SizedBox(
@@ -192,26 +133,31 @@ class _ForgotPasswordConsumerState extends ConsumerState<ForgotPassword> {
                               key: forgotPassFormKey,
                               child: Column(
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: Text(
-                                          'Email',
-                                          style: GoogleFonts.lato(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                      email,
-                                    ],
+                                  CustomTextFieldWidget(
+                                    controller: _emailController,
+                                    obscureText: false,
+                                    filled: false,
+                                    readOnly: false,
+                                    labelText: 'Email',
+                                    autoValidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    maxLines: 1,
+                                    keyboardType: TextInputType.emailAddress,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter an email address.';
+                                      }
+
+                                      // Regular expression for a valid email address
+                                      final emailRegex = RegExp(
+                                          r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
+
+                                      if (!emailRegex.hasMatch(value)) {
+                                        return 'Please enter a valid email address.';
+                                      }
+
+                                      return null;
+                                    },
                                   ),
                                 ],
                               ),

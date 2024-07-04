@@ -9,8 +9,6 @@ class ActivitiesModel {
     if (activitiesData is List<dynamic>) {
       // If activitiesData is a List, map each element to Activities object.
       activities = activitiesData.map((e) => Activities.fromJson(e)).toList();
-      print(activities!.length);
-      print(activitiesData[0]);
     } else if (activitiesData is Map<String, dynamic>) {
       // If activitiesData is a Map, create a single Activities object.
       activities = [Activities.fromJson(activitiesData)];
@@ -33,14 +31,12 @@ class Activities {
   final String activityType;
   final String description;
 
-  // final String status;
   final String activityDate;
 
   Activities({
     required this.id,
     required this.activityType,
     required this.description,
-    // required this.status,
     required this.activityDate,
   });
 
@@ -48,7 +44,6 @@ class Activities {
         id: json["_id"],
         activityType: json["activityType"],
         description: json["description"],
-        // status: json["status"],
         activityDate: json["activityDate"],
       );
 
@@ -56,7 +51,6 @@ class Activities {
         "_id": id,
         "activityType": activityType,
         "description": description,
-        // "status": status,
         "activityDate": activityDate,
       };
 }

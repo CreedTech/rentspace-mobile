@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:rentspace/constants/widgets/custom_loader.dart';
+import 'package:rentspace/widgets/custom_loader.dart';
 
 import 'dart:io';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -39,11 +38,10 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
           child: Icon(
             Icons.close,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
-
       body: Stack(
         children: [
           SizedBox(

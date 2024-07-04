@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -477,100 +476,6 @@ class _AvailableLoansPageState extends State<AvailableLoansPage> {
                         ],
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 14.h,
-                    // ),
-                    // Container(
-                    //   padding: EdgeInsets.symmetric(
-                    //       horizontal: 18.w, vertical: 13.h),
-                    //   decoration: BoxDecoration(
-                    //     color: Theme.of(context).canvasColor,
-                    //     borderRadius: BorderRadius.circular(10),
-                    //   ),
-                    //   child: Row(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Column(
-                    //         crossAxisAlignment: CrossAxisAlignment.center,
-                    //         children: [
-                    //           Image.asset(
-                    //             'assets/icons/pay_icon.png',
-                    //             width: 28.w,
-                    //             height: 28.h,
-                    //           ),
-                    //           Text(
-                    //             'How to \nRepay',
-                    //             textAlign: TextAlign.center,
-                    //             style: GoogleFonts.lato(
-                    //                 fontSize: 12,
-                    //                 fontWeight: FontWeight.w500,
-                    //                 color:
-                    //                     Theme.of(context).colorScheme.primary),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       Column(
-                    //         crossAxisAlignment: CrossAxisAlignment.center,
-                    //         children: [
-                    //           Image.asset(
-                    //             'assets/icons/due_date_icon.png',
-                    //             width: 28.w,
-                    //             height: 28.h,
-                    //           ),
-                    //           Text(
-                    //             'Loan due \ndate',
-                    //             textAlign: TextAlign.center,
-                    //             style: GoogleFonts.lato(
-                    //                 fontSize: 12,
-                    //                 fontWeight: FontWeight.w500,
-                    //                 color:
-                    //                     Theme.of(context).colorScheme.primary),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       Column(
-                    //         crossAxisAlignment: CrossAxisAlignment.center,
-                    //         mainAxisAlignment: MainAxisAlignment.start,
-                    //         children: [
-                    //           Image.asset(
-                    //             'assets/icons/help_icon.png',
-                    //             width: 28.w,
-                    //             height: 28.h,
-                    //           ),
-                    //           Text(
-                    //             'Help',
-                    //             textAlign: TextAlign.center,
-                    //             style: GoogleFonts.lato(
-                    //                 fontSize: 12,
-                    //                 fontWeight: FontWeight.w500,
-                    //                 color:
-                    //                     Theme.of(context).colorScheme.primary),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       Column(
-                    //         crossAxisAlignment: CrossAxisAlignment.center,
-                    //         children: [
-                    //           Image.asset(
-                    //             'assets/icons/care_icon.png',
-                    //             width: 28.w,
-                    //             height: 28.h,
-                    //           ),
-                    //           Text(
-                    //             'Customer \nService',
-                    //             textAlign: TextAlign.center,
-                    //             style: GoogleFonts.lato(
-                    //                 fontSize: 12,
-                    //                 fontWeight: FontWeight.w500,
-                    //                 color:
-                    //                     Theme.of(context).colorScheme.primary),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -780,8 +685,10 @@ class _AvailableLoansPageState extends State<AvailableLoansPage> {
                                               ),
                                             ),
                                             onPressed: () {
-                                              Get.back();
-                                              Get.to(const LoanSuccessPage());
+                                              if (agreeToTerms == true) {
+                                                Get.back();
+                                                Get.to(const LoanSuccessPage());
+                                              }
                                             },
                                             child: Text(
                                               'Continue',

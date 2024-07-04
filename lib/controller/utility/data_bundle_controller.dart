@@ -10,8 +10,8 @@ import 'package:local_session_timeout/local_session_timeout.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
-import '../../constants/widgets/custom_dialog.dart';
 import '../../model/data_bundle_model.dart';
+import '../../widgets/custom_dialogs/index.dart';
 
 class DataBundleController extends GetxController {
   final sessionStateStream = StreamController<SessionState>();
@@ -63,7 +63,6 @@ class DataBundleController extends GetxController {
             'timestamp': newDataBundleResponse.amountOptions[0].name,
           });
           dataBundleResponse = newDataBundleResponse;
-          // // print('Data bundle successfully fetched and updated');
         } else {
           // Load data from Hive
           var dataFromHive = storedData['data'];
@@ -72,14 +71,11 @@ class DataBundleController extends GetxController {
             amountOptions: List<DataBundle>.from(
                 dataFromHive.map((x) => DataBundle.fromJson(x))),
           );
-          // // print('Data bundle loaded from Hive');
         }
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        // // print('error auth');
         multipleLoginRedirectModal();
       } else {
-        // // print('Error fetching data: ${response.statusCode}');
       }
     } on TimeoutException {
       // // print('Network Timeout');

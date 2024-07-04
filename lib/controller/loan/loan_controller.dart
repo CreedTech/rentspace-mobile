@@ -7,14 +7,13 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 
 class LoanController extends GetxController {
   final BuildContext context;
 
   LoanController(this.context);
-  // final userDB = UserDB();
   var isLoading = false.obs;
   var isValidationLoading = false.obs;
   // final airtimes = <UtilityResponse>[].obs;
@@ -103,7 +102,6 @@ class LoanController extends GetxController {
         var result = jsonDecode(response.body);
         print('result here');
         print(result);
-        // customerResponseModel = CustomerResponseModel.fromJson(result);
         EasyLoading.dismiss();
         isValidationLoading(false);
       } else if (response.body.contains('Invalid token') ||

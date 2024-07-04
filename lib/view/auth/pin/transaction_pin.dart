@@ -3,14 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
-import 'package:rentspace/view/auth/pin/confirm_transaction_pin.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/icons.dart';
-import '../../../constants/widgets/custom_dialog.dart';
 import '../../../controller/auth/auth_controller.dart';
+import '../../../widgets/custom_dialogs/index.dart';
 
 class TransactionPin extends ConsumerStatefulWidget {
   const TransactionPin({super.key});
@@ -20,7 +18,6 @@ class TransactionPin extends ConsumerStatefulWidget {
 }
 
 class _TransactionPinState extends ConsumerState<TransactionPin> {
-  // final TextEditingController _pinController = TextEditingController();
   final TextEditingController _pinOneController = TextEditingController();
   final TextEditingController _confirmPinController = TextEditingController();
   bool isFilled = false;
@@ -45,12 +42,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
   initState() {
     super.initState();
   }
-
-  // onKeyboardTap(String value) {
-  //   setState(() {
-  //     _pinController.text = _pinController.text + value;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,21 +87,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
             Center(
               child: Column(
                 children: [
-                  // Align(
-                  //   alignment: Alignment.center,
-                  //   child: Text(
-                  //     'Set Transaction PIN',
-                  //     style: GoogleFonts.lato(
-                  //       color: Theme.of(context).primaryColor,
-                  //       fontWeight: FontWeight.w700,
-                  //       fontSize: 20,
-                  //       // fontFamily: "DefaultFontFamily",
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 40.h,
-                  // ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                     child: Form(
@@ -130,7 +106,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                             child: Text(
                               'Set Transaction Pin',
                               style: GoogleFonts.lato(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,
                               ),
@@ -143,7 +119,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                               color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
-                              // fontFamily: "DefaultFontFamily",
                             ),
                           ),
                           SizedBox(
@@ -202,10 +177,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                             .primary,
                                       ),
                                       decoration: BoxDecoration(
-                                       border: Border.all(
-                                                  color:
-                                                      const Color(0xffBDBDBD),
-                                                  width: 1.0),
+                                        border: Border.all(
+                                            color: const Color(0xffBDBDBD),
+                                            width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -221,10 +195,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                             .primary,
                                       ),
                                       decoration: BoxDecoration(
-                                       border: Border.all(
-                                                  color:
-                                                      const Color(0xffBDBDBD),
-                                                  width: 1.0),
+                                        border: Border.all(
+                                            color: const Color(0xffBDBDBD),
+                                            width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -246,13 +219,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
-                                    // onCompleted: (String val) async {
-                                    //   setState(() {
-                                    //     isFilled = true;
-                                    //   });
-                                    // },
-                                    // validator: validatePinOne,
-                                    // onChanged: validatePinOne,
+
                                     errorTextStyle: GoogleFonts.lato(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
@@ -318,10 +285,9 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                             .primary,
                                       ),
                                       decoration: BoxDecoration(
-                                       border: Border.all(
-                                                  color:
-                                                      const Color(0xffBDBDBD),
-                                                  width: 1.0),
+                                        border: Border.all(
+                                            color: const Color(0xffBDBDBD),
+                                            width: 1.0),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -370,8 +336,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                         authState.createPin(context,
                                             _confirmPinController.text.trim());
                                       }
-
-                                      // authState.setNewPin(context, _pinOneController.text.trim(), _confirmPinController.text.trim());
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -388,8 +352,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                         fontWeight: FontWeight.w500,
                                         color: Colors.red),
 
-                                    // validator: validatePinOne,
-                                    // onChanged: validatePinOne,
                                     controller: _confirmPinController,
                                     length: 4,
                                     closeKeyboardWhenCompleted: true,
@@ -405,9 +367,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              // width: MediaQuery.of(context).size.width * 2,
                               alignment: Alignment.center,
-                              // height: 110.h,
                               child: Column(
                                 children: [
                                   ElevatedButton(
@@ -428,7 +388,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                                       FocusScope.of(context).unfocus();
                                       if (setPinformKey.currentState!
                                           .validate()) {
-                                        // verifyBVN();
                                         authState.createPin(context,
                                             _confirmPinController.text.trim());
                                       } else {
@@ -461,39 +420,6 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
                 ],
               ),
             ),
-            // Positioned(
-            //   bottom: 20,
-            //   left: 0,
-            //   right: 0,
-            //   child: Align(
-            //     alignment: Alignment.bottomCenter,
-            //     child: NumericKeyboard(
-            //       onKeyboardTap: onKeyboardTap,
-            //       textStyle: GoogleFonts.lato(
-            //         color: brandOne,
-            //         fontSize: 28,
-            //       ),
-            //       rightButtonFn: () {
-            //         if (_pinController.text.isEmpty) return;
-            //         setState(() {
-            //           _pinController.text = _pinController.text
-            //               .substring(0, _pinController.text.length - 1);
-            //         });
-            //       },
-            //       rightButtonLongPressFn: () {
-            //         if (_pinController.text.isEmpty) return;
-            //         setState(() {
-            //           _pinController.text = '';
-            //         });
-            //       },
-            //       rightIcon: const Icon(
-            //         Icons.backspace_outlined,
-            //         color: Colors.red,
-            //       ),
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

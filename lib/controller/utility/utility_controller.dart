@@ -5,17 +5,14 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:local_session_timeout/local_session_timeout.dart';
 
 import '../../../api/global_services.dart';
 import '../../../constants/app_constants.dart';
-import '../../constants/widgets/custom_dialog.dart';
 import '../../model/utility_model.dart';
+import '../../widgets/custom_dialogs/index.dart';
 
 class UtilityController extends GetxController {
-  final sessionStateStream = StreamController<SessionState>();
   var isLoading = false.obs;
-  // final rent = <Rent>[].obs;
   UtilityHistoryModel? utilityHistoryModel;
 
   @override
@@ -41,30 +38,18 @@ class UtilityController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // print('result');
-        // // print(result);
-        // print(UtilityHistoryModel.fromJson(result));
 
         utilityHistoryModel = UtilityHistoryModel.fromJson(result);
-        // print('Rent data successfully fetched');
-        // print(utilityHistoryModel!.utilityHistories!);
         if (utilityHistoryModel!.utilityHistories!.isEmpty) {
-          // Show a message or handle the case where no space rent is found
+          // Show a message or handle the case where no utility  is found
           // For example, you can set a default value or display a message to the user
-          // print('No utility histories found');
+          // print('N utility histories found');
         }
         isLoading(false);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
-      } else {
-        // if (jsonDecode(response.body)['error'] == 'No Space Rent Found') {
-        //   rentModel = ;
-        // }
-        // // print(response.body);
-        // print('error fetching data');
-      }
+      } else {}
     } on TimeoutException {
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {

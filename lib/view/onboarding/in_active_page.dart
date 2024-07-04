@@ -23,19 +23,12 @@ class _InActivePageState extends State<InActivePage> {
           padding: const EdgeInsets.all(20),
           height: double.infinity,
           width: double.infinity,
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage("assets/icons/RentSpace-icon.png"),
-          //     fit: BoxFit.cover,
-          //     opacity: 0.1,
-          //   ),
-          // ),
           child: Center(
             child: Text(
               "RentSpace is temporarily under maintenance. We will be back shortly.😊",
               style: GoogleFonts.lato(
                 fontSize: 20.0,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               textAlign: TextAlign.center,
             ),

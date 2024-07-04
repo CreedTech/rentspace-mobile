@@ -5,11 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '../../constants/colors.dart';
-import '../../constants/widgets/separator.dart';
+import '../../widgets/separator.dart';
 import '../../controller/auth/user_controller.dart';
-// import '../FirstPage.dart';
-// import '../savings/spaceRent/spacerent_list.dart';
 
 class ReferralRecord extends StatefulWidget {
   const ReferralRecord({super.key});

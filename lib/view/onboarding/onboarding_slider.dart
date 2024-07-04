@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/auth/registration/login_page.dart';
 import 'package:rentspace/view/auth/registration/signup_page.dart';
@@ -20,7 +17,6 @@ class OnboardingSlider extends StatefulWidget {
 
 class _OnboardingSliderState extends State<OnboardingSlider> {
   late PageController _controller;
-  final sessionStateStream = StreamController<SessionState>();
 
   @override
   void initState() {
@@ -200,10 +196,7 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                           GestureDetector(
                                             onTap: () {
                                               Get.to(
-                                                LoginPage(
-                                                  sessionStateStream:
-                                                      sessionStateStream,
-                                                ),
+                                                LoginPage(),
                                               );
                                             },
                                             child: Text(

@@ -12,8 +12,8 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:io';
 
 import '../../constants/colors.dart';
-import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/user_controller.dart';
+import '../../widgets/custom_dialogs/index.dart';
 
 class IdlePage extends StatefulWidget {
   IdlePage(
@@ -58,26 +58,6 @@ class _IdlePageState extends State<IdlePage> {
   @override
   Widget build(BuildContext context) {
     //validation function
-    validatePin(pinOneValue) {
-      if (pinOneValue.isEmpty) {
-        return 'pin cannot be empty';
-      }
-      if (pinOneValue.length < 4) {
-        return 'pin is incomplete';
-      }
-
-      if (BCrypt.checkpw(
-            int.tryParse(pinOneValue).toString(),
-            userController.userModel!.userDetails![0].wallet.pin,
-          ) ==
-          false) {
-        return 'incorrect PIN';
-      }
-      if (int.tryParse(pinOneValue) == null) {
-        return 'enter valid number';
-      }
-      return '';
-    }
 
     //pin theme
 
@@ -119,24 +99,7 @@ class _IdlePageState extends State<IdlePage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // if (widget.loggedOutReason != "")
-                    //   Container(
-                    //     padding: const EdgeInsets.symmetric(
-                    //         horizontal: 20, vertical: 10),
-                    //     decoration: BoxDecoration(
-                    //       color: Theme.of(context).colorScheme.secondary,
-                    //       borderRadius: BorderRadius.circular(100),
-                    //     ),
-                    //     child: Text(
-                    //       widget.loggedOutReason,
-                    //       style: GoogleFonts.lato(
-                    //         color: Colors.white,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // SizedBox(
-                    //   height: 10.h,
-                    // ),
+
                     Align(
                       alignment: Alignment.center,
                       child: Text(
@@ -146,7 +109,6 @@ class _IdlePageState extends State<IdlePage> {
                           color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
-                          // fontFamily: "DefaultFontFamily",
                         ),
                       ),
                     ),
@@ -172,7 +134,7 @@ class _IdlePageState extends State<IdlePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Color(0xffBDBDBD), width: 1.0),
+                                      color: const Color(0xffBDBDBD), width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -184,8 +146,8 @@ class _IdlePageState extends State<IdlePage> {
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                                 decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Color(0xffBDBDBD), width: 1.0),
+                                  border: Border.all(
+                                      color: const Color(0xffBDBDBD), width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -197,8 +159,8 @@ class _IdlePageState extends State<IdlePage> {
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                                 decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Color(0xffBDBDBD), width: 1.0),
+                                  border: Border.all(
+                                      color: const Color(0xffBDBDBD), width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -210,8 +172,8 @@ class _IdlePageState extends State<IdlePage> {
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                                 decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Color(0xffBDBDBD), width: 1.0),
+                                  border: Border.all(
+                                      color: const Color(0xffBDBDBD), width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -222,7 +184,6 @@ class _IdlePageState extends State<IdlePage> {
                                   userController
                                       .userModel!.userDetails![0].wallet.pin,
                                 )) {
-                                  // _pinController.clear();
                                   widget.sessionStateStream
                                       .add(SessionState.startListening);
                                   Get.back();
@@ -234,8 +195,6 @@ class _IdlePageState extends State<IdlePage> {
                                   }
                                 }
                               },
-                              // validator: validatePinOne,
-                              // onChanged: validatePinOne,
                               controller: _pinController,
                               length: 4,
                               closeKeyboardWhenCompleted: true,

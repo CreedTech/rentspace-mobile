@@ -1,21 +1,17 @@
 import 'package:bcrypt/bcrypt.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
-import 'package:rentspace/view/wallet_funding/fund_wallet.dart';
 
 import '../../../constants/colors.dart';
-import '../../../constants/widgets/custom_dialog.dart';
-import '../../../constants/widgets/custom_loader.dart';
+import '../../../widgets/custom_dialogs/index.dart';
+import '../../../widgets/custom_loader.dart';
 import '../../../controller/app/app_controller.dart';
 import '../../../controller/auth/user_controller.dart';
 import '../../../controller/wallet/wallet_controller.dart';
@@ -64,9 +60,7 @@ class _SpaceRentConfirmationPageState
       dismissOnTap: false,
     );
     if (refresh) {
-      // await userController.fetchData();
       await walletController.fetchWallet();
-      // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
     return true;
@@ -179,7 +173,8 @@ class _SpaceRentConfirmationPageState
                                   style: GoogleFonts.lato(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
-                                    color: Theme.of(context).primaryColor,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                                 Text(
@@ -187,7 +182,8 @@ class _SpaceRentConfirmationPageState
                                   style: GoogleFonts.roboto(
                                     fontSize: 30,
                                     fontWeight: FontWeight.w600,
-                                    color: Theme.of(context).primaryColor,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ],
@@ -196,7 +192,6 @@ class _SpaceRentConfirmationPageState
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          // height: 92.h,
                           padding: const EdgeInsets.all(17),
                           decoration: BoxDecoration(
                             color: Theme.of(context).canvasColor,
@@ -204,7 +199,6 @@ class _SpaceRentConfirmationPageState
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const SizedBox(
                                 height: 10,
@@ -276,9 +270,6 @@ class _SpaceRentConfirmationPageState
                                               .primary,
                                         ),
                                       ),
-                                      // SizedBox(
-                                      //   height: 17.h,
-                                      // ),
                                     ],
                                   ),
                                   Column(
@@ -286,9 +277,6 @@ class _SpaceRentConfirmationPageState
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      // SizedBox(
-                                      //   height: 17.h,
-                                      // ),
                                       Text(
                                         'Days',
                                         style: GoogleFonts.lato(
@@ -315,9 +303,6 @@ class _SpaceRentConfirmationPageState
                                               .primary,
                                         ),
                                       ),
-                                      // SizedBox(
-                                      //   height: 17.h,
-                                      // ),
                                     ],
                                   ),
                                 ],
@@ -339,9 +324,6 @@ class _SpaceRentConfirmationPageState
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      // SizedBox(
-                                      //   height: 17.h,
-                                      // ),
                                       Text(
                                         'Start Date',
                                         style: GoogleFonts.lato(
@@ -364,9 +346,6 @@ class _SpaceRentConfirmationPageState
                                               .primary,
                                         ),
                                       ),
-                                      // SizedBox(
-                                      //   height: 17.h,
-                                      // ),
                                     ],
                                   ),
                                   Column(
@@ -374,9 +353,6 @@ class _SpaceRentConfirmationPageState
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      // SizedBox(
-                                      //   height: 17.h,
-                                      // ),
                                       Text(
                                         'End Date',
                                         style: GoogleFonts.lato(
@@ -524,17 +500,12 @@ class _SpaceRentConfirmationPageState
                                         topRight: Radius.circular(30.0),
                                       ),
                                     ),
-                                    // padding:
-                                    //     const EdgeInsets.fromLTRB(24, 0, 24, 20),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        // SizedBox(
-                                        //   height: 30.h,
-                                        // ),
                                         GestureDetector(
                                           onTap: () {
                                             Navigator.of(context).pop();
@@ -657,8 +628,8 @@ class _SpaceRentConfirmationPageState
                                                     ),
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
-                                                          color:
-                                                              Color(0xffBDBDBD),
+                                                          color: const Color(
+                                                              0xffBDBDBD),
                                                           width: 1.0),
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -679,8 +650,8 @@ class _SpaceRentConfirmationPageState
                                                     ),
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
-                                                          color:
-                                                              Color(0xffBDBDBD),
+                                                          color: const Color(
+                                                              0xffBDBDBD),
                                                           width: 1.0),
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -728,14 +699,7 @@ class _SpaceRentConfirmationPageState
                                                           .then((value) {
                                                         final hasSufficientBalance =
                                                             checkSufficientBalance();
-                                                        print(widget.startDate);
-                                                        print(
-                                                            formattedCurrentDate);
-                                                        print(widget
-                                                                .startDate ==
-                                                            formattedCurrentDate);
-                                                        print(
-                                                            hasSufficientBalance);
+
                                                         (widget
                                                                     .startDate ==
                                                                 formattedCurrentDate)
@@ -760,9 +724,7 @@ class _SpaceRentConfirmationPageState
                                                                     widget
                                                                         .startDate,
                                                                     widget
-                                                                        .duration
-                                                                    // fundingController.text,
-                                                                    )
+                                                                        .duration)
                                                                 : insufficientFundsDialog(
                                                                     context)
                                                             : rentState.createRent(
@@ -782,9 +744,8 @@ class _SpaceRentConfirmationPageState
                                                                     .paymentCount,
                                                                 widget
                                                                     .startDate,
-                                                                widget.duration
-                                                                // fundingController.text,
-                                                                );
+                                                                widget
+                                                                    .duration);
                                                       }).catchError(
                                                         (error) {
                                                           setState(() {
@@ -809,8 +770,6 @@ class _SpaceRentConfirmationPageState
                                                       }
                                                     }
                                                   },
-                                                  // validator: validatePinOne,
-                                                  // onChanged: validatePinOne,
                                                   controller: _aPinController,
                                                   length: 4,
                                                   closeKeyboardWhenCompleted:
@@ -905,11 +864,9 @@ class _SpaceRentConfirmationPageState
     );
   }
 
-
   int _calculateDaysDifference(String endDateString, String startDateString) {
     // Parse the provided date strings into DateTime objects
     DateFormat format = DateFormat('dd/MM/yyyy');
-    String today = DateFormat('dd/MM/yyyy').format(DateTime.now());
     DateTime startDate = format.parse(startDateString);
     DateTime endDate = format.parse(endDateString);
 

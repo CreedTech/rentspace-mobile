@@ -9,14 +9,13 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/app_constants.dart';
-// import 'package:rentspace/model/user_details_model.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:rentspace/model/response/utility_response_model.dart';
 
 import '../../../api/global_services.dart';
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 import '../../model/biller_item_model.dart';
 import '../../model/response/customer_response_model.dart';
 import '../../model/response/electricity_response_model.dart';
@@ -26,7 +25,6 @@ class UtilityResponseController extends GetxController {
   final BuildContext context;
 
   UtilityResponseController(this.context);
-  // final userDB = UserDB();
   var isLoading = false.obs;
   var isValidationLoading = false.obs;
   final airtimes = <UtilityResponse>[].obs;
@@ -59,38 +57,23 @@ class UtilityResponseController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // print("result");
-        // print(result);
-
         utilityResponseModel = UtilityResponseModel.fromJson(result);
         isLoading(false);
-        // print('// printing utilites...');
         var billerLists = await Hive.openBox(categoryName);
-        // print(categoryName);
         billerLists.put(categoryName, {
           'data':
               utilityResponseModel!.utilities!.map((x) => x.toJson()).toList(),
           'timestamp': categoryName
         });
 
-        // print('biller lists herefff');
-        // print(billerLists.values);
-
         for (var i = 0; i < utilityResponseModel!.utilities!.length; i++) {
-          // print(utilityResponseModel!.utilities![i].name);
-
-          // var storedData = bundleBox.get(bundleType);
         }
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
       } else {
         isValidationLoading(false);
         var errorResponse = jsonDecode(response.body);
-        // print('Error: ${errorResponse['error']}');
-        // print(response.body);
-        // print('error fetching data');
         if (context.mounted) {
           customErrorDialog(context, 'Error', errorResponse['error']);
         }
@@ -121,7 +104,8 @@ class UtilityResponseController extends GetxController {
     try {
       http.Response response = await http.get(
           Uri.parse(
-              '${AppConstants.BASE_URL}${AppConstants.VFD_GET_BILLER_ITEMS}?billerId=$billerId&divisionId=$divisionId&productId=$productId'),
+            '${AppConstants.BASE_URL}${AppConstants.VFD_GET_BILLER_ITEMS}?billerId=$billerId&divisionId=$divisionId&productId=$productId',
+          ),
           headers: {
             'Content-type': 'application/json; charset=UTF-8',
             'Accept': 'application/json',
@@ -129,8 +113,6 @@ class UtilityResponseController extends GetxController {
           }).timeout(const Duration(seconds: 30));
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        // print('result');
-        // print(result);
         billerItemResponseModel = BillerItemResponseModel.fromJson(result);
         EasyLoading.dismiss();
         isLoading(false);
@@ -141,25 +123,12 @@ class UtilityResponseController extends GetxController {
               .toList(),
           'timestamp': billerId
         });
-
-        // print('biller items hererr');
-        // print(billerItems.values);
-
-        // print('// printing biller items...');
-        // print(billerItemResponseModel);
-        // for (var i = 0; i < utilityResponseModel!.utilities!.length; i++) {
-        //   // print(utilityResponseModel!.utilities![i].name);
-        // }
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
       } else {
         isValidationLoading(false);
         var errorResponse = jsonDecode(response.body);
-        // print('Error: ${errorResponse['error']}');
-        // print(response.body);
-        // print('error fetching data');
         if (context.mounted) {
           customErrorDialog(context, 'Error', errorResponse['error']);
         }
@@ -215,8 +184,6 @@ class UtilityResponseController extends GetxController {
       );
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        // print('result here');
-        // print(result);
         customerResponseModel = CustomerResponseModel.fromJson(result);
         EasyLoading.dismiss();
         isValidationLoading(false);
@@ -224,17 +191,11 @@ class UtilityResponseController extends GetxController {
 
         var userData = customerResponseModel!.data.data;
 
-// Store the extracted data in the Hive box
+        // Store the extracted data in the Hive box
         billerItems.put(billerId, {
           'data': userData.toJson(),
           'timestamp': DateTime.now().toIso8601String()
         });
-
-        // print('biller items here');
-        // print(billerItems.values);
-
-        // print('// printing biller items...');
-        // print(billerItemResponseModel);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         // print('error auth');
@@ -242,9 +203,6 @@ class UtilityResponseController extends GetxController {
       } else {
         isValidationLoading(false);
         var errorResponse = jsonDecode(response.body);
-        // print('Error: ${errorResponse['error']}');
-        // print(response.body);
-        // print('error fetching data');
         if (context.mounted) {
           customErrorDialog(context, 'Error', errorResponse['error']);
         }
@@ -276,15 +234,8 @@ class UtilityResponseController extends GetxController {
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: false,
     );
-    // print('informations');
-    // print(customerId);
-    // print(divisionId);
-    // print("paymentItem : $paymentItem");
-    // print(productId);
-    // print('biller id $billerId');
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
-// 62419148424
     try {
       http.Response response = await http.post(
         Uri.parse(
@@ -306,10 +257,7 @@ class UtilityResponseController extends GetxController {
       );
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        // print('result ');
-        // print(result['data']['data']['user']['name']);
         electricityResponseModel = ElectricityResponseModel.fromJson(result);
-        // print(electricityResponseModel);
         EasyLoading.dismiss();
         isValidationLoading(false);
         var billerItems =
@@ -317,27 +265,17 @@ class UtilityResponseController extends GetxController {
 
         var userData = electricityResponseModel!.data.data;
 
-// Store the extracted data in the Hive box
+        // Store the extracted data in the Hive box
         billerItems.put(billerId, {
           'data': userData.toJson(),
           'timestamp': DateTime.now().toIso8601String()
         });
-
-        // print('biller items here');
-        // print(billerItems.values);
-
-        // // print('// printing biller items...');
-        // // print(billerItemResponseModel);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
       } else {
         isValidationLoading(false);
         var errorResponse = jsonDecode(response.body);
-        // print('Error: ${errorResponse['error']}');
-        // print(response.body);
-        // print('error fetching data');
         if (context.mounted) {
           customErrorDialog(context, 'Error', errorResponse['error']);
         }

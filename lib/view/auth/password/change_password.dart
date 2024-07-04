@@ -1,6 +1,5 @@
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +7,6 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/icons.dart';
-import '../../../constants/widgets/custom_dialog.dart';
 import '../../../controller/auth/user_controller.dart';
 
 class ChangePassword extends StatefulWidget {

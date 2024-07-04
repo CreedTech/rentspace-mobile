@@ -6,32 +6,12 @@ class SharedPreferencesManager {
 
   Future<SharedPreferencesManager> init() async {
     _prefs = await SharedPreferences.getInstance();
-    // print('Initialize');
     return this;
   }
 
-  // Future<bool> isLoggedIn() async {
-  //   // final _prefs = await SharedPreferences.getInstance();
-  //   return _prefs.getBool(IS_LOGGED_IN) ?? false;
-  // }
-
-  // Future<bool> setLoggedIn({required bool value}) async {
-  //   // final _prefs = await SharedPreferences.getInstance();
-  //   return _prefs.setBool(IS_LOGGED_IN, value);
-  // }
-
-  // Future<String> getPin() async {
-  //   // final _prefs = await SharedPreferences.getInstance();
-  //   return _prefs.getString(USER_TRANSACTION_PIN) ?? '';
-  // }
   Future<void> removeToken() async {
     _prefs.remove('token');
   }
-
-  // Future<bool> setPin({required String value}) async {
-  //   // final _prefs = await SharedPreferences.getInstance();
-  //   return _prefs.setString(USER_TRANSACTION_PIN, value);
-  // }
 
   Future<bool> hasSeenOnboarding() async {
     // final _prefs = await SharedPreferences.getInstance();
@@ -101,24 +81,4 @@ class SharedPreferencesManager {
     // final prefs = await SharedPreferences.getInstance();
     return _prefs.getString('fcm_token') ?? '';
   }
-
-  // Future<void> savePin(String newPin) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString('pin', newPin);
-  //   // pin = newPin;
-  // }
-
-  // // Function to retrieve the user's PIN
-  // Future getPin() async {
-  //   // final prefs = await SharedPreferences.getInstance();
-  //   return _prefs.getString('pin');
-  // }
-
-  // // Function to update the user's PIN
-  // Future<void> updatePin(String newPin) async {
-  //   await savePin(newPin);
-  //   // Call your update PIN endpoint here
-  // }
-
-
 }

@@ -9,8 +9,6 @@ class AirtimesModel {
     if (airtimesData is List<dynamic>) {
       // If airtimesData is a List, map each element to Airtimes object.
       airtimes = airtimesData.map((e) => Airtimes.fromJson(e)).toList();
-      // print(airtimes!.length);
-      // print(airtimesData[0]);
     } else if (airtimesData is Map<String, dynamic>) {
       // If airtimesData is a Map, create a single Airtimes object.
       airtimes = [Airtimes.fromJson(airtimesData)];

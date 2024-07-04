@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,8 +9,6 @@ import 'package:pinput/pinput.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/utils/obscureEmail.dart';
-import '../../constants/widgets/custom_dialog.dart';
 import '../../controller/auth/auth_controller.dart';
 
 class MultipleDeviceLoginOtpPage extends ConsumerStatefulWidget {
@@ -92,13 +89,11 @@ class _MultipleDeviceLoginOtpPageState
 
     final authState = ref.watch(authControllerProvider.notifier);
     String formattedTime = '$_minutes:${_seconds.toString().padLeft(2, '0')}';
-    print(MediaQuery.of(context).size.height);
     return UpgradeAlert(
       upgrader: Upgrader(
         showIgnore: false,
         durationUntilAlertAgain: const Duration(seconds: 5),
         debugLogging: true,
-        // debugDisplayAlways:true,
         dialogStyle: UpgradeDialogStyle.cupertino,
         showLater: false,
         canDismissDialog: false,
@@ -209,30 +204,31 @@ class _MultipleDeviceLoginOtpPageState
                                       RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
-                                            style: GoogleFonts.lato(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14,
+                                          style: GoogleFonts.lato(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text:
+                                                  "Email Verification! Enter One-Time Password ",
+                                              style: GoogleFonts.lato(
+                                                color: Theme.of(context)
+                                                    .primaryColorLight,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text:
-                                                    "Email Verification! Enter One-Time Password ",
-                                                style: GoogleFonts.lato(
-                                                  color: Theme.of(context)
-                                                      .primaryColorLight,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                            TextSpan(
+                                              text:
+                                                  '\n sent to ${widget.email}',
+                                              style: GoogleFonts.lato(
+                                                color: Theme.of(context)
+                                                    .primaryColorLight,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              TextSpan(
-                                                text:
-                                                    '\n sent to ${widget.email}',
-                                                style: GoogleFonts.lato(
-                                                  color: Theme.of(context)
-                                                      .primaryColorLight,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 32.h,
@@ -319,7 +315,7 @@ class _MultipleDeviceLoginOtpPageState
                                     setState(() {
                                       isFilled = true;
                                     });
-                                    print(otpController.text);
+
                                     await authState.verifySingleDeviceLoginOtp(
                                         context,
                                         widget.email,
@@ -342,34 +338,38 @@ class _MultipleDeviceLoginOtpPageState
                                     alignment: Alignment.center,
                                     child: RichText(
                                       textAlign: TextAlign.left,
-                                      text: TextSpan(children: <TextSpan>[
-                                        TextSpan(
-                                          text: "Didn’t receive code? ",
-                                          style: GoogleFonts.lato(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        (_seconds == 0)
-                                            ? TextSpan(
-                                                text: 'Resend OTP ',
-                                                style: GoogleFonts.lato(
-                                                    color: Theme.of(context)
-                                                        .primaryColorLight,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14),
-                                              )
-                                            : TextSpan(
-                                                text: ' ($formattedTime)',
-                                                style: GoogleFonts.lato(
-                                                    color: Theme.of(context)
-                                                        .primaryColorLight,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14),
-                                              ),
-                                      ],),
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: "Didn’t receive code? ",
+                                            style: GoogleFonts.lato(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          (_seconds == 0)
+                                              ? TextSpan(
+                                                  text: 'Resend OTP ',
+                                                  style: GoogleFonts.lato(
+                                                      color: Theme.of(context)
+                                                          .primaryColorLight,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 14),
+                                                )
+                                              : TextSpan(
+                                                  text: ' ($formattedTime)',
+                                                  style: GoogleFonts.lato(
+                                                      color: Theme.of(context)
+                                                          .primaryColorLight,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 14),
+                                                ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -434,9 +434,7 @@ class _MultipleDeviceLoginOtpPageState
                                   height: 20.h,
                                 ),
                                 Container(
-                                  // width: MediaQuery.of(context).size.width * 2,
                                   alignment: Alignment.center,
-                                  // height: 110.h,
                                   child: Column(
                                     children: [
                                       ElevatedButton(

@@ -31,7 +31,6 @@ class _SpaceRentInterestHistoryPageState
 
   Future<void> onRefresh() async {
     refreshController.refreshCompleted();
-    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
     if (mounted) {
       setState(() {
         isRefresh = true;
@@ -120,7 +119,7 @@ class _SpaceRentInterestHistoryPageState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${rentController.rentModel!.rents![widget.current].rentName} balance',
+                    'Balance',
                     style: GoogleFonts.lato(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w400,
@@ -128,8 +127,7 @@ class _SpaceRentInterestHistoryPageState
                     ),
                   ),
                   Text(
-                    nairaFormaet.format(rentController
-                        .rentModel!.rents![widget.current].spaceRentInterest),
+                    '₦ ${rentController.rentModel!.rents![widget.current].spaceRentInterest}',
                     style: GoogleFonts.roboto(
                       color: const Color(0xff278210),
                       fontWeight: FontWeight.w600,
@@ -144,7 +142,7 @@ class _SpaceRentInterestHistoryPageState
               height: 20,
             ),
             (_interests.isEmpty)
-                ? Container(
+                ? SizedBox(
                     height: MediaQuery.of(context).size.height / 2,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -210,15 +208,6 @@ class _SpaceRentInterestHistoryPageState
                                       left: 12.75, top: 16, right: 12.75),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    // boxShadow: [
-                                    //   BoxShadow(
-                                    //     color: Colors.grey
-                                    //         .withOpacity(0.5), // Shadow color
-                                    //     spreadRadius: 0.5, // Spread radius
-                                    //     blurRadius: 2, // Blur radius
-                                    //     offset: const Offset(0, 3), // Offset
-                                    //   ),
-                                    // ],
                                     color: Theme.of(context).canvasColor,
                                   ),
                                   child: Column(
@@ -229,9 +218,6 @@ class _SpaceRentInterestHistoryPageState
                                               children: [
                                                 Column(
                                                   children: [
-                                                    // const SizedBox(
-                                                    //   height: 24,
-                                                    // ),
                                                     Container(
                                                       padding: const EdgeInsets
                                                           .symmetric(
@@ -256,9 +242,6 @@ class _SpaceRentInterestHistoryPageState
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
                                                                       .start,
-                                                              // mainAxisAlignment:
-                                                              //     MainAxisAlignment
-                                                              //         .spaceBetween,
                                                               children: [
                                                                 Flexible(
                                                                   flex: 2,
@@ -355,7 +338,6 @@ class _SpaceRentInterestHistoryPageState
                                                         ],
                                                       ),
                                                     ),
-
                                                     Divider(
                                                       thickness: 1,
                                                       color: Theme.of(context)
@@ -385,10 +367,5 @@ class _SpaceRentInterestHistoryPageState
         ),
       ),
     );
-  }
-
-  String formatAsPercentage(double value) {
-    int percentage = (value * 100).round();
-    return '$percentage%';
   }
 }

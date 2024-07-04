@@ -11,8 +11,6 @@ class BillerItemResponseModel {
   });
 
   factory BillerItemResponseModel.fromJson(Map<String, dynamic> json) {
-    // // print('data');
-    // // print(Data.fromJson(json['data']));
     return BillerItemResponseModel(
       status: json['status'],
       message: json['message'],
@@ -47,13 +45,10 @@ class Data {
             paymentItemsData.map((e) => BillerItem.fromJson(e)).toList(),
       );
 
-      // // print(rents!.length);
     } else if (paymentItemsData is Map<String, dynamic>) {
-      // print("Here");
       return Data(
         paymentItems: [BillerItem.fromJson(paymentItemsData)],
       );
-      // // print(rents);
     } else {
       return Data(paymentItems: []);
     }

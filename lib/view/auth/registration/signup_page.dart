@@ -1,7 +1,4 @@
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,66 +6,36 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/constants/widgets/custom_button.dart';
-import 'package:rentspace/constants/widgets/custom_dialog.dart';
+import 'package:rentspace/widgets/custom_button.dart';
 import 'package:rentspace/view/terms_and_conditions/terms_and_conditions.dart';
 import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/icons.dart';
-import 'package:upgrader/upgrader.dart';
+import 'package:rentspace/widgets/custom_text_field_widget.dart';
 
-// import '../constants/db/firebase_db.dart';
 import '../../../controller/auth/auth_controller.dart';
-// import 'package:http/http.dart' as http;
+import '../../../widgets/custom_dialogs/index.dart';
 
-String dropdownValue = 'User';
 bool isChecked = false;
 
 class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({super.key});
 
-  // @override
-  // _SignupPageConsumerState createState() => _SignupPageConsumerState();
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SignupPageState();
 }
 
-var now = DateTime.now();
-var formatter = DateFormat('yyyy-MM-dd');
-String formattedDate = formatter.format(now);
-// CollectionReference users = FirebaseFirestore.instance.collection('accounts');
-// CollectionReference allUsers =
-//     FirebaseFirestore.instance.collection('accounts');
-String _mssg = "";
-String vName = "";
-String vNum = "";
-bool notLoading = true;
-
 class _SignupPageState extends ConsumerState<SignupPage> {
-  // final UserController userController = Get.find();
-  final form = intl.NumberFormat.decimalPattern();
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final String collectionName = 'dva';
-
-  Timer? timer;
-
   bool obscurity = true;
   Icon lockIcon = LockIcon().open;
-  String enteredPin = '';
-  bool isPinVisible = false;
-  // ignore: prefer_typing_uninitialized_variables
-  var onButtonPressed;
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
 
-  // final RoundedLoadingButtonController _btnController =
-  //     RoundedLoadingButtonController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _firstnameController = TextEditingController();
@@ -76,7 +43,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _referalController = TextEditingController();
-  // final TextEditingController _bvnController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController repeatPasswordController =
@@ -88,7 +54,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   String? selectedGender;
   late int genderValue;
   DateTime? _dateTime;
-  String _format = 'yyyy-MMMM-dd';
+  final String _format = 'yyyy-MMMM-dd';
   bool isDeviceConnected = false;
   bool isAlertSet = false;
   late StreamSubscription subscription;
@@ -112,11 +78,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     super.initState();
     getConnectivity();
     _usernameController.clear();
-    setState(() {
-      _mssg = "";
-      vNum = "";
-      vName = "";
-    });
   }
 
   void getConnectivity() {
@@ -194,13 +155,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         ),
                         onPressed: () async {
                           Navigator.pop(context);
-                          // EasyLoading.dismiss();
                           setState(() => isAlertSet = false);
                           isDeviceConnected =
                               await InternetConnectionChecker().hasConnection;
                           if (!isDeviceConnected && isAlertSet == false) {
-                            // showDialogBox();
-                            noInternetConnectionScreen(context);
+                            if (context.mounted) {
+                              noInternetConnectionScreen(context);
+                            }
                             setState(() => isAlertSet = true);
                           }
                         },
@@ -314,359 +275,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       return null;
     }
 
-    final username = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: _usernameController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-      keyboardType: TextInputType.text,
-      validator: validateUsername,
-      decoration: InputDecoration(
-        // label: Text(
-        //   "Choose new username",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
-        // prefixText: "SPACER/",
-        prefixStyle: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 13,
-          fontWeight: FontWeight.w400,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xffE0E0E0), width: 1),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xffE0E0E0), width: 1),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1,
-          ),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-    );
-
-    //Phone number
-    final phoneNumber = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: _phoneController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: validatePhone,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-      keyboardType: TextInputType.phone,
-      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-      maxLength: 11,
-      decoration: InputDecoration(
-        // label: Text(
-        //   "Enter your Phone number",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-        fillColor: brandThree,
-      ),
-    );
-
-//Address
-    final referal = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: _referalController,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        // label: Text(
-        //   "Referal code (Optional)",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-        // hintText: 'You and your referrer earn 500 naira each',
-        // hintStyle: GoogleFonts.lato(
-        //   color: Colors.grey,
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.w400,
-        // ),
-      ),
-      maxLines: 1,
-    );
-
-    //firstname
-    final firstname = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: _firstnameController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-      keyboardType: TextInputType.name,
-      decoration: InputDecoration(
-        // label: Text(
-        //   "Enter your First name",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-        // hintText: 'legal first name',
-        errorStyle: GoogleFonts.lato(
-          color: Colors.red,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      maxLines: 1,
-      validator: validateFirst,
-    );
-    final lastname = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: _lastnameController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary, fontSize: 14),
-      keyboardType: TextInputType.name,
-      decoration: InputDecoration(
-        // label: Text(
-        //   "Enter Last name",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-        // hintText: 'legal last name',
-        // hintStyle: GoogleFonts.lato(
-        //   color: Colors.grey,
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.w400,
-        // ),
-        errorStyle: GoogleFonts.lato(
-          color: Colors.red,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      maxLines: 1,
-      validator: validateLast,
-    );
-    //email field
-    final email = TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary, fontSize: 14),
-      controller: _emailController,
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        // label: Text(
-        //   "Enter your email",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-        // hintText: 'e.g mymail@inbox.com',
-        // hintStyle: GoogleFonts.lato(
-        //   color: Colors.grey,
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.w400,
-        // ),
-      ),
-      maxLines: 1,
-      validator: validateMail,
-    );
-    //password field
-    final password = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: _passwordController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: obscurity,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary, fontSize: 14),
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1,
-          ),
-        ),
-        suffix: InkWell(
-          onTap: visibility,
-          child: lockIcon,
-        ),
-        suffixIconColor: Colors.black,
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      validator: validatePass,
-    );
-    //Username
-
-    void _showDatePicker() {
+    void showDatePicker() {
       DatePicker.showDatePicker(
         context,
         onMonthChangeStartWithFirstDate: true,
@@ -691,6 +300,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         maxDateTime: DateTime.now(),
         dateFormat: _format,
         locale: DateTimePickerLocale.en_us,
+        // ignore: avoid_print
         onCancel: () => print('onCancel'),
         onChange: (dateTime, List<int> index) {
           setState(() {
@@ -701,7 +311,6 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           setState(() {
             _dateTime = dateTime;
           });
-          print(dateTime);
         },
         onClose: () {
           if (_dateTime != null && _dateTime != selectedDate) {
@@ -723,905 +332,486 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       );
     }
 
-    final dob = TextFormField(
-      controller: dateController,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-      readOnly: true,
-      onTap: _showDatePicker,
-      // onTap: () => _selectDate(context),
-      decoration: InputDecoration(
-        // labelText: 'Date of Birth',
-        // labelStyle: GoogleFonts.lato(
-        //   color: Colors.grey,
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.w400,
-        // ),
-        suffixIcon: Icon(
-          Icons.calendar_today,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0.0,
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            size: 27,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
+        centerTitle: true,
+        title: Text(
+          'Sign up',
+          style: GoogleFonts.lato(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.w600,
+            fontSize: 24,
           ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 23.w),
+            child: Image.asset(
+              'assets/icons/logo_icon.png',
+              height: 35.7.h,
+            ),
+          ),
+        ],
       ),
-    );
-
-    final address = TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-
-      // minLines: 3,
-      keyboardType: TextInputType.streetAddress,
-      controller: _addressController,
-      maxLines: 1,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      validator: validateAddress,
-      // labelText: 'Email Address',
-    );
-
-    final confirmPassword = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: repeatPasswordController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: obscurity,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary, fontSize: 14),
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color(0xffE0E0E0),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1.0,
-          ),
-        ),
-        suffix: InkWell(
-          onTap: visibility,
-          child: lockIcon,
-        ),
-        suffixIconColor: Colors.black,
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please confirm your password';
-        }
-        if (value != _passwordController.text) {
-          return 'Passwords do not match';
-        }
-
-        return null;
-      },
-    );
-
-    final genderSelect = TextFormField(
-      onTap: () {
-        showModalBottomSheet(
-          isDismissible: true,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          context: context,
-          builder: (BuildContext context) {
-            return FractionallySizedBox(
-              heightFactor: 0.45,
-              child: Container(
-                // height: 350,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(19)),
-                child: ListView(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+              child: Form(
+                key: registerFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Select Gender',
-                      style: GoogleFonts.lato(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w500),
+                    CustomTextFieldWidget(
+                      controller: _firstnameController,
+                      keyboardType: TextInputType.name,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'First Name',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      validator: validateFirst,
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 20.h,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).canvasColor,
-                        borderRadius: BorderRadius.circular(20.0),
+                    CustomTextFieldWidget(
+                      controller: _lastnameController,
+                      keyboardType: TextInputType.name,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'Last Name',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      validator: validateLast,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: _usernameController,
+                      keyboardType: TextInputType.text,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'User Name',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      validator: validateUsername,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: _emailController,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'Email',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: validateMail,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: _phoneController,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'Phone Number',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      validator: validatePhone,
+                      keyboardType: TextInputType.phone,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      maxLength: 11,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: _passwordController,
+                      obscureText: obscurity,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'Password',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      validator: validatePass,
+                      keyboardType: TextInputType.text,
+                      suffix: InkWell(
+                        onTap: visibility,
+                        child: lockIcon,
                       ),
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: genders.length,
-                        itemBuilder: (context, idx) {
-                          return Column(
-                            children: [
-                              ListTileTheme(
-                                contentPadding: const EdgeInsets.only(
-                                    left: 13.0, right: 13.0, top: 4, bottom: 4),
-                                selectedColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                child: ListTile(
-                                  title: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.4,
-                                        child: Text(
-                                          genders[idx],
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.lato(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  // selected: _selectedCarrier == name[idx],
-                                  onTap: () {
-                                    print(_genderController.text);
-                                    setState(() {
-                                      selectedGender = genders[idx];
-                                      genderValue =
-                                          selectedGender == 'Male' ? 1 : 2;
-                                    });
-                                    print(genderValue);
-
-                                    _genderController.text = genders[idx];
-                                    // });
-
-                                    Navigator.pop(
-                                      context,
-                                    );
-
-                                    setState(() {});
-                                  },
+                      suffixIconColor: Colors.black,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.info_outline,
+                              size: 15,
+                              color: Color(0xff4E4B4B),
+                            ),
+                            SizedBox(
+                              width: 320.w,
+                              child: Text(
+                                'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
+                                softWrap: true,
+                                style: GoogleFonts.lato(
+                                  color: const Color(0xff828282),
+                                  fontSize: 10,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              (idx != genders.length - 1)
-                                  ? Divider(
-                                      color: Theme.of(context).dividerColor,
-                                      height: 1,
-                                      indent: 13,
-                                      endIndent: 13,
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          );
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: repeatPasswordController,
+                      obscureText: obscurity,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'Confirm Password',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please confirm your password';
+                        }
+                        if (value != _passwordController.text) {
+                          return 'Passwords do not match';
+                        }
+
+                        return null;
+                      },
+                      keyboardType: TextInputType.text,
+                      suffix: InkWell(
+                        onTap: visibility,
+                        child: lockIcon,
+                      ),
+                      suffixIconColor: Colors.black,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: dateController,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: true,
+                      onTap: showDatePicker,
+                      labelText: 'Date Of Birth',
+                      maxLines: 1,
+                      keyboardType: TextInputType.text,
+                      suffixIcon: Icon(
+                        Icons.calendar_today,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      keyboardType: TextInputType.streetAddress,
+                      controller: _addressController,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'Residential Address',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      validator: validateAddress,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: _genderController,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: true,
+                      keyboardType: TextInputType.text,
+                      onTap: () {
+                        showModalBottomSheet(
+                          isDismissible: true,
+                          backgroundColor:
+                              Theme.of(context).scaffoldBackgroundColor,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return FractionallySizedBox(
+                              heightFactor: 0.45,
+                              child: Container(
+                                // height: 350,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 20),
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    borderRadius: BorderRadius.circular(19)),
+                                child: ListView(
+                                  children: [
+                                    Text(
+                                      'Select Gender',
+                                      style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).canvasColor,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      child: ListView.builder(
+                                        physics: const BouncingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: genders.length,
+                                        itemBuilder: (context, idx) {
+                                          return Column(
+                                            children: [
+                                              ListTileTheme(
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 13.0,
+                                                        right: 13.0,
+                                                        top: 4,
+                                                        bottom: 4),
+                                                selectedColor: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary,
+                                                child: ListTile(
+                                                  title: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      const SizedBox(
+                                                        width: 8,
+                                                      ),
+                                                      SizedBox(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.4,
+                                                        child: Text(
+                                                          genders[idx],
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: GoogleFonts.lato(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .primary),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      selectedGender =
+                                                          genders[idx];
+                                                      genderValue =
+                                                          selectedGender ==
+                                                                  'Male'
+                                                              ? 1
+                                                              : 2;
+                                                    });
+                                                    _genderController.text =
+                                                        genders[idx];
+
+                                                    Navigator.pop(
+                                                      context,
+                                                    );
+
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                              ),
+                                              (idx != genders.length - 1)
+                                                  ? Divider(
+                                                      color: Theme.of(context)
+                                                          .dividerColor,
+                                                      height: 1,
+                                                      indent: 13,
+                                                      endIndent: 13,
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      labelText: 'Gender',
+                      maxLines: 1,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextFieldWidget(
+                      controller: _referalController,
+                      obscureText: false,
+                      filled: false,
+                      readOnly: false,
+                      labelText: 'Referral Code(Optional)',
+                      autoValidateMode: AutovalidateMode.onUserInteraction,
+                      maxLines: 1,
+                      // validator: v,
+                      keyboardType: TextInputType.text,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Checkbox.adaptive(
+                          visualDensity: VisualDensity.adaptivePlatformDensity,
+                          value: isChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isChecked = value!;
+                            });
+                          },
+                          overlayColor: MaterialStateColor.resolveWith(
+                            (states) => brandTwo,
+                          ),
+                          fillColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.selected)) {
+                              return brandTwo;
+                            }
+                            return const Color(0xffF2F2F2);
+                          }),
+                          focusColor: MaterialStateColor.resolveWith(
+                            (states) => brandTwo,
+                          ),
+                          activeColor: MaterialStateColor.resolveWith(
+                            (states) => brandTwo,
+                          ),
+                          side: const BorderSide(
+                            color: Color(0xffBDBDBD),
+                          ),
+                        ),
+                        Text(
+                          'You agree to our ',
+                          style: GoogleFonts.lato(
+                            fontSize: 12,
+                            color: Theme.of(context).colorScheme.primary,
+
+                            // fontFamily: "DefaultFontFamily",
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(const TermsAndConditions());
+                          },
+                          child: Text(
+                            'Terms of service',
+                            style: GoogleFonts.lato(
+                              color: brandTwo,
+                              // fontFamily: "DefaultFontFamily",
+                              fontSize: 12,
+                              // decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: CustomButton(
+                        text: 'Sign up',
+                        onTap: () {
+                          FocusScope.of(context).unfocus();
+                          if (registerFormKey.currentState!.validate()) {
+                            if (isChecked == true) {
+                              authState.signUp(
+                                  context,
+                                  _firstnameController.text.trim(),
+                                  _lastnameController.text.trim(),
+                                  _usernameController.text.trim(),
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                  _phoneController.text.trim(),
+                                  dateController.text.trim(),
+                                  _addressController.text.trim(),
+                                  _genderController.text.trim(),
+                                  referralCode:
+                                      _referalController.text.trim() ?? '');
+                            } else {
+                              customErrorDialog(context, 'Error!',
+                                  "You have to agree to the terms of service");
+                            }
+                          } else {
+                            customErrorDialog(context, 'Error!',
+                                "Please fill the form properly to proceed");
+                          }
                         },
                       ),
+                    ),
+                    const SizedBox(
+                      height: 30,
                     ),
                   ],
                 ),
               ),
-            );
-          },
-        );
-      },
-      readOnly: true,
-      // autovalidateMode: AutovalidateMode.onUserInteraction,
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      style: GoogleFonts.lato(
-        color: Theme.of(context).colorScheme.primary,
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-      ),
-
-      controller: _genderController,
-      textAlignVertical: TextAlignVertical.center,
-      // textCapitalization: TextCapitalization.sentences,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1.0),
-        ),
-        filled: false,
-        fillColor: Colors.transparent,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
-      ),
-      maxLines: 1,
-    );
-
-    return UpgradeAlert(
-      upgrader: Upgrader(
-        showIgnore: false,
-        durationUntilAlertAgain: const Duration(seconds: 5),
-        debugLogging: true,
-        // debugDisplayAlways:true,
-        dialogStyle: UpgradeDialogStyle.cupertino,
-        showLater: false,
-        canDismissDialog: false,
-        showReleaseNotes: true,
-      ),
-      child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 0.0,
-          leading: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              size: 27,
-              color: Theme.of(context).colorScheme.primary,
             ),
           ),
-          centerTitle: true,
-          title: Text(
-            'Sign up',
-            style: GoogleFonts.lato(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.w600,
-              fontSize: 24,
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 23.w),
-              child: Image.asset(
-                'assets/icons/logo_icon.png',
-                height: 35.7.h,
-              ),
-            ),
-          ],
-        ),
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                child: Form(
-                  key: registerFormKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'First Name',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          firstname,
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Last Name',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          lastname,
-                        ],
-                      ),
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [
-                      //           Padding(
-                      //             padding: EdgeInsets.symmetric(
-                      //                 vertical: 3.h, horizontal: 3.w),
-                      //             child: Text(
-                      //               'First Name',
-                      //               style: GoogleFonts.lato(
-                      //                 color: Theme.of(context).colorScheme.primary,
-                      //                 fontWeight: FontWeight.w600,
-                      //                 fontSize: 12,
-                      //               ),
-                      //             ),
-                      //           ),
-                      //           firstname,
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     SizedBox(width: 10.w),
-                      //     Expanded(
-                      //       child: Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [
-                      //           Padding(
-                      //             padding: EdgeInsets.symmetric(
-                      //                 vertical: 3.h, horizontal: 3.w),
-                      //             child: Text(
-                      //               'Last Name',
-                      //               style: GoogleFonts.lato(
-                      //                 color: Theme.of(context).colorScheme.primary,
-                      //                 fontWeight: FontWeight.w600,
-                      //                 fontSize: 12,
-                      //                 // fontFamily: "DefaultFontFamily",
-                      //               ),
-                      //             ),
-                      //           ),
-                      //           lastname,
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     // Column(
-                      //     //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //     //   children: [
-                      //     //     Padding(
-                      //     //       padding: EdgeInsets.symmetric(
-                      //     //           vertical: 3.h, horizontal: 3.w),
-                      //     //       child: Text(
-                      //     //         'First Name',
-                      //     //         style: GoogleFonts.lato(
-                      //     //           color: Theme.of(context).colorScheme.primary,
-                      //     //           fontWeight: FontWeight.w600,
-                      //     //           fontSize: 12,
-                      //     //           // fontFamily: "DefaultFontFamily",
-                      //     //         ),
-                      //     //       ),
-                      //     //     ),
-                      //     //     firstname,
-                      //     //   ],
-                      //     // ),
-                      //     // Column(
-                      //     //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //     //   children: [
-                      //     //     Padding(
-                      //     //       padding: EdgeInsets.symmetric(
-                      //     //           vertical: 3.h, horizontal: 3.w),
-                      //     //       child: Text(
-                      //     //         'First Name',
-                      //     //         style: GoogleFonts.lato(
-                      //     //           color: Theme.of(context).colorScheme.primary,
-                      //     //           fontWeight: FontWeight.w600,
-                      //     //           fontSize: 12,
-                      //     //           // fontFamily: "DefaultFontFamily",
-                      //     //         ),
-                      //     //       ),
-                      //     //     ),
-                      //     //     firstname,
-                      //     //   ],
-                      //     // ),
-                      //   ],
-                      // ),
-
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Padding(
-                      //       padding: EdgeInsets.symmetric(
-                      //           vertical: 3.h, horizontal: 3.w),
-                      //       child: Text(
-                      //         'First Name',
-                      //         style: GoogleFonts.lato(
-                      //           color: Theme.of(context).colorScheme.primary,
-                      //           fontWeight: FontWeight.w600,
-                      //           fontSize: 12,
-                      //           // fontFamily: "DefaultFontFamily",
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     firstname,
-                      //   ],
-                      // ),
-                      // SizedBox(
-                      //   height: 20.h,
-                      // ),
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Padding(
-                      //       padding: EdgeInsets.symmetric(
-                      //           vertical: 3.h, horizontal: 3.w),
-                      //       child: Text(
-                      //         'Last Name',
-                      //         style: GoogleFonts.lato(
-                      //           color: Theme.of(context).colorScheme.primary,
-                      //           fontWeight: FontWeight.w600,
-                      //           fontSize: 12,
-                      //           // fontFamily: "DefaultFontFamily",
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     lastname,
-                      //   ],
-                      // ),
-
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'User Name',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          username,
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Email',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          email,
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Phone Number',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          phoneNumber,
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Password',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          password,
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.info_outline,
-                                    size: 15,
-                                    color: Color(0xff4E4B4B),
-                                  ),
-                                  SizedBox(
-                                    width: 320.w,
-                                    child: Text(
-                                      'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
-                                      softWrap: true,
-                                      style: GoogleFonts.lato(
-                                        color: const Color(0xff828282),
-                                        fontSize: 10,
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Confirm Password',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          confirmPassword,
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Date Of Birth',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      dob,
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Residential Address',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          address,
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Gender',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          genderSelect,
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 3.h, horizontal: 3.w),
-                            child: Text(
-                              'Referral Code(Optional)',
-                              style: GoogleFonts.lato(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          referal,
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Wrap(
-                        // alignment: WrapAlignment.center,
-                        // runAlignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Checkbox.adaptive(
-                            visualDensity:
-                                VisualDensity.adaptivePlatformDensity,
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            },
-                            overlayColor: MaterialStateColor.resolveWith(
-                              (states) => brandTwo,
-                            ),
-                            fillColor: MaterialStateProperty.resolveWith<Color>(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.selected)) {
-                                return brandTwo;
-                              }
-                              return const Color(0xffF2F2F2);
-                            }),
-                            focusColor: MaterialStateColor.resolveWith(
-                              (states) => brandTwo,
-                            ),
-                            activeColor: MaterialStateColor.resolveWith(
-                              (states) => brandTwo,
-                            ),
-                            side: const BorderSide(
-                              color: Color(0xffBDBDBD),
-                            ),
-                          ),
-                          Text(
-                            'You agree to our ',
-                            style: GoogleFonts.lato(
-                              fontSize: 12,
-                              color: Theme.of(context).colorScheme.primary,
-
-                              // fontFamily: "DefaultFontFamily",
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.to(const TermsAndConditions());
-                            },
-                            child: Text(
-                              'Terms of service',
-                              style: GoogleFonts.lato(
-                                color: brandTwo,
-                                // fontFamily: "DefaultFontFamily",
-                                fontSize: 12,
-                                // decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: CustomButton(
-                          text: 'Sign up',
-                          onTap: () {
-                            FocusScope.of(context).unfocus();
-                            if (registerFormKey.currentState!.validate()) {
-                              if (isChecked == true) {
-                                print(genderValue.toString());
-                                print(dateController.text);
-                                authState.signUp(
-                                    context,
-                                    _firstnameController.text.trim(),
-                                    _lastnameController.text.trim(),
-                                    _usernameController.text.trim(),
-                                    _emailController.text.trim(),
-                                    _passwordController.text.trim(),
-                                    _phoneController.text.trim(),
-                                    dateController.text.trim(),
-                                    _addressController.text.trim(),
-                                    _genderController.text.trim(),
-                                    referralCode:
-                                        _referalController.text.trim() ?? '');
-                              } else {
-                                customErrorDialog(context, 'Error!',
-                                    "You have to agree to the terms of service");
-                              }
-                            } else {
-                              customErrorDialog(context, 'Error!',
-                                  "Please fill the form properly to proceed");
-                            }
-                          },
-                        ),
-                      ),
-                      // Center(
-                      //   child: ElevatedButton(
-                      //     style: ElevatedButton.styleFrom(
-                      //       minimumSize: const Size(300, 50),
-                      //       backgroundColor: brandOne,
-                      //       elevation: 0,
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(
-                      //           10,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     onPressed: () {
-                      //       FocusScope.of(context).unfocus();
-                      //       if (registerFormKey.currentState!.validate()) {
-                      //         if (isChecked == true) {
-                      //           print(genderValue.toString());
-                      //           print(dateController.text);
-                      //           authState.signUp(
-                      //               context,
-                      //               _firstnameController.text.trim(),
-                      //               _lastnameController.text.trim(),
-                      //               _usernameController.text.trim(),
-                      //               _emailController.text.trim(),
-                      //               _passwordController.text.trim(),
-                      //               _phoneController.text.trim(),
-                      //               dateController.text.trim(),
-                      //               _addressController.text.trim(),
-                      //               _genderController.text.trim(),
-                      //               referralCode:
-                      //                   _referalController.text.trim() ?? '');
-                      //         } else {
-                      //           customErrorDialog(context, 'Error!',
-                      //               "You have to agree to the terms of service");
-                      //         }
-                      //       } else {
-                      //         customErrorDialog(context, 'Error!',
-                      //             "Please fill the form properly to proceed");
-                      //       }
-                      //     },
-                      //     child: Text(
-                      //       'Sign Up',
-                      //       textAlign: TextAlign.center,
-                      //       style: GoogleFonts.lato(
-                      //         color: Colors.white,
-                      //         fontSize: 12,
-                      //         fontWeight: FontWeight.w600,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-
-                      const SizedBox(
-                        height: 30,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

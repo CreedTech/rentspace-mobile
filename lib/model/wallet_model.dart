@@ -9,12 +9,8 @@ class WalletModel {
     if (walletData is Map<String, dynamic>) {
       // If userDetailsData is a Map, create a single UserDetailsModel object.
       wallet = [Wallet.fromJson(walletData)];
-      // print(wallet);
     } else {
-      // Handle the case where userDetailsData is not a Map (e.g., it's a List).
       // You might want to log an error or handle this case differently based on your requirements.
-      // print('userDetailsData is not a Map: $walletData');
-      // Set userDetails to an empty list or null, depending on your needs.
       wallet = [];
     }
   }
@@ -29,7 +25,6 @@ class WalletModel {
 class Wallet {
   final String id;
   final String pin;
-  // Account account;
   final bool isPinSet;
   final dynamic mainBalance;
   final num availableBalance;
@@ -42,7 +37,6 @@ class Wallet {
   Wallet({
     required this.id,
     required this.pin,
-    // required this.account,
     required this.isPinSet,
     required this.mainBalance,
     required this.availableBalance,
@@ -56,7 +50,6 @@ class Wallet {
   factory Wallet.fromJson(Map<String, dynamic> json) => Wallet(
         id: json["_id"],
         pin: json["pin"],
-        // account: Account.fromJson(json["account"]),
         isPinSet: json["isPinSet"],
         mainBalance: json["mainBalance"],
         availableBalance: json["availableBalance"],
@@ -70,7 +63,6 @@ class Wallet {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "pin": pin,
-        // "account": account.tsoJson(),
         "isPinSet": isPinSet,
         "mainBalance": mainBalance,
         "availableBalance": availableBalance,

@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:rentspace/view/loan/loan_payment_confirmation_page.dart';
 import 'package:rentspace/view/wallet_funding/bank_transfer.dart';
 
 import '../../constants/colors.dart';
+import '../../widgets/custom_dialogs/index.dart';
 import '../dashboard/dashboard.dart';
 
 class LoanDetails extends StatefulWidget {
@@ -102,7 +101,7 @@ class _LoanDetailsState extends State<LoanDetails> {
                               ),
                             ),
                             SizedBox(
-                              height: 5.h,
+                              height: 20.h,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,7 +142,7 @@ class _LoanDetailsState extends State<LoanDetails> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Due Date',
+                                      'Amount Paid',
                                       style: GoogleFonts.lato(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
@@ -156,7 +155,7 @@ class _LoanDetailsState extends State<LoanDetails> {
                                       height: 6.h,
                                     ),
                                     Text(
-                                      '24/4/2024',
+                                      nairaFormaet.format(15000),
                                       style: GoogleFonts.roboto(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
@@ -164,6 +163,88 @@ class _LoanDetailsState extends State<LoanDetails> {
                                             .colorScheme
                                             .primary,
                                       ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Loan Payment Schedule',
+                                      style: GoogleFonts.lato(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 6.h,
+                                    ),
+                                    Text(
+                                      '${nairaFormaet.format(15000)}/${'monthly'.toLowerCase()}',
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '',
+                                      style: GoogleFonts.lato(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 6.h,
+                                    ),
+                                    RichText(
+                                      text: TextSpan(
+                                          style: GoogleFonts.lato(
+                                            // fontWeight: FontWeight.w700,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            fontSize: 12,
+                                          ),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: 'Next Payment: ',
+                                              style: GoogleFonts.lato(
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '24/4/2024',
+                                              style: GoogleFonts.lato(
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ]),
                                     ),
                                   ],
                                 ),
@@ -272,7 +353,7 @@ class _LoanDetailsState extends State<LoanDetails> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Start Date',
+                                    'Date Created',
                                     style: GoogleFonts.lato(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400,
@@ -459,7 +540,8 @@ class _LoanDetailsState extends State<LoanDetails> {
                                           insufficientFundsDialog(context);
                                         } else {
                                           Get.back();
-                                          Get.to(LoanPaymentConfirmationPage());
+                                          Get.to(
+                                              const LoanPaymentConfirmationPage());
                                         }
                                       },
                                       child: Container(
@@ -523,7 +605,7 @@ class _LoanDetailsState extends State<LoanDetails> {
                                                   color: (Theme.of(context)
                                                               .brightness ==
                                                           Brightness.dark)
-                                                      ? Color.fromARGB(
+                                                      ? const Color.fromARGB(
                                                           6, 238, 238, 238)
                                                       : const Color(0xffEEF8FF),
                                                   borderRadius:

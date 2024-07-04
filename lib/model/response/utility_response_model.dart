@@ -6,16 +6,11 @@ class UtilityResponseModel {
 
   UtilityResponseModel.fromJson(Map<String, dynamic> json) {
     final dynamic utilitiesData = json['data'];
-    print('utilitiesData');
     if (utilitiesData is List<dynamic>) {
       utilities =
           utilitiesData.map((e) => UtilityResponse.fromJson(e)).toList();
-      print('utilities length');
     } else if (utilitiesData is Map<String, dynamic>) {
-      print("Here");
-
       utilities = [UtilityResponse.fromJson(utilitiesData)];
-      print("utilities");
     } else {
       utilities = [];
     }

@@ -9,7 +9,6 @@ class UserModel {
   });
   List<UserDetailsModel>? userDetails;
 
-// UserModel.fromJson(Map<String, dynamic> json) {
   UserModel.fromJson(Map<String, dynamic> json) {
     final dynamic userDetailsData = json['userDetails'];
     if (userDetailsData is Map<String, dynamic>) {

@@ -1,35 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:rentspace/constants/db/firebase_db.dart';
 import 'package:intl/intl.dart';
-// import 'package:rentspace/controller/box_controller.dart';
-// import 'package:rentspace/controller/deposit_controller.dart';
-// import 'package:rentspace/controller/rent_controller.dart';
-// import 'package:rentspace/controller/tank_controller.dart';
-// import 'package:rentspace/controller/user_controller.dart';
 
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
-// import 'package:rentspace/controller/utility_controller.dart';
-// import 'package:rentspace/controller/withdrawal_controller.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
 
 class FinanceHealth extends StatefulWidget {
-  const FinanceHealth({Key? key}) : super(key: key);
+  const FinanceHealth({super.key});
 
   @override
   _FinanceHealthState createState() => _FinanceHealthState();
@@ -52,81 +34,17 @@ double totalInterest = 0;
 double totalWithdraw = 0;
 
 class _FinanceHealthState extends State<FinanceHealth> {
-  TextEditingController _incomeController = TextEditingController();
+  final TextEditingController _incomeController = TextEditingController();
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
-  // final DepositController depositController = Get.find();
   final RentController rentController = Get.find();
-  // final TankController tankController = Get.find();
-  // final UtilityController utilityController = Get.find();
-  // final WithdrawalController withdrawalController = Get.find();
   final financeformKey = GlobalKey<FormState>();
 
   getSavingsAndInterest() {
-    // if (utilityController.utility.isNotEmpty) {
-    //   for (int h = 0; h < utilityController.utility.length; h++) {
-    //     totalUtility += int.tryParse(utilityController.utility[h].amount)!;
-    //   }
-    // } else {
-    //   setState(() {
-    //     totalUtility = 0;
-    //   });
-    // }
-    // if (withdrawalController.withdrawal.isNotEmpty) {
-    //   for (int g = 0; g < withdrawalController.withdrawal.length; g++) {
-    //     totalWithdraw +=
-    //         int.tryParse(withdrawalController.withdrawal[g].amount)!;
-    //   }
-    // } else {
-    //   setState(() {
-    //     totalUtility = 0;
-    //   });
-    // }
-    // if (tankController.tank.isNotEmpty) {
-    //   for (int i = 0; i < tankController.tank.length; i++) {
-    //     tankBalance += tankController.tank[i].targetAmount.toInt();
-    //     tankInterest += tankController.tank[i].upfront.toInt();
-    //   }
-    // } else {
-    //   setState(() {
-    //     tankBalance = 0;
-    //   });
-    // }
-    // if (rentController.rent.isNotEmpty) {
-    //   rentBalance += rentController.rent[0].paidAmount;
-    //   // for (int j = 0; j < rentController.rent.length; j++) {
-    //   // }
-    // } else {
-    //   setState(() {
-    //     rentBalance = 0;
-    //   });
-    // }
-    // if (boxController.box.isNotEmpty) {
-    //   for (int i = 0; i < boxController.box.length; i++) {
-    //     boxBalance += boxController.box[i].savedAmount.toInt();
-    //     boxInterest += boxController.box[i].upfront.toInt();
-    //   }
-    // } else {
-    //   setState(() {
-    //     boxBalance = 0;
-    //   });
-    // }
-    // if (depositController.deposit.isNotEmpty) {
-    //   for (int i = 0; i < depositController.deposit.length; i++) {
-    //     depositBalance += depositController.deposit[i].savedAmount.toInt();
-    //     depositInterest += depositController.deposit[i].upfront.toInt();
-    //   }
-    // } else {
-    //   setState(() {
-    //     depositBalance = 0;
-    //   });
-    // }
-
     setState(() {
       totalSavings = (tankBalance + rentBalance + boxBalance + depositBalance);
       totalInterest = (tankInterest + boxInterest + depositInterest);
     });
-    print(totalWithdraw);
   }
 
   @override
@@ -233,7 +151,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
           child: Icon(
             Icons.arrow_back,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         title: Text(
@@ -260,7 +178,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
                     'Use the following assesments to calculate your portfolio worth',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 20,
                     ),
@@ -273,7 +191,6 @@ class _FinanceHealthState extends State<FinanceHealth> {
                     style: GoogleFonts.lato(
                       color: const Color(0xff4E4B4B),
                       fontSize: 14,
-                      // fontFamily: "DefaultFontFamily",
                     ),
                   ),
                   const SizedBox(

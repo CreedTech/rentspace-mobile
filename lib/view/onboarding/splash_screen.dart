@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/extensions.dart';
@@ -13,16 +12,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../../api/global_services.dart';
-import '../../constants/widgets/common/annnotated_scaffold.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/common/annnotated_scaffold.dart';
+import '../../widgets/custom_loader.dart';
 import '../offline/no_internet_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
     super.key,
-    required this.sessionStateStream,
   });
-  final StreamController<SessionState> sessionStateStream;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -33,7 +30,6 @@ onReady() {}
 
 class _SplashScreenState extends State<SplashScreen> {
   late StreamSubscription<InternetConnectionStatus> _connectivitySubscription;
-  // final sessionStateStream = StreamController<SessionState>();
   bool isInternetConnected = true;
   late bool hasSeenOnboarding = false;
 
@@ -49,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _connectivitySubscription.cancel();
 
     super.dispose();
-  } 
+  }
 
   Future<void> loadHasSeenOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
@@ -105,10 +101,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => LoginPage(
-                sessionStateStream: widget.sessionStateStream,
-                // loggedOutReason: "Logged out because of user inactivity",
-              ),
+              builder: (context) => const LoginPage(),
             ),
             (route) => false,
           );
@@ -116,10 +109,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => LoginPage(
-                sessionStateStream: widget.sessionStateStream,
-                // loggedOutReason: "Logged out because of user inactivity",
-              ),
+              builder: (context) => const LoginPage(),
             ),
             (route) => false,
           );
@@ -133,8 +123,6 @@ class _SplashScreenState extends State<SplashScreen> {
           (route) => false,
         );
       }
-      // Navigator.pushAndRemoveUntil(
-      //     context, MaterialPageRoute(builder: (context) => OnboardingSlider()));
     }
   }
 
@@ -163,11 +151,6 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
       child: Scaffold(
         body: Container(
-          // decoration: const BoxDecoration(
-          //   image: DecorationImage(
-          //       image: AssetImage(splashScreenBackground), fit: BoxFit.cover),
-          // ),
-          // child: SplashScreenContent(),
           child: isInternetConnected
               ? const SplashScreenContent()
               // WelcomeBackScreen()

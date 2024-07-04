@@ -5,8 +5,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-// import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,14 +12,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-// import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:upgrader/upgrader.dart';
 import '../../constants/colors.dart';
 import '../dashboard/dashboard.dart';
-import '../dashboard/settings.dart';
+import '../settings/settings.dart';
 import '../portfolio/portfolio_page.dart';
 import '../savings/savings_page.dart';
 
@@ -69,24 +66,6 @@ class _HomePageState extends State<HomePage> {
   // int _selectedIndex = 0;
   final WalletController walletController = Get.put(WalletController());
   final RentController rentController = Get.put(RentController());
-  // final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
-
-  // checkStatus() {
-  //   final FirebaseFirestore firestoreFile = FirebaseFirestore.instance;
-  //   DocumentReference docReference =
-  //       firestoreFile.collection('maintenance').doc('27-09-2023-maintenance');
-
-  //   docReference.snapshots().listen((snapshot) {
-  //     var data = snapshot.data() as Map<String, dynamic>?;
-  //     var newStatus = data?['status'];
-
-  //     if (newStatus != "active") {
-  //       Get.to(const InActivePage());
-  //     } else {
-  //       print("All good!!!");
-  //     }
-  //   });
-  // }
 
   checkIsOpenedApp() {
     print('storage opened');
@@ -160,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                             elevation: 0,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 40.w, vertical: 15.h),
-                            textStyle:  GoogleFonts.lato(
+                            textStyle: GoogleFonts.lato(
                                 color: Colors.white, fontSize: 17),
                           ),
                           child: Text(
@@ -197,9 +176,6 @@ class _HomePageState extends State<HomePage> {
         counter._three,
         counter._four,
         counter._five,
-        /* counter._six,
-        counter._seven,
-        counter._eight, */
       ]);
     });
   }
@@ -207,192 +183,15 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     super.initState();
-    // transIds.clear();
-    // checkStatus();
     getConnectivity();
     setState(() {
       fundedAmount = "0";
     });
-    // Future.delayed(const Duration(seconds: 1), () {
-    //   checkIsOpenedApp();
-    // });
   }
-
-  // Future<bool> checkingForBioMetrics() async {
-  //   bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
-  //   print(canCheckBiometrics);
-  //   _authenticateMe();
-  //   return canCheckBiometrics;
-  // }
-
-  // Future<void> _authenticateMe() async {
-  //   bool authenticated = false;
-  //   try {
-  //     authenticated = await _localAuthentication.authenticate(
-  //       localizedReason: "Authentication required",
-  //     );
-  //     setState(() {
-  //       _message = authenticated ? "Authorized" : "Not Authorized";
-  //     });
-  //     if (_message == "Authorized") {
-  //       Get.to(const HomePage());
-  //     } else {
-  //       showDialog(
-  //           context: context,
-  //           barrierDismissible: false,
-  //           builder: (BuildContext context) {
-  //             return AlertDialog(
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(10),
-  //               ),
-  //               title: null,
-  //               elevation: 0,
-  //               content: SizedBox(
-  //                 height: 250.h,
-  //                 child: Column(
-  //                   children: [
-  //                     GestureDetector(
-  //                       onTap: () {
-  //                         Navigator.of(context).pop();
-  //                       },
-  //                       child: Align(
-  //                         alignment: Alignment.topRight,
-  //                         child: Container(
-  //                           decoration: BoxDecoration(
-  //                             borderRadius: BorderRadius.circular(30),
-  //                             // color: brandOne,
-  //                           ),
-  //                           child: Icon(
-  //                             Iconsax.close_circle,
-  //                             color: Theme.of(context).primaryColor,
-  //                             size: 30,
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     Align(
-  //                       alignment: Alignment.center,
-  //                       child: Icon(
-  //                         Iconsax.warning_24,
-  //                         color: Colors.red,
-  //                         size: 75,
-  //                       ),
-  //                     ),
-  //                     SizedBox(
-  //                       height: 12,
-  //                     ),
-  //                     Text(
-  //                       'Error',
-  //                       style: GoogleFonts.lato(
-  //                         color: Colors.red,
-  //                         fontSize: 28,
-  //                         fontWeight: FontWeight.w600,
-  //                       ),
-  //                     ),
-  //                     SizedBox(
-  //                       height: 5.h,
-  //                     ),
-  //                     Text(
-  //                       "Biometrics failed",
-  //                       textAlign: TextAlign.center,
-  //                       style: GoogleFonts.lato(
-  //                           color: Colors.red, fontSize: 18),
-  //                     ),
-  //                     SizedBox(
-  //                       height: 10.h,
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             );
-  //           });
-  //     }
-  //   } catch (e) {
-  //     showDialog(
-  //         context: context,
-  //         barrierDismissible: false,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //             shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(10),
-  //             ),
-  //             title: null,
-  //             elevation: 0,
-  //             content: SizedBox(
-  //               height: 250.h,
-  //               child: Column(
-  //                 children: [
-  //                   GestureDetector(
-  //                     onTap: () {
-  //                       Navigator.of(context).pop();
-  //                     },
-  //                     child: Align(
-  //                       alignment: Alignment.topRight,
-  //                       child: Container(
-  //                         decoration: BoxDecoration(
-  //                           borderRadius: BorderRadius.circular(30),
-  //                           // color: brandOne,
-  //                         ),
-  //                         child: Icon(
-  //                           Iconsax.close_circle,
-  //                           color: Theme.of(context).primaryColor,
-  //                           size: 30,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   Align(
-  //                     alignment: Alignment.center,
-  //                     child: Icon(
-  //                       Iconsax.warning_24,
-  //                       color: Colors.red,
-  //                       size: 75,
-  //                     ),
-  //                   ),
-  //                   SizedBox(
-  //                     height: 12.h,
-  //                   ),
-  //                   Text(
-  //                     'Error',
-  //                     style: GoogleFonts.lato(
-  //                       color: Colors.red,
-  //                       fontSize: 28,
-  //                       fontWeight: FontWeight.w600,
-  //                     ),
-  //                   ),
-  //                   SizedBox(
-  //                     height: 5.h,
-  //                   ),
-  //                   Text(
-  //                     "Biometrics failed",
-  //                     textAlign: TextAlign.center,
-  //                     style: GoogleFonts.lato(
-  //                       color: Colors.red,
-  //                       fontSize: 18,
-  //                     ),
-  //                   ),
-  //                   SizedBox(
-  //                     height: 10.h,
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           );
-  //         });
-  //   }
-  //   if (!mounted) return;
-  // }
 
   var currentIndex = 0;
 
-  // void _onItemTapped(String index) {
-  //   setState(() {
-  //     currentIndex = int.parse(index);
-  //   });
-  // }
-
   void getConnectivity() {
-    // print('checking internet...');
     subscription = Connectivity().onConnectivityChanged.listen(
       (ConnectivityResult result) async {
         isDeviceConnected = await InternetConnectionChecker().hasConnection;
@@ -525,8 +324,7 @@ class _HomePageState extends State<HomePage> {
                       style: GoogleFonts.lato(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        // fontFamily: "DefaultFontFamily",
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     SizedBox(
@@ -632,13 +430,6 @@ class _HomePageState extends State<HomePage> {
             height: (MediaQuery.of(context).size.height >= 1000) ? 120 : 80,
             decoration: BoxDecoration(
               color: Theme.of(context).canvasColor,
-              // boxShadow: [
-              //   BoxShadow(
-              //     color: brandOne.withOpacity(.15),
-              //     blurRadius: 30,
-              //     offset: const Offset(0, 10),
-              //   ),
-              // ],
               borderRadius: BorderRadius.circular(10),
             ),
             child: ListView.builder(
@@ -692,15 +483,7 @@ class _HomePageState extends State<HomePage> {
                       textColor: Colors.white,
                       overlayPadding: const EdgeInsets.all(5),
                       animationDuration: const Duration(seconds: 2),
-                      // child: Icon(
-                      //   index == currentIndex
-                      //       ? listOfIcons[index]
-                      //       : listOfUnselectedIcons[index],
-                      //   size: 30,
-                      //   color: index == currentIndex
-                      //       ? brandTwo
-                      //       : navigationcolorText,
-                      // ),
+
                       child: Image.asset(
                         index == currentIndex
                             ? listOfHomeIcons[index]
@@ -796,8 +579,6 @@ class _HomePageState extends State<HomePage> {
         return const PortfolioPage();
       case 3:
         return const SettingsPage();
-      // case 4:
-      //   return const SettingsPage();
       default:
         return const Dashboard();
     }

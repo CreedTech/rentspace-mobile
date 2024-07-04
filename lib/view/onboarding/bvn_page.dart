@@ -5,27 +5,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-// import 'package:path/path.dart' as p;
-// import 'package:http/http.dart' as http;
 
-import 'dart:math';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'package:rentspace/controller/auth/auth_controller.dart';
 
-import '../../constants/widgets/custom_dialog.dart';
+import '../../widgets/custom_dialogs/index.dart';
 
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 
-String _mssg = "";
 bool isChecking = false;
 bool canProceed = false;
-const _chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-Random _rnd = Random();
-String vName = "";
-String vNum = "";
 bool notLoading = true;
 
 class BvnPage extends ConsumerStatefulWidget {
@@ -40,28 +32,13 @@ final TextEditingController _bvnController = TextEditingController();
 final bvnformKey = GlobalKey<FormState>();
 
 class _BvnPageConsumerState extends ConsumerState<BvnPage> {
-  // final UserController userController = Get.find();
-  // final WalletController walletController = Get.find();
   final form = intl.NumberFormat.decimalPattern();
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final String collectionName = 'dva';
-  String getRandom(int length) => String.fromCharCodes(
-        Iterable.generate(
-          length,
-          (_) => _chars.codeUnitAt(
-            _rnd.nextInt(_chars.length),
-          ),
-        ),
-      );
 
   @override
   initState() {
     super.initState();
     canProceed = false;
-    // isChecking = false;
-    setState(() {
-      _mssg = "";
-    });
+    setState(() {});
   }
 
   @override
@@ -128,14 +105,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
           ),
         ),
         filled: false,
-        // fillColor: brandThree,
-        // hintText: 'e.g 12345678900',
         contentPadding: const EdgeInsets.all(14),
-        // hintStyle: GoogleFonts.lato(
-        //   color: Colors.grey,
-        //   fontSize: 12,
-        //   fontWeight: FontWeight.w400,
-        // ),
       ),
     );
 
@@ -186,9 +156,6 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                           minHeight: 4,
                         )
                       : const SizedBox(),
-                  // const SizedBox(
-                  //   height: 100,
-                  // ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
                     child: Form(
@@ -211,10 +178,9 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                             child: Text(
                               'Enter BVN',
                               style: GoogleFonts.lato(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,
-                                // fontFamily: "DefaultFontFamily",
                               ),
                             ),
                           ),
@@ -225,7 +191,6 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                               color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
-                              // fontFamily: "DefaultFontFamily",
                             ),
                           ),
                           SizedBox(
@@ -273,7 +238,6 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                                   style: GoogleFonts.lato(
                                     color: Theme.of(context).primaryColorLight,
                                     fontSize: 14,
-                                    // fontStyle: FontStyle.italic,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
@@ -286,9 +250,7 @@ class _BvnPageConsumerState extends ConsumerState<BvnPage> {
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              // width: MediaQuery.of(context).size.width * 2,
                               alignment: Alignment.center,
-                              // height: 110.h,
                               child: Column(
                                 children: [
                                   ElevatedButton(

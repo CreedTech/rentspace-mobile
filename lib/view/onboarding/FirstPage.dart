@@ -5,9 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-// import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:rentspace/constants/widgets/shimmer_widget.dart';
+import 'package:rentspace/widgets/shimmer_widget.dart';
 import 'package:rentspace/controller/utility/airtime_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
@@ -15,7 +14,7 @@ import 'package:rentspace/controller/utility/utility_controller.dart';
 import 'package:rentspace/controller/utility/utility_response_controller.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:rentspace/view/dashboard/dashboard.dart';
-import 'package:rentspace/view/dashboard/settings.dart';
+import 'package:rentspace/view/settings/settings.dart';
 import 'package:rentspace/view/portfolio/portfolio_page.dart';
 import 'package:rentspace/view/savings/savings_page.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,6 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get_storage/get_storage.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:intl/intl.dart';
 
@@ -35,8 +33,6 @@ import '../offline/something_went_wrong.dart';
 
 final LocalAuthentication _localAuthentication = LocalAuthentication();
 final UserController userController = Get.find();
-// final ActivitiesController activitiesController = Get.find();
-// final WalletHistoriesController walletHistoriesController = Get.find();
 final WalletController walletController = Get.find();
 final RentController rentController = Get.find();
 final UtilityResponseController utilityResponseController = Get.find();
@@ -92,8 +88,6 @@ class _FirstPageState extends State<FirstPage> {
   bool isRefresh = false;
   late StreamSubscription<InternetConnectionStatus> _connectivitySubscription;
   bool isInternetConnected = true;
-  // final UserController userController = Get.find();
-  // bool _hasPutController = false;
 
   void checkConnectivity() async {
     final hasConnection = await InternetConnectionChecker().hasConnection;
@@ -101,21 +95,9 @@ class _FirstPageState extends State<FirstPage> {
       isInternetConnected = hasConnection;
     });
 
-    // if (isInternetConnected) {
-    //   redirectToAppropriateScreen();
-    // } else {
-    //   showNoInternetScreen();
-    // }
-
     _connectivitySubscription = InternetConnectionChecker()
         .onStatusChange
-        .listen((InternetConnectionStatus status) {
-      // if (status == InternetConnectionStatus.connected) {
-      //   redirectToAppropriateScreen();
-      // } else {
-      //   showNoInternetScreen();
-      // }
-    });
+        .listen((InternetConnectionStatus status) {});
   }
 
   Future<void> redirectToAppropriateScreen() async {}
@@ -151,7 +133,6 @@ class _FirstPageState extends State<FirstPage> {
 
   void checkUserInfo() async {
     userController.fetchData();
-    // final hasConnection = await InternetConnectionChecker().hasConnection;
     setState(() {
       userController.userModel != null;
     });
@@ -163,7 +144,6 @@ class _FirstPageState extends State<FirstPage> {
 
   Future<void> onRefresh() async {
     refreshController.refreshCompleted();
-    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
     if (mounted) {
       setState(() {
         isRefresh = true;
@@ -285,7 +265,7 @@ class _FirstPageState extends State<FirstPage> {
                                           elevation: 0,
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 15),
-                                          textStyle:  GoogleFonts.lato(
+                                          textStyle: GoogleFonts.lato(
                                               color: Colors.white,
                                               fontSize: 17),
                                         ),

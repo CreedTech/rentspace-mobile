@@ -6,21 +6,13 @@ class UtilityHistoryModel {
 
   UtilityHistoryModel.fromJson(Map<String, dynamic> json) {
     final dynamic utilityHistoriesData = json['utilityHistories'];
-    print('utilityHistoriesData');
-    // print(utilityHistoriesData);
     if (utilityHistoriesData is List<dynamic>) {
       utilityHistories =
           utilityHistoriesData.map((e) => UtilityHistory.fromJson(e)).toList();
-      print('utilityHistories length');
-      // print(utilityHistories!.length);
     } else if (utilityHistoriesData is Map<String, dynamic>) {
-      print("Here");
 
       utilityHistories = [UtilityHistory.fromJson(utilityHistoriesData)];
-      print("utilityHistories");
-      // print(utilityHistories);
     } else {
-      // print('Invalid activities data: $utilityHistoriesData');
       utilityHistories = [];
     }
   }

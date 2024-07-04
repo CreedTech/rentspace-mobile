@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -12,23 +13,24 @@ import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/model/user_details_model.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:rentspace/view/dashboard/withdraw_continuation_page.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_withdrawal.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_withdrawal_continuation_page.dart';
+import 'package:rentspace/view/withdrawal/withdraw_continuation_page.dart';
 import 'package:rentspace/view/auth/registration/login_page.dart';
 
 import '../../api/global_services.dart';
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../constants/utils/errorMessageExtraction.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 import '../../model/recent_transfers_model.dart';
 
 class UserController extends GetxController {
   final sessionStateStream = StreamController<SessionState>();
-  // final userDB = UserDB();
   var isLoading = false.obs;
   var isHomePageLoading = false.obs;
   final users = <UserDetailsModel>[].obs;
   var isLoadingRecentTransfers = false.obs;
   final List recentTempName = [];
-  // var isLoggedIn = false.obs;
   UserModel? userModel;
   RecentTransfersModel? recentTransfersModel;
 
@@ -37,7 +39,6 @@ class UserController extends GetxController {
     super.onInit();
     fetchData();
     fetchInitialData();
-    // fetchRecentTransfers();
   }
 
   Future changePassword(BuildContext context, currentPassword, newPassword,
@@ -68,37 +69,26 @@ class UserController extends GetxController {
         headers: headers,
         body: body,
       );
-      // // print(body);
 
-      // print('Response Status Code: ${response.statusCode}');
-      // print('Response Body: ${response.body}');
-      // print('Response Headers: ${response.headers}');
       if (response.statusCode == 200) {
-        // var result = jsonDecode(response.body);
         EasyLoading.dismiss();
         isLoading(false);
-        // print('result success');
         if (context.mounted) {
           customSuccessDialog(
               context, 'Success', 'Password Changed Successfully');
         }
         Get.offAll(
-          LoginPage(sessionStateStream: sessionStateStream),
+          const LoginPage(),
         );
-        // print(result);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
       } else if (response.body.contains('Server Error')) {
         EasyLoading.dismiss();
         isLoading(false);
         if (context.mounted) {
-          // print('Context is mounted, showing dialog');
           customErrorDialog(context, 'Oops', 'Something Went Wrong');
-        } else {
-          // print('Context is not mounted, cannot show dialog');
-        }
+        } else {}
       } else {
         EasyLoading.dismiss();
         isLoading(false);
@@ -110,9 +100,6 @@ class UserController extends GetxController {
         } else {
           errorMessage = 'An unknown error occurred';
         }
-        // print('Error: $errorMessage');
-        // print(response.body);
-        // print('error fetching data');
         if (context.mounted) {
           customErrorDialog(context, 'Error', errorMessage);
         }
@@ -142,7 +129,6 @@ class UserController extends GetxController {
 
   Future fetchData() async {
     isLoading(true);
-    print('fetching');
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 
@@ -182,15 +168,21 @@ class UserController extends GetxController {
         multipleLoginRedirectModal();
       } else {
         // // print(response.body);
-        print('error fetching data ${response.body}');
+        if (kDebugMode) {
+          print('error fetching data ${response.body}');
+        }
       }
     } on TimeoutException {
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {
-      print('Error while getting data is $e');
+      if (kDebugMode) {
+        print('Error while getting data is $e');
+      }
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
-      print('Error while getting data is $e');
+      if (kDebugMode) {
+        print('Error while getting data is $e');
+      }
       throw http.Response('Error: $e', 504);
     } finally {
       isLoading(false);
@@ -257,10 +249,6 @@ class UserController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         var result = jsonDecode(response.body);
-        // // print('result');
-        // // print(result);
-        // // print(SpaceRentModel.fromJson(result));
-
         recentTransfersModel = RecentTransfersModel.fromJson(result);
         recentTempName.clear();
 
@@ -272,10 +260,7 @@ class UserController extends GetxController {
             recentTransfersModel!.recentTransfers![i].bankCode,
             recentTransfersModel!.recentTransfers![i].accountNumber,
           );
-          // // print('Fetched details:');
         }
-        // // print(recentTempName);
-        // // print('recent transfers data successfully fetched');
         if (recentTransfersModel!.recentTransfers!.isEmpty) {
           // // print('No recent transfers found');
         }
@@ -340,8 +325,13 @@ class UserController extends GetxController {
     }
   }
 
-  Future createWithdrawalAccount(BuildContext context, String bankCode,
-      String accountNumber, bankName, accountHolderName) async {
+  Future createWithdrawalAccount(
+      BuildContext context,
+      withdrawalType,
+      String bankCode,
+      String accountNumber,
+      bankName,
+      accountHolderName) async {
     EasyLoading.show(
       indicator: const CustomLoader(),
       maskType: EasyLoadingMaskType.black,
@@ -370,18 +360,17 @@ class UserController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // print('fetched successfully');
-        // Request successful, handle the response data
-        // final Map<String, dynamic> jsonResponse = json.decode(response.body);
         EasyLoading.dismiss();
         isLoadingRecentTransfers(false);
         Get.to(
-          WithdrawContinuationPage(
-            bankCode: bankCode,
-            accountNumber: accountNumber,
-            bankName: bankName,
-            accountHolderName: accountHolderName,
-          ),
+          (withdrawalType == 'space rent')
+              ? const SpaceRentWithdrawal()
+              : WithdrawContinuationPage(
+                  bankCode: bankCode,
+                  accountNumber: accountNumber,
+                  bankName: bankName,
+                  accountHolderName: accountHolderName,
+                ),
         );
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
@@ -431,17 +420,4 @@ class UserController extends GetxController {
       isLoadingRecentTransfers(false);
     }
   }
-}
-
-String extractErrorMessage(Map<String, dynamic> response) {
-  if (response.containsKey('message')) {
-    return response['message'];
-  } else if (response.containsKey('error')) {
-    return response['error'];
-  } else if (response.containsKey('errors')) {
-    if (response['errors'] is List && response['errors'].isNotEmpty) {
-      return response['errors'][0]['error'] ?? 'Something went wrong';
-    }
-  }
-  return 'Something went wrong. Try Again Later.';
 }

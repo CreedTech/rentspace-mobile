@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-
-import '../../constants/colors.dart';
+import 'package:rentspace/constants/colors.dart';
 
 class No_internetScreen extends StatefulWidget {
   final VoidCallback onTap;
@@ -16,7 +14,6 @@ class No_internetScreen extends StatefulWidget {
 }
 
 class _No_internetScreenState extends State<No_internetScreen> {
-  // bool isAlertSet = false;
   bool isDeviceConnected = false;
 
   @override
@@ -24,7 +21,6 @@ class _No_internetScreenState extends State<No_internetScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       body: Stack(
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: Padding(
@@ -44,7 +40,7 @@ class _No_internetScreenState extends State<No_internetScreen> {
                           child: Icon(
                             Iconsax.emoji_sad5,
                             size: 55,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ),
@@ -56,7 +52,7 @@ class _No_internetScreenState extends State<No_internetScreen> {
                         style: GoogleFonts.lato(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       SizedBox(
@@ -67,7 +63,7 @@ class _No_internetScreenState extends State<No_internetScreen> {
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
                           fontSize: 14,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -84,7 +80,7 @@ class _No_internetScreenState extends State<No_internetScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width - 50, 50),
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: brandTwo,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(

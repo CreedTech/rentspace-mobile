@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/core/helper/helper_route_path.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 
 import '../../onboarding/FirstPage.dart';
 
@@ -33,11 +31,8 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
 
   @override
   Widget build(BuildContext context) {
-    // print(MediaQuery.of(context).size.height);
     return WillPopScope(
       onWillPop: () async {
-        // Navigator.of(context).pop(returningValue);
-
         return false;
       },
       child: Scaffold(
@@ -76,7 +71,8 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                           height: 56,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 24.5.h, bottom: 12.h,left: 16,right: 16),
+                          padding: EdgeInsets.only(
+                              top: 24.5.h, bottom: 12.h, left: 16, right: 16),
                           child: Text(
                             widget.rentName.capitalize!,
                             textAlign: TextAlign.center,
@@ -145,7 +141,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                       padding: const EdgeInsets.symmetric(vertical: 60),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      decoration:  BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
@@ -171,7 +167,8 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                                   style: GoogleFonts.lato(
                                     fontSize: 24,
                                     fontWeight: FontWeight.w700,
-                                    color: Theme.of(context).colorScheme.secondary,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                                 SizedBox(
@@ -183,7 +180,8 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                                   style: GoogleFonts.lato(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ],
@@ -204,18 +202,7 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                                 ),
                               ),
                               onPressed: () {
-                                // Navigator.of(context).pushAndRemoveUntil(
-                                //     MaterialPageRoute(
-                                //       builder: (_) => const RentSpaceList(),
-                                //     ),
-                                //     (route) => false);
-                                // Get.until((route) => Get.currentRoute == rentList);
                                 Get.offAll(const FirstPage());
-                                // Get.until((route) => false);
-                                // Get.offNamedUntil(rentList, (route) => false);
-                                // Navigator.popUntil(
-                                //     context, ModalRoute.withName(rentList));
-                                // Get.to(const RentSpaceList());
                               },
                               child: Text(
                                 'Continue',

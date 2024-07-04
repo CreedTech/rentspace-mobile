@@ -1,25 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:rentspace/constants/widgets/custom_loader.dart';
+import 'package:rentspace/widgets/custom_loader.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
-// import 'package:rentspace/controller/rent_controller.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_page.dart';
 
+import '../../../constants/utils/calulate_difference_in_days.dart';
+import '../../../constants/utils/format_money.dart';
 import '../../../controller/rent/rent_controller.dart';
 
 class RentSpaceList extends StatefulWidget {
-  const RentSpaceList({Key? key}) : super(key: key);
+  const RentSpaceList({super.key});
 
   @override
   _RentSpaceListState createState() => _RentSpaceListState();
@@ -63,7 +61,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
     setState(() {
       totalSavings = rentBalance;
     });
-    // print(totalSavings);
   }
 
   @override
@@ -83,7 +80,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
     setState(() {
       selectedStatus = status;
     });
-    print(selectedStatus);
   }
 
   bool _hasActiveRents() {
@@ -92,7 +88,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
   }
 
   bool _hasCompletedRents() {
-    print(rentController.rentModel!.rents!.any((rent) => rent.completed));
     return rentController.rentModel!.rents!
         .any((rent) => rent.completed == true);
   }
@@ -120,7 +115,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
 
   Future<void> onRefresh() async {
     refreshController.refreshCompleted();
-    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
     if (mounted) {
       setState(() {
         isRefresh = true;
@@ -177,7 +171,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
                 onRefresh: onRefresh,
                 child: SafeArea(
                   child: ListView(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
@@ -610,7 +603,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                             .center,
                                                     children: [
                                                       AutoSizeText(
-                                                        _calculateDaysDifference(
+                                                        calculateDaysDifference(
                                                                 rentController
                                                                     .rentModel!
                                                                     .rents![
@@ -1108,100 +1101,5 @@ class _RentSpaceListState extends State<RentSpaceList> {
               ),
             ),
           );
-  }
-
-  String formatDateTime(String dateTimeString) {
-    // Parse the date string into a DateTime object
-    DateTime dateTime =
-        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
-
-    // Define the date format you want
-    final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
-
-    // Format the DateTime object into a string
-    String formattedDateTime = formatter.format(dateTime);
-
-    return formattedDateTime;
-  }
-
-  String formatEndDate(String dateTimeString) {
-    // Parse the date string into a DateTime object
-    DateTime dateTime =
-        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
-
-    // Define the date format you want
-    final DateFormat formatter = DateFormat('MMMM dd, yyyy');
-
-    // Format the DateTime object into a string
-    String formattedDateTime = formatter.format(dateTime);
-
-    return formattedDateTime;
-  }
-
-  int _calculateDaysDifference(String endDateString, String startDateString) {
-    // Parse the provided date strings into DateTime objects
-    DateFormat format = DateFormat('dd/MM/yyyy');
-    String today = DateFormat('dd/MM/yyyy').format(DateTime.now());
-    DateTime startDate = format.parse(startDateString);
-    DateTime endDate = format.parse(endDateString);
-
-    // Calculate the difference in days
-    Duration difference = endDate.difference(startDate);
-
-    // Convert the difference to days
-    int differenceInDays = difference.inDays.abs();
-
-    return differenceInDays;
-  }
-
-  String formatMoney(double amount) {
-    if (amount >= 1000000) {
-      return '${(amount / 1000000).toStringAsFixed(0)}M';
-    } else if (amount >= 1000) {
-      // Check if the amount is an exact multiple of 1000
-      if (amount % 1000 == 0) {
-        return '${amount ~/ 1000}K'; // Remove decimal places
-      } else {
-        return '${(amount / 1000).toStringAsFixed(2)}K'; // Keep decimal places
-      }
-    } else {
-      return amount.toStringAsFixed(2);
-    }
-  }
-
-  String calculateDifferenceInDays(String providedDateString) {
-    // Extract the date components from the provided date string
-    List<String> parts = providedDateString.split(' ');
-    int day = int.parse(parts[2]);
-    int year = int.parse(parts[3]);
-    Map<String, int> months = {
-      'Jan': 1,
-      'Feb': 2,
-      'Mar': 3,
-      'Apr': 4,
-      'May': 5,
-      'Jun': 6,
-      'Jul': 7,
-      'Aug': 8,
-      'Sep': 9,
-      'Oct': 10,
-      'Nov': 11,
-      'Dec': 12
-    };
-    int month = months[parts[1]]!;
-
-    // Construct a DateTime object
-    DateTime providedDate = DateTime.utc(year, month, day);
-
-    // Get today's date
-    DateTime today = DateTime.now();
-
-    // Calculate the difference in days
-    Duration difference = providedDate.difference(today);
-
-    // Convert the difference to days
-    int differenceInDays = difference.inDays.abs();
-
-    return '$differenceInDays';
   }
 }

@@ -19,7 +19,6 @@ class _SomethingWentWrongState extends State<SomethingWentWrong> {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       body: Stack(
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: Padding(

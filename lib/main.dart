@@ -16,7 +16,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/constants/theme.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/model/loan_form_model.dart';
@@ -142,6 +141,7 @@ Future<void> main() async {
 
   // configLoading();
   runApp(const ProviderScope(child: MyApp()));
+  //  RouterGenerator().initDeepLinks(context);
 }
 
 Future<void> openHiveBox(String boxName, {bool limit = false}) async {
@@ -288,9 +288,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeMode _selectedTheme = ThemeMode.system;
     // Createing theme instance For Getting the ThemeMode Stage from the ThemeController
-    final ThemeController _themeController = Get.put(ThemeController());
+    final ThemeController themeController = Get.put(ThemeController());
     final sessionConfig = SessionConfig(
       invalidateSessionForAppLostFocus: const Duration(minutes: 1),
       invalidateSessionForUserInactivity: const Duration(minutes: 5),
@@ -324,14 +323,12 @@ class _MyAppState extends State<MyApp> {
       child: GetMaterialApp(
         theme: CustomTheme.lightTheme, // CustomThemeData for Light Theme
         darkTheme: CustomTheme.darkTheme,
-        themeMode: _themeController.themeStateFromHiveSettingBox,
+        themeMode: themeController.themeStateFromHiveSettingBox,
         debugShowCheckedModeBanner: false,
         navigatorKey: _sessionNavigatorKey,
         title: 'RentSpace',
         initialBinding: InitialBinding(),
-        home: SplashScreen(
-          sessionStateStream: sessionStateStream,
-        ),
+        home: const SplashScreen(),
         onGenerateRoute: RouterGenerator().generate,
         onUnknownRoute: RouterGenerator.onUnknownRoute,
         builder: EasyLoading.init(),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
 
-// import 'element/text_theme.dart';
 
 // ignore: non_constant_identifier_names
 ThemeData LightThemeData() {
@@ -20,15 +19,13 @@ ThemeData LightThemeData() {
     ),
     canvasColor: colorWhite,
     brightness: Brightness.light,
-    dividerColor: Color(0xffC9C9C9),
-    // cardColor: colorWhite,
-    primaryColorLight: Color(0xff4B4B4B),
+    dividerColor: const Color(0xffC9C9C9),
+    // cardColor: colorWhie,
+    primaryColorLight: const Color(0xff4B4B4B),
     textSelectionTheme: const TextSelectionThemeData(
-      selectionColor: brandOne, // Color of the selection highlight
-      // cursorColor: brandOne, // Color of the text cursor
+      selectionColor: brandOne,
       selectionHandleColor: brandOne,
     ),
-    // unselectedWidgetColor: brandOne,
 
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: brandOne,

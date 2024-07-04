@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/view/auth/multiple_device_login_otp_page.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../../constants/colors.dart';
@@ -28,7 +27,6 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
         showIgnore: false,
         durationUntilAlertAgain: const Duration(seconds: 5),
         debugLogging: true,
-        // debugDisplayAlways:true,
         dialogStyle: UpgradeDialogStyle.cupertino,
         showLater: false,
         canDismissDialog: false,
@@ -131,7 +129,6 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                                 color: Theme.of(context).primaryColorLight,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                // fontFamily: "DefaultFontFamily",
                               ),
                             ),
                             SizedBox(
@@ -255,9 +252,7 @@ class _MultipleDeviceLoginState extends ConsumerState<MultipleDeviceLogin> {
                                 height: 20.h,
                               ),
                               Container(
-                                // width: MediaQuery.of(context).size.width * 2,
                                 alignment: Alignment.center,
-                                // height: 110.h,
                                 child: Column(
                                   children: [
                                     ElevatedButton(

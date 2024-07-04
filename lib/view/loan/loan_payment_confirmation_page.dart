@@ -9,8 +9,8 @@ import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/wallet/wallet_controller.dart';
 
@@ -144,7 +144,7 @@ class _LoanPaymentConfirmationPageState
                                 style: GoogleFonts.lato(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                               Text(
@@ -152,7 +152,7 @@ class _LoanPaymentConfirmationPageState
                                 style: GoogleFonts.roboto(
                                   fontSize: 30,
                                   fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             ],
@@ -401,7 +401,8 @@ class _LoanPaymentConfirmationPageState
                                             ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Color(0xffBDBDBD),
+                                                  color:
+                                                      const Color(0xffBDBDBD),
                                                   width: 1.0),
                                               borderRadius:
                                                   BorderRadius.circular(10),
@@ -420,7 +421,8 @@ class _LoanPaymentConfirmationPageState
                                             ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Color(0xffBDBDBD),
+                                                  color:
+                                                      const Color(0xffBDBDBD),
                                                   width: 1.0),
                                               borderRadius:
                                                   BorderRadius.circular(10),
@@ -470,8 +472,6 @@ class _LoanPaymentConfirmationPageState
                                               }
                                             }
                                           },
-                                          // validator: validatePinOne,
-                                          // onChanged: validatePinOne,
                                           controller: _aPinController,
                                           length: 4,
                                           closeKeyboardWhenCompleted: true,
@@ -501,8 +501,9 @@ class _LoanPaymentConfirmationPageState
                                           fontSize: 32,
                                           fontWeight: FontWeight.w500),
                                       rightButtonFn: () {
-                                        if (_aPinController.text.isEmpty)
+                                        if (_aPinController.text.isEmpty) {
                                           return;
+                                        }
                                         setState(() {
                                           _aPinController.text =
                                               _aPinController.text.substring(
@@ -512,8 +513,9 @@ class _LoanPaymentConfirmationPageState
                                         });
                                       },
                                       rightButtonLongPressFn: () {
-                                        if (_aPinController.text.isEmpty)
+                                        if (_aPinController.text.isEmpty) {
                                           return;
+                                        }
                                         setState(() {
                                           _aPinController.text = '';
                                         });

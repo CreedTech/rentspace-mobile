@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,7 +33,6 @@ class _ChangetransactionPinOtpPageState
   void initState() {
     super.initState();
     startCountDown();
-    // errorController = StreamController<ErrorAnimationType>();
   }
 
   void startCountDown() {

@@ -6,20 +6,12 @@ class SpaceRentModel {
 
   SpaceRentModel.fromJson(Map<String, dynamic> json) {
     final dynamic spaceRentData = json['rents'];
-    // print('spaceRentData');
-    // print(spaceRentData);
     if (spaceRentData is List<dynamic>) {
       rents = spaceRentData.map((e) => SpaceRent.fromJson(e)).toList();
-      // print('rents length');
-      // print(rents!.length);
     } else if (spaceRentData is Map<String, dynamic>) {
-      // print("Here");
 
       rents = [SpaceRent.fromJson(spaceRentData)];
-      // print("rents");
-      // print(rents);
     } else {
-      // print('Invalid activities data: $spaceRentData');
       rents = [];
     }
   }

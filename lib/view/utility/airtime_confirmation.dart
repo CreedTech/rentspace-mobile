@@ -1,4 +1,5 @@
 import 'package:bcrypt/bcrypt.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,10 +13,9 @@ import 'package:pinput/pinput.dart';
 import 'package:rentspace/controller/utility/airtime_controller.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/widgets/custom_button.dart';
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
-import '../../controller/app/app_controller.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/utility/utility_response_controller.dart';
 import '../../controller/wallet/wallet_controller.dart';
@@ -67,7 +67,6 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
       await userController.fetchData();
       await walletController.fetchWallet();
 
-      // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
     return true;
@@ -83,7 +82,6 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
 
   @override
   Widget build(BuildContext context) {
-    final appState = ref.watch(appControllerProvider.notifier);
     return Scaffold(
       backgroundColor: brandOne,
       appBar: AppBar(
@@ -377,9 +375,6 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                         builder: (BuildContext context) {
                           return FractionallySizedBox(
                             heightFactor: 0.64,
-                            // constraints: BoxConstraints(
-                            //   maxHeight: 900 // Adjust the value as needed
-                            // ),
                             child: SingleChildScrollView(
                               child: Container(
                                 decoration: BoxDecoration(
@@ -390,15 +385,10 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                     topRight: Radius.circular(30.0),
                                   ),
                                 ),
-                                // padding:
-                                //     const EdgeInsets.fromLTRB(24, 0, 24, 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    // SizedBox(
-                                    //   height: 30.h,
-                                    // ),
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).pop();
@@ -593,19 +583,14 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                       .unfocus();
                                                   var billerItems =
                                                       Hive.box(widget.billerId);
-                                                  print(billerItems);
                                                   var storedData = billerItems
                                                       .get(widget.billerId);
-                                                  print(widget.billerId);
-                                                  //  storedData['data'];
                                                   var outputList =
                                                       storedData['data']
                                                           .where((o) =>
                                                               o['billerid'] ==
                                                               widget.billerId)
                                                           .toList();
-                                                  print(
-                                                      'output list ${outputList}');
                                                   await fetchUserData()
                                                       .then((value) {
                                                     airtimesController.payBill(
@@ -621,7 +606,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                     );
                                                   }).catchError(
                                                     (error) {
-                                                      print(error);
+                                                      if (kDebugMode) {
+                                                        print(error);
+                                                      }
                                                       setState(() {
                                                         isFilled = false;
                                                       });
@@ -644,8 +631,6 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                   }
                                                 }
                                               },
-                                              // validator: validatePinOne,
-                                              // onChanged: validatePinOne,
                                               controller: _aPinController,
                                               length: 4,
                                               closeKeyboardWhenCompleted: true,
@@ -678,8 +663,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                               fontSize: 32,
                                               fontWeight: FontWeight.w500),
                                           rightButtonFn: () {
-                                            if (_aPinController.text.isEmpty)
+                                            if (_aPinController.text.isEmpty) {
                                               return;
+                                            }
                                             setState(() {
                                               _aPinController.text =
                                                   _aPinController
@@ -692,8 +678,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                             });
                                           },
                                           rightButtonLongPressFn: () {
-                                            if (_aPinController.text.isEmpty)
+                                            if (_aPinController.text.isEmpty) {
                                               return;
+                                            }
                                             setState(() {
                                               _aPinController.text = '';
                                             });

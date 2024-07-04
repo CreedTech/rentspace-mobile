@@ -2,29 +2,25 @@
 
 import 'dart:async';
 
-import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
-import 'package:rentspace/main.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_confirmation.dart';
 
 import '../../../constants/colors.dart';
-import '../../../constants/widgets/custom_button.dart';
-import '../../../constants/widgets/custom_dialog.dart';
-import '../../../constants/widgets/custom_loader.dart';
-import '../../../controller/app/app_controller.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_dialogs/index.dart';
+import '../../../widgets/custom_loader.dart';
 import '../../../controller/auth/user_controller.dart';
 
 class SpaceRentCreation extends ConsumerStatefulWidget {
@@ -36,15 +32,8 @@ class SpaceRentCreation extends ConsumerStatefulWidget {
 }
 
 var currencyFormat = NumberFormat.simpleCurrency(name: 'NGN');
-String _id = '';
-String _rentSpaceID = '';
 String _amountValue = "";
 double _rentValue = 0.0;
-double _rentSeventy = 0.0;
-double _rentThirty = 0.0;
-double _holdingFee = 0.0;
-String _canShowRent = 'false';
-String _hasCalculate = 'true';
 bool isDeviceConnected = false;
 bool isAlertSet = false;
 late StreamSubscription subscription;
@@ -53,9 +42,6 @@ String paymentCount = "";
 //savings goals
 double _dailyValue = 0.0;
 double _savingValue = 0.0;
-double _rentAmount = 0.0;
-double _weeklyValue = 0.0;
-double _monthlyValue = 0.0;
 bool showSaveButton = false;
 String selectedId = '';
 int numberInDays = 0;
@@ -78,71 +64,31 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   final TextEditingController _durationController = TextEditingController();
   final UserController userController = Get.find();
   final WalletController walletController = Get.find();
-  // DateTime selectedDate = DateTime.now().add(Duration(days: 6 * 30));
   DateTime _endDate = DateTime.now();
   List<String> intervalLabels = ['Weekly', 'Monthly'];
   List<String> durations = ['5 months', '6 months', '7 months', '8 months'];
 
   bool idSelected = false;
-  // String durationType = "";
 
-  int _daysInMonth(int month, int year) {
-    switch (month) {
-      case 2: // February
-        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-          return 29; // Leap year
-        } else {
-          return 28;
-        }
-      case 4: // April
-      case 6: // June
-      case 9: // September
-      case 11: // November
-        return 30;
-      default:
-        return 31;
-    }
-  }
-
-  int _calculateDaysInSixMonths(_endDate, _duration) {
-    // Calculate the number of days in the next 6 months
-    int daysInSixMonths = 0;
-    for (int i = 0; i < _duration; i++) {
-      // Calculate days in each month and add to total
-      daysInSixMonths += _daysInMonth(_endDate.month + i, _endDate.year);
-    }
-    print('here');
-    // print(daysInSixMonths);
-    // print('daysInSixMonths');
-    // print(_daysInMonth(today.month + 6, today.year));
-    return daysInSixMonths;
-  }
-
-  int _calculateDaysInEightMonths(DateTime today) {
-    int daysInEightMonths = 0;
-    for (int i = 0; i < 8; i++) {
-      daysInEightMonths += _daysInMonth(today.month + i, today.year);
-    }
-    // print(daysInEightMonths);
-    // print('daysInEightMonths');
-    // print(_daysInMonth(today.month + 8, today.year));
-    return daysInEightMonths;
-  }
-
-  // int _calculateMonthsDifference() {
-  //   final differenceMonths = _endDate
-  //           .add(const Duration(days: 1))
-  //           .difference(DateTime.now())
-  //           .inDays ~/
-  //       30; // Calculate difference in months
-  //   print('differenceMonths');
-  //   print(differenceMonths);
-
-  //   return differenceMonths.abs();
+  // int _daysInMonth(int month, int year) {
+  //   switch (month) {
+  //     case 2: // February
+  //       if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+  //         return 29; // Leap year
+  //       } else {
+  //         return 28;
+  //       }
+  //     case 4: // April
+  //     case 6: // June
+  //     case 9: // September
+  //     case 11: // November
+  //       return 30;
+  //     default:
+  //       return 31;
+  //   }
   // }
+
   int _calculateMonthsDifference(DateTime startDate, int duration) {
-    // final startDate = DateTime.now();
-    // final endDate = _endDate;
     DateTime endDate =
         Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime;
 
@@ -151,78 +97,24 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     final endYear = endDate.year;
     final endMonth = endDate.month;
 
-    // print(startDate);
-    // print(duration);
-    // print('======');
-    // print(Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime);
-
     final monthsDifference =
         ((endYear - startYear) * 12) + (endMonth - startMonth);
-    // print('here======');
-    // print(endDate);
-    // print(endDate.difference(startDate).inDays);
-    // // print('monthsDifference: $monthsDifference');
-
     return monthsDifference.abs();
   }
 
-  int _calculateWeeksDifference() {
-    final startDate = DateTime.now();
-    final endDate = _endDate;
-
-    final differenceInDays = endDate.difference(startDate).inDays;
-    final weeksDifference = (differenceInDays / 7).ceil();
-
-    // print('weeksDifference: $weeksDifference');
-
-    return weeksDifference.abs();
-  }
-
   int _calculateWeeksDifferences(DateTime startDate, int duration) {
-    // print(startDate);
-    // print(duration);
-    // print('======');
-    // print(Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime);
-    // //     _calculateDaysInSixMonths(startDate, duration);
-    // DateTime endDate = startDate
-    //     .add(Duration(days: _calculateDaysInSixMonths(startDate, _duration)));
     DateTime endDate =
         Jiffy.parseFromDateTime(startDate).add(months: duration).dateTime;
 
     receivalDate = endDate;
-    // print('here======');
-    // print(endDate);
-    // print(endDate.difference(startDate).inDays ~/ 7);
     return endDate.difference(startDate).inDays ~/ 7;
   }
 
-  // String _formatWeeksDifference() {
-  //   final weeksDifference = _calculateWeeksDifference();
-  //   return '$weeksDifference weeks';
-  // }
-
-  // bool isWithinRange() {
-  //   int monthsDifference = _calculateMonthsDifference();
-  //   return monthsDifference >= 6 && monthsDifference <= 8;
-  // }
-
   int _calculateDaysDifference() {
-    // final differenceDays = selectedDate
-    //     .add(const Duration(days: 1))
-    //     .difference(DateTime.now())
-    //     .inDays;
     final differenceDays =
         _endDate.add(const Duration(days: 1)).difference(DateTime.now()).inDays;
 
     return differenceDays.abs();
-  }
-
-  getCurrentUser() async {
-    setState(() {
-      _id = userController.userModel!.userDetails![0].id;
-    });
-    // print(_id);
-    // print(_rentSpaceID);
   }
 
   Future<bool> fetchUserData({bool refresh = true}) async {
@@ -234,7 +126,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     if (refresh) {
       await userController.fetchData();
       await walletController.fetchWallet();
-      // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
     return true;
@@ -250,9 +141,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     selectedId = '';
     _savingValue = 0.0;
     _rentNameController.clear();
-    getCurrentUser();
     resetCalculator();
-    // _intervalController.addListener(_updateDurationType);
   }
 
   void getConnectivity() {
@@ -329,12 +218,10 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                         ),
                         onPressed: () async {
                           Navigator.pop(context);
-                          // EasyLoading.dismiss();
                           setState(() => isAlertSet = false);
                           isDeviceConnected =
                               await InternetConnectionChecker().hasConnection;
                           if (!isDeviceConnected && isAlertSet == false) {
-                            // showDialogBox();
                             noInternetConnectionScreen(context);
                             setState(() => isAlertSet = true);
                           }
@@ -358,14 +245,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         });
   }
 
-  // void _updateDurationType() {
-  //   if (mounted) {
-  //     setState(() {
-  //       durationType = _intervalController.text;
-  //     });
-  //   }
-  // }
-
   @override
   void dispose() {
     super.dispose();
@@ -379,22 +258,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime today = DateTime.now();
-
-    // Calculate the date 6 months from today
-    // DateTime sixMonthsLater =
-    //     today.add(Duration(days: _calculateDaysInSixMonths(today)));
-
-    // print('6 months from today is: $sixMonthsLater');
-    int daysInSixMonths = _calculateDaysInSixMonths(_endDate, _duration);
-    // print(daysInSixMonths);
-    int daysInEightMonths = _calculateDaysInEightMonths(today);
-
-    // DateTime sixMonthsLater = today.add(Duration(days: daysInSixMonths));
-    // print('6 months from today is: $daysInSixMonths');
-    // print('8 months from today is: $daysInEightMonths');
-    final rentState = ref.watch(appControllerProvider.notifier);
-
     validateFunc(text) {
       if (text.isEmpty) {
         return 'Can\'t be empty';
@@ -437,67 +300,37 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       return null;
     }
 
-///////calculate rent
+// calculate rent
     Future<void> calculateRent(rent) async {
-      // print('_calculateDaysDifference()');
-      // print(_calculateDaysDifference());
-      // print(_calculateMonthsDifference());
-      // print(_calculateWeeksDifference());
       setState(() {
-        _rentThirty = (rent - (rent * 0.7));
-        _rentSeventy = (rent * 0.7);
-        // _rentAmount = double.parse(_rentAmountController.text.trim().replaceAll(',', ''));
         _amountValue = _rentAmountController.text;
-        _holdingFee = 0.01 * _rentSeventy;
         _rentValue = rent;
-        _hasCalculate = 'true';
         if (_intervalController.text.toLowerCase() == "weekly") {
           paymentCount =
               _calculateWeeksDifferences(_endDate, _duration).toString();
 
           _savingValue =
               ((rent) / _calculateWeeksDifferences(_endDate, _duration));
-          // print("_endDate");
-          // print(_endDate);
-          // print(_duration);
-          // print(_savingValue);
-          int weeksDifference = _calculateWeeksDifferences(_endDate, _duration);
-
-          // print("Number of weeks after $_duration months: $weeksDifference");
         } else {
           paymentCount =
               _calculateMonthsDifference(_endDate, _duration).toString();
           _savingValue =
               ((rent) / _calculateMonthsDifference(_endDate, _duration));
-          int monthsDifference =
-              _calculateMonthsDifference(_endDate, _duration);
-          // print("Number of months after $_duration months: $monthsDifference");
-          int daysInSixMonths = _calculateDaysInSixMonths(_endDate, _duration);
-          // print(daysInSixMonths);
         }
         _dailyValue = ((rent) / _calculateDaysDifference());
       });
     }
 
-    int calculateDaysInMonths(DateTime startDate, int months) {
-      int daysInMonths = 0;
-      for (int i = 0; i < months; i++) {
-        daysInMonths += _daysInMonth(startDate.month + i, startDate.year);
-      }
-      return daysInMonths;
-    }
+    // int calculateDaysInMonths(DateTime startDate, int months) {
+    //   int daysInMonths = 0;
+    //   for (int i = 0; i < months; i++) {
+    //     daysInMonths += _daysInMonth(startDate.month + i, startDate.year);
+    //   }
+    //   return daysInMonths;
+    // }
 
     Future<void> selectEndDate(BuildContext context) async {
       final DateTime now = DateTime.now();
-      final DateTime sixMonthsLater =
-          now.add(Duration(days: calculateDaysInMonths(now, 6)));
-      final DateTime eightMonthsLater =
-          now.add(Duration(days: calculateDaysInMonths(now, 8)));
-
-      // final picks = await showDateRangePicker(
-      //     context: context,
-      //     firstDate: DateTime.now(),
-      //     lastDate: DateTime(2030));
 
       final DateTime? picked = await showDatePicker(
         context: context,
@@ -510,7 +343,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                 primary: brandTwo, // header background color
                 onPrimary: Colors.white,
                 onBackground: brandTwo,
-                // onSecondary: brandTwo,
 
                 outline: brandTwo,
                 background: brandTwo,
@@ -535,37 +367,18 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         setState(() {
           _endDate = picked;
           Duration difference = picked.difference(now);
-          // Duration difference = picked.difference(DateTime.now());
-          // print(difference.inDays + 1);
           numberInDays = difference.inDays + 1;
-          // print('numberInDays');
-          // print(numberInDays);
           if (validateFunc(
                   _rentAmountController.text.trim().replaceAll(',', '')) ==
               null) {
             showSaveButton = true;
             _endDateController.text = DateFormat('dd/MM/yyyy').format(picked);
-            // if (numberInDays < daysInSixMonths) {
-            //   showSaveButton = false;
-            //   customErrorDialog(
-            //       context, 'Invalid date', 'Minimum duration is 6 months');
-            // } else if (numberInDays > daysInEightMonths) {
-            //   showSaveButton = false;
-            //   customErrorDialog(
-            //       context, 'Invalid date', 'Maximum duration is 8 months');
-            // } else {
-            //   showSaveButton = true;
-            //   _endDateController.text = DateFormat('dd/MM/yyyy').format(picked);
-            // }
           } else {
             if (context.mounted) {
               customErrorDialog(
                   context, 'Invalid', "Please enter valid amount to proceed.");
             }
           }
-
-          // calculateRent(rent);
-          _canShowRent = 'true';
         });
       }
     }
@@ -575,9 +388,9 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       cursorColor: Theme.of(context).colorScheme.primary,
       controller: _rentNameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      maxLength: 12,
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
       validator: validateName,
-      // update the state variable when the text changes
-      // onChanged: (text) => setState(() => _nameValue = text),
       style: GoogleFonts.lato(
           color: Theme.of(context).colorScheme.primary,
           fontSize: 14,
@@ -585,14 +398,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       keyboardType: TextInputType.text,
       inputFormatters: const [],
       decoration: InputDecoration(
-        // label: Text(
-        //   "Enter Rent name",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
@@ -629,7 +434,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     );
     final rentAmount = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _rentAmountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validateFunc,
@@ -638,11 +443,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         setState(() {
           _amountValue = "";
           _rentValue = 0.0;
-          _rentSeventy = 0.0;
-          _rentThirty = 0.0;
-          _holdingFee = 0.0;
-          _hasCalculate = 'true';
-          _canShowRent = 'false';
           showSaveButton = false;
           _endDateController.clear();
         });
@@ -655,14 +455,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       keyboardType: TextInputType.number,
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
-        // label: Text(
-        //   "How much is your rent per year?",
-        //   style: GoogleFonts.lato(
-        //     color: Colors.grey,
-        //     fontSize: 12,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
@@ -707,7 +499,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     );
     final endDate = TextFormField(
       controller: _endDateController,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: Theme.of(context).colorScheme.primary,
       validator: validateEndDate,
       style: GoogleFonts.lato(
           color: Theme.of(context).colorScheme.primary,
@@ -827,8 +619,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                       ),
                                     ],
                                   ),
-
-                                  // selected: _selectedCarrier == name[idx],
                                   onTap: () {
                                     setState(() {
                                       idSelected = true;
@@ -878,7 +668,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
       controller: _intervalController,
       textAlignVertical: TextAlignVertical.center,
-      // textCapitalization: TextCapitalization.sentences,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -983,18 +772,14 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                       ),
                                     ],
                                   ),
-
-                                  // selected: _selectedCarrier == name[idx],
                                   onTap: () {
                                     setState(() {
                                       idSelected = true;
                                       _duration = int.parse(
                                           durations[idx].split(' ')[0]);
-                                      // durationType = _intervalController.text;
                                     });
 
                                     _durationController.text = durations[idx];
-                                    // });
 
                                     Navigator.pop(
                                       context,
@@ -1036,7 +821,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
       controller: _durationController,
       textAlignVertical: TextAlignVertical.center,
-      // textCapitalization: TextCapitalization.sentences,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -1214,39 +998,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                     ),
                                   ),
                                   frequencySelect,
-                                  // CustomDropdown(
-                                  //   selectedStyle: GoogleFonts.lato(
-                                  //       color: Theme.of(context)
-                                  //           .colorScheme
-                                  //           .primary,
-                                  //       fontSize: 14,
-                                  //       fontWeight: FontWeight.w500),
-                                  //   // hintText: 'Select frequency',
-                                  //   hintStyle: GoogleFonts.lato(fontSize: 12),
-                                  //   excludeSelected: true,
-                                  //   fillColor: Colors.transparent,
-                                  //   listItemStyle: GoogleFonts.lato(
-                                  //       color: Theme.of(context)
-                                  //           .colorScheme
-                                  //           .primary,
-                                  //       fontSize: 14,
-                                  //       fontWeight: FontWeight.w500),
-                                  //   items: intervalLabels,
-                                  //   controller: _intervalController,
-                                  //   borderSide: BorderSide(
-                                  //       color: Theme.of(context).primaryColor),
-                                  //   fieldSuffixIcon: Icon(
-                                  //     Iconsax.arrow_down5,
-                                  //     size: 25.h,
-                                  //     color:
-                                  //         Theme.of(context).colorScheme.primary,
-                                  //   ),
-                                  //   onChanged: (String val) {
-                                  //     setState(() {
-                                  //       idSelected = true;
-                                  //     });
-                                  //   },
-                                  // ),
                                 ],
                               ),
                               const SizedBox(
@@ -1332,12 +1083,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
     setState(() {
       _amountValue = "";
       _rentValue = 0.0;
-      _rentSeventy = 0.0;
-      _rentThirty = 0.0;
-      _holdingFee = 0.0;
       _savingValue = 0.0;
-      _hasCalculate = 'true';
-      _canShowRent = 'false';
     });
     _rentNameController.clear();
     _rentAmountController.clear();

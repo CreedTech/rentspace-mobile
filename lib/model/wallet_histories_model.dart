@@ -10,14 +10,11 @@ class WalletHistoriesModel {
       // If walletHistoriesData is a List, map each element to WalletHistories object.
       walletHistories =
           walletHistoriesData.map((e) => WalletHistories.fromJson(e)).toList();
-      // print(walletHistories!.length);
-      // print(walletHistoriesData[0]);
     } else if (walletHistoriesData is Map<String, dynamic>) {
       // If walletHistoriesData is a Map, create a single WalletHistories object.
       walletHistories = [WalletHistories.fromJson(walletHistoriesData)];
     } else {
       // Handle other cases if necessary.
-      // print('Invalid walle/t histories data: $walletHistoriesData');
       walletHistories = [];
     }
   }

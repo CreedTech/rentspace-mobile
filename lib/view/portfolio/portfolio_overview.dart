@@ -5,11 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 
-import '../../constants/colors.dart';
 import '../../controller/auth/user_controller.dart';
 
 class PortfolioOverview extends StatefulWidget {
-  PortfolioOverview({super.key});
+  const PortfolioOverview({super.key});
 
   @override
   State<PortfolioOverview> createState() => _PortfolioOverviewState();

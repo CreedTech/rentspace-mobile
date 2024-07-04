@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../constants/colors.dart';
-import '../../../constants/widgets/custom_dialog.dart';
 import '../../../controller/auth/auth_controller.dart';
 
 class ChangeTransactionPin extends ConsumerStatefulWidget {
@@ -35,18 +32,6 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
-    validatePinOne(pinOneValue) {
-      if (pinOneValue.isEmpty) {
-        return 'pin cannot be empty';
-      }
-      if (pinOneValue.length < 4) {
-        return 'pin is incomplete';
-      }
-      if (int.tryParse(pinOneValue) == null) {
-        return 'enter valid number';
-      }
-      return null;
-    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

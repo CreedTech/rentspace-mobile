@@ -189,7 +189,9 @@ class _ForgotPasswordOTPVerificationPageState
                                       'Enter OTP',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.lato(
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 20,
                                       ),
@@ -206,7 +208,8 @@ class _ForgotPasswordOTPVerificationPageState
                                               text:
                                                   "Email Verification! Enter One-Time Password ",
                                               style: GoogleFonts.lato(
-                                                color: Theme.of(context).primaryColorLight,
+                                                color: Theme.of(context)
+                                                    .primaryColorLight,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -214,7 +217,8 @@ class _ForgotPasswordOTPVerificationPageState
                                               text:
                                                   '\n sent to ${obscureEmail(widget.email)}',
                                               style: GoogleFonts.lato(
-                                                color: Theme.of(context).primaryColorLight,
+                                                color: Theme.of(context)
+                                                    .primaryColorLight,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -236,7 +240,8 @@ class _ForgotPasswordOTPVerificationPageState
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   textStyle: GoogleFonts.lato(
                                     fontSize: 25,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -252,11 +257,13 @@ class _ForgotPasswordOTPVerificationPageState
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   textStyle: GoogleFonts.lato(
                                     fontSize: 25,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                   decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: const Color(0xffBDBDBD), width: 1.0),
+                                    border: Border.all(
+                                        color: const Color(0xffBDBDBD),
+                                        width: 1.0),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
@@ -267,11 +274,13 @@ class _ForgotPasswordOTPVerificationPageState
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   textStyle: GoogleFonts.lato(
                                     fontSize: 25,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                   decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: const Color(0xffBDBDBD), width: 1.0),
+                                    border: Border.all(
+                                        color: const Color(0xffBDBDBD),
+                                        width: 1.0),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
@@ -282,7 +291,8 @@ class _ForgotPasswordOTPVerificationPageState
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   textStyle: GoogleFonts.lato(
                                     fontSize: 25,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -326,7 +336,9 @@ class _ForgotPasswordOTPVerificationPageState
                                       TextSpan(
                                         text: "Didn’t receive code? ",
                                         style: GoogleFonts.lato(
-                                            color: Theme.of(context).colorScheme.primary,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400),
                                       ),
@@ -334,16 +346,16 @@ class _ForgotPasswordOTPVerificationPageState
                                           ? TextSpan(
                                               text: 'Resend OTP ',
                                               style: GoogleFonts.lato(
-                                                  color:
-                                                      Theme.of(context).primaryColorLight,
+                                                  color: Theme.of(context)
+                                                      .primaryColorLight,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 14),
                                             )
                                           : TextSpan(
                                               text: ' ($formattedTime)',
                                               style: GoogleFonts.lato(
-                                                  color:
-                                                      Theme.of(context).primaryColorLight,
+                                                  color: Theme.of(context)
+                                                      .primaryColorLight,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 14),
                                             ),
@@ -395,7 +407,9 @@ class _ForgotPasswordOTPVerificationPageState
                                         style: GoogleFonts.lato(
                                           color: (isFilled == true)
                                               ? colorWhite
-                                              : Theme.of(context).colorScheme.primary,
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -454,145 +468,6 @@ class _ForgotPasswordOTPVerificationPageState
                     ),
                   ),
                 ),
-
-                // Padding(
-                //   padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
-                //   child: Column(
-                //     children: [
-                //       Align(
-                //         alignment: Alignment.center,
-                //         child: RichText(
-                //           textAlign: TextAlign.center,
-                //           text: TextSpan(
-                //               style: GoogleFonts.lato(
-                //                 fontWeight: FontWeight.w700,
-                //                 fontSize: 18,
-                //               ),
-                //               children: <TextSpan>[
-                //                 TextSpan(
-                //                   text: "We've sent a verification code to ",
-                //                   style: GoogleFonts.lato(color: brandOne),
-                //                 ),
-                //                 TextSpan(
-                //                   text: obscureEmail(widget.email),
-                //                   style: GoogleFonts.lato(
-                //                     color: brandTwo,
-                //                     fontWeight: FontWeight.w700,
-                //                   ),
-                //                 ),
-                //               ]),
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         height: 40.h,
-                //       ),
-                //       Column(
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: [
-                //           Form(
-                //             key: otprestpwdFormKey,
-                //             child: Padding(
-                //               padding: const EdgeInsets.symmetric(
-                //                 vertical: 8.0,
-                //                 horizontal: 14,
-                //               ),
-                //               child: pin,
-                //             ),
-                //           ),
-                //           const SizedBox(
-                //             height: 30,
-                //           ),
-                //           Column(
-                //             children: [
-                //               Row(
-                //                 mainAxisAlignment: MainAxisAlignment.center,
-                //                 children: [
-                //                   Text(
-                //                     'Didn\'t receive the mail?',
-                //                     style: GoogleFonts.lato(
-                //                       color: brandOne,
-                //                       fontSize: 14,
-                //                       fontWeight: FontWeight.w700,
-                //                     ),
-                //                   ),
-                //                   // const SizedBox(
-                //                   //   width: 10,
-                //                   // ),
-                //                   if (isClicked == false)
-                //                     GestureDetector(
-                //                       onTap: () {
-                //                         setState(() {
-                //                           isClicked = true;
-                //                         });
-                //                         resetCountdown();
-                //                         authState.resendPasswordOtp(
-                //                             context, widget.email);
-                //                       },
-                //                       child: Text(
-                //                         ' Click here',
-                //                         style: GoogleFonts.lato(
-                //                           color: brandTwo,
-                //                           fontSize: 14,
-                //                           fontWeight: FontWeight.w700,
-                //                         ),
-                //                       ),
-                //                     ),
-                //                 ],
-                //               ),
-                //               if (isClicked == true)
-                //                 Text(
-                //                   formattedTime,
-                //                   style: GoogleFonts.lato(
-                //                     color: brandTwo,
-                //                     fontSize: 14,
-                //                     fontWeight: FontWeight.w700,
-                //                   ),
-                //                 ),
-                //             ],
-                //           ),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
-                // Positioned(
-                //   bottom: 20,
-                //   left: 0,
-                //   right: 0,
-                //   child: Align(
-                //     alignment: Alignment.bottomCenter,
-                //     child: NumericKeyboard(
-                //       onKeyboardTap: (String value) {
-                //         setState(() {
-                //           otpController.text = otpController.text + value;
-                //         });
-                //       },
-                //       textStyle: GoogleFonts.lato(
-                //         color: brandOne,
-                //         fontSize: 28,
-                //       ),
-                //       rightButtonFn: () {
-                //         if (otpController.text.isEmpty) return;
-                //         setState(() {
-                //           otpController.text = otpController.text
-                //               .substring(0, otpController.text.length - 1);
-                //         });
-                //       },
-                //       rightButtonLongPressFn: () {
-                //         if (otpController.text.isEmpty) return;
-                //         setState(() {
-                //           otpController.text = '';
-                //         });
-                //       },
-                //       rightIcon: const Icon(
-                //         Icons.backspace_outlined,
-                //         color: Colors.red,
-                //       ),
-                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),

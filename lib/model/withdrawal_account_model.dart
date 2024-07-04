@@ -6,13 +6,9 @@ class WithdrawalAccountModel {
 
   WithdrawalAccountModel.fromJson(Map<String, dynamic> json) {
     final dynamic withdrawalAccountData = json['withdrawalAccount'] ?? '';
-      print('withdrawalAccountdata');
-      print(withdrawalAccountData);
     if (withdrawalAccountData is Map<String, dynamic>) {
       // If userDetailsData is a Map, create a single UserDetailsModel object.
       withdrawalAccount = [WithdrawalAccount.fromJson(withdrawalAccountData)];
-      print('withdrawalAccount');
-      print(withdrawalAccount);
     } else {
       withdrawalAccount = [];
     }

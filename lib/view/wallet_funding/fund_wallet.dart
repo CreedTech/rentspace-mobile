@@ -143,7 +143,7 @@ class _FundWalletState extends State<FundWallet> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 7, vertical: 3),
                         decoration: BoxDecoration(
-                          color: Color(0xffEEF8FF),
+                          color: const Color(0xffEEF8FF),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
@@ -203,7 +203,7 @@ class _FundWalletState extends State<FundWallet> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 7, vertical: 3),
                         decoration: BoxDecoration(
-                          color: Color(0xffEEF8FF),
+                          color: const Color(0xffEEF8FF),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
@@ -219,166 +219,6 @@ class _FundWalletState extends State<FundWallet> {
                     ],
                   ),
                 ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                // Padding(
-                //   padding:
-                //       EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(
-                //             'Rentspace Account Number',
-                //             style: GoogleFonts.lato(
-                //               color: brandTwo,
-                //               fontSize: 12,
-                //               fontWeight: FontWeight.w400,
-                //             ),
-                //           ),
-                //           Row(
-                //             children: [
-                //               Text(
-                //                 userController
-                //                     .userModel!.userDetails![0].dvaNumber,
-                //                 style: GoogleFonts.lato(
-                //                   color: brandOne,
-                //                   fontSize: 25,
-                //                   letterSpacing: 4,
-                //                   fontWeight: FontWeight.w600,
-                //                 ),
-                //               ),
-                //               const SizedBox(
-                //                 width: 10,
-                //               ),
-                //               InkWell(
-                //                 onTap: () {
-                //                   Clipboard.setData(
-                //                     ClipboardData(
-                //                       text: userController
-                //                           .userModel!.userDetails![0].dvaNumber
-                //                           .obs()
-                //                           .toString(),
-                //                     ),
-                //                   );
-
-                //                   Fluttertoast.showToast(
-                //                     msg: "Copied",
-                //                     toastLength: Toast.LENGTH_SHORT,
-                //                     gravity: ToastGravity.BOTTOM,
-                //                     timeInSecForIosWeb: 1,
-                //                     backgroundColor: brandOne,
-                //                     textColor: Colors.white,
-                //                     fontSize: 16.0,
-                //                   );
-                //                 },
-                //                 child: const Icon(
-                //                   Icons.copy,
-                //                   size: 16,
-                //                   color: brandOne,
-                //                 ),
-                //               )
-                //             ],
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(
-                //         height: 5.h,
-                //       ),
-                //       Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(
-                //             'Bank',
-                //             style: GoogleFonts.lato(
-                //               color: brandTwo,
-                //               fontSize: 12,
-                //               fontWeight: FontWeight.w400,
-                //             ),
-                //           ),
-                //           Text(
-                //             'Providus Bank',
-                //             style: GoogleFonts.lato(
-                //               color: brandOne,
-                //               fontSize: 16,
-                //               fontWeight: FontWeight.w600,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //       SizedBox(
-                //         height: 5.h,
-                //       ),
-                //       Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(
-                //             'Account Name',
-                //             style: GoogleFonts.lato(
-                //               color: brandTwo,
-                //               fontSize: 12,
-                //               fontWeight: FontWeight.w400,
-                //             ),
-                //           ),
-                //           Text(
-                //             userController.userModel!.userDetails![0].dvaName,
-                //             style: GoogleFonts.lato(
-                //               color: brandOne,
-                //               fontSize: 16,
-                //               fontWeight: FontWeight.w600,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                //   child: MySeparator(
-                //     height: 1,
-                //     color: Theme.of(context).cardColor,
-                //   ),
-                // ),
-                // ListTile(
-                //   leading: Container(
-                //     padding: const EdgeInsets.all(12),
-                //     decoration: const BoxDecoration(
-                //       shape: BoxShape.circle,
-                //       color: brandOne,
-                //     ),
-                //     child: const Icon(
-                //       Iconsax.card,
-                //       color: Colors.white,
-                //     ),
-                //   ),
-                //   title: Text(
-                //     'Top-up with Card',
-                //     style: GoogleFonts.lato(
-                //       color: Theme.of(context).primaryColor,
-                //       fontSize: 13,
-                //       fontWeight: FontWeight.w700,
-                //     ),
-                //   ),
-                //   subtitle: Text(
-                //     'Add money via your bank card',
-                //     style: GoogleFonts.lato(
-                //       color: brandOne,
-                //       fontSize: 12,
-                //       fontWeight: FontWeight.w400,
-                //     ),
-                //   ),
-                //   onTap: () {
-                //     Get.to(const CardTopUp());
-                //   },
-                //   trailing: Icon(
-                //     Iconsax.arrow_right_3,
-                //     color: Theme.of(context).primaryColor,
-                //   ),
-                // ),
               ],
             ),
           ),

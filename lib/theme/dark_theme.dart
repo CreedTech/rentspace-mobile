@@ -16,8 +16,8 @@ ThemeData DarkThemeData() {
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
-    textSelectionTheme: const TextSelectionThemeData(
-      selectionColor: colorWhite, // Color of the selection highlight
+    textSelectionTheme:  TextSelectionThemeData(
+      selectionColor: colorWhite.withOpacity(0.5), // Color of the selection highlight
       // cursorColor: brandOne, // Color of the text cursor
       selectionHandleColor: colorWhite,
     ),

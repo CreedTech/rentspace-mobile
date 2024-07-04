@@ -14,13 +14,11 @@ class DataBundle {
   String amount;
   String name;
   String validity;
-  // String bundleType;
 
   DataBundle({
     required this.amount,
     required this.name,
     required this.validity,
-    // required this.bundleType,
   });
 
   factory DataBundle.fromJson(Map<String, dynamic> json) {
@@ -28,7 +26,6 @@ class DataBundle {
       amount: json['amount'],
       name: json['name'],
       validity: json['validity'],
-      // bundleType: json['bundle_type'],
     );
   }
 
@@ -37,7 +34,6 @@ class DataBundle {
       'amount': amount,
       'name': name,
       'validity': validity,
-      // 'bundle_type': bundleType,
     };
   }
 }

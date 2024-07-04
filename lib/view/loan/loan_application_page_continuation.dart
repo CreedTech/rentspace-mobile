@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pattern_formatter/numeric_formatter.dart';
 import 'package:rentspace/view/loan/loan_application_success_page.dart';
+import 'package:rentspace/widgets/custom_dialogs/custom_error_dialog.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/utils/formatPhoneNumber.dart';
@@ -54,6 +55,8 @@ class _LoanApplicationPageContinuationState
   bool employmentStatusSelected = false;
   String? selectedId;
   bool idSelected = false;
+  bool authorizeRentspace = false;
+  bool agreeToTerms = false;
   // bool hasExistingLoans = false;
   @override
   Widget build(BuildContext context) {
@@ -1655,6 +1658,131 @@ class _LoanApplicationPageContinuationState
                           SizedBox(
                             height: 20.h,
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: Container(
+                                  padding: EdgeInsets.zero,
+                                  margin: EdgeInsets.zero,
+                                  child: Checkbox.adaptive(
+                                    visualDensity:
+                                        VisualDensity.adaptivePlatformDensity,
+                                    value: authorizeRentspace,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        authorizeRentspace = value!;
+                                      });
+                                    },
+                                    overlayColor:
+                                        MaterialStateColor.resolveWith(
+                                      (states) => brandTwo,
+                                    ),
+                                    fillColor:
+                                        MaterialStateProperty.resolveWith<
+                                            Color>((Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return brandTwo;
+                                      }
+                                      return const Color(0xffF2F2F2);
+                                    }),
+                                    focusColor: MaterialStateColor.resolveWith(
+                                      (states) => brandTwo,
+                                    ),
+                                    activeColor: MaterialStateColor.resolveWith(
+                                      (states) => brandTwo,
+                                    ),
+                                    side: const BorderSide(
+                                      color: Color(0xffBDBDBD),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                flex: 9,
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'I authorize Rentspace Technologies Limited to obtain personal and credit information about me from our credit bureau, or credit reporting agency, any person who has or may have any financial dealing with me, or from any references I have provided. ',
+                                    textAlign: TextAlign.left,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: Container(
+                                  padding: EdgeInsets.zero,
+                                  margin: EdgeInsets.zero,
+                                  child: Checkbox.adaptive(
+                                    visualDensity:
+                                        VisualDensity.adaptivePlatformDensity,
+                                    value: agreeToTerms,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        agreeToTerms = value!;
+                                      });
+                                    },
+                                    overlayColor:
+                                        MaterialStateColor.resolveWith(
+                                      (states) => brandTwo,
+                                    ),
+                                    fillColor:
+                                        MaterialStateProperty.resolveWith<
+                                            Color>((Set<MaterialState> states) {
+                                      if (states
+                                          .contains(MaterialState.selected)) {
+                                        return brandTwo;
+                                      }
+                                      return const Color(0xffF2F2F2);
+                                    }),
+                                    focusColor: MaterialStateColor.resolveWith(
+                                      (states) => brandTwo,
+                                    ),
+                                    activeColor: MaterialStateColor.resolveWith(
+                                      (states) => brandTwo,
+                                    ),
+                                    side: const BorderSide(
+                                      color: Color(0xffBDBDBD),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                flex: 9,
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'I hereby agree that the information given is true, accurate and complete as of the date of this application submission. ',
+                                    textAlign: TextAlign.left,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -1682,15 +1810,18 @@ class _LoanApplicationPageContinuationState
                     ),
                   ),
                   onPressed: () async {
-                    if (loanContFormKey.currentState!.validate()) {
+                    if (loanContFormKey.currentState!.validate() &&
+                        agreeToTerms == true &&
+                        authorizeRentspace == true) {
                       Get.to(const LoanApplicationSuccessfulPage());
-                      // await _saveFormData().then(
-                      //   (value) => Get.to(
-                      //     LoanApplicationPageContinuation(
-                      //       current: widget.current,
-                      //     ),
-                      //   ),
-                      // );
+                    } else if (!(agreeToTerms == true &&
+                            authorizeRentspace == true) &&
+                        loanContFormKey.currentState!.validate()) {
+                      customErrorDialog(context, 'Invalid',
+                          'Please click the checkboxes to continue');
+                    } else {
+                      customErrorDialog(context, 'Invalid',
+                          'Please Fill all required fields');
                     }
                   },
                   child: Text(

@@ -1,67 +1,34 @@
-// import 'dart:io';
-
-// import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-// import 'package:flutter/widgets.dart';
-// import 'package:flutter_html/flutter_html.dart';
-// import 'package:html/parser.dart';
-// import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
-// import 'package:rentspace/constants/widgets/app_scrolling.dart';
-import 'package:rentspace/constants/widgets/custom_loader.dart';
-// import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:rentspace/model/user_details_model.dart';
-import 'package:rentspace/view/onboarding/FirstPage.dart';
 import 'package:rentspace/view/contact/contact_us.dart';
 import 'package:rentspace/view/wallet_funding/fund_wallet.dart';
-import 'package:rentspace/view/dashboard/all_activities.dart';
-import 'package:get_storage/get_storage.dart';
-// import 'package:rentspace/view/dashboard/settings.dart';
-import 'package:rentspace/view/dashboard/transfer.dart';
+import 'package:rentspace/view/history/all_activities.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/view/dashboard/withdraw_continuation_page.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
 import 'package:rentspace/view/utility/airtime.dart';
-// import 'package:http/http.dart' as http;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
-// import '../../api/wp-api.dart';
-// import '../../constants/utils/responsive_height.dart';
-// import '../../constants/widgets/custom_dialog.dart';
-// import '../../controller/settings_controller.dart';
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/icon_container.dart';
-import '../../core/helper/helper_route_path.dart';
-// import '../actions/onboarding_page.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../constants/utils/formatDateTime.dart';
 import '../../provider/task_provider.dart';
 import '../auth/pin/transaction_pin.dart';
 import '../receipts/transaction_receipt.dart';
-import '../receipts/transaction_receipt_dva.dart';
-import '../receipts/transaction_receipt_transfer.dart';
-import 'withdraw_page.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({
@@ -74,22 +41,18 @@ class Dashboard extends ConsumerStatefulWidget {
 
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 final UserController userController = Get.put(UserController());
-// final ActivitiesController activitiesController =
-//     Get.put(ActivitiesController());
 final WalletController walletController = Get.put(WalletController());
 final RentController rentController = Get.put(RentController());
 
 int id = 0;
 
 String _greeting = "";
-// bool _hasReferred = false;
 String referalCode = "";
 int referalCount = 0;
 int userReferal = 0;
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
-// String _isSet = "false";
 var dum1 = "".obs;
 String previousAnnouncementText = '';
 bool showBalance = true;
@@ -103,31 +66,15 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   String? fullName = '';
   double rentBalance = 0;
   List<UserDetailsModel> userInfo = [];
-// String? fullName = '';
-  // List<WalletModel> wallet_info = [];
   bool isAlertSet = false;
   bool isRefresh = false;
   List rentspaceProducts = ['Space Wallet', 'Space Rent', 'Space Deposit'];
   String selectedIndex = 'Space Wallet';
+  final Box<dynamic> settingsHiveBox = Hive.box('settings');
 
   final form = intl.NumberFormat.decimalPattern();
   bool isContainerVisible = true;
-  // final List<Map<String, dynamic>> _slides = [
-  //   {
-  //     'label': 'Add your profile picture',
-  //     'subTitle': 'Complete your profile by adding a profile picture',
-  //     'completed': false,
-  //     'image': 'assets/face.png',
-  //   },
-  //   {
-  //     'label': 'Set up your withdrawal account',
-  //     'subTitle': 'Save an account to withdraw your funds',
-  //     'completed': false,
-  //     'image': 'assets/bank_tilt.png',
-  //   },
-  //   // {'label': 'Task 3', 'completed': false},
-  // ];
-  // List<dynamic> _articles = [];
+
   greeting() {
     var hour = DateTime.now().hour;
     if (hour < 12) {
@@ -156,55 +103,45 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         ref
             .read(taskProvider.notifier)
             .completeTask('Set up your withdrawal account');
-        // setState(() {
-        //   _slides.remove(value);
-        // });
       }
       if (userController.userModel!.userDetails![0].imageUpdated == true) {
         ref
             .read(taskProvider.notifier)
             .completeTask('Add your profile picture');
-        // setState(() {
-        //   _slides.remove(value);
-        // });
       }
 
       setState(() {}); // Move setState inside fetchData
     }
   }
 
-  UserModel? _user;
-  bool _loading = true;
+  // UserModel? _user;
+  // bool _loading = true;
 
-  Future<void> _loadUserData() async {
-    final box = Hive.box('settings');
-    final user = box.get('userInfo') as UserModel?;
-    print('user');
-    print(user);
+  // Future<void> _loadUserData() async {
+  //   final box = Hive.box('settings');
+  //   final user = box.get('userInfo') as UserModel?;
+  //   print('user');
+  //   print(user);
 
-    if (user != null) {
-      setState(() {
-        _user = user;
-        _loading = false;
-      });
-    } else {
-      final fetchedUser = await userController.fetchData();
-      print('fetchedUser');
-      print(fetchedUser);
-      setState(() {
-        _user = fetchedUser;
-        _loading = false;
-      });
-    }
-  }
+  //   if (user != null) {
+  //     setState(() {
+  //       _user = user;
+  //       _loading = false;
+  //     });
+  //   } else {
+  //     final fetchedUser = await userController.fetchData();
+  //     print('fetchedUser');
+  //     print(fetchedUser);
+  //     setState(() {
+  //       _user = fetchedUser;
+  //       _loading = false;
+  //     });
+  //   }
+  // }
 
   getSavings() async {
-    // print("rentController.rent");
     await rentController.fetchRent().then((value) {
-      // if (userController.userModel!.userDetails![0].hasRent == true) {
       if (rentController.rentModel!.rents!.isNotEmpty) {
-        // rentBalance += rentController.rentModel!.rent![0].paidAmount;
-        // targetBalance += rentController.rentModel!.rent![0].amount;
         for (int j = 0; j < rentController.rentModel!.rents!.length; j++) {
           setState(() {
             rentBalance += rentController.rentModel!.rents![j].paidAmount;
@@ -223,7 +160,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   Future<void> setTransationPin() async {
     await Future.delayed(const Duration(seconds: 1));
     if (userController.userModel!.userDetails![0].isPinSet == true) {
-      // Get.to(TransactionPin());
       if (mounted) {
         Navigator.push(
           context,
@@ -236,25 +172,22 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   @override
   initState() {
     super.initState();
-    // setTransationPin();
+    bool? showBalanceStorage =
+        settingsHiveBox.get('showBalance', defaultValue: true);
     setState(() {
       rentBalance = 0;
     });
     fetchUserData();
-    // print(userController.userModel!.userDetails![0].firstName);
     selectedIndex = rentspaceProducts[0];
     getSavings();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      // final notification = message.notification?.title ?? 'No Title';
       userController.fetchData();
       walletController.fetchWallet();
       rentController.fetchRent();
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // final notification = message.notification?.title ?? 'No Title';
-      // context.read().addNotification(notification);
       userController.fetchData();
       walletController.fetchWallet();
       rentController.fetchRent();
@@ -267,13 +200,12 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
         userController.fetchData();
         walletController.fetchWallet();
         rentController.fetchRent();
-        // final notification = message.notification?.title ?? 'No Title';
       }
     });
 
     getConnectivity();
     // print("isLoading");
-    showBalance = true;
+    showBalance = showBalanceStorage!;
     // print(userController.isLoading.value);
 
     greeting();
@@ -309,12 +241,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    // print('nextWithdrawalDate');
-    // print(walletController.walletModel!.wallet![0].nextWithdrawalDate != '');
-    // final data = ref.watch(userProfileDetailsProvider);
-    // double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    // double sliderHeight = sliderDynamicScreen(screenHeight);
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: brandOne,
@@ -428,6 +355,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             setState(() {
                                               showBalance = !showBalance;
                                             });
+                                            settingsHiveBox.put(
+                                                'showBalance', showBalance);
                                           },
                                           child: Icon(
                                             showBalance
@@ -583,8 +512,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                           context) {
                                                         return GestureDetector(
                                                           onTap: () {
-                                                            print(
-                                                                slide['page']);
                                                             Navigator.pushNamed(
                                                               context,
                                                               slide['page'],
@@ -724,25 +651,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             );
                                     },
                                   ),
-                                  // CarouselSlider.builder(
-                                  //     itemCount: 3,
-                                  //     itemBuilder: (context, indexOfSlider,
-                                  //         realIndex) {
-                                  //       return Text(
-                                  //           'Index ${indexOfSlider}');
-                                  //     },
-                                  //     options: CarouselOptions(
-                                  //       onPageChanged: ((index, reason) {
-                                  //         setState(() {
-                                  //           currentPos = index;
-                                  //         });
-                                  //       }),
-                                  //       height: 200.0,
-                                  //       enableInfiniteScroll: false,
-                                  //       enlargeCenterPage: true,
-                                  //     ),
-                                  //   ),
-
                                   Text(
                                     'Quick Actions',
                                     style: GoogleFonts.lato(
@@ -859,7 +767,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                       ),
                                     ],
                                   ),
-
                                   SizedBox(
                                     height: 20.h,
                                   ),
@@ -968,14 +875,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                               itemBuilder:
                                                   (BuildContext context,
                                                       int index) {
-                                                int reversedIndex =
-                                                    userController
-                                                            .userModel!
-                                                            .userDetails![0]
-                                                            .walletHistories
-                                                            .length -
-                                                        1 -
-                                                        index;
                                                 final history = userController
                                                     .userModel!
                                                     .userDetails![0]
@@ -1057,9 +956,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                                 crossAxisAlignment:
                                                                     CrossAxisAlignment
                                                                         .start,
-                                                                // mainAxisAlignment:
-                                                                //     MainAxisAlignment
-                                                                //         .spaceBetween,
                                                                 children: [
                                                                   Flexible(
                                                                     flex: 2,
@@ -1204,10 +1100,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                             ),
                                           ),
                                         ),
-
-                                  // SizedBox(
-                                  //   height: 60.h,
-                                  // ),
                                 ],
                               ),
                             ),
@@ -1231,47 +1123,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
     // valueNotifier.dispose();
     _isDisposed = true;
     super.dispose();
-  }
-
-  String formatMongoDBDate(String dateStr) {
-    DateTime date = DateTime.parse(dateStr);
-    int day = date.day;
-    String daySuffix;
-
-    if (day >= 11 && day <= 13) {
-      daySuffix = 'th';
-    } else {
-      switch (day % 10) {
-        case 1:
-          daySuffix = 'st';
-          break;
-        case 2:
-          daySuffix = 'nd';
-          break;
-        case 3:
-          daySuffix = 'rd';
-          break;
-        default:
-          daySuffix = 'th';
-      }
-    }
-
-    String month = DateFormat('MMMM').format(date);
-    return '$day$daySuffix $month';
-  }
-
-  String formatDateTime(String dateTimeString) {
-    // Parse the date string into a DateTime object
-    DateTime dateTime =
-        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
-
-    // Define the date format you want
-    final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
-
-    // Format the DateTime object into a string
-    String formattedDateTime = formatter.format(dateTime);
-
-    return formattedDateTime;
   }
 
   noInternetConnectionScreen(BuildContext context) {

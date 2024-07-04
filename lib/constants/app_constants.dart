@@ -4,7 +4,6 @@ class AppConstants {
   static const BASE_URL = 'http://35.223.163.78';
   static const SIGN_UP = '/api/user/create';
   static const GET_WALLET = '/api/wallet/get-wallet';
-  static const WALLET_TRANSFER = '/api/wallet/wallet-withdrawal';
   static const CREATE_PIN = '/api/wallet/create-pin';
   static const FORGOT_PIN = '/api/wallet/reset-pin';
   static const RESEND_PIN_OTP = '/api/wallet/resend-pinOtp';

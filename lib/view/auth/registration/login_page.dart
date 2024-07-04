@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/view/auth/password/forgot_password.dart';
 import 'package:flutter/material.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -14,18 +13,15 @@ import 'dart:async';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:upgrader/upgrader.dart';
 
 import '../../../api/global_services.dart';
 import '../../../controller/auth/auth_controller.dart';
-import '../../offline/internet_connection_provider.dart';
+import '../../../widgets/custom_text_field_widget.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
-  LoginPage(
-      {super.key, required this.sessionStateStream, this.loggedOutReason = ""});
-
-  final StreamController<SessionState> sessionStateStream;
-  late String loggedOutReason;
+  const LoginPage({
+    super.key,
+  });
 
   @override
   ConsumerState<LoginPage> createState() => _LoginPageConsumerState();
@@ -53,8 +49,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   String deviceType = "";
   String deviceModel = "";
   String token = "";
-  // final RoundedLoadingButtonController _btnController =
-  //     RoundedLoadingButtonController();
   final loginFormKey = GlobalKey<FormState>();
   void visibility() {
     if (obscurity == true) {
@@ -72,7 +66,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
 
   @override
   initState() {
-    // setHasSeenOnboardingPreference(true);
     super.initState();
     // getConnectivity();
     _getSavedLoginInfo();
@@ -99,19 +92,12 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
     final prefs = await SharedPreferences.getInstance();
     final savedDeviceType = prefs.getString('device_type');
     final savedDeviceModel = prefs.getString('device_model');
-    // print('device info');
-    // print(savedDeviceType);
-    // print(savedDeviceModel);
-    // print(fcmToken);
     if (savedDeviceType != null && savedDeviceModel != null && fcmToken != '') {
       setState(() {
         deviceType = savedDeviceType;
         deviceModel = savedDeviceModel;
         token = fcmToken;
       });
-      // print(savedDeviceType);
-      // print(savedDeviceModel);
-      // print(fcmToken);
     }
   }
 
@@ -120,7 +106,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
       (ConnectivityResult result) async {
         isDeviceConnected = await InternetConnectionChecker().hasConnection;
         if (!isDeviceConnected && !isAlertSet) {
-          noInternetConnectionScreen(context);
+          if (mounted) {
+            noInternetConnectionScreen(context);
+          }
           setState(() => isAlertSet = true);
         }
       },
@@ -130,116 +118,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider.notifier);
-    // final isConnected = ref.watch(internetConnectionProvider).isConnected;
-    //email field
-    final email = TextFormField(
-      // autovalidateMode: AutovalidateMode.onUserInteraction,
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-      controller: _emailController,
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1.0),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      maxLines: 1,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter an email address.';
-        }
-
-        // Regular expression for a valid email address
-        final emailRegex =
-            RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
-
-        if (!emailRegex.hasMatch(value)) {
-          return 'Please enter a valid email address.';
-        }
-
-        return null;
-      },
-    );
-//Textform field
-    final password = TextFormField(
-      // autovalidateMode: AutovalidateMode.onUserInteraction,
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: _passwordController,
-      obscureText: obscurity,
-      style: GoogleFonts.lato(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 14,
-          fontWeight: FontWeight.w500),
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        suffix: InkWell(
-          onTap: visibility,
-          child: lockIcon,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.red, width: 1.0),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      maxLines: 1,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Input a valid password';
-        } else {
-          return null;
-        }
-      },
-    );
 
     return Scaffold(
       backgroundColor: brandOne,
@@ -339,48 +217,56 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                             key: loginFormKey,
                             child: Column(
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'Email',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                    email,
-                                  ],
+                                CustomTextFieldWidget(
+                                  controller: _emailController,
+                                  obscureText: false,
+                                  filled: false,
+                                  readOnly: false,
+                                  labelText: 'Email',
+                                  autoValidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter an email address.';
+                                    }
+
+                                    // Regular expression for a valid email address
+                                    final emailRegex = RegExp(
+                                        r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
+
+                                    if (!emailRegex.hasMatch(value)) {
+                                      return 'Please enter a valid email address.';
+                                    }
+
+                                    return null;
+                                  },
                                 ),
                                 SizedBox(
                                   height: 36.h,
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'Password',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                    password,
-                                  ],
+                                CustomTextFieldWidget(
+                                  controller: _passwordController,
+                                  obscureText: obscurity,
+                                  filled: false,
+                                  readOnly: false,
+                                  labelText: 'Password',
+                                  autoValidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  maxLines: 1,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Input a valid password';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  keyboardType: TextInputType.text,
+                                  suffix: InkWell(
+                                    onTap: visibility,
+                                    child: lockIcon,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 21.h,
@@ -448,13 +334,9 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                         ),
                                       ],
                                     ),
-                                    // : const Row(
-                                    //     children: [],
-                                    //   ),
                                     GestureDetector(
                                       onTap: () {
                                         Get.to(const ForgotPassword());
-                                        // Navigator.of(context).pushNamed(forgotPass);
                                       },
                                       child: Container(
                                         alignment: Alignment.centerRight,
@@ -463,8 +345,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                           style: GoogleFonts.lato(
                                             color: brandFive,
                                             fontSize: 14,
-                                            // leadingDistribution:
-                                            //     TextLeadingDistribution.even,
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -483,9 +363,7 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
-                          // width: MediaQuery.of(context).size.width * 2,
                           alignment: Alignment.center,
-                          // height: 110.h,
                           child: Column(
                             children: [
                               ElevatedButton(
@@ -511,13 +389,8 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                       token,
                                       deviceType,
                                       deviceModel,
-                                      widget.loggedOutReason,
-                                      widget.sessionStateStream,
                                       rememberMe: _rememberMe,
-                                      // usernameController.text.trim(),
                                     );
-                                    // emailController.clear();
-                                    // passwordController.clear();
                                   }
                                 },
                                 child: Text(
@@ -560,10 +433,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
                                             Get.to(const SignupPage());
-                                            // authState.sendOTP(
-                                            //   context,
-                                            //   widget.email,
-                                            // );
                                           },
                                       )
                                     ],

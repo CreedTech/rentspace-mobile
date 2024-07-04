@@ -6,20 +6,12 @@ class ReferralModel {
 
   ReferralModel.fromJson(Map<String, dynamic> json) {
     final dynamic referralData = json['referredUsers'];
-    print('referralData');
-    // print(referralData);
     if (referralData is List<dynamic>) {
       referrals = referralData.map((e) => Referral.fromJson(e)).toList();
-      print('referrals length');
-      // print(referrals!.length);
     } else if (referralData is Map<String, dynamic>) {
-      print("Here");
 
       referrals = [Referral.fromJson(referralData)];
-      print("referrals");
-      // print(referrals);
     } else {
-      // print('Invalid referral data: $referralData');
       referrals = [];
     }
   }

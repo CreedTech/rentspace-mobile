@@ -1,7 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
-import 'package:rentspace/view/dashboard/personal_details.dart';
-import 'package:rentspace/view/dashboard/withdraw_page.dart';
 
 final taskProvider =
     StateNotifierProvider<TaskNotifier, List<Map<String, dynamic>>>((ref) {

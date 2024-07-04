@@ -147,6 +147,7 @@ dependencies:
   printing: ^5.12.0
   gallery_saver: ^2.3.2
   image_gallery_saver: ^2.0.3
+  uni_links:
   #path_provider: ^2.0.15
 
 # dependency_overrides:

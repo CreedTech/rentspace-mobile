@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/constants/widgets/custom_button.dart';
+import 'package:rentspace/widgets/custom_button.dart';
 import 'package:rentspace/view/credit_score/contest_result_page.dart';
 import 'package:rentspace/view/credit_score/rating_breakdown_page.dart';
 import 'package:rentspace/view/loan/available_loans_page.dart';
@@ -117,10 +117,6 @@ class _CreditScorePageState extends State<CreditScorePage> {
                                       ],
                                     ),
                                   ),
-                                  // SizedBox(
-                                  //   height: 4.h,
-                                  // ),
-
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Row(

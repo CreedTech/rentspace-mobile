@@ -10,25 +10,20 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
-import 'package:rentspace/constants/widgets/custom_dialog.dart';
 import 'package:rentspace/view/auth/otp/change_transaction_pin_otp_page.dart';
 import 'package:rentspace/view/auth/otp/forgot_password_otp_verification.dart';
-import 'package:rentspace/view/auth/otp/forgot_pin_otp_verify.dart';
 import 'package:rentspace/view/onboarding/bvn_page.dart';
-import 'package:rentspace/view/auth/pin/reset_pin.dart';
 import 'package:rentspace/view/auth/multiple_device_login.dart';
-// import 'package:rentspace/controller/activities_controller.dart';
 import 'package:rentspace/view/auth/registration/verify_user_screen.dart';
-import 'package:rentspace/view/onboarding/home_page.dart';
 import 'package:rentspace/view/auth/registration/login_page.dart';
-import 'package:rentspace/view/onboarding/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/colors.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 import '../../model/user_model.dart';
 import '../../repo/auth_repo.dart';
 import '../../view/onboarding/FirstPage.dart';
@@ -200,23 +195,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future verifyOtp(BuildContext context, email, otp) async {
-    // print("Fields");
-    // // print(email);
-    // // print(otp);
+ 
     isLoading = true;
     if (otp.isEmpty || otp == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     message: 'All fields are required',
-      //   ),
-      // );
       return;
     }
     Map<String, dynamic> body = {'email': email, 'otp': otp};
-    // print("body");
-    // // print(body);
     String message;
 
     try {
@@ -267,15 +252,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future verifyBVN(BuildContext context, bvn, email) async {
-    // // print(email);
     isLoading = true;
     if (bvn.isEmpty || bvn == '') {
       customErrorDialog(context, 'Error', 'Please input your bvn!!');
       return;
     }
     Map<String, dynamic> params = {'bvn': bvn, 'email': email};
-    // print('params');
-    // // print(params);
     String message;
     try {
       isLoading = true;
@@ -286,7 +268,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         dismissOnTap: false,
       );
       var response = await authRepository.verifyBVN(params);
-      // print(response.message.toString());
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
@@ -357,8 +338,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     Map<String, dynamic> params = {
       'email': email.toString().toLowerCase(),
     };
-    // print('params');
-    // // print(params);
     String message;
     try {
       isLoading = true;
@@ -369,14 +348,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         dismissOnTap: false,
       );
       var response = await authRepository.createDva(params);
-      // // print(response.message.toString());
       if (response.success) {
-        // await userController.fetchData();
         Get.offAll(
-          LoginPage(
-            sessionStateStream: sessionStateStream,
-            // loggedOutReason: "Logged out because of user inactivity",
-          ),
+          const LoginPage(),
         );
         EasyLoading.dismiss();
         isLoading = false;
@@ -451,8 +425,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     Map<String, dynamic> params = {
       'email': email.toString().toLowerCase(),
     };
-    print('params');
-    // print(params);
     String message;
     try {
       isLoading = true;
@@ -463,14 +435,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         dismissOnTap: false,
       );
       var response = await authRepository.createProvidusDva(params);
-      // // print(response.message.toString());
       if (response.success) {
         // await userController.fetchData();
         Get.offAll(
-          LoginPage(
-            sessionStateStream: sessionStateStream,
-            // loggedOutReason: "Logged out because of user inactivity",
-          ),
+          const LoginPage(),
         );
         EasyLoading.dismiss();
         isLoading = false;
@@ -540,11 +508,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future resendOtp(BuildContext context, email) async {
-    // // print(email);
     isLoading = true;
     if (email.isEmpty || email == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
-      // showSnackBar(context: context, content: 'All fields are required');
       return;
     }
 
@@ -619,18 +585,16 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  Future signIn(BuildContext context, email, password, fcmToken, deviceType,
-      deviceModel, loggedOutReason, sessionStateStream,
+  Future signIn(
+      BuildContext context, email, password, fcmToken, deviceType, deviceModel,
+      // loggedOutReason, sessionStateStream,
       {rememberMe = false}) async {
     isLoading = true;
     if (email.isEmpty || email == '' || password.isEmpty || password == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
       return;
     }
-    // print('fcmToken ======');
-    // print(fcmToken);
-    // print(deviceType);
-    // print(deviceModel);
+
     Map<String, dynamic> user = {
       'email': email.toString().toLowerCase(),
       'password': password,
@@ -652,14 +616,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.dismiss();
       state = const AsyncData(false);
       print('response.message');
-      // // print(response.message);
+      print(response.message);
       if (response.success == true) {
         isLoading = false;
-        // final fcmToken =
-        //     await GlobalService.sharedPreferencesManager.getFCMToken();
-        // print('fcmToken');
-        // // print(fcmToken);
-        // postFcmToken(context, fcmToken);
         await GlobalService.sharedPreferencesManager.saveLoginInfo(
           email,
           password,
@@ -667,51 +626,31 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         );
         await GlobalService.sharedPreferencesManager
             .setHasSeenOnboarding(value: true);
-        sessionStateStream.add(SessionState.startListening);
-        // // print('session started');
-        // // print('loggedOutReason');
-        // print(sessionStateStream);
-        loggedOutReason = await Navigator.of(context).pushAndRemoveUntil(
+        // sessionStateStream.add(SessionState.startListening);
+
+        await Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
               builder: (_) => const FirstPage(),
             ),
             (route) => false);
-        // // print('loggedOutReason here');
-        // // print(loggedOutReason);
-        // Navigator.pushReplacementNamed(context, home);
-        // Get.offAll(const FirstPage());
 
         return;
       } else {
         print(response.message.toString());
       }
-      // authStatus = AuthStatus.NOT_LOGGED_IN;
-
       // check for different reasons to enhance users experience
       if (response.success == false &&
           response.message.contains("Incorrect credentials")) {
-        // authStatus = AuthStatus.NOT_LOGGED_IN;
         message = "Incorrect credentials";
         customErrorDialog(context, 'Oops ):', message);
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.error(
-        //     message: message,
-        //   ),
-        // );
 
         return;
       } else if (response.success == false &&
           response.message
               .contains("User not verified, please verify your account")) {
-        // authStatus = AuthStatus.NOT_LOGGED_IN;
         message = "User not verified, please verify your account";
         customErrorDialog(context, 'Error', message);
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.error(
-        //     message: message,
-        //   ),
+
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => VerifyUserPage(
@@ -720,19 +659,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
           ),
         );
         resendOtp(context, email);
-        // );
-        // Navigator.of(context).pushAndRemoveUntil(
-        //     MaterialPageRoute(
-        //       builder: (context) => const HomePage(),
-        //     ),
-        //     (route) => false);
-
-        // Navigator.of(context).pushNamed(RouteList.otp_verify, arguments: email);
         return;
       } else if (response.success == false &&
           response.message.contains(
               "BVN not verified, please verify your BVN to continue")) {
-        // authStatus = AuthStatus.NOT_LOGGED_IN;
         message = "BVN not verified, please verify your bvn to continue";
 
         Navigator.of(context).push(
@@ -757,43 +687,19 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             ),
           ),
         );
-        // customErrorDialog(context, 'Error', message);
-
         return;
       } else {
-        // authStatus = AuthStatus.NOT_LOGGED_IN;
         // to capture other errors later
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.error(
-        //     message: message,
-        //   ),
-        // );
-
         return;
       }
-      // state = const AsyncLoading();
-
-      // state = AsyncData(true);
     } catch (e) {
-      // authStatus = AuthStatus.NOT_LOGGED_IN;
-      // state = AsyncData(false);
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
       message = "Ooops something went wrong";
       customErrorDialog(context, 'Error', message);
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     message: message,
-      //   ),
-      // );
-
       return;
-      //  debug// print(state.toString());
-      // // print(e.toString());
     } finally {
       isLoading = false;
       //  return;
@@ -826,9 +732,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         isLoading = false;
         Get.to(
             MultipleDeviceLoginOtpPage(email: email.toString().toLowerCase()));
-        // resendVerification(context);
-        // resendVerification(context, 'Successfully Sent 🎉',
-        //     'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
         return;
       } else if (response.success == false &&
           response.message.contains("User not found")) {
@@ -859,7 +762,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future verifySingleDeviceLoginOtp(BuildContext context, email, otp) async {
-    // // print(email);
     isLoading = true;
     if (email.isEmpty || email == '' || otp.isEmpty || otp == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -883,10 +785,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
-        Get.to(LoginPage(sessionStateStream: sessionStateStream));
-        // resendVerification(context);
-        // resendVerification(context, 'Successfully Sent 🎉',
-        //     'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
+        Get.to(const LoginPage());
         return;
       } else if (response.success == false &&
           response.message.contains("Invalid OTP")) {
@@ -919,76 +818,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     }
   }
 
-  // Future postFcmToken(BuildContext context, fcmToken) async {
-  //   // print('fcmToken here');
-  //   // print(fcmToken);
-  //   // isLoading = true;
-  //   if (fcmToken.isEmpty || fcmToken == '') {
-  //     return;
-  //   }
-  //   Map<String, dynamic> token = {
-  //     'fcm_token': fcmToken,
-  //   };
-  //   // String message;
-  //   try {
-  //     // isLoading = true;
-  //     state = const AsyncLoading();
-  //     // print('Got here in fcm token contrl');
-  //     // EasyLoading.show(
-  //     //   indicator: const CustomLoader(),
-  //     //   maskType: EasyLoadingMaskType.black,
-  //     //   dismissOnTap: false,
-  //     // );
-
-  //     var response = await authRepository.postFcmToken(token);
-  //     // EasyLoading.dismiss();
-  //     state = const AsyncData(false);
-  //     // print('response.message');
-  //     // // print(response);
-  //     // // print(response.message);
-  //     if (response.success) {
-  //       // print('posted');
-  //       // isLoading = false;
-
-  //       return;
-  //     } else {
-  //       // print(response.message.toString());
-  //     }
-  //     // if (response.success == false &&
-  //     //     response.message.contains("Incorrect credentials")) {
-  //     //   // authStatus = AuthStatus.NOT_LOGGED_IN;
-  //     //   message = "Incorrect credentials";
-  //     //   customErrorDialog(context, 'Error', message);
-  //     //   // showTopSnackBar(
-  //     //   //   Overlay.of(context),
-  //     //   //   CustomSnackBar.error(
-  //     //   //     message: message,
-  //     //   //   ),
-  //     //   // );
-
-  //     //   return;
-  //     // }
-  //   } catch (e) {
-  //     // authStatus = AuthStatus.NOT_LOGGED_IN;
-  //     state = const AsyncData(false);
-  //     // EasyLoading.dismiss();
-  //     state = AsyncError(e, StackTrace.current);
-  //     // message = "Ooops something went wrong";
-  //     // customErrorDialog(context, 'Error', message);
-  //     // print('e');
-  //     // print(e);
-
-  //     return;
-  //   } finally {
-  //     // isLoading = false;
-  //     // return;
-  //   }
-  // }
-
   Future verifyForgotPasswordOtp(BuildContext context, email, otp) async {
-    // print("Fields");
-    // // print(email);
-    // // print(otp);
     isLoading = true;
     if (otp.isEmpty || otp == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -998,8 +828,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       'email': email.toString().toLowerCase(),
       'otp': otp
     };
-    // print("body");
-    // // print(body);
     String message;
 
     try {
@@ -1105,12 +933,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
   Future resetPassword(
       BuildContext context, email, newPassword, repeatPassword) async {
-    // print("email");
-    // // print(email);
-    // print("newPassword");
-    // // print(newPassword);
-    // print("repeatPassword");
-    // // print(repeatPassword);
     isLoading = true;
     if (email.isEmpty ||
         email == '' ||
@@ -1127,8 +949,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       "newPassword": newPassword,
       'repeatPassword': repeatPassword,
     };
-    // print('params');
-    // // print(params);
     String message;
     try {
       isLoading = true;
@@ -1144,11 +964,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         isLoading = false;
         customRedirectingSuccessDialog(
             context, 'Success', 'Password changed successfully.');
-        // redirectingAlert(
-        //     context,
-        //     '🎉 Congratulations! 🎉',
-        //     'Your password has been successfully set, and your account is now secure.',
-        //     "Login");
         return;
       } else {
         // print(response.message.toString());
@@ -1163,7 +978,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Passwords do not match")) {
@@ -1188,10 +1002,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     } catch (e) {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
-
       message = "Ooops something went wrong";
       customErrorDialog(context, 'Error', message);
-
       return;
     } finally {
       EasyLoading.dismiss();
@@ -1201,7 +1013,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future resendPasswordOtp(BuildContext context, email) async {
-    // // print(email);
     isLoading = true;
     if (email.isEmpty || email == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -1224,7 +1035,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
-        // resendVerification(context);
         resendVerification(context, 'Successfully Sent 🎉',
             'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
         return;
@@ -1243,7 +1053,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         // to capture other errors later
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
-
         return;
       }
     } catch (e) {
@@ -1272,33 +1081,22 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         dismissOnTap: false,
       );
       var response = await authRepository.logout();
-      // print('response message here');
-      // // print(response.message);
       if (response.success == true) {
         EasyLoading.dismiss();
         isLoading = false;
-        // notifyListeners();
         state = const AsyncValue.data(false);
-        // final GetStorage storage = GetStorage();
         final prefs = await SharedPreferences.getInstance();
 
         await GetStorage().erase();
         await prefs.clear();
         await box.clear();
-
         await GlobalService.sharedPreferencesManager.removeToken();
         await GlobalService.sharedPreferencesManager.deleteLoginInfo();
         await GlobalService.sharedPreferencesManager.deleteDeviceInfo();
 
         prefs.setBool('hasSeenOnboarding', false);
 
-        // // print(prefs.get('hasSeenOnboarding'));
-        // Get.offAll( LoginPage());
-
-        await Get.offAll(LoginPage(sessionStateStream: sessionStateStream));
-        // Navigator.of(context).pushAndRemoveUntil(
-        //     MaterialPageRoute(builder: (context) => const LoginPage()),
-        //     (route) => false);
+        await Get.offAll(const LoginPage());
         return;
       } else {
         // print(response.message.toString());
@@ -1333,8 +1131,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future createPin(BuildContext context, pin) async {
-    // print("pin");
-    // // print(pin);
     isLoading = true;
     if (pin.isEmpty || pin == '') {
       customErrorDialog(context, 'Error', 'Pin is required');
@@ -1344,8 +1140,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
     Map<String, dynamic> params = {
       'pin': pin,
     };
-    // print('params');
-    // // print(params);
     String message;
     try {
       isLoading = true;
@@ -1357,9 +1151,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.createPin(params);
       if (response.success) {
-        // await userController.fetchData();
-        // print(userController.userModel!.userDetails![0].isPinSet);
-        // await GlobalService.sharedPreferencesManager.savePin(pin);
         await userController.fetchData().then((value) {
           EasyLoading.dismiss();
           isLoading = false;
@@ -1367,13 +1158,10 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         });
         EasyLoading.dismiss();
         isLoading = false;
-        // redirectingAlert(context, '🎉 Congratulations! 🎉',
-        //     'Your Transaction has been set successfully!!!.', "Home");
         return;
       } else {
         // print('response.message.toString()');
       }
-      // print(response.message.toString());
 
       // check for different reasons to enhance users experience
       if (response.success == false &&
@@ -1390,19 +1178,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       } else if (response.success == false &&
           response.message.contains("Pin was already set")) {
         EasyLoading.dismiss();
-        // print('response here');
-        // // print(response.success);
-        // // print(response);
         message = "Oops! Pin has already been set for this account";
         customErrorDialog(context, 'Error', message);
 
         return;
       } else {
         EasyLoading.dismiss();
-        // to capture other errors later
-        // print('response again');
-        // // print(response.success);
-        // // print(response.message);
         message = "Something went wrong";
         customErrorDialog(context, 'Error', message);
 
@@ -1421,17 +1202,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future forgotPin(BuildContext context, email) async {
-    // // print(email);
     isLoading = true;
-    // if (email.isEmpty || email == '') {
-    //   customErrorDialog(context, 'Error', 'All fields are required');
-    //   return;
-    // }
-
-    // Map<String, dynamic> mail = {
-    //   'email': email.toString().toLowerCase(),
-    // };
-    // // print(mail);
     String message;
     try {
       isLoading = true;
@@ -1464,7 +1235,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
       } else {
         // to capture other errors later
@@ -1488,7 +1258,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future resendPinOtp(BuildContext context, email) async {
-    // // print(email);
     isLoading = true;
     if (email.isEmpty || email == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -1511,7 +1280,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
-        // resendVerification(context);
         resendVerification(context, 'Successfully Sent 🎉',
             'Your verification code is on its way to your email. Please check your inbox and follow the instructions. Thank you!');
         return;
@@ -1550,17 +1318,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future verifyForgotPinOtp(BuildContext context, email, otp) async {
-    // print("Fields");
-    // // print(email);
-    // // print(otp);
     isLoading = true;
     if (otp.isEmpty || otp == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
       return;
     }
     Map<String, dynamic> body = {'otp': otp};
-    // print("body");
-    // // print(body);
     String message;
     try {
       EasyLoading.show(
@@ -1609,9 +1372,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future setNewPin(BuildContext context, newPin, confirmNewPin) async {
-    // print("Fields");
-    // // print(newPin);
-    // // print(confirmNewPin);
     isLoading = true;
     if (newPin.isEmpty ||
         newPin == '' ||
@@ -1624,8 +1384,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       'newPin': newPin,
       'confirmNewPin': confirmNewPin
     };
-    // print("body");
-    // // print(body);
     String message;
     try {
       EasyLoading.show(
@@ -1642,23 +1400,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         isLoading = false;
         customSuccessDialog(
             context, 'Success', 'Transaction Pin changed successfully.');
-        // showTopSnackBar(
-        //   Overlay.of(context),
-        //   CustomSnackBar.success(
-        //     backgroundColor: Colors.green,
-        //     message: 'Payment Pin Reset Successful!!',
-        //     textStyle: GoogleFonts.lato(
-        //       fontSize: 14,
-        //       color: Colors.white,
-        //       fontWeight: FontWeight.w700,
-        //     ),
-        //   ),
-        // );
-        // Get.offAll(
-        //   const FirstPage(),
-        // );
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
@@ -1673,7 +1414,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       } else if (response.success == false &&
           response.message.contains("New pin and confirm pin do not match")) {
         message = "Pin Mismatch error";
-        // Get.back();
         customErrorDialog(context, 'Error', message);
 
         return;
@@ -1688,17 +1428,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future changePin(BuildContext context, newPin, currentPin) async {
-    // print("Fields");
-    // // print(newPin);
-    // // print(currentPin);
     isLoading = true;
     if (newPin.isEmpty || newPin == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
       return;
     }
     Map<String, dynamic> body = {'newPin': newPin, 'currentPin': currentPin};
-    // print("body");
-    // // print(body);
     String message;
     try {
       EasyLoading.show(
@@ -1728,12 +1463,9 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         Get.offAll(
           const FirstPage(),
         );
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => ResetPIN(email: email)));
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        print('error auth');
         multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("Wallet not found")) {
@@ -1743,20 +1475,16 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
       } else if (response.success == false &&
           response.message.contains("New pin and confirm pin do not match")) {
         message = "Pin Mismatch error";
-        // Get.back();
         customErrorDialog(context, 'Error', message);
-
         return;
       }
     } catch (e) {
       message = "Oops something went wrong";
       customErrorDialog(context, 'Error', message);
-
       return;
     }
     return;

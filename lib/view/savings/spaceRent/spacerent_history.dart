@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -8,9 +7,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:rentspace/controller/auth/user_controller.dart';
 
+import '../../../constants/utils/formatDateTime.dart';
 import '../../../controller/rent/rent_controller.dart';
 import '../../receipts/transaction_receipt.dart';
 import 'spacerent_list.dart';
@@ -21,40 +20,6 @@ class SpaceRentHistory extends StatefulWidget {
 
   @override
   _SpaceRentHistoryState createState() => _SpaceRentHistoryState();
-}
-
-doSomeThing() {
-  String paymentInfo = "2023-09-26T18:19:21.676 New Payment Recorded ₦104";
-
-// // Split the string by space
-//   List<String> parts = paymentInfo.split(" ");
-
-// // Extract date and time
-//   String dateTimeString = "${parts[0]}";
-//   DateTime dateTime = DateTime.parse(dateTimeString);
-//   String formattedDateTime = DateFormat.yMMMMd().add_jm().format(dateTime);
-
-// // Extract payment description
-//   String paymentDescription = parts.sublist(1, parts.length - 1).join(" ");
-
-// // Extract amount
-//   String amount = parts.last;
-
-//   print("Date and Time: $formattedDateTime");
-//   print("Payment Description: $paymentDescription");
-//   print("Amount: $amount");
-
-  String dateString = (paymentInfo
-      .split(" ")[0]
-      .substring(0, paymentInfo.split(" ")[0].length - 4));
-
-  try {
-    DateTime dateTime =
-        DateTime.parse(dateString).add(const Duration(hours: 1));
-    // print("Parsed DateTime: $dateTime");
-  } catch (e) {
-    // print("Error parsing date: $e");
-  }
 }
 
 class _SpaceRentHistoryState extends State<SpaceRentHistory> {
@@ -68,7 +33,6 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
 
   Future<void> onRefresh() async {
     refreshController.refreshCompleted();
-    // if (Provider.of<ConnectivityProvider>(context, listen: false).isOnline) {
     if (mounted) {
       setState(() {
         isRefresh = true;
@@ -80,7 +44,6 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
   @override
   initState() {
     super.initState();
-    doSomeThing();
     setState(() {
       _payments =
           rentController.rentModel!.rents![widget.current].rentHistories;
@@ -89,7 +52,6 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
 
   @override
   Widget build(BuildContext context) {
-    print(_payments);
     var groupedByMonth = {};
 
     for (var item in _payments) {
@@ -194,7 +156,7 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
             ),
             Expanded(
               child: (_payments.isEmpty)
-                  ? Container(
+                  ? SizedBox(
                       height: MediaQuery.of(context).size.height / 2,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -260,15 +222,6 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                       left: 12.75, top: 16, right: 12.75),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      // boxShadow: [
-                                      //   BoxShadow(
-                                      //     color: Colors.grey
-                                      //         .withOpacity(0.5), // Shadow color
-                                      //     spreadRadius: 0.5, // Spread radius
-                                      //     blurRadius: 2, // Blur radius
-                                      //     offset: const Offset(0, 3), // Offset
-                                      //   ),
-                                      // ],
                                       color: Theme.of(context).canvasColor),
                                   child: Column(
                                     children: [
@@ -313,9 +266,6 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
                                                                     .start,
-                                                            // mainAxisAlignment:
-                                                            //     MainAxisAlignment
-                                                            //         .spaceBetween,
                                                             children: [
                                                               Flexible(
                                                                 flex: 2,
@@ -478,42 +428,5 @@ class _SpaceRentHistoryState extends State<SpaceRentHistory> {
       ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
-  }
-
-  String _formatTime(DateTime time) {
-    final now = DateTime.now();
-    final difference = now.difference(time);
-
-    if (difference.inDays > 0) {
-      return '${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago';
-    } else if (difference.inHours > 0) {
-      return '${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago';
-    } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago';
-    } else {
-      return 'just now';
-    }
-  }
-
-  String extractAmount(String input) {
-    final nairaIndex = input.indexOf('₦');
-    if (nairaIndex != -1 && nairaIndex < input.length - 1) {
-      return input.substring(nairaIndex + 1).trim();
-    }
-    return '';
-  }
-
-  String formatDateTime(String dateTimeString) {
-    // Parse the date string into a DateTime object
-    DateTime dateTime =
-        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
-
-    // Define the date format you want
-    final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
-
-    // Format the DateTime object into a string
-    String formattedDateTime = formatter.format(dateTime);
-
-    return formattedDateTime;
   }
 }

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import '../../../constants/icons.dart';
 import '../../../controller/auth/auth_controller.dart';
+import '../../../widgets/custom_text_field_widget.dart';
 
 class ResetPassword extends ConsumerStatefulWidget {
   const ResetPassword({super.key, required this.email});
@@ -63,127 +62,6 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
         return null;
       }
     }
-
-    //password field
-    final password = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: newPasswordController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: obscureText,
-      style: GoogleFonts.lato(
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1.0,
-          ),
-        ),
-        suffix: GestureDetector(
-          onTap: () {
-            setState(() {
-              obscureText = !obscureText;
-            });
-          },
-          child: Icon(
-            obscureText ? Iconsax.eye_slash : Iconsax.eye,
-            color: Theme.of(context).colorScheme.primary,
-            size: 24,
-          ),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      validator: validatePass,
-    );
-    final confirmPassword = TextFormField(
-      enableSuggestions: true,
-      cursorColor: Theme.of(context).colorScheme.primary,
-      controller: repeatPasswordController,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: obscureText,
-      style: GoogleFonts.lato(
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: brandOne, width: 1.0),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color.fromRGBO(189, 189, 189, 30)
-                : const Color.fromRGBO(189, 189, 189, 100),
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1.0,
-          ),
-        ),
-        suffix: GestureDetector(
-          onTap: () {
-            setState(() {
-              obscureText = !obscureText;
-            });
-          },
-          child: Icon(
-            obscureText ? Iconsax.eye_slash : Iconsax.eye,
-            color: Theme.of(context).colorScheme.primary,
-            size: 24,
-          ),
-        ),
-        filled: false,
-        contentPadding: const EdgeInsets.all(14),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please confirm your password';
-        }
-        if (value != newPasswordController.text) {
-          return 'Passwords do not match';
-        }
-
-        return null;
-      },
-    );
 
     return Scaffold(
       backgroundColor: brandOne,
@@ -273,7 +151,6 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                               color: Theme.of(context).primaryColorLight,
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
-                              // fontFamily: "DefaultFontFamily",
                             ),
                           ),
                           const SizedBox(
@@ -283,48 +160,50 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                             key: resetPwdFormKey,
                             child: Column(
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'Password',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                    password,
-                                  ],
+                                CustomTextFieldWidget(
+                                  controller: newPasswordController,
+                                  obscureText: obscureText,
+                                  filled: false,
+                                  readOnly: false,
+                                  labelText: 'Password',
+                                  autoValidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  maxLines: 1,
+                                  validator: validatePass,
+                                  keyboardType: TextInputType.text,
+                                  suffix: InkWell(
+                                    onTap: visibility,
+                                    child: lockIcon,
+                                  ),
                                 ),
-                                const SizedBox(
-                                  height: 20,
+                                SizedBox(
+                                  height: 20.h,
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'Confirm Password',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                    confirmPassword,
-                                  ],
+                                CustomTextFieldWidget(
+                                  controller: repeatPasswordController,
+                                  obscureText: obscureText,
+                                  filled: false,
+                                  readOnly: false,
+                                  labelText: 'Confirm Password',
+                                  autoValidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  maxLines: 1,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please confirm your password';
+                                    }
+                                    if (value != newPasswordController.text) {
+                                      return 'Passwords do not match';
+                                    }
+
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.text,
+                                  suffix: InkWell(
+                                    onTap: visibility,
+                                    child: lockIcon,
+                                  ),
+                                  suffixIconColor: Colors.black,
                                 ),
                               ],
                             ),
@@ -336,9 +215,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                         child: Column(
                           children: [
                             Container(
-                              // width: MediaQuery.of(context).size.width * 2,
                               alignment: Alignment.center,
-                              // height: 110.h,
                               child: Column(
                                 children: [
                                   ElevatedButton(
@@ -365,7 +242,6 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                                             newPasswordController.text.trim(),
                                             repeatPasswordController.text
                                                 .trim());
-                                        // _emailController.clear();
                                       }
                                     },
                                     child: Text(
@@ -391,75 +267,6 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                   ),
                 ),
               ),
-
-              // Column(
-              //   children: [
-              //     const SizedBox(
-              //       height: 35,
-              //     ),
-              //     Align(
-              //       alignment: Alignment.topLeft,
-              //       child: Text(
-              //         'Kindly fill in your new password.',
-              //         style: GoogleFonts.lato(
-              //             fontWeight: FontWeight.w700,
-              //             color: brandOne,
-              //             fontSize: 18),
-              //       ),
-              //     ),
-              //     const SizedBox(
-              //       height: 25,
-              //     ),
-              //     Form(
-              //       key: resetPwdFormKey,
-              //       child: Column(
-              //         children: [
-              //           Column(
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: [
-              //               password,
-              //               Padding(
-              //                 padding: const EdgeInsets.symmetric(vertical: 8),
-              //                 child: SizedBox(
-              //                   width: MediaQuery.of(context).size.width,
-              //                   child: Row(
-              //                     crossAxisAlignment: CrossAxisAlignment.start,
-              //                     children: [
-              //                       const Icon(
-              //                         Icons.info_outline,
-              //                         size: 15,
-              //                         color: Color(0xff828282),
-              //                       ),
-              //                       SizedBox(
-              //                         width: 320,
-              //                         child: Text(
-              //                           'Password -8 Characters, One Uppercase, One Lowercase, One Special Characters (#%&*?@)',
-              //                           softWrap: true,
-              //                           style: GoogleFonts.lato(
-              //                             color: const Color(0xff828282),
-              //                             fontSize: 12,
-              //                             fontStyle: FontStyle.italic,
-              //                             fontWeight: FontWeight.w400,
-              //                           ),
-              //                         ),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //           const SizedBox(
-              //             height: 15,
-              //           ),
-              //           confirmPassword
-              //         ],
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
-              // const Spacer(),
             ],
           ),
         ),

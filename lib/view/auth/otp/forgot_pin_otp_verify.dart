@@ -179,14 +179,14 @@ class _ForgotPinOTPVerificationPageState
           child: Icon(
             Icons.arrow_back,
             size: 25,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         centerTitle: true,
         title: Text(
           'OTP',
           style: GoogleFonts.lato(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.w700,
             fontSize: 16,
           ),

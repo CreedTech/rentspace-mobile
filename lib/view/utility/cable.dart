@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:rentspace/constants/widgets/custom_loader.dart';
+import 'package:rentspace/widgets/custom_loader.dart';
 import 'package:rentspace/view/utility/airtime.dart';
 
 import '../../constants/colors.dart';
@@ -751,9 +751,10 @@ class _CableScreenState extends State<CableScreen> {
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               enableSuggestions: true,
-                              cursorColor: Theme.of(context).primaryColor,
+                              cursorColor:
+                                  Theme.of(context).colorScheme.primary,
                               style: GoogleFonts.lato(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 14),
 
                               controller: providerController,

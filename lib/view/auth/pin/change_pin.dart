@@ -8,8 +8,8 @@ import 'package:pinput/pinput.dart';
 import 'package:rentspace/view/onboarding/FirstPage.dart';
 
 import '../../../constants/colors.dart';
-import '../../../constants/widgets/custom_dialog.dart';
 import '../../../controller/auth/auth_controller.dart';
+import '../../../widgets/custom_dialogs/index.dart';
 
 class ChangePIN extends ConsumerStatefulWidget {
   const ChangePIN({super.key, required this.pin});
@@ -107,7 +107,6 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
           authState.changePin(
               context, _changePinController.text.trim(), widget.pin);
         }
-        // _changePinController.clear();
       },
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
@@ -129,7 +128,7 @@ class _ChangePINState extends ConsumerState<ChangePIN> {
                       child: Text(
                         'Change Transaction PIN',
                         style: GoogleFonts.lato(
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
                           // fontFamily: "DefaultFontFamily",

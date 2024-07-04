@@ -4,12 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/view/onboarding/FirstPage.dart';
-import 'package:rentspace/view/dashboard/dashboard.dart';
 
 import '../../constants/colors.dart';
+import '../../constants/utils/formatDateTime.dart';
 
 class SuccessFulScreen extends StatefulWidget {
   const SuccessFulScreen(
@@ -286,93 +285,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                 ],
                               )
                             : const SizedBox(),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 24),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //     children: [
-                        //       ElevatedButton(
-                        //         style: ElevatedButton.styleFrom(
-                        //           elevation: 0,
-                        //           minimumSize: const Size(180, 45),
-                        //           backgroundColor: Colors.transparent,
-                        //           shape: RoundedRectangleBorder(
-                        //             side: const BorderSide(
-                        //                 color: Color(0xffCCCCCC), width: 1),
-                        //             borderRadius: BorderRadius.circular(10),
-                        //           ),
-                        //         ),
-                        //         onPressed: () {
-                        //           // Get.offAll(
-                        //           //     LoginPage(sessionStateStream: sessionStateStream));
-                        //         },
-                        //         child: Row(
-                        //           mainAxisAlignment:
-                        //               MainAxisAlignment.spaceBetween,
-                        //           children: [
-                        //             const Icon(
-                        //               Icons.share_outlined,
-                        //               color: Theme.of(context).colorScheme.primary,
-                        //               size: 26,
-                        //             ),
-                        //             const SizedBox(
-                        //               width: 10,
-                        //             ),
-                        //             Text(
-                        //               'Share',
-                        //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.lato(
-                        //                 color: Theme.of(context).colorScheme.primary,
-                        //                 fontSize: 14,
-                        //                 fontWeight: FontWeight.w500,
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //       ElevatedButton(
-                        //         style: ElevatedButton.styleFrom(
-                        //           elevation: 0,
-                        //           minimumSize: const Size(180, 45),
-                        //           backgroundColor: Colors.transparent,
-                        //           shape: RoundedRectangleBorder(
-                        //             side: const BorderSide(
-                        //                 color: Color(0xffCCCCCC), width: 1),
-                        //             borderRadius: BorderRadius.circular(10),
-                        //           ),
-                        //         ),
-                        //         onPressed: () {
-                        //           // Get.offAll(
-                        //           //     LoginPage(sessionStateStream: sessionStateStream));
-                        //         },
-                        //         child: Row(
-                        //           mainAxisAlignment:
-                        //               MainAxisAlignment.spaceBetween,
-                        //           children: [
-                        //             const Icon(
-                        //               Icons.file_download_outlined,
-                        //               color: Theme.of(context).colorScheme.primary,
-                        //               size: 26,
-                        //             ),
-                        //             const SizedBox(
-                        //               width: 10,
-                        //             ),
-                        //             Text(
-                        //               'Download',
-                        //               textAlign: TextAlign.center,
-                        //               style: GoogleFonts.lato(
-                        //                 color: Theme.of(context).colorScheme.primary,
-                        //                 fontSize: 14,
-                        //                 fontWeight: FontWeight.w500,
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-
-                        //     ],
-                        //   ),
-                        // ),
+                    
 
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -391,18 +304,7 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                 ),
                               ),
                               onPressed: () {
-                                // Navigator.of(context).pushAndRemoveUntil(
-                                //     MaterialPageRoute(
-                                //       builder: (_) => const RentSpaceList(),
-                                //     ),
-                                //     (route) => false);
-                                // Get.until((route) => Get.currentRoute == rentList);
                                 Get.offAll(const FirstPage());
-                                // Get.until((route) => false);
-                                // Get.offNamedUntil(rentList, (route) => false);
-                                // Navigator.popUntil(
-                                //     context, ModalRoute.withName(rentList));
-                                // Get.to(const RentSpaceList());
                               },
                               child: Text(
                                 'Continue',
@@ -435,16 +337,5 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
     );
   }
 
-  String formatDateTime(String dateTimeString) {
-    // Parse the date string into a DateTime object
-    DateTime dateTime = DateTime.parse(dateTimeString);
 
-    // Define the date format you want
-    final DateFormat formatter = DateFormat('dd/MM/yyyy');
-
-    // Format the DateTime object into a string
-    String formattedDateTime = formatter.format(dateTime);
-
-    return formattedDateTime;
-  }
 }

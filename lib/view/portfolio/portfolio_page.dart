@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -11,28 +9,18 @@ import 'package:get/get.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/view/contact/contact_us.dart';
-// import 'package:rentspace/constants/db/firebase_db.dart';
-// import 'package:rentspace/controller/rent_controller.dart';
-// import 'package:rentspace/controller/user_controller.dart';
-import 'package:rentspace/view/kyc/kyc_intro.dart';
-import 'package:rentspace/view/portfolio/finance_health.dart';
-//import 'package:rentspace/view/savings/spaceRent/spacerent_history.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:intl/intl.dart';
 import 'package:rentspace/view/portfolio/portfolio_overview.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
-// import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../constants/widgets/separator.dart';
 import '../loan/loan_details.dart';
 import '../loan/loans_page.dart';
-// import '../kyc/kyc_form_page.dart';
 
 class PortfolioPage extends StatefulWidget {
-  const PortfolioPage({Key? key}) : super(key: key);
+  const PortfolioPage({super.key});
 
   @override
   _PortfolioPageState createState() => _PortfolioPageState();
@@ -42,8 +30,6 @@ var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 double _totalInterest = 0;
 String _loanAmount = "0";
 dynamic _totalSavings = 0;
-double _totalDebts = 0;
-double _totalInvestments = 0;
 var changeOne = 6.obs();
 
 class _PortfolioPageState extends State<PortfolioPage> {
@@ -54,14 +40,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final RentController rentController = Get.find();
   getUser() async {
     setState(() {
-      // _totalInterest =
-      //     userController.userModel!.userDetails![0].totalInterests;
       _loanAmount =
           userController.userModel!.userDetails![0].loanAmount.toString();
       _totalSavings = userController.userModel!.userDetails![0].totalSavings;
-      // _totalDebts =
-      //     userController.userModel!.userDetails![0].totalDebts;
-      // _totalInvestments = userController.userModel!.userDetails![0].tot.toString();
     });
   }
 
@@ -69,7 +50,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   initState() {
     super.initState();
-    // userController.fetchData();
     userController.userModel!.userDetails!.isEmpty
         ? valueNotifier = ValueNotifier(0.0)
         : valueNotifier = ValueNotifier(double.tryParse(userController
@@ -96,7 +76,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0.0,
-        surfaceTintColor:  Theme.of(context).scaffoldBackgroundColor,
+        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
@@ -683,10 +663,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                   .userDetails![0]
                                                   .hasVerifiedKyc ==
                                               false)
-                                          ? Get.to(const KYCIntroPage())
+                                          ? null
                                           : Get.to(const LoansPage());
-                              // Get.to(const ProfilePage());
-                              // Navigator.pushNamed(context, RouteList.profile);
                             },
                             trailing: Icon(
                               Icons.keyboard_arrow_right,
@@ -728,7 +706,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 "Pay an outstanding loan",
                                 style: GoogleFonts.lato(
                                   fontSize: 12.0,
-                                  // letterSpacing: 0.5,
 
                                   color: Theme.of(context).primaryColorLight,
                                 ),

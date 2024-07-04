@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:rentspace/constants/widgets/custom_loader.dart';
+import 'package:rentspace/widgets/custom_loader.dart';
 
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:clipboard/clipboard.dart';
 
-import '../../constants/widgets/copy_widget.dart';
-import '../../constants/widgets/custom_dialog.dart';
+import '../../widgets/copy_widget.dart';
+import '../../widgets/custom_dialogs/index.dart';
 
 class ContactUsPage extends StatefulWidget {
   const ContactUsPage({super.key});
@@ -123,114 +118,6 @@ class _ContactUsPageState extends State<ContactUsPage> {
                     ),
                     Column(
                       children: [
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(vertical: 15),
-                        //   child: Container(
-                        //     width: 350,
-                        //     padding: const EdgeInsets.all(5),
-                        //     decoration: BoxDecoration(
-                        //       color: Color(0xffEEF8FF)),
-                        //       borderRadius: BorderRadius.circular(15),
-                        //     ),
-                        //     child: Padding(
-                        //       padding: const EdgeInsets.symmetric(
-                        //           horizontal: 10, vertical: 10),
-                        //       child: Column(
-                        //         crossAxisAlignment: CrossAxisAlignment.start,
-                        //         children: [
-                        //           Text(
-                        //             "Phone Number",
-                        //             style: GoogleFonts.lato(
-                        //               color: Theme.of(context).primaryColor,
-                        //               fontSize: 17,
-                        //               fontWeight: FontWeight.w600,
-                        //             ),
-                        //           ),
-                        //           const SizedBox(
-                        //             height: 10,
-                        //           ),
-                        //           Container(
-                        //             decoration: BoxDecoration(
-                        //               color: Theme.of(context).canvasColor,
-                        //               borderRadius: BorderRadius.circular(5),
-                        //             ),
-                        //             child: Padding(
-                        //               padding: const EdgeInsets.all(0),
-                        //               child: Row(
-                        //                 mainAxisAlignment:
-                        //                     MainAxisAlignment.spaceBetween,
-                        //                 children: [
-                        //                   GestureDetector(
-                        //                     onTap: () {
-                        //                       launchUrl(
-                        //                         Uri.parse("tel://+23413444012"),
-                        //                       );
-                        //                     },
-                        //                     child: Padding(
-                        //                       padding:
-                        //                           const EdgeInsets.symmetric(
-                        //                               horizontal: 10),
-                        //                       child: Text(
-                        //                         '+234 (1) 344 4012',
-                        //                         style: GoogleFonts.lato(
-                        //                           color: Theme.of(context).colorScheme.secondary,
-                        //                           fontSize: 17,
-                        //                           fontWeight: FontWeight.w600,
-                        //                         ),
-                        //                       ),
-                        //                     ),
-                        //                   ),
-                        //                   GestureDetector(
-                        //                     onTap: () {
-                        //                       FlutterClipboard.copy(
-                        //                               '+23413444012')
-                        //                           .then((result) {
-                        //                         Fluttertoast.showToast(
-                        //                             msg: "Copied to clipboard!",
-                        //                             toastLength:
-                        //                                 Toast.LENGTH_SHORT,
-                        //                             gravity:
-                        //                                 ToastGravity.BOTTOM,
-                        //                             timeInSecForIosWeb: 1,
-                        //                             backgroundColor: brandOne,
-                        //                             textColor: Colors.white,
-                        //                             fontSize: 16.0);
-                        //                       });
-                        //                     },
-                        //                     child: Container(
-                        //                       decoration: BoxDecoration(
-                        //                         color:
-                        //                             Theme.of(context).primaryColor,
-                        //                         borderRadius:
-                        //                             BorderRadius.circular(5),
-                        //                       ),
-                        //                       child: Padding(
-                        //                         padding:
-                        //                             const EdgeInsets.symmetric(
-                        //                                 horizontal: 15,
-                        //                                 vertical: 10),
-                        //                         child: Text(
-                        //                           'Copy',
-                        //                           style: GoogleFonts.lato(
-                        //                               color: Theme.of(context)
-                        //                                   .colorScheme.primary,
-                        //                               fontSize: 12,
-                        //                               fontWeight:
-                        //                                   FontWeight.w600),
-                        //                         ),
-                        //                       ),
-                        //                     ),
-                        //                   ),
-                        //                 ],
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Container(
@@ -307,116 +194,6 @@ class _ContactUsPageState extends State<ContactUsPage> {
                         ),
                       ],
                     ),
-                    // const SizedBox(
-                    //   height: 70,
-                    // ),
-                    // Center(
-                    //   child: Column(
-                    //     children: [
-                    //       Padding(
-                    //         padding: const EdgeInsets.all(15.0),
-                    //         child: Text(
-                    //           'Follow Us on Social Media',
-                    //           style: GoogleFonts.lato(
-                    //             color: colorBlack,
-                    //             fontSize: 14,
-                    //             fontWeight: FontWeight.w400,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Row(
-                    //         mainAxisAlignment: MainAxisAlignment.center,
-                    //         children: [
-                    //           GestureDetector(
-                    //             onTap: () {
-                    //               Get.to(SocialPagesWeb(
-                    //                 initialUrl: facebookLink,
-                    //               ));
-                    //             },
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.symmetric(
-                    //                   horizontal: 10),
-                    //               child: Container(
-                    //                 padding: const EdgeInsets.all(15),
-                    //                 decoration: BoxDecoration(
-                    //                   color: brandTwo.withOpacity(0.1),
-                    //                   borderRadius: BorderRadius.circular(100),
-                    //                 ),
-                    //                 child: const Icon(
-                    //                   FontAwesomeIcons.facebookF,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           GestureDetector(
-                    //             onTap: () {
-                    //               // print('https://x.com/rentspacetech?s=20');
-                    //               Get.to(SocialPagesWeb(
-                    //                 initialUrl: twitterLink,
-                    //               ));
-                    //             },
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.symmetric(
-                    //                   horizontal: 10),
-                    //               child: Container(
-                    //                 padding: const EdgeInsets.all(15),
-                    //                 decoration: BoxDecoration(
-                    //                   color: brandTwo.withOpacity(0.1),
-                    //                   borderRadius: BorderRadius.circular(100),
-                    //                 ),
-                    //                 child: const Icon(
-                    //                   FontAwesomeIcons.xTwitter,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           GestureDetector(
-                    //             onTap: () {
-                    //               Get.to(SocialPagesWeb(
-                    //                 initialUrl: instagramLink,
-                    //               ));
-                    //             },
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.symmetric(
-                    //                   horizontal: 10),
-                    //               child: Container(
-                    //                 padding: const EdgeInsets.all(15),
-                    //                 decoration: BoxDecoration(
-                    //                   color: brandTwo.withOpacity(0.1),
-                    //                   borderRadius: BorderRadius.circular(100),
-                    //                 ),
-                    //                 child: const Icon(
-                    //                   FontAwesomeIcons.instagram,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           GestureDetector(
-                    //             onTap: () {
-                    //               Get.to(SocialPagesWeb(
-                    //                 initialUrl: linkedinLink,
-                    //               ));
-                    //             },
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.symmetric(
-                    //                   horizontal: 10),
-                    //               child: Container(
-                    //                 padding: const EdgeInsets.all(15),
-                    //                 decoration: BoxDecoration(
-                    //                   color: brandTwo.withOpacity(0.1),
-                    //                   borderRadius: BorderRadius.circular(100),
-                    //                 ),
-                    //                 child: const Icon(
-                    //                   FontAwesomeIcons.linkedinIn,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ],
@@ -461,7 +238,7 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
           child: Icon(
             Icons.close,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         title: Text(

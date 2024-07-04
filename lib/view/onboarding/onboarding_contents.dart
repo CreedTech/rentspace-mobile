@@ -23,10 +23,4 @@ List<OnboardingContents> contents = [
     desc:
         "Earn Space Points for airtime top-ups by completing various saving activities on our app.",
   ),
-  // OnboardingContents(
-  //   title: "On demand and runtime location",
-  //   image: "assets/slider1.png",
-  //   desc:
-  //       "We pick up from your desired location at your preferred date and time",
-  // ),
 ];

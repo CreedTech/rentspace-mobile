@@ -1,22 +1,25 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:rentspace/constants/widgets/custom_dialog.dart';
-import 'package:rentspace/view/loan/loan_details.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_interest_histories.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_withdrawal.dart';
 
 import '../../../constants/colors.dart';
+import '../../../constants/utils/calulate_difference_in_days.dart';
+import '../../../constants/utils/formatDateTime.dart';
 import '../../../controller/rent/rent_controller.dart';
+import '../../../widgets/custom_dialogs/index.dart';
 import '../../credit_score/credit_score_page.dart';
+import '../../dashboard/dashboard.dart';
+import '../../loan/loan_details.dart';
 import '../../receipts/transaction_receipt.dart';
 
+import '../../withdrawal/withdraw_page.dart';
 import 'spacerent_history.dart';
+import 'spacerent_withdrawal_continuation_page.dart';
 
 class SpaceRentPage extends StatefulWidget {
   const SpaceRentPage({super.key, required this.current});
@@ -105,7 +108,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                         .rents![widget.current].completed ==
                                     false)
                                 ? const Color(0xff278210)
-                                : Color(0xff556750),
+                                : const Color(0xff556750),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Stack(
@@ -318,7 +321,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                                                 widget.current]
                                                             .completed ==
                                                         false))
-                                                    ? '${_calculateDaysDifference(rentController.rentModel!.rents![widget.current].dueDate, rentController.rentModel!.rents![widget.current].date).toString()} Days'
+                                                    ? '${calculateDaysDifference(rentController.rentModel!.rents![widget.current].dueDate, rentController.rentModel!.rents![widget.current].date).toString()} Days'
                                                     : 'Completed',
                                                 style: GoogleFonts.lato(
                                                   fontSize: 16.0,
@@ -650,7 +653,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 //               ),
                 //             ),
                 //             onPressed: () {
-                //               Get.to(LoanDetails());
+                //               Get.to(const LoanDetails());
                 //               // forfeitInterestModal(context, widget.current);
                 //             },
                 //             child: Text(
@@ -673,6 +676,128 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 // ),
 
                 // ============= OUTSTANDING LOAN ENDS ==============
+
+                // ============= WITHDRAW NOTIFICATION BEGINS ==============
+                if (rentController
+                        .rentModel!.rents![widget.current].completed ==
+                    true)
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    // height: 92.h,
+                    padding: const EdgeInsets.all(17),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).canvasColor,
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 6,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Withdraw Space Rent',
+                                style: GoogleFonts.lato(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 3.h,
+                              ),
+                              Text(
+                                'Yay! You have completed your Alpha Rent savings.',
+                                style: GoogleFonts.lato(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Spacer(),
+                        Flexible(
+                          flex: 3,
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width - 50, 40),
+                                backgroundColor: brandTwo,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                (userController.userModel!.userDetails![0]
+                                            .withdrawalAccount ==
+                                        null)
+                                    ? Get.to(const WithdrawalPage(
+                                        withdrawalType: 'space rent',
+                                      ))
+                                    : Get.to(
+                                        SpaceRentWithdrawalContinuationPage(
+                                          bankCode: userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .withdrawalAccount!
+                                              .bankCode,
+                                          accountNumber: userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .withdrawalAccount!
+                                              .accountNumber,
+                                          bankName: userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .withdrawalAccount!
+                                              .bankName,
+                                          accountHolderName: userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .withdrawalAccount!
+                                              .accountHolderName,
+                                          amount: rentController
+                                              .rentModel!
+                                              .rents![widget.current]
+                                              .paidAmount,
+                                          narration: rentController.rentModel!
+                                              .rents![widget.current].rentName,
+                                        ),
+                                      );
+
+                                // forfeitInterestModal(context, widget.current);
+                              },
+                              child: Text(
+                                'Withdraw',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.lato(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                SizedBox(
+                  height: 20.h,
+                ),
+
+                // ============= WITHDRAW NOTIFICATION ENDS ==============
 
                 // ======== CREDIT SCORE BEGINS ==========
 
@@ -813,6 +938,90 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
 
                 // =========== LOAN IN PROGRESS ENDS ===============
 
+                // ======== LOAN REPAYMENT SCHEDULE END =========
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   // height: 92.h,
+                //   padding: const EdgeInsets.all(17),
+                //   decoration: BoxDecoration(
+                //     color: Theme.of(context).canvasColor,
+                //     borderRadius: BorderRadius.circular(10.r),
+                //   ),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           Text(
+                //             'Loan Payment Schedule',
+                //             style: GoogleFonts.lato(
+                //               fontSize: 14,
+                //               fontWeight: FontWeight.w600,
+                //               color: Theme.of(context).colorScheme.primary,
+                //             ),
+                //           ),
+                //           SizedBox(
+                //             height: 9.h,
+                //           ),
+                //           Text(
+                //             '${ch8t.format(15000)}/${'monthly'.toLowerCase()}',
+                //             style: GoogleFonts.roboto(
+                //               fontSize: 12,
+                //               fontWeight: FontWeight.w400,
+                //               color: Theme.of(context).colorScheme.primary,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //       Column(
+                //         crossAxisAlignment: CrossAxisAlignment.end,
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           Text(
+                //             '',
+                //             style: GoogleFonts.lato(
+                //               fontSize: 12,
+                //               fontWeight: FontWeight.w400,
+                //               color: Theme.of(context).primaryColorLight,
+                //             ),
+                //           ),
+                //           SizedBox(
+                //             height: 8.h,
+                //           ),
+                //           RichText(
+                //             text: TextSpan(
+                //                 style: GoogleFonts.lato(
+                //                   // fontWeight: FontWeight.w700,
+                //                   color: Theme.of(context).colorScheme.primary,
+                //                   fontSize: 12,
+                //                 ),
+                //                 children: <TextSpan>[
+                //                   TextSpan(
+                //                     text: 'Next Payment: ',
+                //                     style: GoogleFonts.lato(
+                //                       fontWeight: FontWeight.w400,
+                //                     ),
+                //                   ),
+                //                   TextSpan(
+                //                     text: '28/4/2024',
+                //                     style: GoogleFonts.lato(
+                //                       fontWeight: FontWeight.w700,
+                //                     ),
+                //                   ),
+                //                 ]),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
+
+                // ======== LOAN REPAYMENT SCHEDULE END =========
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -910,14 +1119,6 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                   .rentHistories.length
                               : 3,
                           itemBuilder: (BuildContext context, int index) {
-                            int reversedIndex = rentController
-                                    .rentModel!
-                                    .rents![widget.current]
-                                    .rentHistories
-                                    .length -
-                                1 -
-                                index;
-
                             final item = rentController.rentModel!
                                 .rents![widget.current].rentHistories[index];
                             final itemLength = item.length;
@@ -1095,58 +1296,5 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
           )),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
-  }
-
-  String _formatTime(DateTime time) {
-    final now = DateTime.now();
-    final difference = now.difference(time);
-
-    if (difference.inDays > 0) {
-      return '${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago';
-    } else if (difference.inHours > 0) {
-      return '${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago';
-    } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago';
-    } else {
-      return 'just now';
-    }
-  }
-
-  String formatDateTime(String dateTimeString) {
-    // Parse the date string into a DateTime object
-    DateTime dateTime =
-        DateTime.parse(dateTimeString).add(const Duration(hours: 1));
-
-    // Define the date format you want
-    final DateFormat formatter = DateFormat('MMMM dd, yyyy hh:mm a');
-
-    // Format the DateTime object into a string
-    String formattedDateTime = formatter.format(dateTime);
-
-    return formattedDateTime;
-  }
-
-  int _calculateDaysDifference(String endDateString, String startDateString) {
-    // Parse the provided date strings into DateTime objects
-    DateFormat format = DateFormat('dd/MM/yyyy');
-    String today = DateFormat('dd/MM/yyyy').format(DateTime.now());
-    DateTime startDate = format.parse(startDateString);
-    DateTime endDate = format.parse(endDateString);
-
-    // Calculate the difference in days
-    Duration difference = endDate.difference(startDate);
-
-    // Convert the difference to days
-    int differenceInDays = difference.inDays.abs();
-
-    return differenceInDays;
-  }
-
-  String extractAmount(String input) {
-    final nairaIndex = input.indexOf('₦');
-    if (nairaIndex != -1 && nairaIndex < input.length - 1) {
-      return input.substring(nairaIndex + 1).trim();
-    }
-    return '';
   }
 }

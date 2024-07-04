@@ -8,12 +8,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 import '../../controller/auth/user_controller.dart';
 import '../../controller/utility/utility_response_controller.dart';
 import '../../controller/wallet/wallet_controller.dart';
-// import 'package:http/http.dart' as http;
 
 import 'airtime_confirmation.dart';
 
@@ -42,11 +41,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   final TextEditingController selectnetworkproviderController =
       TextEditingController();
   final dataBundleFormKey = GlobalKey<FormState>();
-  // String? _selectedData;
 
-  // List<String> _amount = [];
-  // List<String> _dataName = [];
-  // List<String> _dataValidity = [];
   String? selectedItem;
   String? selectedItemAmount;
   String? selectedItemValidity;
@@ -54,25 +49,6 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   bool isNetworkSelected = false;
   bool isNunmberInputted = false;
 
-  // List<String> SelectSubscription = const <String>[
-  //   'Data Bundle',
-  //   'Internet Subscription',
-  // ];
-
-  // List<String> networkCarrier = const <String>[
-  //   'Select Network',
-  //   'MTN',
-  //   'Glo',
-  //   'Airtel',
-  //   '9mobile',
-  // ];
-
-  // List<String> UserSelectDataPlans = const <String>[
-  //   'MTN',
-  //   'Glo',
-  //   'Airtel',
-  //   '9mobile',
-  // ];
   List<String> networkImages = const <String>[
     'assets/utility/mtn.jpg',
     "assets/utility/airtel.jpg",
@@ -83,27 +59,10 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
   String? _selectedCarrier;
   String? _selectedImage;
   String billType = '';
-  // bool showInvalidRecipientNumberAlert = false;
-  // String _userInput = '';
   String? billerId;
   String? divisionId;
   String? productId;
   String? description;
-
-  // void validateUsersInput() {
-  //   if (dataBundleFormKey.currentState!.validate()) {
-  //     Get.to(DataListScreen(
-  //         number: recipientController.text.trim(),
-  //         network: _selectedCarrier!.trim(),
-  //         image: _selectedImage!));
-  //     // int amount = int.parse(amountController.text);
-  //     // String number = recipientController.text;
-  //     // String bill = billType;
-  //     // String biller = _selectedCarrier;
-
-  //     // confirmPayment(context, amount, number, bill, biller);
-  //   }
-  // }
 
   String getCurrency() {
     var format =
@@ -119,10 +78,6 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
       setState(() {
         _selectedCarrier = detectedCarrier;
       });
-      print('_selectedCarrier');
-      print(_selectedCarrier);
-      print('detectedCarrier');
-      print(detectedCarrier);
       if (detectedCarrier == 'MTN'.toUpperCase()) {
         setState(() {
           _selectedImage = 'assets/utility/mtn.jpg';
@@ -242,77 +197,15 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
       await userController.fetchData();
       await walletController.fetchWallet();
       await utilityResponseController.fetchUtilitiesResponse('Data');
-      // setState(() {}); // Move setState inside fetchData
     }
     EasyLoading.dismiss();
     return true;
   }
 
-  // Future getDataBundles() async {
-  //   EasyLoading.show(
-  //     indicator: const CustomLoader(),
-  //     maskType: EasyLoadingMaskType.black,
-  //     dismissOnTap: false,
-  //   );
-  //   String authToken =
-  //       await GlobalService.sharedPreferencesManager.getAuthToken();
-  //   final response = await http.post(
-  //     Uri.parse(AppConstants.BASE_URL + AppConstants.GET_DATA_VARIATION_CODES),
-  //     headers: {
-  //       'Authorization': 'Bearer $authToken',
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: jsonEncode(<String, String>{
-  //       "selectedNetwork": _selectedCarrier!,
-  //     }),
-  //   );
-  //   EasyLoading.dismiss();
-  //   // print(response);
-
-  //   if (response.statusCode == 200) {
-  //     EasyLoading.dismiss();
-  //     var jsonResponse = jsonDecode(response.body);
-  //     print('jsonResponse');
-  //     List<String> dataAmount = [];
-  //     List<String> dataName = [];
-  //     List<String> dataValidity = [];
-  //     // tempName.add("Select bank");
-  //     for (var item in jsonResponse['amount_options']) {
-  //       String amount = item['amount'];
-  //       String name = item['name'];
-  //       String validity = item['validity'];
-  //       // String name = item['name'];
-  //       if (name != "") {
-  //         dataAmount.add(amount);
-  //         dataName.add(name);
-  //         dataValidity.add(validity);
-  //       }
-  //     }
-  //     if (!mounted) return;
-  //     setState(() {
-  //       _amount = dataAmount;
-  //       _dataName = dataName;
-  //       _dataValidity = dataValidity;
-  //       // _bankCode = tempCode;
-
-  //       // _canShowOptions = true;
-  //     });
-  //   } else {
-  //     EasyLoading.dismiss();
-  //     print('Failed to load data from the server');
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
     fetchUserData();
-    // recipientController.addListener(() {
-    //   setState(() {
-    //     // _selectedCarrier = getCarrier(recipientController.text);
-    //     selectnetworkController.text = _selectedCarrier!;
-    //   });
-    // });
   }
 
   @override
@@ -424,10 +317,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                                     ),
                                   ],
                                 ),
-
-                                // selected: _selectedCarrier == name[idx],
                                 onTap: () {
-                                  // billType = airtimeBill[idx];
                                   _selectedCarrier = utilityResponseController
                                       .utilityResponseModel!
                                       .utilities![idx]
@@ -436,23 +326,17 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                                       'assets/utility/${utilityResponseController.utilityResponseModel!.utilities![idx].name.toLowerCase()}.jpg';
                                   var billerLists = Hive.box('Data');
                                   var storedData = billerLists.get('Data');
-                                  //  storedData['data'];
-                                  print(_selectedCarrier!);
                                   var outputList = storedData['data']
                                       .where(
                                           (o) => o['name'] == _selectedCarrier!)
                                       .toList();
-                                  print('output list ${outputList}');
-                                  // canProceed = true;
                                   setState(() {
-                                    // billType = airtimeBill[idx];
                                     _selectedCarrier = utilityResponseController
                                         .utilityResponseModel!
                                         .utilities![idx]
                                         .name;
                                     _selectedImage =
                                         'assets/utility/${utilityResponseController.utilityResponseModel!.utilities![idx].name.toLowerCase()}.jpg';
-                                    // canProceed = true;
                                     selectnetworkController.text =
                                         _selectedCarrier!;
                                     billerId = outputList[0]['id'];
@@ -460,10 +344,6 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                                     productId = outputList[0]['product'];
                                     isNetworkSelected = true;
                                   });
-                                  print(billerId);
-                                  print(divisionId);
-                                  print(productId);
-
                                   Navigator.pop(
                                     context,
                                   );
@@ -482,7 +362,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                                     indent: 13,
                                     endIndent: 13,
                                   )
-                                : SizedBox(),
+                                : const SizedBox(),
                           ],
                         );
                       },
@@ -579,15 +459,6 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                   enableDrag: true,
                   isScrollControlled: true,
                   builder: (BuildContext context) {
-                    var billerItems = Hive.box(billerId!);
-                    print(billerItems);
-                    var storedData = billerItems.get(billerId!);
-                    print(billerId);
-                    //  storedData['data'];
-                    var outputList = storedData['data']
-                        .where((o) => o['billerid'] == billerId!)
-                        .toList();
-                    print('output data list ${outputList}');
                     return FractionallySizedBox(
                       heightFactor: 0.88,
                       child: Container(
@@ -772,7 +643,7 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                                               indent: 13,
                                               endIndent: 13,
                                             )
-                                          : SizedBox(),
+                                          : const SizedBox(),
                                     ],
                                   );
                                 },
@@ -1171,17 +1042,9 @@ class _DataBundleScreenState extends State<DataBundleScreen> {
                         FocusScope.of(context).unfocus();
                         var billerLists = Hive.box('Data');
                         var storedData = billerLists.get('Data');
-                        //  storedData['data'];
-                        print(_selectedCarrier!);
                         var outputList = storedData['data']
                             .where((o) => o['name'] == _selectedCarrier!)
                             .toList();
-                        print('output list ${outputList}');
-
-                        print(recipientController.text);
-                        print(amountController.text);
-                        // print(billType!);
-                        print(_selectedCarrier!);
                         Get.to(
                           AirtimeConfirmation(
                             number: recipientController.text,

@@ -7,13 +7,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_session_timeout/local_session_timeout.dart';
-import 'package:rentspace/view/onboarding/FirstPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
-import '../../constants/widgets/custom_dialog.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/custom_dialogs/index.dart';
+import '../../widgets/custom_loader.dart';
 import '../../view/auth/registration/login_page.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -35,11 +34,6 @@ class AuthState extends GetxController {
         'Authorization': 'Bearer $authToken',
       };
 
-      // var body = json.encode({
-      //   "currentPassword": currentPassword,
-      //   "newPassword": newPassword,
-      //   "repeatNewPassword": repeatNewPassword,
-      // });
 
       var response = await http.post(
         Uri.parse('${AppConstants.BASE_URL}${AppConstants.LOGOUT}'),
@@ -69,8 +63,6 @@ class AuthState extends GetxController {
                                 (value) => _deleteAppDir().then(
                                   (value) => Get.offAll(
                                     LoginPage(
-                                      sessionStateStream: sessionStateStream,
-                                      // loggedOutReason: "Logged out because of user inactivity",
                                     ),
                                   ),
                                 ),
@@ -79,14 +71,6 @@ class AuthState extends GetxController {
                       ),
             );
 
-        // (value) => Get.offAll(
-        //                   LoginPage(
-        //                     sessionStateStream: sessionStateStream,
-        //                     // loggedOutReason: "Logged out because of user inactivity",
-        //                   ),
-        //                 ),
-
-        // print(result);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         // print('error auth');
@@ -111,9 +95,6 @@ class AuthState extends GetxController {
         } else {
           errorMessage = 'An unknown error occurred';
         }
-        // print('Error: $errorMessage');
-        // print(response.body);
-        // print('error fetching data');
         if (context.mounted) {
           customErrorDialog(context, 'Error', errorMessage);
         }
@@ -169,33 +150,22 @@ class AuthState extends GetxController {
         headers: headers,
         body: body,
       );
-      // // print(body);
-
-      // print('Response Status Code: ${response.statusCode}');
-      // print('Response Body: ${response.body}');
-      // print('Response Headers: ${response.headers}');
       if (response.statusCode == 200) {
-        // var result = jsonDecode(response.body);
         EasyLoading.dismiss();
         isLoading(false);
-        // print('result success');
         if (context.mounted) {
           customSuccessDialog(
               context, 'Success', 'Password Changed Successfully');
         }
-        // print(result);
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
-        // print('error auth');
         multipleLoginRedirectModal();
       } else if (response.body.contains('Server Error')) {
         EasyLoading.dismiss();
         isLoading(false);
         if (context.mounted) {
-          // print('Context is mounted, showing dialog');
           customErrorDialog(context, 'Oops', 'Something Went Wrong');
         } else {
-          // print('Context is not mounted, cannot show dialog');
         }
       } else {
         EasyLoading.dismiss();
@@ -208,9 +178,6 @@ class AuthState extends GetxController {
         } else {
           errorMessage = 'An unknown error occurred';
         }
-        // print('Error: $errorMessage');
-        // print(response.body);
-        // print('error fetching data');
         if (context.mounted) {
           customErrorDialog(context, 'Error', errorMessage);
         }
@@ -225,12 +192,10 @@ class AuthState extends GetxController {
     } on http.ClientException catch (e) {
       EasyLoading.dismiss();
       isLoading(false);
-      // print('Error while getting data is $e');
       throw http.Response('HTTP Client Exception: $e', 500);
     } catch (e) {
       EasyLoading.dismiss();
       isLoading(false);
-      // print('Error while getting data activities is $e');
       throw http.Response('Error: $e', 504);
     } finally {
       EasyLoading.dismiss();
@@ -243,9 +208,6 @@ final authState = AuthState();
 
 Future<void> logoutUser(BuildContext context) async {
   await authState.logout(context);
-  // GetStorage().erase().then(
-  //       (value) => authState.logout(context),
-  //     );
   // Ensure that the UI updates after logout
   Get.forceAppUpdate(); // Force the entire app to update
 }

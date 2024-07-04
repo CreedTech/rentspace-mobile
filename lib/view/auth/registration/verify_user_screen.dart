@@ -8,9 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
 
-import '../../../constants/utils/obscureEmail.dart';
-import '../../../constants/widgets/custom_dialog.dart';
 import '../../../controller/auth/auth_controller.dart';
+import '../../../widgets/custom_dialogs/index.dart';
 
 class VerifyUserPage extends ConsumerStatefulWidget {
   const VerifyUserPage({super.key, required this.email});
@@ -242,7 +241,6 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                       color: Theme.of(context).colorScheme.secondary,
                                       fontWeight: FontWeight.w700,
                                       fontSize: 20,
-                                      // fontFamily: "DefaultFontFamily",
                                     ),
                                   ),
                                 ),
@@ -268,7 +266,6 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                           GestureDetector(
                             onTap: () {
                               resetCountdown();
-                              // resendVerification(context);
                               authState.resendOtp(context, widget.email);
                             },
                             child: Align(

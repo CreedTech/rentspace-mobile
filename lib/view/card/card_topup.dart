@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/widgets/custom_dialog.dart';
+import '../../widgets/custom_dialogs/index.dart';
 import '../onboarding/FirstPage.dart';
 import '../wallet_funding/wallet_funding.dart';
 
@@ -22,7 +22,7 @@ var formatter = DateFormat('yyyy-MM-dd');
 String formattedDate = formatter.format(now);
 
 class _CardTopUpState extends State<CardTopUp> {
-  TextEditingController _amountController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
   final fundWalletFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -55,13 +55,13 @@ class _CardTopUpState extends State<CardTopUp> {
 
     final amount = TextFormField(
       enableSuggestions: true,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: Theme.of(context).colorScheme.primary,
       controller: _amountController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       inputFormatters: [ThousandsFormatter()],
       validator: validateAmount,
       style: GoogleFonts.lato(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).colorScheme.primary,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -122,13 +122,13 @@ class _CardTopUpState extends State<CardTopUp> {
           child: Icon(
             Icons.arrow_back_ios,
             size: 30,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         title: Text(
           'Top Up With Card',
           style: GoogleFonts.lato(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
@@ -162,7 +162,7 @@ class _CardTopUpState extends State<CardTopUp> {
                               child: Text(
                                 'Amount',
                                 style: GoogleFonts.lato(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,
                                   // fontFamily: "DefaultFontFamily",
@@ -176,7 +176,7 @@ class _CardTopUpState extends State<CardTopUp> {
                               child: Text(
                                 'Use Bank Transfer if amount exceeds ₦9,999.99',
                                 style: GoogleFonts.roboto(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12,
                                   // fontFamily: "DefaultFontFamily",

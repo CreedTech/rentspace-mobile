@@ -1,6 +1,8 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +16,7 @@ import 'package:rentspace/model/loan_form_model.dart';
 import 'package:rentspace/view/loan/loan_application_page_continuation.dart';
 
 import '../../constants/colors.dart';
-import '../../constants/widgets/custom_loader.dart';
+import '../../widgets/custom_loader.dart';
 import '../../controller/rent/rent_controller.dart';
 
 class LoanApplicationPage extends StatefulWidget {
@@ -58,7 +60,6 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
   // late int genderValue;
 
   void _loadFormData() async {
-    // var box = Hive.box<LoanFormData>('loanFormDataBox');
     var box = await Hive.openBox<LoanFormData>('formDataBox');
     var formData = box.get('loanFormData');
     if (formData != null) {
@@ -100,7 +101,6 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
         dismissOnTap: false,
       );
       var box = await Hive.openBox<LoanFormData>('formDataBox');
-      // var box = Hive.box<LoanFormData>('loanFormDataBox');
       var formData = LoanFormData()
         ..reason = _reasonController.text
         ..id = _idSelectController.text
@@ -271,12 +271,12 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
     }
 
     // Function to clean up the image name
-    String _cleanImageName(String imageName) {
+    String cleanImageName(String imageName) {
       final RegExp regExp = RegExp(r'image_picker_[\dA-F-]+-');
       return imageName.replaceAll(regExp, '');
     }
 
-    Future<void> _pickImage(BuildContext context, ImageSource source) async {
+    Future<void> pickImage(BuildContext context, ImageSource source) async {
       final pickedFile = await ImagePicker().pickImage(
         source: source,
         imageQuality: 100, // Ensure only images are picked
@@ -287,10 +287,12 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
         // uploadImage(context, imageFile);
         String imageName = path.basename(imageFile.path);
         setState(() {
-          _utilityBillController.text = _cleanImageName(imageName);
+          _utilityBillController.text = cleanImageName(imageName);
         });
       } else {
-        print('No image selected.');
+        if (kDebugMode) {
+          print('No image selected.');
+        }
       }
     }
 
@@ -422,12 +424,9 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
                                     setState(() {
                                       selectedId = idTypes[idx];
                                       idSelected = true;
-                                      // genderValue =
-                                      //     selectedGender == 'Male' ? 1 : 2;
                                     });
 
                                     _idSelectController.text = idTypes[idx];
-                                    // });
 
                                     Navigator.pop(
                                       context,
@@ -726,7 +725,7 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
 
     final utilityBill = TextFormField(
       onTap: () {
-        _pickImage(context, ImageSource.gallery);
+        pickImage(context, ImageSource.gallery);
       },
       enableSuggestions: true,
       cursorColor: Theme.of(context).colorScheme.primary,

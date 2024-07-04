@@ -6,21 +6,13 @@ class RecentTransfersModel {
 
   RecentTransfersModel.fromJson(Map<String, dynamic> json) {
     final dynamic recentTransfersData = json['recentTransfers'];
-    print('recentTransfersData');
-    // print(recentTransfersData);
     if (recentTransfersData is List<dynamic>) {
       recentTransfers =
           recentTransfersData.map((e) => RecentTransfers.fromJson(e)).toList();
-      print('rents length');
-      // print(rents!.length);
     } else if (recentTransfersData is Map<String, dynamic>) {
-      print("Here");
 
       recentTransfers = [RecentTransfers.fromJson(recentTransfersData)];
-      print("recentTransfers");
-      // print(rents);
     } else {
-      // print('Invalid activities data: $recentTransfersData');
       recentTransfers = [];
     }
   }
