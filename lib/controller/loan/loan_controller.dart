@@ -64,60 +64,89 @@ class LoanController extends GetxController {
       maskType: EasyLoadingMaskType.black,
       dismissOnTap: false,
     );
+    print(spacerentId);
+    print(reason);
+    print(idCard);
+    print(idNumber);
+    print(bvn);
+    print(phoneNumber);
+    print(address);
+    print(landlordOrAgent);
+    print(landlordOrAgentName);
+    print(livesInSameProperty);
+    print(landlordOrAgentAddress);
+    print(landlordOrAgentNumber);
+    print(duration);
+    print(propertyType);
+    print(employmentStatus);
+    print(position);
+    print(netSalary);
+    print(nameOfBusiness);
+    print(cacNumber);
+    print(estimatedMonthlyTurnOver);
+    print(estimatedNetMonthlyProfit);
+    print(hasExistingLoans);
+    print(howMuch);
+    print(where);
+    print(loanDuration);
+    print(guarantorName);
+    print(guarantorRelationship);
+    print(guarantorNumber);
+    print(guarantorAddress);
     String authToken =
         await GlobalService.sharedPreferencesManager.getAuthToken();
 
     try {
-      http.Response response = await http.post(
-        Uri.parse('${AppConstants.BASE_URL}${AppConstants.APPLY_FOR_LOAN}'),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $authToken'
-        },
-        body: json.encode({
-          "spaceRent": "6658b3c978a8ffa66879bf6e",
-          "reason": "Medical emergency",
-          "landlordOrAgent": {
-            "name": "John Doe",
-            "livesInSameProperty": false,
-            "address": "123 Main St, Anytown",
-            "phoneNumber": "1234567890",
-            "duration": "1 year",
-            "propertyType": "Residential"
-          },
-          "occupation": {
-            "status": "Employed",
-            "details": {"position": "Software Engineer", "netSalary": 60000}
-          },
-          "guarantor": {
-            "name": "Jane Smith",
-            "relationship": "Friend",
-            "phoneNumber": "9876543210",
-            "address": "456 Elm St, Othertown"
-          }
-        }),
-      );
-      if (response.statusCode == 200) {
-        var result = jsonDecode(response.body);
-        print('result here');
-        print(result);
-        EasyLoading.dismiss();
-        isValidationLoading(false);
-      } else if (response.body.contains('Invalid token') ||
-          response.body.contains('Invalid token or device')) {
-        // print('error auth');
-        multipleLoginRedirectModal();
-      } else {
-        isValidationLoading(false);
-        var errorResponse = jsonDecode(response.body);
-        print('Error: ${errorResponse['error']}');
-        print(response.body);
-        print('error fetching data');
-        if (context.mounted) {
-          customErrorDialog(context, 'Error', errorResponse['error']);
-        }
-      }
+      // http.Response response = await http.post(
+      //   Uri.parse('${AppConstants.BASE_URL}${AppConstants.APPLY_FOR_LOAN}'),
+      //   headers: {
+      //     'Content-type': 'application/json; charset=UTF-8',
+      //     'Accept': 'application/json',
+      //     'Authorization': 'Bearer $authToken'
+      //   },
+      //   body: json.encode({
+      //     "spaceRent": "6658b3c978a8ffa66879bf6e",
+      //     "reason": "Medical emergency",
+      //     "landlordOrAgent": {
+      //       "name": "John Doe",
+      //       "livesInSameProperty": false,
+      //       "address": "123 Main St, Anytown",
+      //       "phoneNumber": "1234567890",
+      //       "duration": "1 year",
+      //       "propertyType": "Residential"
+      //     },
+      //     "occupation": {
+      //       "status": "Employed",
+      //       "details": {"position": "Software Engineer", "netSalary": 60000}
+      //     },
+      //     "guarantor": {
+      //       "name": "Jane Smith",
+      //       "relationship": "Friend",
+      //       "phoneNumber": "9876543210",
+      //       "address": "456 Elm St, Othertown"
+      //     }
+      //   }),
+      // );
+      // if (response.statusCode == 200) {
+      //   var result = jsonDecode(response.body);
+      //   print('result here');
+      //   print(result);
+      //   EasyLoading.dismiss();
+      //   isValidationLoading(false);
+      // } else if (response.body.contains('Invalid token') ||
+      //     response.body.contains('Invalid token or device')) {
+      //   // print('error auth');
+      //   multipleLoginRedirectModal();
+      // } else {
+      //   isValidationLoading(false);
+      //   var errorResponse = jsonDecode(response.body);
+      //   print('Error: ${errorResponse['error']}');
+      //   print(response.body);
+      //   print('error fetching data');
+      //   if (context.mounted) {
+      //     customErrorDialog(context, 'Error', errorResponse['error']);
+      //   }
+      // }
     } on TimeoutException {
       throw http.Response('Network Timeout', 500);
     } on http.ClientException catch (e) {

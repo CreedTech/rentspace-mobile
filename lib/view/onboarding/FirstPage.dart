@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -26,6 +27,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:intl/intl.dart';
 
+import '../../controller/loan/loan_controller.dart';
+import '../../widgets/custom_loader.dart';
 import '../auth/pin/transaction_pin.dart';
 import 'home_page.dart';
 import '../offline/no_internet_screen.dart';
@@ -37,6 +40,7 @@ final WalletController walletController = Get.find();
 final RentController rentController = Get.find();
 final UtilityResponseController utilityResponseController = Get.find();
 final AirtimesController airtimesController = Get.find();
+final LoanController loanController = Get.find();
 String _message = "Not Authorized";
 bool _hasBiometric = false;
 final hasBiometricStorage = GetStorage();
@@ -112,6 +116,7 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(UtilityResponseController(context));
     Get.put(AirtimesController(context));
     Get.put(UtilityController());
+    Get.put(LoanController(context));
     Future.delayed(const Duration(seconds: 3), () {
       // fetchUserAndSetState();
       // setState(() {
@@ -128,7 +133,13 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   void onTryAgain() {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
     checkConnectivity();
+    EasyLoading.dismiss();
   }
 
   void checkUserInfo() async {
@@ -139,7 +150,13 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   void onReloadAgain() {
+    EasyLoading.show(
+      indicator: const CustomLoader(),
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
     checkUserInfo();
+    EasyLoading.dismiss();
   }
 
   Future<void> onRefresh() async {
@@ -161,6 +178,7 @@ class _FirstPageState extends State<FirstPage> {
     Get.put(UtilityController());
     Get.put(WalletController());
     Get.put(UtilityResponseController(context));
+    Get.put(LoanController(context));
     return Obx(
       () => (userController.isHomePageLoading.value.obs() == true)
           ? Scaffold(

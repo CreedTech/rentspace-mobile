@@ -10,6 +10,7 @@ import 'package:rentspace/view/utility/cable.dart';
 import 'package:rentspace/view/utility/data.dart';
 import 'package:rentspace/view/utility/electricity.dart';
 
+import '../../view/savings/spaceRent/spacerent_creation.dart';
 import '../components/component_route_animation.dart';
 import 'helper_route_path.dart';
 
@@ -42,6 +43,11 @@ class RouterGenerator {
         return MaterialPageRoute(
           builder: (context) => const RentSpaceList(),
           settings: const RouteSettings(name: rentList),
+        );
+      case rentCreation:
+        return MaterialPageRoute(
+          builder: (context) => const SpaceRentCreation(),
+          settings: const RouteSettings(name: rentCreation),
         );
       case register:
         return MaterialPageRoute(

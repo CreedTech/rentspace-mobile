@@ -1982,6 +1982,21 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
                         (value) => Get.to(
                           LoanApplicationPageContinuation(
                             current: widget.current,
+                            reason: _reasonController.text,
+                            id: _idSelectController.text,
+                            idNumber: _idNumberController.text,
+                            bvn: _bvnController.text,
+                            phoneNumber: _phoneNumberController.text,
+                            address: _houseAddressController.text,
+                            landlordOrAgent: _landLordOrAgentController.text,
+                            landlordOrAgentName: _landlordNameController.text,
+                            livesInSameProperty: _samePropertyController.text,
+                            landlordOrAgentAddress:
+                                _landlordAddressController.text,
+                            landlordOrAgentNumber:
+                                _landlordPhoneNumberController.text,
+                            duration: _currentAddressDurationController.text,
+                            propertyType: _propertyTypesController.text,
                           ),
                         ),
                       );

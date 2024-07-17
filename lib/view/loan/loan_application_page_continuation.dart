@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pattern_formatter/numeric_formatter.dart';
+import 'package:rentspace/controller/loan/loan_controller.dart';
 import 'package:rentspace/view/loan/loan_application_success_page.dart';
 import 'package:rentspace/widgets/custom_dialogs/custom_error_dialog.dart';
 
@@ -13,7 +14,36 @@ import '../../controller/rent/rent_controller.dart';
 
 class LoanApplicationPageContinuation extends StatefulWidget {
   final int current;
-  const LoanApplicationPageContinuation({super.key, required this.current});
+  final String reason,
+      id,
+      idNumber,
+      bvn,
+      phoneNumber,
+      address,
+      landlordOrAgent,
+      landlordOrAgentName,
+      livesInSameProperty,
+      landlordOrAgentAddress,
+      landlordOrAgentNumber,
+      duration,
+      propertyType;
+  const LoanApplicationPageContinuation({
+    super.key,
+    required this.current,
+    required this.reason,
+    required this.id,
+    required this.idNumber,
+    required this.bvn,
+    required this.phoneNumber,
+    required this.address,
+    required this.landlordOrAgent,
+    required this.landlordOrAgentName,
+    required this.livesInSameProperty,
+    required this.landlordOrAgentAddress,
+    required this.landlordOrAgentNumber,
+    required this.duration,
+    required this.propertyType,
+  });
 
   @override
   State<LoanApplicationPageContinuation> createState() =>
@@ -22,6 +52,7 @@ class LoanApplicationPageContinuation extends StatefulWidget {
 
 class _LoanApplicationPageContinuationState
     extends State<LoanApplicationPageContinuation> {
+  final LoanController loanController = Get.find();
   final TextEditingController _employmentStatusController =
       TextEditingController();
   final TextEditingController _positionController = TextEditingController();
@@ -1813,7 +1844,41 @@ class _LoanApplicationPageContinuationState
                     if (loanContFormKey.currentState!.validate() &&
                         agreeToTerms == true &&
                         authorizeRentspace == true) {
-                      Get.to(const LoanApplicationSuccessfulPage());
+                      loanController.applyForLoan(
+                        rentController
+                            .rentModel!.rents![widget.current].rentspaceId,
+                        widget.reason,
+                        widget.id,
+                        widget.idNumber,
+                        widget.bvn,
+                        widget.phoneNumber,
+                        widget.address,
+                        widget.landlordOrAgent,
+                        widget.landlordOrAgentName,
+                        widget.livesInSameProperty,
+                        widget.landlordOrAgentAddress,
+                        widget.landlordOrAgentNumber,
+                        widget.duration,
+                        widget.propertyType,
+                        _employmentStatusController.text,
+                        _positionController.text ?? '',
+                        _netSalaryController.text.trim().replaceAll(',', '') ??
+                            '',
+                        _nameOfBusinessController.text ?? '',
+                        _cacController.text ?? '',
+                        _estimatedMonthlyTurnOverController.text ?? '',
+                        _estimatedNetMonthlyNetProfitController.text ?? '',
+                        _existingLoansController.text,
+                        _howMuchController.text.trim().replaceAll(',', '') ??
+                            '',
+                        _whereLoanWasCollectedController.text ?? '',
+                        _howLongController.text ?? '',
+                        _guarantorNameController.text,
+                        _guarantorRelationshipController.text,
+                        _guarantorNumberController.text,
+                        _guarantorAddressController.text,
+                      );
+                      // Get.to(const LoanApplicationSuccessfulPage());
                     } else if (!(agreeToTerms == true &&
                             authorizeRentspace == true) &&
                         loanContFormKey.currentState!.validate()) {
