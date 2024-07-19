@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rentspace/api/global_services.dart';
 import 'package:rentspace/constants/app_constants.dart';
@@ -10,6 +11,7 @@ import 'package:rentspace/model/response_model.dart';
 import 'package:http/http.dart';
 
 import '../api/api_client.dart';
+import '../main.dart';
 
 final appRepositoryProvider = Provider((ref) {
   final apiClient = ref.read(apiClientProvider);

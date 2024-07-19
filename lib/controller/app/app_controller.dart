@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/widgets/custom_loader.dart';
@@ -74,37 +75,26 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
         if (date == DateFormat('dd/MM/yyyy').format(DateTime.now())) {
           if (walletController.walletModel!.wallet![0].mainBalance <
               intervalAmount) {
-            Get.back();
+            context.pop();
             insufficientFundsDialog(context);
           } else {
             await walletDebit(context, intervalAmount, amount, rentspaceId,
                     date, interval)
                 .then(
-              (value) => Get.to(
-                SpaceRentSuccessPage(
-                    rentValue: amount,
-                    savingsValue: intervalAmount,
-                    startDate: date,
-                    durationType: interval,
-                    paymentCount: paymentCount,
-                    rentName: rentName,
-                    duration: duration,
-                    receivalDate: dueDate),
-              ),
+              (value) => context.go('/success'),
             );
           }
         } else {
-          Get.to(
-            SpaceRentSuccessPage(
-                rentValue: amount,
-                savingsValue: intervalAmount,
-                startDate: date,
-                durationType: interval,
-                paymentCount: paymentCount,
-                rentName: rentName,
-                duration: duration,
-                receivalDate: dueDate),
-          );
+          context.go('/spacerentSuccessfulPage', extra: {
+            'rentValue': amount,
+            'savingsValue': intervalAmount,
+            'startDate': date,
+            'durationType': interval,
+            'paymentCount': paymentCount,
+            'rentName': rentName,
+            'duration': duration,
+            'receivalDate': dueDate
+          });
         }
 
         return;
@@ -222,5 +212,4 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
       // return;
     }
   }
-
 }

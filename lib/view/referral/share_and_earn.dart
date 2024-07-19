@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -41,7 +42,7 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [

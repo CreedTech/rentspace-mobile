@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
@@ -146,7 +147,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
         backgroundColor: Theme.of(context).canvasColor,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back,
@@ -251,7 +252,7 @@ class _FinanceHealthState extends State<FinanceHealth> {
                               //     'finance_health': outcome.toString(),
                               //   }).then((value) {
                               //     EasyLoading.dismiss();
-                              //     Get.back();
+                              //     context.pop();
                               //     showTopSnackBar(
                               //       Overlay.of(context),
                               //       CustomSnackBar.success(

@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_session_timeout/local_session_timeout.dart';
@@ -15,6 +16,7 @@ final sessionStateStream = StreamController<SessionState>();
 final apiClientProvider = Provider<ApiClient>((ref) {
   return ApiClient();
 });
+
 class ApiClient {
   String? appBaseUrl = AppConstants.BASE_URL;
   late Map<String, String> _mainHeaders;
@@ -31,6 +33,7 @@ class ApiClient {
     token = newToken;
     _mainHeaders['Authorization'] = 'Bearer $token';
   }
+
   /// Method to send data to backend, don't edit this code  *
   Future<http.Response> postData(String url, body) async {
     if (kDebugMode) {
@@ -50,9 +53,11 @@ class ApiClient {
       } else if (response.statusCode == 401) {
         if (kDebugMode) {
           print('auth error here');
+          // print(response);
         }
-
-        multipleLoginRedirectModal();
+        // if (context.mounted) {
+        //   multipleLoginRedirectModal(context);
+        // }
 
         return response;
       } else {
@@ -76,7 +81,6 @@ class ApiClient {
     }
   }
 
-
 /*  Method to update data to backend  **/
   Future putData(url, body) async {
     http.Response response;
@@ -97,6 +101,7 @@ class ApiClient {
     return response;
     //var response = await http.put(url, body: body, headers: _mainHeaders);
   }
+
 /*  Method to accept data from backend  **/
   Future getData(url) async {
     // print('got to api client');
@@ -127,6 +132,7 @@ class ApiClient {
     // Response response = await get(url, headers: _mainHeaders);
     // return response;
   }
+
 /*  Method to send photo to backend  **/
   Future postPhoto(String url, String imagePath) async {
     var headers = {

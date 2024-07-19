@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rentspace/widgets/custom_loader.dart';
@@ -70,108 +71,6 @@ class _CableScreenState extends State<CableScreen> {
     return true;
   }
 
-  // void _updateMessage() {
-  //   if (isChecking) {
-  //     // If checking, display loader message
-  //     _message = 'Verifying TV Details';
-  //     verifyAccountError = "";
-  //     hasError = false;
-  //     tvName = "";
-  //   }
-  // }
-
-  // verifyTV(String currentCode) async {
-  //   String authToken =
-  //       await GlobalService.sharedPreferencesManager.getAuthToken();
-
-  //   setState(() {
-  //     isChecking = true;
-  //     tvName = "";
-  //     verifyAccountError = "";
-  //     hasError = false;
-  //     canProceed = false;
-  //   });
-  //   final response = await http.post(
-  //       Uri.parse(AppConstants.BASE_URL + AppConstants.VERIFY_TV),
-  //       headers: {
-  //         'Authorization': 'Bearer $authToken',
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: json.encode({
-  //         "billingServiceID": _selectedTVCode,
-  //         "smartCardNumber": smartcardController.text.trim().toString()
-  //       }));
-
-  //   if (response.statusCode == 200) {
-  //     // Request successful, handle the response data
-  //     final Map<String, dynamic> jsonResponse = json.decode(response.body);
-  //     final smartCardFirstName = jsonResponse['firstName'];
-  //     final smartCardLastName = jsonResponse['lastName'];
-  //     final smartCardStatus = jsonResponse['accountStatus'];
-  //     tvName = '$smartCardFirstName $smartCardLastName';
-  //     if (tvName != '' && tvName != 'N/A') {
-  //       setState(() {
-  //         tvName = tvName;
-  //         isChecking = false;
-  //         hasError = false;
-  //         canProceed = true;
-  //       });
-  //       _updateMessage();
-  //     } else {
-  //       // Error handling
-  //       setState(() {
-  //         tvName = "";
-  //         isChecking = false;
-  //         hasError = true;
-  //         verifyAccountError =
-  //             'SmartCard Validation failed. Please check the digits and try again';
-  //         canProceed = false;
-  //       });
-  //       _updateMessage();
-  //       // if (context.mounted) {
-  //       //   customErrorDialog(context, 'Error!', "Invalid account number");
-  //       // }
-  //     }
-
-  //     //print(response.body);
-  //   } else {
-  //     // Error handling
-  //     setState(() {
-  //       tvName = "";
-  //       isChecking = false;
-  //       hasError = true;
-  //       verifyAccountError =
-  //           'SmartCard Validation failed. Please check the digits and try again';
-  //       canProceed = false;
-  //     });
-  //     _updateMessage();
-
-  //     // if (context.mounted) {
-  //     //   customErrorDialog(context, 'Error!', 'Something went wrong');
-  //     // }
-
-  //     print(
-  //         'Request failed with status: ${response.statusCode}, ${response.body}');
-  //   }
-  // }
-
-  // void _checkFieldsAndHitApi() {
-  //   if (tvFormKey.currentState!.validate()) {
-  //     verifyTV(_selectedTVCode);
-  //   }
-  // }
-
-  // void validateUsersInput() {
-  //   if (tvFormKey.currentState!.validate()) {
-  //     Get.to(CableListScreen(
-  //       image: tvImage,
-  //       name: tvName,
-  //       tvName: tvCable,
-  //       cardNumber: smartcardController.text.trim(),
-  //       code: _selectedTVCode,
-  //     ));
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -437,7 +336,7 @@ class _CableScreenState extends State<CableScreen> {
           children: [
             GestureDetector(
               onTap: () {
-                Get.back();
+                context.pop();
               },
               child: const Icon(
                 Icons.arrow_back_ios_sharp,
@@ -1066,176 +965,7 @@ class _CableScreenState extends State<CableScreen> {
                           ),
                         ),
 
-                        // (isChecking)
-                        //     ? Padding(
-                        //         padding: EdgeInsets.symmetric(
-                        //             vertical: 10.h, horizontal: 10.w),
-                        //         child: Align(
-                        //           alignment: Alignment.center,
-                        //           child: Container(
-                        //             padding: const EdgeInsets.symmetric(
-                        //                 horizontal: 15, vertical: 10),
-                        //             decoration: BoxDecoration(
-                        //               color: Color(0xffEEF8FF)),
-                        //               borderRadius: BorderRadius.circular(15),
-                        //             ),
-                        //             child: Row(
-                        //               children: [
-                        //                 SizedBox(
-                        //                   width: 20.w,
-                        //                 ),
-                        //                 Center(
-                        //                   widthFactor: 0.2,
-                        //                   child: SizedBox(
-                        //                     height: 20.h,
-                        //                     width: 20.w,
-                        //                     child: const SpinKitSpinningLines(
-                        //                       color: brandTwo,
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //                 SizedBox(
-                        //                   width: 20.w,
-                        //                 ),
-                        //                 Text(
-                        //                   'Verifying Smart Card Details',
-                        //                   textAlign: TextAlign.center,
-                        //                   style: GoogleFonts.lato(
-                        //                     color: brandOne,
-                        //                     fontSize: 14,
-                        //                     fontWeight: FontWeight.w700,
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       )
-                        //     : const SizedBox(),
-                        // (hasError == true || verifyAccountError != '')
-                        //     ? Padding(
-                        //         padding: EdgeInsets.symmetric(
-                        //             vertical: 10.h, horizontal: 10.w),
-                        //         child: Container(
-                        //           padding: const EdgeInsets.symmetric(
-                        //               horizontal: 15, vertical: 10),
-                        //           decoration: BoxDecoration(
-                        //             color: Colors.red.withOpacity(0.2),
-                        //             borderRadius: BorderRadius.circular(15),
-                        //           ),
-                        //           child: Row(
-                        //             children: [
-                        //               Flexible(
-                        //                 // flex: 2,
-                        //                 child: Padding(
-                        //                   padding: EdgeInsets.only(
-                        //                       right: 10.w, left: 10.w),
-                        //                   child: const Icon(
-                        //                     Iconsax.close_circle5,
-                        //                     color: Colors.red,
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //               Flexible(
-                        //                 flex: 6,
-                        //                 child: Text(
-                        //                   verifyAccountError,
-                        //                   style: GoogleFonts.lato(
-                        //                     color: Colors.red,
-                        //                     fontSize: 14,
-                        //                     fontWeight: FontWeight.w700,
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       )
-                        //     : const SizedBox(),
-                        // ((utilityResponseController.isValidationLoading.value ==
-                        //         false))
-                        //     ? Padding(
-                        //         padding: EdgeInsets.symmetric(
-                        //             vertical: 10.h, horizontal: 10.w),
-                        //         child: Container(
-                        //           padding: const EdgeInsets.symmetric(
-                        //               horizontal: 15, vertical: 10),
-                        //           decoration: BoxDecoration(
-                        //             color: Color(0xffEEF8FF)),
-                        //             borderRadius: BorderRadius.circular(15),
-                        //           ),
-                        //           child: Row(
-                        //             children: [
-                        //               Flexible(
-                        //                 // flex: 2,
-                        //                 child: Padding(
-                        //                   padding: EdgeInsets.only(
-                        //                       right: 10.w, left: 10.w),
-                        //                   child: const Icon(
-                        //                     Icons.verified,
-                        //                     color: brandOne,
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //               Flexible(
-                        //                 flex: 6,
-                        //                 child: Text(
-                        //                   tvName,
-                        //                   style: GoogleFonts.lato(
-                        //                     color: brandOne,
-                        //                     fontSize: 14,
-                        //                     fontWeight: FontWeight.w700,
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       )
-                        //     : const SizedBox(),
-                        // SizedBox(
-                        //   height: 40.h,
-                        // ),
-                        // SizedBox(
-                        //   height: 20.h,
-                        // ),
-                        // Visibility(
-                        //   visible: tvName == '',
-                        //   child: Align(
-                        //     alignment: Alignment.bottomCenter,
-                        //     child: Padding(
-                        //       padding: const EdgeInsets.symmetric(
-                        //           vertical: 20, horizontal: 20),
-                        //       child: ElevatedButton(
-                        //         style: ElevatedButton.styleFrom(
-                        //           minimumSize: const Size(250, 50),
-                        //           backgroundColor: brandOne,
-                        //           elevation: 0,
-                        //           shape: RoundedRectangleBorder(
-                        //             borderRadius: BorderRadius.circular(
-                        //               10,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         onPressed: () async {
-                        //           if (tvFormKey.currentState!.validate()) {
-                        //             // _doSomething();
-                        //             // Get.to(ConfirmTransactionPinPage(
-                        //             //     pin: _pinController.text.trim()));
-                        //             FocusScope.of(context).unfocus();
-                        //             // _checkFieldsAndHitApi();
-                        //             // validateUsersInput();
-                        //           }
-                        //         },
-                        //         child: const Text(
-                        //           'Check',
-                        //           textAlign: TextAlign.center,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
+                     ],
                     ),
                   ),
                 ],
@@ -1288,32 +1018,23 @@ class _CableScreenState extends State<CableScreen> {
                           // print(_selectedCarrier!);
                           var customerInfo = storedData['data'];
                           // print('customer info ${customerInfo['name']}');
-                          Get.to(
-                            AirtimeConfirmation(
-                              number: smartcardController.text,
-                              amount: int.parse(amountController.text),
-                              image: _selectedImage!.replaceAll(' ', ''),
-                              billerId: billerId!,
-                              name: outputList[0]['name'],
-                              divisionId: divisionId!,
-                              productId: productId!,
-                              category: description!,
-                              customerName: customerInfo['name'],
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AirtimeConfirmation(
+                                number: smartcardController.text,
+                                amount: int.parse(amountController.text),
+                                image: _selectedImage!.replaceAll(' ', ''),
+                                billerId: billerId!,
+                                name: outputList[0]['name'],
+                                divisionId: divisionId!,
+                                productId: productId!,
+                                category: description!,
+                                customerName: customerInfo['name'],
+                              ),
                             ),
                           );
                         });
-                        // Get.to(
-                        //   AirtimeConfirmation(
-                        //     number: smartcardController.text,
-                        //     amount: int.parse(amountController.text),
-                        //     image: _selectedImage!,
-                        //     billerId: billerId!,
-                        //     name: outputList[0]['name'],
-                        //     divisionId: divisionId!,
-                        //     productId: productId!,
-                        //     category: description!,
-                        //   ),
-                        // );
                       }
                     },
                     child: const Text(

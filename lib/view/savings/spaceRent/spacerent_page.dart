@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_interest_histories.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_withdrawal.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/utils/calulate_difference_in_days.dart';
 import '../../../constants/utils/formatDateTime.dart';
 import '../../../controller/rent/rent_controller.dart';
 import '../../../widgets/custom_dialogs/index.dart';
-import '../../credit_score/credit_score_page.dart';
 import '../../dashboard/dashboard.dart';
-import '../../loan/loan_details.dart';
 import '../../receipts/transaction_receipt.dart';
 
 import '../../withdrawal/withdraw_page.dart';
@@ -63,7 +61,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -342,8 +340,15 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(SpaceRentInterestHistoryPage(
-                                current: widget.current));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    SpaceRentInterestHistoryPage(
+                                  current: widget.current,
+                                ),
+                              ),
+                            );
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -506,7 +511,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     rentController.rentModel!
                                         .rents![widget.current].amount) *
                                 100)
-                            .toInt()<=
+                            .toInt() <=
                         70)
                     ? Container(
                         width: MediaQuery.of(context).size.width,
@@ -653,7 +658,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 //               ),
                 //             ),
                 //             onPressed: () {
-                //               Get.to(const LoanDetails());
+                //               context.push('/loanDetails');
                 //               // forfeitInterestModal(context, widget.current);
                 //             },
                 //             child: Text(
@@ -742,37 +747,49 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 (userController.userModel!.userDetails![0]
                                             .withdrawalAccount ==
                                         null)
-                                    ? Get.to(const WithdrawalPage(
-                                        withdrawalType: 'space rent',
-                                      ))
-                                    : Get.to(
-                                        SpaceRentWithdrawalContinuationPage(
-                                          bankCode: userController
-                                              .userModel!
-                                              .userDetails![0]
-                                              .withdrawalAccount!
-                                              .bankCode,
-                                          accountNumber: userController
-                                              .userModel!
-                                              .userDetails![0]
-                                              .withdrawalAccount!
-                                              .accountNumber,
-                                          bankName: userController
-                                              .userModel!
-                                              .userDetails![0]
-                                              .withdrawalAccount!
-                                              .bankName,
-                                          accountHolderName: userController
-                                              .userModel!
-                                              .userDetails![0]
-                                              .withdrawalAccount!
-                                              .accountHolderName,
-                                          amount: rentController
-                                              .rentModel!
-                                              .rents![widget.current]
-                                              .paidAmount,
-                                          narration: rentController.rentModel!
-                                              .rents![widget.current].rentName,
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const WithdrawalPage(
+                                            withdrawalType: 'space rent',
+                                          ),
+                                        ),
+                                      )
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SpaceRentWithdrawalContinuationPage(
+                                            bankCode: userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .withdrawalAccount!
+                                                .bankCode,
+                                            accountNumber: userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .withdrawalAccount!
+                                                .accountNumber,
+                                            bankName: userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .withdrawalAccount!
+                                                .bankName,
+                                            accountHolderName: userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .withdrawalAccount!
+                                                .accountHolderName,
+                                            amount: rentController
+                                                .rentModel!
+                                                .rents![widget.current]
+                                                .paidAmount,
+                                            narration: rentController
+                                                .rentModel!
+                                                .rents![widget.current]
+                                                .rentName,
+                                          ),
                                         ),
                                       );
 
@@ -859,7 +876,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                 //               ),
                 //             ),
                 //             onPressed: () {
-                //               Get.to(const CreditScorePage());
+                //               context.push('/creditScorePage');
                 //             },
                 //             child: Text(
                 //               'View',
@@ -1035,9 +1052,14 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(SpaceRentHistory(
-                          current: widget.current,
-                        ));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SpaceRentHistory(
+                              current: widget.current,
+                            ),
+                          ),
+                        );
                       },
                       child: Text(
                         'View All',

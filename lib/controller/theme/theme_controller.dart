@@ -60,4 +60,5 @@ class ThemeController extends GetxController {
 
   // Private Method to change theme
   void _changeThemeMode(ThemeMode themeMode) => Get.changeThemeMode(themeMode);
+
 }

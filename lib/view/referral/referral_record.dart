@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -27,7 +28,7 @@ class _ReferralRecordState extends State<ReferralRecord> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back_ios,
@@ -140,7 +141,10 @@ class _ReferralRecordState extends State<ReferralRecord> {
                           horizontal: 35.w,
                         ),
                         child: MySeparator(
-                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(0.2),
                         ),
                       ),
                       SizedBox(
@@ -209,7 +213,9 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                         style: GoogleFonts.lato(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
-                                          color: Theme.of(context).colorScheme.primary,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                     ],
@@ -219,7 +225,8 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                     style: GoogleFonts.lato(
                                       fontSize: 10,
                                       fontWeight: FontWeight.w300,
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                   trailing: Container(
@@ -256,7 +263,8 @@ class _ReferralRecordState extends State<ReferralRecord> {
                                   "No Referred User",
                                   style: GoogleFonts.lato(
                                     fontSize: 12,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

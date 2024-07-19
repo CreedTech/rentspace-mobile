@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
@@ -195,7 +196,6 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
   }
 
   Future verifyOtp(BuildContext context, email, otp) async {
- 
     isLoading = true;
     if (otp.isEmpty || otp == '') {
       customErrorDialog(context, 'Error', 'All fields are required');
@@ -215,7 +215,18 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       final response = await authRepository.verifyOtp(body);
       EasyLoading.dismiss();
       if (response.success) {
-        Get.offAll(BvnPage(email: email));
+        while (context.canPop()) {
+          context.pop();
+        }
+        // Navigate to the first page
+        context.go('/login');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BvnPage(email: email),
+          ),
+        );
+        // Get.offAll(BvnPage(email: email));
 
         return;
       } else if (response.success == false &&
@@ -349,9 +360,14 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.createDva(params);
       if (response.success) {
-        Get.offAll(
-          const LoginPage(),
-        );
+        while (context.canPop()) {
+          context.pop();
+        }
+        // Navigate to the first page
+        context.go('/login');
+        // Get.offAll(
+        //   const LoginPage(),
+        // );
         EasyLoading.dismiss();
         isLoading = false;
         showTopSnackBar(
@@ -437,9 +453,14 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       var response = await authRepository.createProvidusDva(params);
       if (response.success) {
         // await userController.fetchData();
-        Get.offAll(
-          const LoginPage(),
-        );
+         while (context.canPop()) {
+            context.pop();
+          }
+          // Navigate to the first page
+          context.go('/login');
+        // Get.offAll(
+        //   const LoginPage(),
+        // );
         EasyLoading.dismiss();
         isLoading = false;
         showTopSnackBar(
@@ -616,6 +637,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.dismiss();
       state = const AsyncData(false);
       print('response.message');
+
       print(response.message);
       if (response.success == true) {
         isLoading = false;
@@ -627,12 +649,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         await GlobalService.sharedPreferencesManager
             .setHasSeenOnboarding(value: true);
         // sessionStateStream.add(SessionState.startListening);
-
-        await Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (_) => const FirstPage(),
-            ),
-            (route) => false);
+        context.replace('/firstpage');
+        // await Navigator.of(context).pushAndRemoveUntil(
+        //     MaterialPageRoute(
+        //       builder: (_) => const FirstPage(),
+        //     ),
+        //     (route) => false);
 
         return;
       } else {
@@ -730,8 +752,13 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
-        Get.to(
-            MultipleDeviceLoginOtpPage(email: email.toString().toLowerCase()));
+        context.goNamed(
+          'multipleDeviceLoginOtp',
+          extra: {
+            'email': email,
+          },
+        );
+
         return;
       } else if (response.success == false &&
           response.message.contains("User not found")) {
@@ -785,7 +812,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
-        Get.to(const LoginPage());
+        context.go('/login');
         return;
       } else if (response.success == false &&
           response.message.contains("Invalid OTP")) {
@@ -1082,6 +1109,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       );
       var response = await authRepository.logout();
       if (response.success == true) {
+        context.pop();
         EasyLoading.dismiss();
         isLoading = false;
         state = const AsyncValue.data(false);
@@ -1096,7 +1124,12 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
 
         prefs.setBool('hasSeenOnboarding', false);
 
-        await Get.offAll(const LoginPage());
+        while (context.canPop()) {
+          context.pop();
+        }
+        // Navigate to the first page
+        context.go('/login');
+        // await Get.offAll(const LoginPage());
         return;
       } else {
         // print(response.message.toString());
@@ -1106,12 +1139,14 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success == false &&
           response.message.contains("invalid signature")) {
         message = "User info could not be retrieved , Try again later.";
+        context.pop();
         customErrorDialog(context, 'Error', message);
 
         return;
       } else {
         // to capture other errors later
         message = "Something went wrong";
+        context.pop();
         customErrorDialog(context, 'Error', message);
 
         return;
@@ -1120,6 +1155,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       EasyLoading.dismiss();
       state = AsyncError(e, StackTrace.current);
       message = "Oops something went wrong";
+      print(e);
+      context.pop();
       customErrorDialog(context, 'Error', message);
 
       return;
@@ -1154,7 +1191,7 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
         await userController.fetchData().then((value) {
           EasyLoading.dismiss();
           isLoading = false;
-          Get.to(const FirstPage());
+          context.go('/firstpage');
         });
         EasyLoading.dismiss();
         isLoading = false;
@@ -1460,9 +1497,14 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
             ),
           ),
         );
-        Get.offAll(
-          const FirstPage(),
-        );
+        while (context.canPop() == true) {
+          context.pop();
+        }
+        context.pushReplacement('/firstpage');
+        // context.go('/firstpage');
+        // Get.offAll(
+        //   const FirstPage(),
+        // );
         return;
       } else if (response.message.contains('Invalid token') ||
           response.message.contains('Invalid token or device')) {

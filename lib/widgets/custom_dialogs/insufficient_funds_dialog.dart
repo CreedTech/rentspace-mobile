@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/colors.dart';
@@ -78,7 +79,8 @@ Future<dynamic> insufficientFundsDialog(BuildContext context) {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
-                        Get.to(const FundWallet());
+                        context.push('/fundWallet');
+                        // Get.to(const FundWallet());
                       },
                       child: Text(
                         'Ok',

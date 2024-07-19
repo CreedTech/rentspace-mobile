@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
 import 'package:pinput/pinput.dart';
@@ -160,7 +161,6 @@ class _ForgotPinOTPVerificationPageState
           otpController.text.trim(),
         );
         otpController.clear();
-        // Get.to(ConfirmTransactionPinPage(pin: _pinController.text.trim()));
       },
       closeKeyboardWhenCompleted: true,
       keyboardType: TextInputType.number,
@@ -174,7 +174,7 @@ class _ForgotPinOTPVerificationPageState
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back,

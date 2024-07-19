@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/extensions.dart';
-import 'package:rentspace/view/auth/registration/login_page.dart';
-import 'package:rentspace/view/onboarding/onboarding_slider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:upgrader/upgrader.dart';
@@ -207,34 +206,36 @@ class _SplashScreenState extends State<SplashScreen> {
         await GlobalService.sharedPreferencesManager.getAuthToken();
     await Future.delayed(const Duration(seconds: 2));
     // bool isNewUser = true;
-
     if (hasSeenOnboarding) {
       if (mounted) {
         if (authToken == '') {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const LoginPage(),
-            ),
-            (route) => false,
-          );
+          context.replace('/login');
+          // Navigator.pushAndRemoveUntil(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => const LoginPage(),
+          //   ),
+          //   (route) => false,
+          // );
         } else {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const LoginPage(),
-            ),
-            (route) => false,
-          );
+          context.replace('/login');
+          // Navigator.pushAndRemoveUntil(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => const LoginPage(),
+          //   ),
+          //   (route) => false,
+          // );
         }
       }
     } else {
       if (mounted) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const OnboardingSlider()),
-          (route) => false,
-        );
+        context.replace('/onboardingSlider');
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const OnboardingSlider()),
+        //   (route) => false,
+        // );
       }
     }
   }

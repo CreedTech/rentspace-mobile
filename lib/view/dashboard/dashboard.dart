@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -16,13 +17,8 @@ import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
 import 'package:rentspace/model/user_details_model.dart';
-import 'package:rentspace/view/contact/contact_us.dart';
-import 'package:rentspace/view/wallet_funding/fund_wallet.dart';
-import 'package:rentspace/view/history/all_activities.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
-import 'package:rentspace/view/utility/airtime.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../constants/utils/formatDateTime.dart';
@@ -320,7 +316,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Get.to(const ContactUsPage());
+                                        context.push('/contactUs');
                                       },
                                       child: Image.asset(
                                         'assets/icons/message_icon.png',
@@ -407,7 +403,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            Get.to(const FundWallet());
+                                            context.push('/fundWallet');
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
@@ -684,7 +680,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          Get.to(const AirtimePage());
+                                          context.push('/airtimePage');
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -733,7 +729,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          Get.to(const SpaceRentCreation());
+                                          context.push('/rentCreation');
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -786,7 +782,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          Get.to(const AllActivities());
+                                          context.push('/allActivities');
                                         },
                                         child: Text(
                                           'View All',

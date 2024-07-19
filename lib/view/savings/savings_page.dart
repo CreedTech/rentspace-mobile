@@ -232,7 +232,12 @@ class _SavingsPageState extends State<SavingsPage> {
                       (userController
                                   .userModel!.userDetails![0].hasVerifiedBvn ==
                               true)
-                          ? Get.to(const RentSpaceList())
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RentSpaceList(),
+                              ),
+                            )
                           : customErrorDialog(
                               context,
                               'Verification!',

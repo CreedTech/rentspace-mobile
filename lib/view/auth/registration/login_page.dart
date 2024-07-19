@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:rentspace/view/auth/password/forgot_password.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,6 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   bool isAlertSet = false;
 
   bool obscurity = true;
-  Icon lockIcon = LockIcon().open;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
@@ -50,19 +50,25 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
   String deviceModel = "";
   String token = "";
   final loginFormKey = GlobalKey<FormState>();
-  void visibility() {
-    if (obscurity == true) {
-      setState(() {
-        obscurity = false;
-        lockIcon = LockIcon().close;
-      });
-    } else {
-      setState(() {
-        obscurity = true;
-        lockIcon = LockIcon().open;
-      });
-    }
-  }
+  // void visibility() {
+  //   if (obscurity == true) {
+  //     setState(() {
+  //       obscurity = false;
+  //       lockIcon = Icon(
+  //         Iconsax.eye_slash,
+  //         color: Theme.of(context).colorScheme.primary,
+  //       );
+  //     });
+  //   } else {
+  //     setState(() {
+  //       obscurity = true;
+  //       lockIcon = Icon(
+  //         Iconsax.eye,
+  //         color: Theme.of(context).colorScheme.primary,
+  //       );
+  //     });
+  //   }
+  // }
 
   @override
   initState() {
@@ -264,8 +270,25 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                   },
                                   keyboardType: TextInputType.text,
                                   suffix: InkWell(
-                                    onTap: visibility,
-                                    child: lockIcon,
+                                    onTap: () {
+                                      setState(() {
+                                        obscurity =
+                                            !obscurity; // Toggle the obscurity state
+                                      });
+                                    },
+                                    child: (obscurity == true)
+                                        ? Icon(
+                                            Iconsax.eye_slash,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                        : Icon(
+                                            Iconsax.eye,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
                                   ),
                                 ),
                                 SizedBox(
@@ -336,7 +359,13 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Get.to(const ForgotPassword());
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ForgotPassword(),
+                                          ),
+                                        );
                                       },
                                       child: Container(
                                         alignment: Alignment.centerRight,
@@ -432,7 +461,13 @@ class _LoginPageConsumerState extends ConsumerState<LoginPage> {
                                         ),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            Get.to(const SignupPage());
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const SignupPage(),
+                                              ),
+                                            );
                                           },
                                       )
                                     ],

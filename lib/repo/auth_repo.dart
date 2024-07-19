@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
+import 'package:rentspace/main.dart';
 import '../api/api_client.dart';
 import '../api/global_services.dart';
 import '../constants/app_constants.dart';
@@ -275,6 +276,8 @@ class AuthRepository {
       return responseModel;
     }
     var error = jsonDecode(response.body)['errors'].toString();
+    print('error here');
+    print(error);
 
     return responseModel = ResponseModel(error, false);
   }
@@ -300,7 +303,6 @@ class AuthRepository {
       var error = jsonDecode(response.body)['error'].toString();
       return responseModel = ResponseModel(error, false);
     }
-
   }
 
   Future<ResponseModel> forgotPin() async {

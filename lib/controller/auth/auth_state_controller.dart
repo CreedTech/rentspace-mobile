@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +35,6 @@ class AuthState extends GetxController {
         'Authorization': 'Bearer $authToken',
       };
 
-
       var response = await http.post(
         Uri.parse('${AppConstants.BASE_URL}${AppConstants.LOGOUT}'),
         headers: headers,
@@ -56,21 +56,27 @@ class AuthState extends GetxController {
             .then((value) =>
                 GlobalService.sharedPreferencesManager.deleteLoginInfo())
             .then(
-              (value) =>
-                  GlobalService.sharedPreferencesManager.deleteLoginInfo().then(
-                        (value) => GetStorage().erase().then(
-                              (value) => _deleteCacheDir().then(
-                                (value) => _deleteAppDir().then(
-                                  (value) => Get.offAll(
-                                    LoginPage(
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                      ),
+              (value) => GlobalService.sharedPreferencesManager
+                  .deleteLoginInfo()
+                  .then((value) {
+                GetStorage().erase().then((value) {
+                  _deleteCacheDir().then((value) {
+                    _deleteAppDir().then((value) {
+                      // Clear all routes from the navigation stack
+                      while (context.canPop()) {
+                        context.pop();
+                      }
+                      // Navigate to the first page
+                      context.go('/login');
+                    });
+                  });
+                });
+              }),
+              // Get.offAll(
+              //   LoginPage(
+              //   ),
+              // ),
             );
-
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         // print('error auth');
@@ -165,8 +171,7 @@ class AuthState extends GetxController {
         isLoading(false);
         if (context.mounted) {
           customErrorDialog(context, 'Oops', 'Something Went Wrong');
-        } else {
-        }
+        } else {}
       } else {
         EasyLoading.dismiss();
         isLoading(false);
@@ -227,5 +232,3 @@ Future<void> _deleteAppDir() async {
     appDir.deleteSync(recursive: true);
   }
 }
-
-

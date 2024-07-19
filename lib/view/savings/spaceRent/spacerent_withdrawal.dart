@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rentspace/constants/utils/format_money.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_withdrawal_continuation_page.dart';
 
-import '../../../constants/colors.dart';
 import '../../../controller/auth/user_controller.dart';
 import '../../../controller/rent/rent_controller.dart';
-import '../../withdrawal/withdraw_continuation_page.dart';
 import '../../withdrawal/withdraw_page.dart';
 
 class SpaceRentWithdrawal extends StatefulWidget {
@@ -34,7 +32,7 @@ class _SpaceRentWithdrawalState extends State<SpaceRentWithdrawal> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -91,35 +89,45 @@ class _SpaceRentWithdrawalState extends State<SpaceRentWithdrawal> {
                               (userController.userModel!.userDetails![0]
                                           .withdrawalAccount ==
                                       null)
-                                  ? Get.to(const WithdrawalPage(
-                                      withdrawalType: 'space rent',
-                                    ))
-                                  : Get.to(
-                                      SpaceRentWithdrawalContinuationPage(
-                                        bankCode: userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .bankCode,
-                                        accountNumber: userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .accountNumber,
-                                        bankName: userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .bankName,
-                                        accountHolderName: userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .accountHolderName,
-                                        amount: rentController
-                                            .rentModel!.rents![index].paidAmount,
-                                        narration: rentController
-                                            .rentModel!.rents![index].rentName,
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const WithdrawalPage(
+                                          withdrawalType: 'space rent',
+                                        ),
+                                      ),
+                                    )
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            SpaceRentWithdrawalContinuationPage(
+                                          bankCode: userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .withdrawalAccount!
+                                              .bankCode,
+                                          accountNumber: userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .withdrawalAccount!
+                                              .accountNumber,
+                                          bankName: userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .withdrawalAccount!
+                                              .bankName,
+                                          accountHolderName: userController
+                                              .userModel!
+                                              .userDetails![0]
+                                              .withdrawalAccount!
+                                              .accountHolderName,
+                                          amount: rentController.rentModel!
+                                              .rents![index].paidAmount,
+                                          narration: rentController.rentModel!
+                                              .rents![index].rentName,
+                                        ),
                                       ),
                                     );
                             },

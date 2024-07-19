@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../constants/colors.dart';
 import '../../../controller/auth/auth_controller.dart';
@@ -42,11 +43,11 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
-               Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: Theme.of(context).colorScheme.primary,
@@ -106,7 +107,9 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                     child: Text(
                                       'Pin',
                                       style: GoogleFonts.lato(
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),
@@ -208,7 +211,9 @@ class _ChangeTransactionPinState extends ConsumerState<ChangeTransactionPin> {
                                     child: Text(
                                       'Confirm Pin',
                                       style: GoogleFonts.lato(
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12,
                                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/colors.dart';
@@ -80,10 +81,15 @@ void forfeitInterestModal(BuildContext context, int currentIndex) {
                         ),
                       ),
                       onPressed: () {
-                        Get.back();
-                        Get.to(LoanApplicationPage(
-                          current: currentIndex,
-                        ));
+                        context.pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoanApplicationPage(
+                              current: currentIndex,
+                            ),
+                          ),
+                        );
                       },
                       child: Text(
                         'Continue',
@@ -96,7 +102,7 @@ void forfeitInterestModal(BuildContext context, int currentIndex) {
                       ),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 20.h,
                   ),
                   Align(
@@ -114,7 +120,7 @@ void forfeitInterestModal(BuildContext context, int currentIndex) {
                         ),
                       ),
                       onPressed: () {
-                        Get.back();
+                        context.pop();
                       },
                       child: Text(
                         'Cancel',

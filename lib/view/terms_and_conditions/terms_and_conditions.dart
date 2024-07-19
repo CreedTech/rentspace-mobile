@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentspace/widgets/custom_loader.dart';
 
 import 'dart:io';
@@ -33,7 +34,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
         backgroundColor: Theme.of(context).canvasColor,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.close,

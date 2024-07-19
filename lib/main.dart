@@ -13,26 +13,27 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rentspace/core/router_generator.dart';
 import 'package:rentspace/model/loan_form_model.dart';
-import 'package:rentspace/view/onboarding/FirstPage.dart';
 import 'package:rentspace/view/onboarding/idle_page.dart';
 import 'api/global_services.dart';
 import 'constants/component_constant.dart';
 import 'controller/theme/theme_controller.dart';
-import 'core/helper/helper_routes.dart';
 import 'modules/initial_binding.dart';
 import 'theme/theme.dart';
-import 'view/onboarding/splash_screen.dart';
 import 'package:path_provider/path_provider.dart';
+
 
 int id = 0;
 final StreamController<String?> selectNotificationStream =
     StreamController<String?>.broadcast();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 /// A notification action which triggers a App navigation event
 const String navigationActionId = 'id_3';
@@ -189,8 +190,7 @@ Future<void> initNotifications() async {
     switch (notificationResponse.notificationResponseType) {
       case NotificationResponseType.selectedNotification:
         selectNotificationStream.add(notificationResponse.payload);
-
-        Get.to(const FirstPage());
+        navigatorKey.currentContext?.go('/firsypage');
 
         break;
       case NotificationResponseType.selectedNotificationAction:
@@ -320,19 +320,32 @@ class _MyAppState extends State<MyApp> {
     return MediaQuery(
       data: MediaQuery.of(context)
           .copyWith(textScaler: const TextScaler.linear(1)),
-      child: GetMaterialApp(
+      child: GetMaterialApp.router(
         theme: CustomTheme.lightTheme, // CustomThemeData for Light Theme
         darkTheme: CustomTheme.darkTheme,
         themeMode: themeController.themeStateFromHiveSettingBox,
         debugShowCheckedModeBanner: false,
-        navigatorKey: _sessionNavigatorKey,
+        // navigatorKey: Get.key,
         title: 'RentSpace',
         initialBinding: InitialBinding(),
-        home: const SplashScreen(),
-        onGenerateRoute: RouterGenerator().generate,
-        onUnknownRoute: RouterGenerator.onUnknownRoute,
+        routeInformationParser: routerGenerator.routeInformationParser,
+        routerDelegate: routerGenerator.routerDelegate,
+        routeInformationProvider: routerGenerator.routeInformationProvider,
         builder: EasyLoading.init(),
       ),
     );
   }
 }
+
+// class RouterWrapper extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp.router(
+//       debugShowCheckedModeBanner: false,
+//       routeInformationParser: _router.routeInformationParser,
+//       routerDelegate: _router.routerDelegate,
+//       routeInformationProvider: _router.routeInformationProvider,
+//       routerConfig: _router,
+//     );
+//   }
+// }

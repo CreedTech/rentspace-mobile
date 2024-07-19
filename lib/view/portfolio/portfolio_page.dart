@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
@@ -8,16 +9,10 @@ import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
-import 'package:rentspace/view/contact/contact_us.dart';
 
 import 'package:intl/intl.dart';
-import 'package:rentspace/view/portfolio/portfolio_overview.dart';
-import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
-import '../loan/loan_details.dart';
-import '../loan/loans_page.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
@@ -98,7 +93,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(const ContactUsPage());
+              context.push('/contactUs');
             },
             child: Padding(
               padding: EdgeInsets.only(right: 23.w),
@@ -158,7 +153,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             GestureDetector(
                               onTap: (double.parse(_loanAmount) > 0)
                                   ? () {
-                                      Get.to(const LoansPage());
+                                      context.push('/loanPage');
                                     }
                                   : null,
                               child: const Icon(
@@ -301,7 +296,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 ),
                                 onPressed: () async {
                                   if (double.parse(_loanAmount) > 0) {
-                                    Get.to(const LoanDetails());
+                                    context.push('/loanDetails');
                                   }
                                 },
                                 child: Text(
@@ -463,8 +458,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      Get.to(
-                                                          const SpaceRentCreation());
+                                                      context.push(
+                                                          '/rentCreation');
                                                     },
                                                     child: Text(
                                                       'Create Space Rent',
@@ -664,7 +659,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                                   .hasVerifiedKyc ==
                                               false)
                                           ? null
-                                          : Get.to(const LoansPage());
+                                          : context.push('/loanPage');
                             },
                             trailing: Icon(
                               Icons.keyboard_arrow_right,
@@ -706,7 +701,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 "Pay an outstanding loan",
                                 style: GoogleFonts.lato(
                                   fontSize: 12.0,
-
                                   color: Theme.of(context).primaryColorLight,
                                 ),
                               ),
@@ -880,7 +874,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                 ),
                               ),
                               onTap: () {
-                                Get.to(PortfolioOverview());
+                                context.push('/portfolioOverview');
                               },
                               trailing: Icon(
                                 Icons.keyboard_arrow_right,

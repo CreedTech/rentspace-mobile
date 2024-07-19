@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/widgets/custom_button.dart';
@@ -29,7 +30,7 @@ class _CreditScorePageState extends State<CreditScorePage> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -206,7 +207,13 @@ class _CreditScorePageState extends State<CreditScorePage> {
                             // horizontalTitleGap: 0,
                             minLeadingWidth: 0,
                             onTap: () {
-                              Get.to(const ContestResultPage());
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ContestResultPage(),
+                                ),
+                              );
                             },
                             title: Text(
                               "Contest Result",
@@ -240,7 +247,13 @@ class _CreditScorePageState extends State<CreditScorePage> {
                             // horizontalTitleGap: 0,
                             minLeadingWidth: 0,
                             onTap: () {
-                              Get.to(const RatingbreakdownPage());
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const RatingbreakdownPage(),
+                                ),
+                              );
                             },
                             title: Text(
                               'See Breakdown',
@@ -278,7 +291,12 @@ class _CreditScorePageState extends State<CreditScorePage> {
                 child: CustomButton(
                   text: 'See Available Loans',
                   onTap: () {
-                    Get.to(const AvailableLoansPage());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AvailableLoansPage(),
+                      ),
+                    );
                   },
                 ),
               ),

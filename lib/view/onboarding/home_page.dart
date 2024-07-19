@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -128,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Get.back();
+                            context.pop();
                             startShowCase();
                           },
                           style: ElevatedButton.styleFrom(
@@ -298,112 +299,117 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Get.bottomSheet(
-          SizedBox(
-            height: 250.h,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
-              ),
-              child: Container(
-                color: Theme.of(context).canvasColor,
-                padding: EdgeInsets.fromLTRB(
-                  10.w,
-                  5.h,
-                  10.w,
-                  5.h,
+        showModalBottomSheet(
+          barrierColor: const Color.fromRGBO(74, 74, 74, 100),
+          context: context,
+          // barrierDismissible: true,
+          builder: (BuildContext context) {
+            return SizedBox(
+              height: 250.h,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 50.h,
-                    ),
-                    Text(
-                      'Are you sure you want to exit?',
-                      style: GoogleFonts.lato(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.primary,
+                child: Container(
+                  color: Theme.of(context).canvasColor,
+                  padding: EdgeInsets.fromLTRB(
+                    10.w,
+                    5.h,
+                    10.w,
+                    5.h,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 50.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                    //card
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(3),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              exit(0);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                      Text(
+                        'Are you sure you want to exit?',
+                        style: GoogleFonts.lato(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      //card
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                exit(0);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 40.w,
+                                  vertical: 15.h,
+                                ),
+                                textStyle: GoogleFonts.lato(
+                                  color: brandFour,
+                                  fontSize: 13,
+                                ),
                               ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 40.w,
-                                vertical: 15.h,
-                              ),
-                              textStyle: GoogleFonts.lato(
-                                color: brandFour,
-                                fontSize: 13,
-                              ),
-                            ),
-                            child: Text(
-                              "Yes",
-                              style: GoogleFonts.lato(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
+                              child: Text(
+                                "Yes",
+                                style: GoogleFonts.lato(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: brandTwo,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                context.pop();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: brandTwo,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 40.w,
+                                  vertical: 15.h,
+                                ),
+                                textStyle: GoogleFonts.lato(
+                                    color: brandFour, fontSize: 13),
                               ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 40.w,
-                                vertical: 15.h,
-                              ),
-                              textStyle: GoogleFonts.lato(
-                                  color: brandFour, fontSize: 13),
-                            ),
-                            child: Text(
-                              "No",
-                              style: GoogleFonts.lato(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
+                              child: Text(
+                                "No",
+                                style: GoogleFonts.lato(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
 
-                    //card
-                  ],
+                      //card
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
 
         return false;

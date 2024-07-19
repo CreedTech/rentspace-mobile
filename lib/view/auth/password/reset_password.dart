@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:rentspace/constants/colors.dart';
 
 import '../../../constants/icons.dart';
@@ -22,20 +23,26 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
       TextEditingController();
   final resetPwdFormKey = GlobalKey<FormState>();
   bool obscureText = true;
-  Icon lockIcon = LockIcon().open;
+  // late Icon lockIcon;
 
-  void visibility() {
-    if (obscureText == true) {
-      setState(() {
-        obscureText = false;
-        lockIcon = LockIcon().close;
-      });
-    } else {
-      setState(() {
-        obscureText = true;
-        lockIcon = LockIcon().open;
-      });
-    }
+  // void visibility() {
+  //   if (obscureText == true) {
+  //     setState(() {
+  //       obscureText = false;
+  //       lockIcon = LockIcon().close(context);
+  //     });
+  //   } else {
+  //     setState(() {
+  //       obscureText = true;
+  //       lockIcon = LockIcon().open(context);
+  //     });
+  //   }
+  // }
+
+  @override
+  void initState() {
+    // lockIcon = LockIcon().open(context);
+    super.initState();
   }
 
   @override
@@ -172,8 +179,25 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                                   validator: validatePass,
                                   keyboardType: TextInputType.text,
                                   suffix: InkWell(
-                                    onTap: visibility,
-                                    child: lockIcon,
+                                    onTap: () {
+                                      setState(() {
+                                        obscureText =
+                                            !obscureText; // Toggle the obscureText state
+                                      });
+                                    },
+                                    child: (obscureText == true)
+                                        ? Icon(
+                                            Iconsax.eye_slash,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                        : Icon(
+                                            Iconsax.eye,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
                                   ),
                                 ),
                                 SizedBox(
@@ -200,8 +224,25 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                                   },
                                   keyboardType: TextInputType.text,
                                   suffix: InkWell(
-                                    onTap: visibility,
-                                    child: lockIcon,
+                                    onTap: () {
+                                      setState(() {
+                                        obscureText =
+                                            !obscureText; // Toggle the obscureText state
+                                      });
+                                    },
+                                    child: (obscureText == true)
+                                        ? Icon(
+                                            Iconsax.eye_slash,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                        : Icon(
+                                            Iconsax.eye,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
                                   ),
                                   suffixIconColor: Colors.black,
                                 ),

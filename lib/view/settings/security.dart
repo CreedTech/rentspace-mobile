@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:rentspace/view/auth/password/change_password.dart';
@@ -36,7 +37,7 @@ class _SecurityState extends ConsumerState<Security> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -86,7 +87,7 @@ class _SecurityState extends ConsumerState<Security> {
                           // horizontalTitleGap: 0,
                           minLeadingWidth: 0,
                           onTap: () {
-                            Get.to(const ChangePassword());
+                            context.push('/changePassword');
                           },
                           title: Text(
                             "Change Password",
@@ -144,10 +145,15 @@ class _SecurityState extends ConsumerState<Security> {
                             (userController.userModel!.userDetails![0]
                                         .withdrawalAccount ==
                                     null)
-                                ? Get.to(const WithdrawalPage(
-                                    withdrawalType: 'space wallet',
-                                  ))
-                                : Get.to(const WithdrawalAccount());
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const WithdrawalPage(
+                                              withdrawalType: 'space wallet',
+                                            )),
+                                  )
+                                : context.push('/withdrawalAccount');
                           },
                           title: Text(
                             'Withdrawal Account',

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -32,7 +33,7 @@ class SignupPage extends ConsumerStatefulWidget {
 
 class _SignupPageState extends ConsumerState<SignupPage> {
   bool obscurity = true;
-  Icon lockIcon = LockIcon().open;
+
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
 
@@ -48,6 +49,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final TextEditingController repeatPasswordController =
       TextEditingController();
   final registerFormKey = GlobalKey<FormState>();
+  // late Icon lockIcon;
   final sessionStateStream = StreamController<SessionState>();
   final int minimumAge = 18;
   List<String> genders = ['Male', 'Female'];
@@ -59,22 +61,23 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   bool isAlertSet = false;
   late StreamSubscription subscription;
 
-  void visibility() {
-    if (obscurity == true) {
-      setState(() {
-        obscurity = false;
-        lockIcon = LockIcon().close;
-      });
-    } else {
-      setState(() {
-        obscurity = true;
-        lockIcon = LockIcon().open;
-      });
-    }
-  }
+  // void visibility() {
+  //   if (obscurity == true) {
+  //     setState(() {
+  //       obscurity = false;
+  //       lockIcon = LockIcon().close(context);
+  //     });
+  //   } else {
+  //     setState(() {
+  //       obscurity = true;
+  //       lockIcon = LockIcon().open(context);
+  //     });
+  //   }
+  // }
 
   @override
   initState() {
+    // lockIcon = LockIcon().open(context);
     super.initState();
     getConnectivity();
     _usernameController.clear();
@@ -339,7 +342,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back_ios,
@@ -459,8 +462,21 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       validator: validatePass,
                       keyboardType: TextInputType.text,
                       suffix: InkWell(
-                        onTap: visibility,
-                        child: lockIcon,
+                        onTap: () {
+                          setState(() {
+                            obscurity =
+                                !obscurity; // Toggle the obscurity state
+                          });
+                        },
+                        child: (obscurity == true)
+                            ? Icon(
+                                Iconsax.eye_slash,
+                                color: Theme.of(context).colorScheme.primary,
+                              )
+                            : Icon(
+                                Iconsax.eye,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                       ),
                       suffixIconColor: Colors.black,
                     ),
@@ -517,8 +533,21 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                       },
                       keyboardType: TextInputType.text,
                       suffix: InkWell(
-                        onTap: visibility,
-                        child: lockIcon,
+                        onTap: () {
+                          setState(() {
+                            obscurity =
+                                !obscurity; // Toggle the obscurity state
+                          });
+                        },
+                        child: (obscurity == true)
+                            ? Icon(
+                                Iconsax.eye_slash,
+                                color: Theme.of(context).colorScheme.primary,
+                              )
+                            : Icon(
+                                Iconsax.eye,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                       ),
                       suffixIconColor: Colors.black,
                     ),
@@ -754,7 +783,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(const TermsAndConditions());
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const TermsAndConditions(),
+                              ),
+                            );
                           },
                           child: Text(
                             'Terms of service',

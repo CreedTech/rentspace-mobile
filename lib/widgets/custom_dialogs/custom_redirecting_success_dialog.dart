@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/colors.dart';
@@ -59,7 +60,7 @@ void customRedirectingSuccessDialog(
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                 SizedBox(
+                SizedBox(
                   height: 29.h,
                 ),
                 Align(
@@ -77,8 +78,12 @@ void customRedirectingSuccessDialog(
                       ),
                     ),
                     onPressed: () {
-                      Get.offAll(const LoginPage(
-                      ));
+                      while (context.canPop()) {
+                        context.pop();
+                      }
+                      // Navigate to the first page
+                      context.go('/login');
+                      // Get.offAll(const LoginPage());
                     },
                     child: Text(
                       'Sign in',

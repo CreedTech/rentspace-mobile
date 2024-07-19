@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-
+import 'package:go_router/go_router.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/icons.dart';
 import '../../../controller/auth/user_controller.dart';
@@ -24,23 +24,27 @@ class _ChangePasswordState extends State<ChangePassword> {
       TextEditingController();
   final changePwdFormKey = GlobalKey<FormState>();
   bool obscureText = true;
-  Icon lockIcon = LockIcon().open;
+  // late Icon lockIcon;
 
-  void visibility() {
-    if (obscureText == true) {
-      setState(() {
-        obscureText = false;
-        lockIcon = LockIcon().close;
-      });
-    } else {
-      setState(() {
-        obscureText = true;
-        lockIcon = LockIcon().open;
-      });
-    }
+  // void visibility() {
+  //   if (obscureText == true) {
+  //     setState(() {
+  //       obscureText = false;
+  //       lockIcon = LockIcon().close(context);
+  //     });
+  //   } else {
+  //     setState(() {
+  //       obscureText = true;
+  //       lockIcon = LockIcon().open(context);
+  //     });
+  //   }
+  // }
+
+  @override
+  void initState() {
+    // lockIcon = LockIcon().open(context);
+    super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -298,7 +302,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [

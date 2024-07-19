@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -133,7 +134,7 @@ class _RentSpaceListState extends State<RentSpaceList> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -285,8 +286,13 @@ class _RentSpaceListState extends State<RentSpaceList> {
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      Get.to(
-                                                          const SpaceRentCreation());
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const SpaceRentCreation(),
+                                                        ),
+                                                      );
                                                     },
                                                     child: Text(
                                                       'Create New Space Rent',
@@ -408,9 +414,14 @@ class _RentSpaceListState extends State<RentSpaceList> {
               itemBuilder: (context, int index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.to(SpaceRentPage(
-                      current: index,
-                    ));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SpaceRentPage(
+                          current: index,
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     margin: EdgeInsets.only(bottom: 20.h),
@@ -771,9 +782,14 @@ class _RentSpaceListState extends State<RentSpaceList> {
               itemBuilder: (context, int index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.to(SpaceRentPage(
-                      current: index,
-                    ));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SpaceRentPage(
+                          current: index,
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     margin: EdgeInsets.only(bottom: 20.h),

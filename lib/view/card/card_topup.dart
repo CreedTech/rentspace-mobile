@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
@@ -117,7 +118,7 @@ class _CardTopUpState extends State<CardTopUp> {
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back_ios,
@@ -202,16 +203,21 @@ class _CardTopUpState extends State<CardTopUp> {
                           onPressed: () async {
                             FocusScope.of(context).unfocus();
                             if (fundWalletFormKey.currentState!.validate()) {
-                              Get.to(WalletFunding(
-                                amount: int.tryParse(_amountController.text
-                                    .trim()
-                                    .replaceAll(',', ''))!,
-                                date: formattedDate,
-                                interval: "",
-                                numPayment: 1,
-                                savingsID: userController
-                                    .userModel!.userDetails![0].id,
-                              ));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WalletFunding(
+                                    amount: int.tryParse(_amountController.text
+                                        .trim()
+                                        .replaceAll(',', ''))!,
+                                    date: formattedDate,
+                                    interval: "",
+                                    numPayment: 1,
+                                    savingsID: userController
+                                        .userModel!.userDetails![0].id,
+                                  ),
+                                ),
+                              );
                             } else {
                               customErrorDialog(context, "Invalid!",
                                   "Please fill the form properly to proceed");

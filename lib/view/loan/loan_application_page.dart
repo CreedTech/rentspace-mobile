@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
@@ -1515,7 +1516,7 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -1979,24 +1980,28 @@ class _LoanApplicationPageState extends State<LoanApplicationPage> {
                   onPressed: () async {
                     if (loanFormKey.currentState!.validate()) {
                       await _saveFormData().then(
-                        (value) => Get.to(
-                          LoanApplicationPageContinuation(
-                            current: widget.current,
-                            reason: _reasonController.text,
-                            id: _idSelectController.text,
-                            idNumber: _idNumberController.text,
-                            bvn: _bvnController.text,
-                            phoneNumber: _phoneNumberController.text,
-                            address: _houseAddressController.text,
-                            landlordOrAgent: _landLordOrAgentController.text,
-                            landlordOrAgentName: _landlordNameController.text,
-                            livesInSameProperty: _samePropertyController.text,
-                            landlordOrAgentAddress:
-                                _landlordAddressController.text,
-                            landlordOrAgentNumber:
-                                _landlordPhoneNumberController.text,
-                            duration: _currentAddressDurationController.text,
-                            propertyType: _propertyTypesController.text,
+                        (value) => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                LoanApplicationPageContinuation(
+                              current: widget.current,
+                              reason: _reasonController.text,
+                              id: _idSelectController.text,
+                              idNumber: _idNumberController.text,
+                              bvn: _bvnController.text,
+                              phoneNumber: _phoneNumberController.text,
+                              address: _houseAddressController.text,
+                              landlordOrAgent: _landLordOrAgentController.text,
+                              landlordOrAgentName: _landlordNameController.text,
+                              livesInSameProperty: _samePropertyController.text,
+                              landlordOrAgentAddress:
+                                  _landlordAddressController.text,
+                              landlordOrAgentNumber:
+                                  _landlordPhoneNumberController.text,
+                              duration: _currentAddressDurationController.text,
+                              propertyType: _propertyTypesController.text,
+                            ),
                           ),
                         ),
                       );

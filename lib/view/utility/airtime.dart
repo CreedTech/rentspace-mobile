@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -66,16 +67,19 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
         .where((o) => o['name'] == _selectedCarrier!)
         .toList();
 
-    Get.to(
-      AirtimeConfirmation(
-        number: recipientController.text,
-        amount: int.parse(amountController.text),
-        image: _selectedImage!,
-        billerId: outputList[0]['id'],
-        name: outputList[0]['name'],
-        divisionId: outputList[0]['division'],
-        productId: outputList[0]['product'],
-        category: outputList[0]['category'],
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AirtimeConfirmation(
+          number: recipientController.text,
+          amount: int.parse(amountController.text),
+          image: _selectedImage!,
+          billerId: outputList[0]['id'],
+          name: outputList[0]['name'],
+          divisionId: outputList[0]['division'],
+          productId: outputList[0]['product'],
+          category: outputList[0]['category'],
+        ),
       ),
     );
   }
@@ -485,7 +489,7 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -944,16 +948,19 @@ class _AirtimePageState extends ConsumerState<AirtimePage> {
                               .where((o) => o['name'] == _selectedCarrier!)
                               .toList();
 
-                          Get.to(
-                            AirtimeConfirmation(
-                              number: recipientController.text,
-                              amount: int.parse(amountController.text),
-                              image: _selectedImage!,
-                              billerId: outputList[0]['id'],
-                              name: outputList[0]['name'],
-                              divisionId: outputList[0]['division'],
-                              productId: outputList[0]['product'],
-                              category: outputList[0]['category'],
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AirtimeConfirmation(
+                                number: recipientController.text,
+                                amount: int.parse(amountController.text),
+                                image: _selectedImage!,
+                                billerId: outputList[0]['id'],
+                                name: outputList[0]['name'],
+                                divisionId: outputList[0]['division'],
+                                productId: outputList[0]['product'],
+                                category: outputList[0]['category'],
+                              ),
                             ),
                           );
                         }

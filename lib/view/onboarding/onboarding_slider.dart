@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/auth/registration/login_page.dart';
@@ -161,7 +162,8 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        Get.to(const SignupPage());
+                                        context.push('/signup');
+                                        // Get.to(const SignupPage());
                                       },
                                       child: Text(
                                         "Sign up",
@@ -195,9 +197,10 @@ class _OnboardingSliderState extends State<OnboardingSlider> {
                                           // ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.to(
-                                                LoginPage(),
-                                              );
+                                              context.push('/login');
+                                              // Get.to(
+                                              //   LoginPage(),
+                                              // );
                                             },
                                             child: Text(
                                               'Sign In',

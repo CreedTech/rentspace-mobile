@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
-
+import 'package:go_router/go_router.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/icons.dart';
 import '../../../controller/auth/auth_controller.dart';
@@ -22,24 +22,25 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
   final TextEditingController _confirmPinController = TextEditingController();
   bool isFilled = false;
   final setPinformKey = GlobalKey<FormState>();
-  void visibility() {
-    if (obscurity == true) {
-      setState(() {
-        obscurity = false;
-        lockIcon = LockIcon().close;
-      });
-    } else {
-      setState(() {
-        obscurity = true;
-        lockIcon = LockIcon().open;
-      });
-    }
-  }
+  // void visibility() {
+  //   if (obscurity == true) {
+  //     setState(() {
+  //       obscurity = false;
+  //       lockIcon = LockIcon().close(context);
+  //     });
+  //   } else {
+  //     setState(() {
+  //       obscurity = true;
+  //       lockIcon = LockIcon().open(context);
+  //     });
+  //   }
+  // }
 
   bool obscurity = true;
-  Icon lockIcon = LockIcon().open;
+  // late Icon lockIcon;
   @override
   initState() {
+    // lockIcon = LockIcon().open(context);
     super.initState();
   }
 
@@ -54,7 +55,7 @@ class _TransactionPinState extends ConsumerState<TransactionPin> {
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back_ios,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentspace/constants/colors.dart';
 
 class NewNotificationPage extends StatefulWidget {
@@ -78,7 +79,7 @@ class _NewNotificationPageState extends State<NewNotificationPage> {
         backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: const Icon(
             Icons.arrow_back_ios,

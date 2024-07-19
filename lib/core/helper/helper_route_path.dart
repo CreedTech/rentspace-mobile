@@ -9,6 +9,7 @@ const withdrawal = "/withdrawal";
 /// Home Path
 const rentList = "/rentList";
 const rentCreation = "/rentCreation";
+const spacerentSuccessfulPage = "/spacerentSuccessfulPage";
 
 const transactionDetails = '/details';
 const airtime = "/airtime";

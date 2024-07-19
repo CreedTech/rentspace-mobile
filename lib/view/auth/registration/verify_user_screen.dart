@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:rentspace/constants/colors.dart';
@@ -176,7 +177,7 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.arrow_back_ios,
@@ -238,7 +239,9 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
                                   child: Text(
                                     'Enter OTP',
                                     style: GoogleFonts.lato(
-                                      color: Theme.of(context).colorScheme.secondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontWeight: FontWeight.w700,
                                       fontSize: 20,
                                     ),

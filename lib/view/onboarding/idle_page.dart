@@ -2,6 +2,7 @@ import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:onscreen_num_keyboard/onscreen_num_keyboard.dart';
@@ -134,7 +135,8 @@ class _IdlePageState extends State<IdlePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: const Color(0xffBDBDBD), width: 1.0),
+                                      color: const Color(0xffBDBDBD),
+                                      width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -147,7 +149,8 @@ class _IdlePageState extends State<IdlePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: const Color(0xffBDBDBD), width: 1.0),
+                                      color: const Color(0xffBDBDBD),
+                                      width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -160,7 +163,8 @@ class _IdlePageState extends State<IdlePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: const Color(0xffBDBDBD), width: 1.0),
+                                      color: const Color(0xffBDBDBD),
+                                      width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -173,11 +177,11 @@ class _IdlePageState extends State<IdlePage> {
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: const Color(0xffBDBDBD), width: 1.0),
+                                      color: const Color(0xffBDBDBD),
+                                      width: 1.0),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
-
                               onCompleted: (String val) {
                                 if (BCrypt.checkpw(
                                   _pinController.text.trim().toString(),
@@ -186,7 +190,7 @@ class _IdlePageState extends State<IdlePage> {
                                 )) {
                                   widget.sessionStateStream
                                       .add(SessionState.startListening);
-                                  Get.back();
+                                  context.pop();
                                 } else {
                                   _pinController.clear();
                                   if (context.mounted) {

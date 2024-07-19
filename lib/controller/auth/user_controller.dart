@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/app_constants.dart';
@@ -76,10 +77,15 @@ class UserController extends GetxController {
         if (context.mounted) {
           customSuccessDialog(
               context, 'Success', 'Password Changed Successfully');
+          while (context.canPop()) {
+            context.pop();
+          }
+          // Navigate to the first page
+          context.go('/login');
         }
-        Get.offAll(
-          const LoginPage(),
-        );
+        // Get.offAll(
+        //   const LoginPage(),
+        // );
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         multipleLoginRedirectModal();
@@ -362,16 +368,25 @@ class UserController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         EasyLoading.dismiss();
         isLoadingRecentTransfers(false);
-        Get.to(
+        // if (context.mounted) {
+        //   context.go('/firstpage');
+        // }
+
+        if (context.mounted) {
           (withdrawalType == 'space rent')
-              ? const SpaceRentWithdrawal()
-              : WithdrawContinuationPage(
-                  bankCode: bankCode,
-                  accountNumber: accountNumber,
-                  bankName: bankName,
-                  accountHolderName: accountHolderName,
-                ),
-        );
+              ? context.go('/firstpage')
+              : Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WithdrawContinuationPage(
+                      bankCode: bankCode,
+                      accountNumber: accountNumber,
+                      bankName: bankName,
+                      accountHolderName: accountHolderName,
+                    ),
+                  ),
+                );
+        }
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         EasyLoading.dismiss();

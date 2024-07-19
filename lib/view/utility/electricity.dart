@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../constants/colors.dart';
@@ -83,7 +84,7 @@ class _ElectricityState extends State<Electricity> {
           children: [
             GestureDetector(
               onTap: () {
-                Get.back();
+                context.pop();
               },
               child: const Icon(
                 Icons.arrow_back_ios_sharp,
@@ -770,19 +771,23 @@ class _ElectricityState extends State<Electricity> {
                           // print(_selectedCarrier!);
                           var customerInfo = storedData['data'];
                           // print('customer info ${customerInfo['name']}');
-                          Get.to(
-                            AirtimeConfirmation(
-                              number: meterController.text.trim(),
-                              amount: int.parse(amountController.text),
-                              image: _selectedImage!.replaceAll(' ', ''),
-                              billerId: billerId!,
-                              name: outputList[0]['name'],
-                              divisionId: divisionId!,
-                              productId: productId!,
-                              category: description!,
-                              customerName: customerInfo['name'],
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AirtimeConfirmation(
+                                number: meterController.text.trim(),
+                                amount: int.parse(amountController.text),
+                                image: _selectedImage!.replaceAll(' ', ''),
+                                billerId: billerId!,
+                                name: outputList[0]['name'],
+                                divisionId: divisionId!,
+                                productId: productId!,
+                                category: description!,
+                                customerName: customerInfo['name'],
+                              ),
                             ),
                           );
+                       
                         });
                       }
                     },

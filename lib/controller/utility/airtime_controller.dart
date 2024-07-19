@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
 import 'package:rentspace/constants/app_constants.dart';
 
@@ -103,24 +104,27 @@ class AirtimesController extends GetxController {
         headers: headers,
         body: body,
       );
-  
 
       if (jsonDecode(response.body)['status'] == '00') {
         var result = jsonDecode(response.body);
         EasyLoading.dismiss();
         isLoading(false);
-        Get.to(
-          SuccessFulScreen(
-            name: name,
-            image: name,
-            category: category,
-            amount: amount,
-            billerId: billerId,
-            number: customerId,
-            date: DateTime.now().toString(),
-            token: result['data']['token'],
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SuccessFulScreen(
+              name: name,
+              image: name,
+              category: category,
+              amount: amount,
+              billerId: billerId,
+              number: customerId,
+              date: DateTime.now().toString(),
+              token: result['data']['token'],
+            ),
           ),
         );
+        
       } else if (response.body.contains('Invalid token') ||
           response.body.contains('Invalid token or device')) {
         // print('error auth');
@@ -129,7 +133,9 @@ class AirtimesController extends GetxController {
         EasyLoading.dismiss();
         isLoading(false);
         var errorResponse = jsonDecode(response.body);
-        Get.back();
+        if (context.mounted) {
+          context.pop();
+        }
         if (context.mounted) {
           // print('Context is mounted, showing dialog');
           customErrorDialog(context, 'Error', errorResponse['message']);

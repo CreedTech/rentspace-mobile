@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,23 +17,17 @@ import 'package:local_auth/local_auth.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rentspace/constants/app_constants.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
-import 'package:rentspace/view/contact/contact_us.dart';
-import 'package:rentspace/view/settings/personal_details.dart';
-import 'package:rentspace/view/settings/security.dart';
-import 'package:rentspace/view/settings/theme/theme_page.dart';
-import 'package:rentspace/view/withdrawal/select_account.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../api/global_services.dart';
 import '../../constants/colors.dart';
 import 'package:get_storage/get_storage.dart';
+import '../../core/router_generator.dart';
 import '../../widgets/copy_widget.dart';
 import '../../widgets/custom_dialogs/index.dart';
 import '../../widgets/custom_loader.dart';
 import '../../controller/auth/auth_controller.dart';
-import '../referral/share_and_earn.dart';
-import '../faq/faqs.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -86,7 +81,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     if (response.statusCode == 200) {
       EasyLoading.dismiss();
       // print('Image uploaded successfully');
-      // Get.back();
+      // context.pop();
 
       refreshController.refreshCompleted();
       if (mounted) {
@@ -145,7 +140,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     if (hasBiometricStorage.read('hasBiometric') == null ||
         hasBiometricStorage.read('hasBiometric') == false) {
       hasBiometricStorage.write('hasBiometric', true);
-      Get.back();
+      context.pop();
       showTopSnackBar(
         Overlay.of(context),
         CustomSnackBar.success(
@@ -166,7 +161,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
             hasBiometricStorage.write('hasBiometric', _hasBiometric);
           },
         );
-        Get.back();
+        context.pop();
         showTopSnackBar(
           Overlay.of(context),
           CustomSnackBar.success(
@@ -192,7 +187,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
     if (hasBiometricStorage.read('hasBiometric') == null ||
         hasBiometricStorage.read('hasBiometric') == true) {
       hasBiometricStorage.write('hasBiometric', false);
-      Get.back();
+      context.pop();
       showTopSnackBar(
         Overlay.of(context),
         CustomSnackBar.success(
@@ -213,7 +208,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
             hasBiometricStorage.write('hasBiometric', _hasBiometric);
           },
         );
-        Get.back();
+        context.pop();
         showTopSnackBar(
           Overlay.of(context),
           CustomSnackBar.success(
@@ -457,7 +452,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(const PersonalDetails());
+                        context.push('/personalDetails');
                       },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -532,7 +527,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(const Security());
+                        context.push('/securityPage');
                       },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -574,7 +569,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(const SelectAccount());
+                        context.push('/selectAccount');
                       },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -616,7 +611,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(const ThemePage());
+                        context.push('/themePage');
+                        // Get.to(const ThemePage());
                       },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -662,7 +658,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(const ShareAndEarn());
+                        context.push('/shareAndEarn');
                       },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -704,7 +700,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(const ContactUsPage());
+                        context.push('/contactUs');
                       },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -746,7 +742,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(const FaqsPage());
+                        context.push('/faqsPage');
                       },
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
@@ -792,106 +788,111 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.bottomSheet(
-                      SizedBox(
-                        height: 250,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0),
-                          ),
-                          child: Container(
-                            color: Theme.of(context).canvasColor,
-                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                Text(
-                                  'Are you sure you want to logout?',
-                                  style: GoogleFonts.lato(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    // fontFamily: "DefaultFontFamily",
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                    showModalBottomSheet(
+                      barrierColor: const Color.fromRGBO(74, 74, 74, 100),
+                      context: routerGenerator
+                          .routerDelegate.navigatorKey.currentContext!,
+                      // barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: 250,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
+                            ),
+                            child: Container(
+                              color: Theme.of(context).canvasColor,
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 50,
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                //card
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(3),
-                                      child: ElevatedButton(
-                                        onPressed: () async {
-                                          Navigator.pop(context);
-                                          await authState.logout(context);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                  Text(
+                                    'Are you sure you want to logout?',
+                                    style: GoogleFonts.lato(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(3),
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            // Navigator.pop(context);
+                                            await authState.logout(context);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 40, vertical: 15),
+                                            textStyle: GoogleFonts.lato(
+                                                color: Colors.white,
+                                                fontSize: 13),
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 40, vertical: 15),
-                                          textStyle: GoogleFonts.lato(
-                                              color: brandFour, fontSize: 13),
-                                        ),
-                                        child: Text(
-                                          "Yes",
-                                          style: GoogleFonts.lato(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14,
+                                          child: Text(
+                                            "Yes",
+                                            style: GoogleFonts.lato(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(3),
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          Get.back();
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: brandTwo,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(3),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(
+                                                context); // Close the bottom sheet
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: brandTwo,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 40, vertical: 15),
+                                            textStyle: GoogleFonts.lato(
+                                                color: Colors.white,
+                                                fontSize: 13),
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 40, vertical: 15),
-                                          textStyle: GoogleFonts.lato(
-                                              color: brandFour, fontSize: 13),
-                                        ),
-                                        child: Text(
-                                          "No",
-                                          style: GoogleFonts.lato(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14,
+                                          child: Text(
+                                            "No",
+                                            style: GoogleFonts.lato(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-
-                                //card
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     );
                   },
                   child: Text(
@@ -903,7 +904,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         )),

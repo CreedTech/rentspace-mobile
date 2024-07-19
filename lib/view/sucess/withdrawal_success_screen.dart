@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -303,7 +304,12 @@ class _WithdrawalSuccessfulScreenState
                                 ),
                               ),
                               onPressed: () {
-                               Get.offAll(const FirstPage());
+                                 while (context.canPop()) {
+                                  context.pop();
+                                }
+                                // Navigate to the first page
+                                context.go('/login');
+                              //  Get.offAll(const FirstPage());
                               },
                               child: Text(
                                 'Continue',

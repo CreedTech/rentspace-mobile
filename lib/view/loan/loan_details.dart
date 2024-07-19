@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/wallet/wallet_controller.dart';
-import 'package:rentspace/view/loan/loan_payment_confirmation_page.dart';
-import 'package:rentspace/view/wallet_funding/bank_transfer.dart';
-
 import '../../constants/colors.dart';
 import '../../widgets/custom_dialogs/index.dart';
 import '../dashboard/dashboard.dart';
@@ -32,7 +30,7 @@ class _LoanDetailsState extends State<LoanDetails> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -536,12 +534,11 @@ class _LoanDetailsState extends State<LoanDetails> {
                                                 .wallet![0].mainBalance <
                                             userController.userModel!
                                                 .userDetails![0].loanAmount) {
-                                          Get.back();
+                                          context.pop();
                                           insufficientFundsDialog(context);
                                         } else {
-                                          Get.back();
-                                          Get.to(
-                                              const LoanPaymentConfirmationPage());
+                                          context.pop();
+                                          context.push('/loanConfirmationPage');
                                         }
                                       },
                                       child: Container(
@@ -667,8 +664,8 @@ class _LoanDetailsState extends State<LoanDetails> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Get.back();
-                                        Get.to(const BankTransfer());
+                                        context.pop();
+                                        context.push('/bankTransfer');
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(

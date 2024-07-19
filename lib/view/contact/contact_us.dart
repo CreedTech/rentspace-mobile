@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/widgets/custom_loader.dart';
@@ -34,14 +35,7 @@ launchEmail(
       customErrorDialog(
           context, "Invalid!", "Please fill the form properly to proceed");
     }
-    // Get.snackbar(
-    //   "Oops",
-    //   "Something went wrong, try again later",
-    //   animationDuration: const Duration(seconds: 1),
-    //   backgroundColor: Colors.red,
-    //   colorText: Colors.white,
-    //   snackPosition: SnackPosition.BOTTOM,
-    // );
+
   }
 }
 
@@ -68,7 +62,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            Navigator.pop(context);
+            // Na.pop();
           },
           child: Row(
             children: [
@@ -233,7 +228,7 @@ class _SocialPagesWebState extends State<SocialPagesWeb> {
         elevation: 0.0,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.close,

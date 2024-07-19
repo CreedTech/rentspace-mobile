@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       if (kDebugMode) {
         print('Image uploaded successfully');
       }
-      // Get.back();
+      // context.pop();
 
       refreshController.refreshCompleted();
       if (mounted) {
@@ -129,8 +130,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,7 +141,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [

@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
@@ -66,7 +67,6 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
     if (refresh) {
       await userController.fetchData();
       await walletController.fetchWallet();
-
     }
     EasyLoading.dismiss();
     return true;
@@ -91,7 +91,7 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -480,10 +480,12 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                   "*",
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts.lato(
-                                                    fontSize: 44,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Theme.of(context).colorScheme.primary
-                                                  ),
+                                                      fontSize: 44,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary),
                                                 ),
                                               ),
                                               hapticFeedbackType:
@@ -497,7 +499,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                         horizontal: 5),
                                                 textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
-                                                  color: Theme.of(context).colorScheme.primary,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
@@ -516,7 +520,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                         horizontal: 5),
                                                 textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
-                                                  color:  Theme.of(context).colorScheme.primary,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
@@ -535,7 +541,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                         horizontal: 5),
                                                 textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
-                                                  color:  Theme.of(context).colorScheme.primary,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
@@ -554,7 +562,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                                         horizontal: 5),
                                                 textStyle: GoogleFonts.lato(
                                                   fontSize: 25,
-                                                  color:  Theme.of(context).colorScheme.primary,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                 ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
@@ -659,7 +669,9 @@ class _AirtimeConfirmationState extends ConsumerState<AirtimeConfirmation> {
                                         child: NumericKeyboard(
                                           onKeyboardTap: onKeyboardTap,
                                           textStyle: GoogleFonts.lato(
-                                              color:  Theme.of(context).colorScheme.secondary,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
                                               fontSize: 32,
                                               fontWeight: FontWeight.w500),
                                           rightButtonFn: () {

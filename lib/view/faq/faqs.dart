@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/onboarding/FirstPage.dart';
@@ -40,7 +41,7 @@ class _FaqsPageState extends State<FaqsPage> {
             ),
             child: Padding(
               padding:
-                  EdgeInsets.only(left: 20.w, right: 20.w, bottom: 50,top: 50),
+                  EdgeInsets.only(left: 20.w, right: 20.w, bottom: 50, top: 50),
               child: Column(
                 children: [
                   Column(
@@ -53,7 +54,7 @@ class _FaqsPageState extends State<FaqsPage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Get.back();
+                                  context.pop();
                                 },
                                 child: const Icon(
                                   Icons.arrow_back_ios_sharp,
@@ -96,31 +97,24 @@ class _FaqsPageState extends State<FaqsPage> {
                   Expanded(
                     child: ListView(
                       children: [
-                       
                         ExpansionTile(
-                          
                           initiallyExpanded: true,
                           title: Text(
                             'What is RentSpace?',
                             style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           backgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
                           collapsedBackgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
-                          iconColor:
-                              Theme.of(context).colorScheme.primary,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           collapsedIconColor:
                               Theme.of(context).colorScheme.primary,
                           tilePadding: const EdgeInsets.symmetric(
@@ -138,8 +132,7 @@ class _FaqsPageState extends State<FaqsPage> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -154,22 +147,17 @@ class _FaqsPageState extends State<FaqsPage> {
                             style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           backgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
                           collapsedBackgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
-                          iconColor:
-                              Theme.of(context).colorScheme.primary,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           collapsedIconColor:
                               Theme.of(context).colorScheme.primary,
                           tilePadding: const EdgeInsets.symmetric(
@@ -187,8 +175,7 @@ class _FaqsPageState extends State<FaqsPage> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -203,22 +190,17 @@ class _FaqsPageState extends State<FaqsPage> {
                             style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           backgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
                           collapsedBackgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
-                          iconColor:
-                              Theme.of(context).colorScheme.primary,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           collapsedIconColor:
                               Theme.of(context).colorScheme.primary,
                           tilePadding: const EdgeInsets.symmetric(
@@ -236,8 +218,7 @@ class _FaqsPageState extends State<FaqsPage> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -252,22 +233,17 @@ class _FaqsPageState extends State<FaqsPage> {
                             style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           backgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
                           collapsedBackgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
-                          iconColor:
-                              Theme.of(context).colorScheme.primary,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           collapsedIconColor:
                               Theme.of(context).colorScheme.primary,
                           tilePadding: const EdgeInsets.symmetric(
@@ -285,8 +261,7 @@ class _FaqsPageState extends State<FaqsPage> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -301,22 +276,17 @@ class _FaqsPageState extends State<FaqsPage> {
                             style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           backgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
                           collapsedBackgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
-                          iconColor:
-                              Theme.of(context).colorScheme.primary,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           collapsedIconColor:
                               Theme.of(context).colorScheme.primary,
                           tilePadding: const EdgeInsets.symmetric(
@@ -334,8 +304,7 @@ class _FaqsPageState extends State<FaqsPage> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -350,22 +319,17 @@ class _FaqsPageState extends State<FaqsPage> {
                             style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           backgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
                           collapsedBackgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
-                          iconColor:
-                              Theme.of(context).colorScheme.primary,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           collapsedIconColor:
                               Theme.of(context).colorScheme.primary,
                           tilePadding: const EdgeInsets.symmetric(
@@ -383,8 +347,7 @@ class _FaqsPageState extends State<FaqsPage> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -399,22 +362,17 @@ class _FaqsPageState extends State<FaqsPage> {
                             style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           backgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
                           collapsedBackgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
-                          iconColor:
-                              Theme.of(context).colorScheme.primary,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           collapsedIconColor:
                               Theme.of(context).colorScheme.primary,
                           tilePadding: const EdgeInsets.symmetric(
@@ -432,8 +390,7 @@ class _FaqsPageState extends State<FaqsPage> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -448,22 +405,17 @@ class _FaqsPageState extends State<FaqsPage> {
                             style: GoogleFonts.lato(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           backgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
                           collapsedBackgroundColor:
-                              (Theme.of(context).brightness ==
-                                      Brightness.dark)
+                              (Theme.of(context).brightness == Brightness.dark)
                                   ? const Color.fromARGB(5, 255, 255, 255)
                                   : colorWhite,
-                          iconColor:
-                              Theme.of(context).colorScheme.primary,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           collapsedIconColor:
                               Theme.of(context).colorScheme.primary,
                           tilePadding: const EdgeInsets.symmetric(
@@ -483,8 +435,7 @@ class _FaqsPageState extends State<FaqsPage> {
                               style: GoogleFonts.lato(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color:
-                                    Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -514,7 +465,7 @@ class _FaqsPageState extends State<FaqsPage> {
                   ),
                 ),
                 onPressed: () {
-                  Get.to(const ContactUsPage());
+                  context.push('/contactUs');
                 },
                 child: Text(
                   'Contact Us',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants/colors.dart';
@@ -99,11 +100,11 @@ class _LoanSuccessPageState extends State<LoanSuccessPage> {
                     ),
                     onPressed: () {
                       // for (var i = 0; i < 4; i++) {
-                      //   Get.back();
+                      //   context.pop();
                       // }
-                      Get.back();
-                      Get.back();
-                      Get.back();
+                      context.pop();
+                      context.pop();
+                      context.pop();
                       // Get.offAll(AvailableLoansPage());
                     },
                     child: Text(

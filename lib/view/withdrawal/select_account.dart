@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_withdrawal.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -31,7 +32,7 @@ class _SelectAccountState extends State<SelectAccount> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -246,61 +247,84 @@ class _SelectAccountState extends State<SelectAccount> {
                                     : (userController.userModel!.userDetails![0]
                                                 .withdrawalAccount ==
                                             null)
-                                        ? Get.to(const WithdrawalPage(
-                                            withdrawalType: 'space wallet',
-                                          ))
-                                        : Get.to(
-                                            WithdrawContinuationPage(
-                                              bankCode: userController
-                                                  .userModel!
-                                                  .userDetails![0]
-                                                  .withdrawalAccount!
-                                                  .bankCode,
-                                              accountNumber: userController
-                                                  .userModel!
-                                                  .userDetails![0]
-                                                  .withdrawalAccount!
-                                                  .accountNumber,
-                                              bankName: userController
-                                                  .userModel!
-                                                  .userDetails![0]
-                                                  .withdrawalAccount!
-                                                  .bankName,
-                                              accountHolderName: userController
-                                                  .userModel!
-                                                  .userDetails![0]
-                                                  .withdrawalAccount!
-                                                  .accountHolderName,
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const WithdrawalPage(
+                                                withdrawalType: 'space wallet',
+                                              ),
+                                            ),
+                                          )
+                                        : Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WithdrawContinuationPage(
+                                                bankCode: userController
+                                                    .userModel!
+                                                    .userDetails![0]
+                                                    .withdrawalAccount!
+                                                    .bankCode,
+                                                accountNumber: userController
+                                                    .userModel!
+                                                    .userDetails![0]
+                                                    .withdrawalAccount!
+                                                    .accountNumber,
+                                                bankName: userController
+                                                    .userModel!
+                                                    .userDetails![0]
+                                                    .withdrawalAccount!
+                                                    .bankName,
+                                                accountHolderName:
+                                                    userController
+                                                        .userModel!
+                                                        .userDetails![0]
+                                                        .withdrawalAccount!
+                                                        .accountHolderName,
+                                              ),
                                             ),
                                           )
                                 : (userController.userModel!.userDetails![0]
                                             .withdrawalAccount ==
                                         null)
-                                    ? Get.to(const WithdrawalPage(
-                                        withdrawalType: 'space wallet',
-                                      ))
-                                    : Get.to(WithdrawContinuationPage(
-                                        bankCode: userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .bankCode,
-                                        accountNumber: userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .accountNumber,
-                                        bankName: userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .bankName,
-                                        accountHolderName: userController
-                                            .userModel!
-                                            .userDetails![0]
-                                            .withdrawalAccount!
-                                            .accountHolderName,
-                                      ));
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const WithdrawalPage(
+                                            withdrawalType: 'space wallet',
+                                          ),
+                                        ),
+                                      )
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              WithdrawContinuationPage(
+                                            bankCode: userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .withdrawalAccount!
+                                                .bankCode,
+                                            accountNumber: userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .withdrawalAccount!
+                                                .accountNumber,
+                                            bankName: userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .withdrawalAccount!
+                                                .bankName,
+                                            accountHolderName: userController
+                                                .userModel!
+                                                .userDetails![0]
+                                                .withdrawalAccount!
+                                                .accountHolderName,
+                                          ),
+                                        ),
+                                      );
                           },
                           title: Text(
                             "Space Wallet",
@@ -444,7 +468,7 @@ class _SelectAccountState extends State<SelectAccount> {
                                         ),
                                       );
                                     })
-                                : Get.to(const SpaceRentWithdrawal());
+                                : context.push('/rentWithdrawal');
                           },
                           title: Text(
                             'Space Rent',

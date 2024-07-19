@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/bank_constants.dart';
@@ -28,7 +29,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments;
-  
+
     Map<String, dynamic>? transactionData;
 
     // Check if arguments are not null and of the correct type
@@ -59,7 +60,7 @@ class _TransactionReceiptState extends State<TransactionReceipt> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [

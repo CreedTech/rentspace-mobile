@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/loan/loan_success_page.dart';
@@ -36,7 +37,7 @@ class _AvailableLoansPageState extends State<AvailableLoansPage> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -686,8 +687,8 @@ class _AvailableLoansPageState extends State<AvailableLoansPage> {
                                             ),
                                             onPressed: () {
                                               if (agreeToTerms == true) {
-                                                Get.back();
-                                                Get.to(const LoanSuccessPage());
+                                                context.pop();
+                                                context.push('/loanSuccessPage');
                                               }
                                             },
                                             child: Text(

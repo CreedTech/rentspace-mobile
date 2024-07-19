@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 
@@ -25,7 +26,7 @@ class _LoansPageState extends State<LoansPage> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
@@ -296,8 +297,7 @@ class _LoansPageState extends State<LoansPage> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(
-                               100, 50),
+                            minimumSize: const Size(100, 50),
                             backgroundColor: brandTwo,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -324,7 +324,6 @@ class _LoansPageState extends State<LoansPage> {
               ),
             ),
           ),
-        
           Padding(
             padding: EdgeInsets.only(
                 left: 24.w, top: 14.h, right: 24.w, bottom: 20.h),
@@ -457,8 +456,7 @@ class _LoansPageState extends State<LoansPage> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(
-                               100, 50),
+                            minimumSize: const Size(100, 50),
                             backgroundColor: brandTwo,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -485,7 +483,6 @@ class _LoansPageState extends State<LoansPage> {
               ),
             ),
           ),
-        
           Padding(
             padding: EdgeInsets.only(
                 left: 24.w, top: 14.h, right: 24.w, bottom: 20.h),
@@ -618,8 +615,7 @@ class _LoansPageState extends State<LoansPage> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(
-                               100, 50),
+                            minimumSize: const Size(100, 50),
                             backgroundColor: brandTwo,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
@@ -646,7 +642,6 @@ class _LoansPageState extends State<LoansPage> {
               ),
             ),
           ),
-        
         ],
       ),
     );

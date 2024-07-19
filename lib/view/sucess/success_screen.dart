@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:rentspace/view/onboarding/FirstPage.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/utils/formatDateTime.dart';
@@ -285,7 +285,6 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                 ],
                               )
                             : const SizedBox(),
-                    
 
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -304,7 +303,12 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
                                 ),
                               ),
                               onPressed: () {
-                                Get.offAll(const FirstPage());
+                                while (context.canPop()) {
+                                  context.pop();
+                                }
+                                // Navigate to the first page
+                                context.go('/login');
+                                // Get.offAll(const FirstPage());
                               },
                               child: Text(
                                 'Continue',
@@ -336,6 +340,4 @@ class _SuccessFulScreenState extends State<SuccessFulScreen> {
       ),
     );
   }
-
-
 }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/app_constants.dart';
 import 'package:get/get.dart';
@@ -131,7 +132,7 @@ class _WalletFundingState extends State<WalletFunding> {
         backgroundColor: Theme.of(context).canvasColor,
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Icon(
             Icons.close,

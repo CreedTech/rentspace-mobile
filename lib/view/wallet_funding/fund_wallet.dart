@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
@@ -25,11 +26,11 @@ class _FundWalletState extends State<FundWallet> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
-               Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: Theme.of(context).colorScheme.primary,
@@ -68,7 +69,7 @@ class _FundWalletState extends State<FundWallet> {
                 ),
                 ListTile(
                   onTap: () {
-                    Get.to(const BankTransfer());
+                    context.push('/bankTransfer');
                   },
                   contentPadding: const EdgeInsets.only(left: 15, right: 11),
                   tileColor: Theme.of(context).canvasColor,
@@ -98,7 +99,7 @@ class _FundWalletState extends State<FundWallet> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  trailing:  Icon(
+                  trailing: Icon(
                     Icons.keyboard_arrow_right_outlined,
                     size: 20,
                     color: Theme.of(context).colorScheme.primary,

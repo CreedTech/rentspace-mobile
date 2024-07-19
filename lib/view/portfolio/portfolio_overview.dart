@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
@@ -48,11 +49,11 @@ class _PortfolioOverviewState extends State<PortfolioOverview> {
         centerTitle: false,
         title: GestureDetector(
           onTap: () {
-            Get.back();
+            context.pop();
           },
           child: Row(
             children: [
-               Icon(
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: Theme.of(context).colorScheme.primary,

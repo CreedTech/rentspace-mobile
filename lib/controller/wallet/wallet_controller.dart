@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:rentspace/model/wallet_model.dart';
@@ -109,15 +110,18 @@ class WalletController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        Get.to(
-          WithdrawalSuccessfulScreen(
-            name: beneficiaryAccountName,
-            image: 'bank_icon',
-            category: 'withdrawal',
-            amount: transactionAmount,
-            bank: bankName,
-            number: beneficiaryAccountNumber,
-            date: DateTime.now().toString(),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WithdrawalSuccessfulScreen(
+              name: beneficiaryAccountName,
+              image: 'bank_icon',
+              category: 'withdrawal',
+              amount: transactionAmount,
+              bank: bankName,
+              number: beneficiaryAccountNumber,
+              date: DateTime.now().toString(),
+            ),
           ),
         );
       } else if (response.body.contains('Invalid token') ||
@@ -165,7 +169,6 @@ class WalletController extends GetxController {
       EasyLoading.dismiss();
       isLoading(false);
       throw http.Response('Error: $e', 504);
-    } finally {
-    }
+    } finally {}
   }
 }
