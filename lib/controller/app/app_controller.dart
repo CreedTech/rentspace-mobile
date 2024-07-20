@@ -85,16 +85,20 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             );
           }
         } else {
-          context.go('/spacerentSuccessfulPage', extra: {
-            'rentValue': amount,
-            'savingsValue': intervalAmount,
-            'startDate': date,
-            'durationType': interval,
-            'paymentCount': paymentCount,
-            'rentName': rentName,
-            'duration': duration,
-            'receivalDate': dueDate
-          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SpaceRentSuccessPage(
+                  rentValue: amount,
+                  savingsValue: intervalAmount,
+                  startDate: date,
+                  durationType: interval,
+                  paymentCount: paymentCount,
+                  rentName: rentName,
+                  duration: duration,
+                  receivalDate: dueDate),
+            ),
+          );
         }
 
         return;

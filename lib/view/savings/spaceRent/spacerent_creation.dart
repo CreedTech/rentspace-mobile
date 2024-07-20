@@ -61,10 +61,13 @@ final TextEditingController fundingController = TextEditingController();
 List<String> fundingSource = ['DVA Wallet', 'Debit Card'];
 
 class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
+  final UserController userController = Get.put(UserController());
+  WalletController walletController = Get.put(WalletController());
   final TextEditingController _intervalController = TextEditingController();
   final TextEditingController _durationController = TextEditingController();
-  final UserController userController = Get.find();
-  final WalletController walletController = Get.find();
+
+  // final UserController userController = Get.find();
+  // final WalletController walletController = Get.find();
   DateTime _endDate = DateTime.now();
   List<String> intervalLabels = ['Weekly', 'Monthly'];
   List<String> durations = ['5 months', '6 months', '7 months', '8 months'];
@@ -135,6 +138,8 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   @override
   initState() {
     super.initState();
+    // walletController = Get.find();
+    // Get.lazyPut(() => UserController());
     getConnectivity();
     fetchUserData();
     numberInDays = 0;
@@ -259,6 +264,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(UserController());
     validateFunc(text) {
       if (text.isEmpty) {
         return 'Can\'t be empty';

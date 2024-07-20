@@ -147,7 +147,6 @@ dependencies:
   printing: ^5.12.0
   gallery_saver: ^2.3.2
   image_gallery_saver: ^2.0.3
-  uni_links:
   go_router: ^14.2.1
   #path_provider: ^2.0.15
 

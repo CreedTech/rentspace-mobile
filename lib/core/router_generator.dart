@@ -16,6 +16,7 @@ import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_success_page.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_withdrawal.dart';
 import 'package:rentspace/view/withdrawal/withdraw_continuation_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../view/auth/password/change_password.dart';
 import '../view/credit_score/credit_score_page.dart';
@@ -36,7 +37,15 @@ import '../view/withdrawal/select_account.dart';
 import '../view/withdrawal/withdrawal_account.dart';
 
 // static BuildContext? get ctx => myGoRouter.routerDelegate.navigatorKey.currentContext;
+
 final GlobalKey<NavigatorState> _key = GlobalKey<NavigatorState>();
+
+Future<bool> isAuthTokenAvailable() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('authToken');
+  return token != null;
+}
+
 final routerGenerator = GoRouter(
   initialLocation: '/',
   navigatorKey: _key,
@@ -190,29 +199,28 @@ final routerGenerator = GoRouter(
         Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
         return MultipleDeviceLoginOtpPage(
           email: extra['email'],
-          // par2: extra['par2'],
         );
       },
     ),
-    GoRoute(
-      name: 'spacerentSuccessfulPage',
-      path: '/spacerentSuccessfulPage', // Define email as a parameter
-      builder: (context, state) {
-        Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
-        return SpaceRentSuccessPage(
-          rentValue: extra['amount'],
-          savingsValue: extra['intervalAmount'],
-          startDate: extra['date'],
-          durationType: extra['interval'],
-          paymentCount: extra['paymentCount'],
-          rentName: extra['rentName'],
-          duration: extra['duration'],
-          receivalDate: extra['dueDate'],
+    // GoRoute(
+    //   name: 'spacerentSuccessfulPage',
+    //   path: '/spacerentSuccessfulPage', // Define email as a parameter
+    //   builder: (context, state) {
+    //     Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+    //     return SpaceRentSuccessPage(
+    //       rentValue: extra['amount'],
+    //       savingsValue: extra['intervalAmount'],
+    //       startDate: extra['date'],
+    //       durationType: extra['interval'],
+    //       paymentCount: extra['paymentCount'],
+    //       rentName: extra['rentName'],
+    //       duration: extra['duration'],
+    //       receivalDate: extra['dueDate'],
 
-          // par2: extra['par2'],
-        );
-      },
-    ),
+    //       // par2: extra['par2'],
+    //     );
+    //   },
+    // ),
     GoRoute(
       name: 'withdrawContinuationPage',
       path: '/withdrawContinuationPage', // Define email as a parameter
@@ -227,4 +235,21 @@ final routerGenerator = GoRouter(
       },
     ),
   ],
+  // redirect: (context, state) async {
+  //   // Check for auth token availability
+  //   bool loggedIn = await isAuthTokenAvailable();
+
+  //   // If the user is not logged in, redirect to login
+  //   if (!loggedIn && state.matchedLocation != '/login') {
+  //     return '/login';
+  //   }
+
+  //   // If the user is logged in and trying to access login, redirect to homepage
+  //   if (loggedIn && state.matchedLocation == '/login') {
+  //     return '/homepage';
+  //   }
+
+  //   // No redirection required
+  //   return null;
+  // },
 );

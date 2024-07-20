@@ -14,7 +14,7 @@ import '../../view/savings/spaceRent/spacerent_creation.dart';
 import '../components/component_route_animation.dart';
 import 'helper_route_path.dart';
 
-import 'package:uni_links/uni_links.dart';
+
 import 'dart:async';
 import 'package:flutter/services.dart';
 

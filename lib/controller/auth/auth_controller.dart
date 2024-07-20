@@ -453,11 +453,11 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       var response = await authRepository.createProvidusDva(params);
       if (response.success) {
         // await userController.fetchData();
-         while (context.canPop()) {
-            context.pop();
-          }
-          // Navigate to the first page
-          context.go('/login');
+        while (context.canPop()) {
+          context.pop();
+        }
+        // Navigate to the first page
+        context.go('/login');
         // Get.offAll(
         //   const LoginPage(),
         // );
@@ -752,8 +752,8 @@ class AuthController extends StateNotifier<AsyncValue<bool>> {
       if (response.success) {
         EasyLoading.dismiss();
         isLoading = false;
-        context.goNamed(
-          'multipleDeviceLoginOtp',
+        context.go(
+          '/multipleDeviceLoginOtp',
           extra: {
             'email': email,
           },

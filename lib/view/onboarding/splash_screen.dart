@@ -11,7 +11,6 @@ import 'package:lottie/lottie.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/constants/extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uni_links/uni_links.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../../api/global_services.dart';
@@ -34,12 +33,10 @@ class SplashScreen extends StatefulWidget {
 onReady() {}
 
 class _SplashScreenState extends State<SplashScreen> {
-  Uri? _initialURI;
-  Uri? _currentURI;
-  Object? _err;
+
 
   StreamSubscription? _streamSubscription;
-  StreamSubscription? _sub;
+
   late StreamSubscription<InternetConnectionStatus> _connectivitySubscription;
   bool isInternetConnected = true;
   late bool hasSeenOnboarding = false;
@@ -63,101 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
-  Future<void> _initURIHandler() async {
-    if (!_initialURILinkHandled) {
-      _initialURILinkHandled = true;
-      Fluttertoast.showToast(
-          msg: "Invoked _initURIHandler",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white);
-      try {
-        final initialURI = await getInitialUri();
-        // Use the initialURI and warn the user if it is not correct,
-        // but keep in mind it could be `null`.
-        if (initialURI != null) {
-          debugPrint("Initial URI received $initialURI");
-          if (!mounted) {
-            return;
-          }
-          setState(() {
-            _initialURI = initialURI;
-          });
-        } else {
-          debugPrint("Null Initial URI received");
-        }
-      } on PlatformException {
-        // Platform messages may fail, so we use a try/catch PlatformException.
-        // Handle exception by warning the user their action did not succeed
-        debugPrint("Failed to receive initial uri");
-      } on FormatException catch (err) {
-        if (!mounted) {
-          return;
-        }
-        debugPrint('Malformed Initial URI received');
-        setState(() => _err = err);
-      }
-    }
-  }
-
-  /// Handle incoming links - the ones that the app will receive from the OS
-  /// while already started.
-  void _incomingLinkHandler() {
-    if (!kIsWeb) {
-      // It will handle app links while the app is already started - be it in
-      // the foreground or in the background.
-      _streamSubscription = uriLinkStream.listen((Uri? uri) {
-        if (!mounted) {
-          return;
-        }
-        debugPrint('Received URI: $uri');
-        setState(() {
-          _currentURI = uri;
-          _err = null;
-        });
-      }, onError: (Object err) {
-        if (!mounted) {
-          return;
-        }
-        debugPrint('Error occurred: $err');
-        setState(() {
-          _currentURI = null;
-          if (err is FormatException) {
-            _err = err;
-          } else {
-            _err = null;
-          }
-        });
-      });
-    }
-  }
-
-  Future<void> initUniLinks() async {
-    try {
-      _sub = getUriLinksStream().listen(
-          (Uri uri) {
-            if (!mounted) return;
-            setState(() {
-              // Handle the deep link URI here
-              // Example: parse URI and navigate to a specific screen
-              print('Received URI: $uri');
-            });
-          } as void Function(Uri? event)?, onError: (err) {
-        print('Error receiving URI: $err');
-      });
-
-      // Get the initial deep link on app start
-      Uri? initialUri = await getInitialUri();
-      if (initialUri != null) {
-        print('Initial URI: $initialUri');
-        // Handle the initial deep link URI here if needed
-      }
-    } on PlatformException {
-      print('Error initializing UniLinks');
-    }
-  }
+ 
 
   Future<void> loadHasSeenOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
