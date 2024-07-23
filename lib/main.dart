@@ -16,19 +16,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_session_timeout/local_session_timeout.dart';
+import 'package:logging/logging.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rentspace/core/router_generator.dart';
 import 'package:rentspace/model/loan_form_model.dart';
 import 'package:rentspace/view/onboarding/idle_page.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'api/global_services.dart';
 import 'constants/component_constant.dart';
 import 'controller/theme/theme_controller.dart';
 import 'modules/initial_binding.dart';
 import 'theme/theme.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:sentry_logging/sentry_logging.dart';
 
 int id = 0;
 final StreamController<String?> selectNotificationStream =
@@ -47,6 +49,8 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 }
 
 // final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+var _isIntegrationTest = false;
 //app entry point
 Future<void> main() async {
   await GlobalService.init();
@@ -141,8 +145,65 @@ Future<void> main() async {
   await initNotifications();
 
   // configLoading();
+
+  // await SentryFlutter.init(
+  //   (options) {
+  //     options.dsn =
+  //         'https://94a7e98bd47f335cf0c989a4751f5f95@o4507651822780416.ingest.de.sentry.io/4507651907649616';
+  //     options.debug = true;
+  //     options.tracesSampleRate = 1.0;
+  //     options.profilesSampleRate = 1.0;
+  //   },
+  //   appRunner: () => runApp(const ProviderScope(child: MyApp())),
+  // );
   runApp(const ProviderScope(child: MyApp()));
-  //  RouterGenerator().initDeepLinks(context);
+}
+
+Future<void> setupSentry(
+  AppRunner appRunner,
+  String dsn, {
+  bool isIntegrationTest = false,
+  BeforeSendCallback? beforeSendCallback,
+}) async {
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://5c7e8269363f04cc6845e99e24584d3d@o4507651822780416.ingest.de.sentry.io/4507651825336400';
+      options.tracesSampleRate = 1.0;
+      options.profilesSampleRate = 1.0;
+      options.reportPackages = false;
+      options.addInAppInclude('rentspace');
+      options.considerInAppFramesByDefault = false;
+      options.attachThreads = true;
+      options.enableWindowMetricBreadcrumbs = true;
+      options.addIntegration(LoggingIntegration(minEventLevel: Level.INFO));
+      options.sendDefaultPii = true;
+      options.reportSilentFlutterErrors = true;
+      options.attachScreenshot = true;
+      options.screenshotQuality = SentryScreenshotQuality.low;
+      options.attachViewHierarchy = true;
+      // We can enable Sentry debug logging during development. This is likely
+      // going to log too much for your app, but can be useful when figuring out
+      // configuration issues, e.g. finding out why your events are not uploaded.
+      options.debug = true;
+      options.spotlight = Spotlight(enabled: true);
+      options.enableTimeToFullDisplayTracing = true;
+      options.enableMetrics = true;
+
+      options.maxRequestBodySize = MaxRequestBodySize.always;
+      options.maxResponseBodySize = MaxResponseBodySize.always;
+      options.navigatorKey = navigatorKey;
+
+      _isIntegrationTest = isIntegrationTest;
+      if (_isIntegrationTest) {
+        options.dist = '1';
+        options.environment = 'integration';
+        options.beforeSend = beforeSendCallback;
+      }
+    },
+    // Init your App.
+    appRunner: appRunner,
+  );
 }
 
 Future<void> openHiveBox(String boxName, {bool limit = false}) async {
@@ -321,6 +382,9 @@ class _MyAppState extends State<MyApp> {
       data: MediaQuery.of(context)
           .copyWith(textScaler: const TextScaler.linear(1)),
       child: GetMaterialApp.router(
+        navigatorObservers: [
+          SentryNavigatorObserver(),
+        ],
         theme: CustomTheme.lightTheme, // CustomThemeData for Light Theme
         darkTheme: CustomTheme.darkTheme,
         themeMode: themeController.themeStateFromHiveSettingBox,

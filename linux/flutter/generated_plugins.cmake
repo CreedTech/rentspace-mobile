@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_linux
   modal_progress_hud_nsn
   printing
+  sentry_flutter
   smart_auth
   url_launcher_linux
 )

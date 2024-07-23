@@ -99,9 +99,9 @@ class _LoanApplicationSuccessfulPageState
                       // for (var i = 0; i < 4; i++) {
                       //   context.pop();
                       // }
-                      context.pop();
-                      context.pop();
-                      context.pop();
+                      context.go('/firstpage');
+                      // context.pop();
+                      // context.pop();
                       // Get.offAll(AvailableLoansPage());
                     },
                     child: Text(

@@ -11,6 +11,8 @@ import 'package:rentspace/controller/auth/user_controller.dart';
 import 'package:rentspace/controller/rent/rent_controller.dart';
 
 import 'package:intl/intl.dart';
+import 'package:rentspace/view/savings/spaceRent/qualified_rents.dart';
+import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -364,6 +366,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                               ),
                             ),
                             onTap: () {
+                              print('asking');
                               (rentController.rentModel!.rents!.isEmpty)
                                   ? showDialog(
                                       context: context,
@@ -653,13 +656,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                               ),
                                             );
                                           })
-                                      : (userController
-                                                  .userModel!
-                                                  .userDetails![0]
-                                                  .hasVerifiedKyc ==
-                                              false)
-                                          ? null
-                                          : context.push('/loanPage');
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const QualifiedRents(),
+                                          ),
+                                        );
                             },
                             trailing: Icon(
                               Icons.keyboard_arrow_right,

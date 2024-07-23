@@ -34,16 +34,21 @@ class LoanFormData extends HiveObject {
   @HiveField(9)
   String? sameProperty;
 
-  @HiveField(10)
-  String? landlordOrAgentAddress;
+  // @HiveField(10)
+  // String? landlordOrAgentAddress;
 
-  @HiveField(11)
+  @HiveField(10)
   String? landlordOrAgentNumber;
 
+  @HiveField(11)
+  String? landlordAccountNumber;
+
   @HiveField(12)
-  String? howLong;
+  String? landlordBankName;
 
   @HiveField(13)
-  String? propertyType;
+  String? howLong;
 
+  @HiveField(14)
+  String? propertyType;
 }

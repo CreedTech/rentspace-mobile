@@ -325,7 +325,7 @@ class _MultipleDeviceLoginOtpPageState
                                   keyboardType: TextInputType.number,
                                 ),
                                 SizedBox(
-                                  height: 3.h,
+                                  height: 10.h,
                                 ),
                                 GestureDetector(
                                   onTap: () {

@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -14,7 +16,6 @@ import '../../api/global_services.dart';
 import '../../constants/app_constants.dart';
 import '../../widgets/custom_dialogs/index.dart';
 import '../../widgets/custom_loader.dart';
-import '../../view/auth/registration/login_page.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AuthState extends GetxController {

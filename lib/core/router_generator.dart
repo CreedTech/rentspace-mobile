@@ -6,6 +6,7 @@ import 'package:rentspace/view/auth/multiple_device_login_otp_page.dart';
 import 'package:rentspace/view/auth/registration/login_page.dart';
 import 'package:rentspace/view/auth/registration/signup_page.dart';
 import 'package:rentspace/view/contact/contact_us.dart';
+import 'package:rentspace/view/loan/loan_application_success_page.dart';
 import 'package:rentspace/view/onboarding/FirstPage.dart';
 import 'package:rentspace/view/onboarding/home_page.dart';
 import 'package:rentspace/view/onboarding/onboarding_slider.dart';
@@ -171,6 +172,11 @@ final routerGenerator = GoRouter(
       name: 'loanSuccessPage',
       path: '/loanSuccessPage',
       builder: (context, state) => const LoanSuccessPage(),
+    ),
+    GoRoute(
+      name: 'loanApplicationSuccessPage',
+      path: '/loanApplicationSuccessPage',
+      builder: (context, state) => const LoanApplicationSuccessfulPage(),
     ),
     GoRoute(
       name: 'loanConfirmationPage',

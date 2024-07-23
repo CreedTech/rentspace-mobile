@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -9,9 +13,13 @@ import 'package:rentspace/controller/loan/loan_controller.dart';
 import 'package:rentspace/view/loan/loan_application_success_page.dart';
 import 'package:rentspace/widgets/custom_dialogs/custom_error_dialog.dart';
 
+import '../../api/global_services.dart';
+import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
 import '../../constants/utils/formatPhoneNumber.dart';
 import '../../controller/rent/rent_controller.dart';
+import '../../widgets/custom_loader.dart';
+import 'package:http/http.dart' as http;
 
 class LoanApplicationPageContinuation extends StatefulWidget {
   final int current;
@@ -21,12 +29,15 @@ class LoanApplicationPageContinuation extends StatefulWidget {
       bvn,
       phoneNumber,
       address,
+      bill,
       landlordOrAgent,
       landlordOrAgentName,
       livesInSameProperty,
-      landlordOrAgentAddress,
+      // landlordOrAgentAddress,
       landlordOrAgentNumber,
-      duration,
+      landlordAccountNumber,
+      landlordBankName,
+      // duration,
       propertyType;
   const LoanApplicationPageContinuation({
     super.key,
@@ -37,12 +48,15 @@ class LoanApplicationPageContinuation extends StatefulWidget {
     required this.bvn,
     required this.phoneNumber,
     required this.address,
+    required this.bill,
     required this.landlordOrAgent,
     required this.landlordOrAgentName,
     required this.livesInSameProperty,
-    required this.landlordOrAgentAddress,
+    // required this.landlordOrAgentAddress,
     required this.landlordOrAgentNumber,
-    required this.duration,
+    required this.landlordAccountNumber,
+    required this.landlordBankName,
+    // required this.duration,
     required this.propertyType,
   });
 
@@ -82,7 +96,7 @@ class _LoanApplicationPageContinuationState
   var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN', decimalDigits: 0);
   final RentController rentController = Get.find();
   final loanContFormKey = GlobalKey<FormState>();
-  List<String> employmentStatusList = ['Employed', 'Self Employed'];
+  List<String> employmentStatusList = ['Employed', 'Self-Employed'];
   List<String> existingLoansResponse = ['Yes', 'No'];
   bool employmentStatusSelected = false;
   String? selectedId;
@@ -1196,6 +1210,68 @@ class _LoanApplicationPageContinuationState
       validator: validateGuarantorAddress,
     );
 
+    uploadBill(BuildContext context, File imageFile) async {
+      String authToken =
+          await GlobalService.sharedPreferencesManager.getAuthToken();
+
+      var headers = {'Authorization': 'Bearer $authToken'};
+      EasyLoading.show(
+        indicator: const CustomLoader(),
+        maskType: EasyLoadingMaskType.black,
+        dismissOnTap: false,
+      );
+      var request = http.MultipartRequest('POST',
+          Uri.parse(AppConstants.BASE_URL + AppConstants.UPLOAD_UTILITY_BILL));
+      request.files
+          .add(await http.MultipartFile.fromPath('image', imageFile.path));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+
+      EasyLoading.dismiss();
+      if (response.statusCode == 200) {
+        EasyLoading.dismiss();
+        if (kDebugMode) {
+          print('Image uploaded successfully');
+        }
+        // context.pop();
+
+        // refreshController.refreshCompleted();
+        // if (mounted) {
+        //   setState(() {
+        //     isRefresh = true;
+        //   });
+        // }
+
+        // showTopSnackBar(
+        //   Overlay.of(context),
+        //   CustomSnackBar.success(
+        //     backgroundColor: Colors.green,
+        //     message: 'Your profile picture has been updated successfully. !!',
+        //     textStyle: GoogleFonts.poppins(
+        //       fontSize: 14,
+        //       color: Colors.white,
+        //       fontWeight: FontWeight.w600,
+        //     ),
+        //   ),
+        // );
+        // await fetchUserData(refresh: true);
+        // Get.to(FirstPage());
+      } else {
+        EasyLoading.dismiss();
+        customErrorDialog(
+            context, 'File too large', 'Please select image below 1.5mb');
+        if (kDebugMode) {
+          print(response.request);
+        }
+        if (kDebugMode) {
+          print(response.reasonPhrase);
+        }
+        if (kDebugMode) {
+          print('Image upload failed with status ${response.statusCode}');
+        }
+      }
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -1477,118 +1553,118 @@ class _LoanApplicationPageContinuationState
                           SizedBox(
                             height: 23.h,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 3.h, horizontal: 3.w),
-                                child: Text(
-                                  'Previous Loans',
-                                  style: GoogleFonts.lato(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 3.h, horizontal: 3.w),
-                                child: Text(
-                                  'Do you have existing loans?',
-                                  style: GoogleFonts.lato(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              hasExistingLoans,
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Visibility(
-                            visible: (_existingLoansController.text ==
-                                existingLoansResponse[0]),
-                            child: Column(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'How Much?',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                    howMuch,
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'Where?',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                    whereLoanWasCollected,
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 3.h, horizontal: 3.w),
-                                      child: Text(
-                                        'How Long?',
-                                        style: GoogleFonts.lato(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                    loanDuration,
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 23.h,
-                          ),
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     Padding(
+                          //       padding: EdgeInsets.symmetric(
+                          //           vertical: 3.h, horizontal: 3.w),
+                          //       child: Text(
+                          //         'Previous Loans',
+                          //         style: GoogleFonts.lato(
+                          //           color:
+                          //               Theme.of(context).colorScheme.primary,
+                          //           fontWeight: FontWeight.w500,
+                          //           fontSize: 14,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     Padding(
+                          //       padding: EdgeInsets.symmetric(
+                          //           vertical: 3.h, horizontal: 3.w),
+                          //       child: Text(
+                          //         'Do you have existing loans?',
+                          //         style: GoogleFonts.lato(
+                          //           color:
+                          //               Theme.of(context).colorScheme.primary,
+                          //           fontWeight: FontWeight.w500,
+                          //           fontSize: 12,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     hasExistingLoans,
+                          //   ],
+                          // ),
+                          // SizedBox(
+                          //   height: 20.h,
+                          // ),
+                          // Visibility(
+                          //   visible: (_existingLoansController.text ==
+                          //       existingLoansResponse[0]),
+                          //   child: Column(
+                          //     children: [
+                          //       Column(
+                          //         crossAxisAlignment: CrossAxisAlignment.start,
+                          //         children: [
+                          //           Padding(
+                          //             padding: EdgeInsets.symmetric(
+                          //                 vertical: 3.h, horizontal: 3.w),
+                          //             child: Text(
+                          //               'How Much?',
+                          //               style: GoogleFonts.lato(
+                          //                 color: Theme.of(context)
+                          //                     .colorScheme
+                          //                     .primary,
+                          //                 fontWeight: FontWeight.w500,
+                          //                 fontSize: 12,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //           howMuch,
+                          //         ],
+                          //       ),
+                          //       SizedBox(
+                          //         height: 20.h,
+                          //       ),
+                          //       Column(
+                          //         crossAxisAlignment: CrossAxisAlignment.start,
+                          //         children: [
+                          //           Padding(
+                          //             padding: EdgeInsets.symmetric(
+                          //                 vertical: 3.h, horizontal: 3.w),
+                          //             child: Text(
+                          //               'Where?',
+                          //               style: GoogleFonts.lato(
+                          //                 color: Theme.of(context)
+                          //                     .colorScheme
+                          //                     .primary,
+                          //                 fontWeight: FontWeight.w500,
+                          //                 fontSize: 12,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //           whereLoanWasCollected,
+                          //         ],
+                          //       ),
+                          //       SizedBox(
+                          //         height: 20.h,
+                          //       ),
+                          //       Column(
+                          //         crossAxisAlignment: CrossAxisAlignment.start,
+                          //         children: [
+                          //           Padding(
+                          //             padding: EdgeInsets.symmetric(
+                          //                 vertical: 3.h, horizontal: 3.w),
+                          //             child: Text(
+                          //               'How Long?',
+                          //               style: GoogleFonts.lato(
+                          //                 color: Theme.of(context)
+                          //                     .colorScheme
+                          //                     .primary,
+                          //                 fontWeight: FontWeight.w500,
+                          //                 fontSize: 12,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //           loanDuration,
+                          //         ],
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: 23.h,
+                          // ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -1846,34 +1922,32 @@ class _LoanApplicationPageContinuationState
                         agreeToTerms == true &&
                         authorizeRentspace == true) {
                       loanController.applyForLoan(
-                        rentController
-                            .rentModel!.rents![widget.current].rentspaceId,
+                        rentController.rentModel!.rents![widget.current].id,
                         widget.reason,
                         widget.id,
                         widget.idNumber,
                         widget.bvn,
                         widget.phoneNumber,
                         widget.address,
+                        widget.bill,
                         widget.landlordOrAgent,
                         widget.landlordOrAgentName,
                         widget.livesInSameProperty,
-                        widget.landlordOrAgentAddress,
+                        // (widget.livesInSameProperty == 'Yes')
+                        //     ? widget.address
+                        //     : widget.landlordOrAgentAddress,
                         widget.landlordOrAgentNumber,
-                        widget.duration,
+                        widget.landlordAccountNumber,
+                        widget.landlordBankName,
+                        // widget.duration,
                         widget.propertyType,
                         _employmentStatusController.text,
-                        _positionController.text ?? '',
-                        _netSalaryController.text.trim().replaceAll(',', '') ??
-                            '',
-                        _nameOfBusinessController.text ?? '',
-                        _cacController.text ?? '',
-                        _estimatedMonthlyTurnOverController.text ?? '',
-                        _estimatedNetMonthlyNetProfitController.text ?? '',
-                        _existingLoansController.text,
-                        _howMuchController.text.trim().replaceAll(',', '') ??
-                            '',
-                        _whereLoanWasCollectedController.text ?? '',
-                        _howLongController.text ?? '',
+                        _positionController.text,
+                        _netSalaryController.text.trim().replaceAll(',', ''),
+                        _nameOfBusinessController.text,
+                        _cacController.text,
+                        _estimatedMonthlyTurnOverController.text,
+                        _estimatedNetMonthlyNetProfitController.text,
                         _guarantorNameController.text,
                         _guarantorRelationshipController.text,
                         _guarantorNumberController.text,

@@ -18,13 +18,13 @@ import '../../../constants/utils/format_money.dart';
 import '../../../controller/rent/rent_controller.dart';
 
 class RentSpaceList extends StatefulWidget {
-  const RentSpaceList({super.key});
-
+  const RentSpaceList({
+    super.key,
+  });
   @override
   _RentSpaceListState createState() => _RentSpaceListState();
 }
 
-var ch8t = NumberFormat.simpleCurrency(name: 'NGN');
 var nairaFormaet = NumberFormat.simpleCurrency(name: 'NGN');
 var now = DateTime.now();
 var formatter = DateFormat('yyyy-MM-dd');
@@ -99,7 +99,6 @@ class _RentSpaceListState extends State<RentSpaceList> {
     });
     try {
       // Your code to fetch rent data
-      // Assuming you have a RentController instance called rentController
       await rentController.fetchRent();
       setState(() {
         _isLoading = false;

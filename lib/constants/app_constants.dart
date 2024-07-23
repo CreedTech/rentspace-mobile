@@ -77,4 +77,5 @@ class AppConstants {
 
 // LOANS
   static const APPLY_FOR_LOAN = '/api/loan/apply';
+  static const UPLOAD_UTILITY_BILL = '/api/loan/uploadUtilityBill';
 }

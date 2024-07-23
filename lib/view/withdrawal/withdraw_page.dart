@@ -281,7 +281,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
       controller: _accountNumberController,
       keyboardType: TextInputType.number,
       onChanged: (e) {
-        if (_accountNumberController.text.length == 11) {
+        if (_accountNumberController.text.length == 10) {
           FocusScope.of(context).unfocus();
         }
         _checkFieldsAndHitApi();
@@ -549,12 +549,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                       maxLines: 1,
                                     ),
 
-                                    // GestureDetector(
-                                    //   onTap: _openBankSelectorOverlay,
-                                    //   child: AbsorbPointer(
-                                    //     child: bank,
-                                    //   ),
-                                    // ),
+                                  
                                   ],
                                 ),
                                 const SizedBox(
@@ -631,7 +626,6 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                                         ),
                                       )
 
-                                    // :(hasError == true)?Text(verifyAccountError):Text(_bankAccountName)
                                     : const SizedBox(),
                                 (hasError == true || verifyAccountError != '')
                                     ? Padding(
@@ -840,19 +834,6 @@ class _BankSelectionState extends State<BankSelection> {
                       cursorColor: Theme.of(context).colorScheme.primary,
                       controller: _searchController,
                       onChanged: (query) => _filterBanks(query),
-                      // onChanged:
-                      //     (String value) {
-                      //   _onSearchChanged();
-                      //   print(
-                      //       "searchQuery here");
-                      //   // print(searchQuery);
-                      // },
-                      // onChanged: (value) {
-                      //   setState(() {
-                      //     searchQuery = value;
-                      //   });
-
-                      // },
                       decoration: InputDecoration(
                         filled: false,
                         contentPadding: const EdgeInsets.all(3),
@@ -861,12 +842,6 @@ class _BankSelectionState extends State<BankSelection> {
                           color: Theme.of(context).colorScheme.primary,
                           size: 24,
                         ),
-                        // suffixIcon: _searchController.text.isNotEmpty
-                        //     ? IconButton(
-                        //         icon: Icon(Icons.clear),
-                        //         onPressed: _clearSearch,
-                        //       )
-                        //     : null,
                         suffixIcon: _searchController.text
                                 .isNotEmpty // Show clear button only when typing
                             ? IconButton(
@@ -931,10 +906,6 @@ class _BankSelectionState extends State<BankSelection> {
                     String bankCode = filteredBankEntries[idx].key;
                     String bankName = filteredBankEntries[idx].value;
 
-                    // final bankName =
-                    //     filteredBanks(
-                    //             searchQuery)[
-                    //         idx];
                     return Column(
                       children: [
                         StatefulBuilder(builder:

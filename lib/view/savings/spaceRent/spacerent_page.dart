@@ -502,7 +502,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                 rentController
                                     .rentModel!.rents![widget.current].amount) *
                             100)
-                        .toInt() <=
+                        .toInt() >=
                     70))
                   SizedBox(
                     height: 20.h,
@@ -511,7 +511,7 @@ class _SpaceRentPageState extends State<SpaceRentPage> {
                                     rentController.rentModel!
                                         .rents![widget.current].amount) *
                                 100)
-                            .toInt() <=
+                            .toInt() >=
                         70)
                     ? Container(
                         width: MediaQuery.of(context).size.width,

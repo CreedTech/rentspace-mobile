@@ -27,16 +27,17 @@ class LoanFormDataAdapter extends TypeAdapter<LoanFormData> {
       ..landlordOrAgent = fields[7] as String?
       ..landlordOrAgentName = fields[8] as String?
       ..sameProperty = fields[9] as String?
-      ..landlordOrAgentAddress = fields[10] as String?
-      ..landlordOrAgentNumber = fields[11] as String?
-      ..howLong = fields[12] as String?
-      ..propertyType = fields[13] as String?;
+      ..landlordOrAgentNumber = fields[10] as String?
+      ..landlordAccountNumber = fields[11] as String?
+      ..landlordBankName = fields[12] as String?
+      ..howLong = fields[13] as String?
+      ..propertyType = fields[14] as String?;
   }
 
   @override
   void write(BinaryWriter writer, LoanFormData obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.reason)
       ..writeByte(1)
@@ -58,12 +59,14 @@ class LoanFormDataAdapter extends TypeAdapter<LoanFormData> {
       ..writeByte(9)
       ..write(obj.sameProperty)
       ..writeByte(10)
-      ..write(obj.landlordOrAgentAddress)
-      ..writeByte(11)
       ..write(obj.landlordOrAgentNumber)
+      ..writeByte(11)
+      ..write(obj.landlordAccountNumber)
       ..writeByte(12)
-      ..write(obj.howLong)
+      ..write(obj.landlordBankName)
       ..writeByte(13)
+      ..write(obj.howLong)
+      ..writeByte(14)
       ..write(obj.propertyType);
   }
 
