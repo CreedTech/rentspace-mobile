@@ -38,7 +38,8 @@ xmlns:tools="http://schemas.android.com/tools"
                 <category android:name="android.intent.category.BROWSABLE" />
                   <data android:scheme="@string/fb_login_protocol_scheme" />
                 <data android:scheme="https" />
-                <data android:host="rentspace.tech"/>
+                <data android:host="rentspace.tech" android:pathPrefix="/rentCreation" />
+                
             </intent-filter>
               <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id"
         android:value="high_importance_channel" />
