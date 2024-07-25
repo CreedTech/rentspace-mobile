@@ -790,6 +790,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage>
                   onTap: () {
                     showModalBottomSheet(
                       barrierColor: const Color.fromRGBO(74, 74, 74, 100),
+                      backgroundColor: Theme.of(context).canvasColor,
                       context: routerGenerator
                           .routerDelegate.navigatorKey.currentContext!,
                       // barrierDismissible: true,

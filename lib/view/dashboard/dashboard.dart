@@ -508,10 +508,11 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                                                           context) {
                                                         return GestureDetector(
                                                           onTap: () {
-                                                            Navigator.pushNamed(
-                                                              context,
-                                                              slide['page'],
-                                                            );
+                                                            context.push(slide['page']);
+                                                            // Navigator.pushNamed(
+                                                            //   context,
+                                                            //   slide['page'],
+                                                            // );
                                                           },
                                                           child: Container(
                                                             margin:

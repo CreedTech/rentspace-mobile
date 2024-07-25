@@ -869,31 +869,35 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         centerTitle: false,
-        title: Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                resetCalculator();
-                context.pop();
-              },
-              child: Icon(
+        title: GestureDetector(
+          onTap: () {
+            resetCalculator();
+            if (Navigator.canPop(context)) {
+              context.pop();
+            } else {
+              context.go('/');
+            }
+          },
+          child: Row(
+            children: [
+              Icon(
                 Icons.arrow_back_ios_sharp,
                 size: 27,
                 color: Theme.of(context).colorScheme.primary,
               ),
-            ),
-            SizedBox(
-              width: 4.h,
-            ),
-            Text(
-              'Create Space Rent',
-              style: GoogleFonts.lato(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500,
-                fontSize: 24,
+              SizedBox(
+                width: 4.h,
               ),
-            ),
-          ],
+              Text(
+                'Create Space Rent',
+                style: GoogleFonts.lato(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SafeArea(

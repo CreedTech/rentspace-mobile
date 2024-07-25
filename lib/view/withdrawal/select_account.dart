@@ -358,8 +358,7 @@ class _SelectAccountState extends State<SelectAccount> {
                           // horizontalTitleGap: 0,
                           minLeadingWidth: 0,
                           onTap: () {
-                            (rentController.rentModel!.rents!
-                                    .any((rent) => rent.completed == false))
+                            (rentController.rentModel!.rents!.isEmpty)
                                 ? showDialog(
                                     context: context,
                                     barrierDismissible: true,
@@ -413,7 +412,7 @@ class _SelectAccountState extends State<SelectAccount> {
                                                 height: 14,
                                               ),
                                               Text(
-                                                'You currently do not have any completed Space Rent. Please continue saving consistently to reach your goal.',
+                                                'You are yet to create a Space Rent plan.\nPlease create a Space Rent plan to have access to our loan service.',
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.lato(
                                                   color: Theme.of(context)
@@ -449,13 +448,56 @@ class _SelectAccountState extends State<SelectAccount> {
                                                     ),
                                                   ),
                                                   onPressed: () {
+                                                    context
+                                                        .push('/rentCreation');
+                                                  },
+                                                  child: Text(
+                                                    'Create Space Rent',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.lato(
+                                                      color: Colors.white,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    minimumSize: Size(
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width -
+                                                            50,
+                                                        50),
+                                                    backgroundColor: colorWhite,
+                                                    elevation: 0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      side: const BorderSide(
+                                                          color: brandTwo),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        10,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
                                                   child: Text(
                                                     'Ok',
                                                     textAlign: TextAlign.center,
                                                     style: GoogleFonts.lato(
-                                                      color: Colors.white,
+                                                      color: brandTwo,
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -468,7 +510,128 @@ class _SelectAccountState extends State<SelectAccount> {
                                         ),
                                       );
                                     })
-                                : context.push('/rentWithdrawal');
+                                : (rentController.rentModel!.rents!
+                                        .any((rent) => rent.completed == false))
+                                    ? showDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            backgroundColor: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            title: null,
+                                            scrollable: true,
+                                            elevation: 0,
+                                            content: SizedBox(
+                                              // height: 220.h,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Column(
+                                                children: [
+                                                  Wrap(
+                                                    alignment:
+                                                        WrapAlignment.center,
+                                                    crossAxisAlignment:
+                                                        WrapCrossAlignment
+                                                            .center,
+                                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .info_outline_rounded,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
+                                                        size: 24,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 4,
+                                                      ),
+                                                      Text(
+                                                        'Oops!',
+                                                        style: GoogleFonts.lato(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary,
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 14,
+                                                  ),
+                                                  Text(
+                                                    'You currently do not have any completed Space Rent. Please continue saving consistently to reach your goal.',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.lato(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 29,
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        minimumSize: Size(
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                50,
+                                                            50),
+                                                        backgroundColor:
+                                                            brandTwo,
+                                                        elevation: 0,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            10,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: Text(
+                                                        'Ok',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: GoogleFonts.lato(
+                                                          color: Colors.white,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        })
+                                    : context.push('/rentWithdrawal');
                           },
                           title: Text(
                             'Space Rent',

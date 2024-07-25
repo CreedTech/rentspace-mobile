@@ -12,6 +12,7 @@ import 'package:rentspace/view/onboarding/home_page.dart';
 import 'package:rentspace/view/onboarding/onboarding_slider.dart';
 import 'package:rentspace/view/onboarding/splash_screen.dart';
 import 'package:rentspace/view/portfolio/portfolio_overview.dart';
+import 'package:rentspace/view/referral/referral_record.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_creation.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_list.dart';
 import 'package:rentspace/view/savings/spaceRent/spacerent_success_page.dart';
@@ -35,6 +36,7 @@ import '../view/utility/airtime.dart';
 import '../view/wallet_funding/bank_transfer.dart';
 import '../view/wallet_funding/fund_wallet.dart';
 import '../view/withdrawal/select_account.dart';
+import '../view/withdrawal/withdraw_page.dart';
 import '../view/withdrawal/withdrawal_account.dart';
 
 // static BuildContext? get ctx => myGoRouter.routerDelegate.navigatorKey.currentContext;
@@ -104,8 +106,8 @@ final routerGenerator = GoRouter(
       builder: (context, state) => const FundWallet(),
     ),
     GoRoute(
-      name: 'bannkTransfer',
-      path: '/bannkTransfer',
+      name: 'bankTransfer',
+      path: '/bankTransfer',
       builder: (context, state) => const BankTransfer(),
     ),
     GoRoute(
@@ -134,9 +136,21 @@ final routerGenerator = GoRouter(
       builder: (context, state) => const WithdrawalAccount(),
     ),
     GoRoute(
+      name: 'withdrawalPage',
+      path: '/withdrawalPage',
+      builder: (context, state) => const  WithdrawalPage(
+            withdrawalType: 'space wallet',
+          ),
+    ),
+    GoRoute(
       name: 'shareAndEarn',
       path: '/shareAndEarn',
       builder: (context, state) => const ShareAndEarn(),
+    ),
+    GoRoute(
+      name: 'referralRecord',
+      path: '/referralRecord',
+      builder: (context, state) => const ReferralRecord(),
     ),
     GoRoute(
       name: 'faqsPage',

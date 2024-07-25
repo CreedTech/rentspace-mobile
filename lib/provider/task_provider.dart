@@ -13,14 +13,14 @@ class TaskNotifier extends StateNotifier<List<Map<String, dynamic>>> {
             'subTitle': 'Complete your profile by adding a profile picture',
             'completed': false,
             'image': 'assets/face.png',
-            'page': '/personalInfo'
+            'page': '/personalDetails'
           },
           {
             'label': 'Set up your withdrawal account',
             'subTitle': 'Save an account to withdraw your funds',
             'completed': false,
             'image': 'assets/bank_tilt.png',
-            'page': '/withdrawal'
+            'page': '/withdrawalPage'
           },
         ]);
 

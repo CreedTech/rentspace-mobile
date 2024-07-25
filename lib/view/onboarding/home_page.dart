@@ -301,6 +301,7 @@ class _HomePageState extends State<HomePage> {
       onWillPop: () async {
         showModalBottomSheet(
           barrierColor: const Color.fromRGBO(74, 74, 74, 100),
+          backgroundColor: Theme.of(context).canvasColor,
           context: context,
           // barrierDismissible: true,
           builder: (BuildContext context) {

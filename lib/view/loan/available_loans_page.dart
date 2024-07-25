@@ -7,6 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
 import 'package:rentspace/view/loan/loan_success_page.dart';
 
+import '../../constants/constants.dart';
+
 class AvailableLoansPage extends StatefulWidget {
   const AvailableLoansPage({super.key});
 
@@ -25,6 +27,8 @@ class _AvailableLoansPageState extends State<AvailableLoansPage> {
       isSelected = true;
     });
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -532,7 +536,7 @@ class _AvailableLoansPageState extends State<AvailableLoansPage> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                'Terms & Conditions',
+                                                'RentSpace Loan Terms of Service',
                                                 style: GoogleFonts.lato(
                                                     color: Theme.of(context)
                                                         .colorScheme
@@ -566,7 +570,7 @@ class _AvailableLoansPageState extends State<AvailableLoansPage> {
                                         child: ListView(
                                           children: [
                                             Text(
-                                              'Lorem ipsum dolor sit amet consectetur adipiscing elit posuere fermentum, tempus in porta id primis dui odio fames elementum, ligula conubia laoreet mollis tempor commodo malesuada euismod. Pretium etiam duis vitae aptent odio augue commodo nibh porta, tortor at bibendum ornare class parturient sapien rhoncus est natoque, auctor quis morbi lobortis laoreet sodales vivamus curabitur. Luctus sed quisque in nulla sem odio mauris dapibus cubilia varius, facilisi urna scelerisque aenean posuere fames lacinia nascetur justo consequat, interdum aliquet erat duis tortor eros curae sodales platea. \n\nEros proin parturient eu eleifend dictum metus nascetur, gravida faucibus malesuada est consequat mollis nam, hac habitant dui habitasse magnis porttitor mauris, luctus integer mus iaculis dis nunc. Euismod cras lectus blandit dis tortor orci ridiculus commodo, auctor turpis dapibus phasellus suspendisse enim inceptos, lacinia cubilia est fringilla ornare mollis conubia. Aptent placerat ad odio vulputate duis torquent condimentum pulvinar turpis, dictumst ante elementum hendrerit vehicula cras semper habitant pharetra eleifend, tempus sociosqu maecenas ligula leo porttitor suscipit vel.\n\nEros proin parturient eu eleifend dictum metus nascetur, gravida faucibus malesuada est consequat mollis nam, hac habitant dui habitasse magnis porttitor mauris, luctus integer mus iaculis dis nunc. Euismod cras lectus blandit dis tortor orci ridiculus commodo,',
+                                              loansTermsText,
                                               style: GoogleFonts.lato(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
@@ -688,7 +692,8 @@ class _AvailableLoansPageState extends State<AvailableLoansPage> {
                                             onPressed: () {
                                               if (agreeToTerms == true) {
                                                 context.pop();
-                                                context.push('/loanSuccessPage');
+                                                context
+                                                    .push('/loanSuccessPage');
                                               }
                                             },
                                             child: Text(

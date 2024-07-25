@@ -652,10 +652,11 @@ class _ShareAndEarnState extends State<ShareAndEarn> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/referralRecord',
-                                );
+                                context.push('/referralRecord');
+                                // Navigator.pushNamed(
+                                //   context,
+                                //   '/referralRecord',
+                                // );
                                 // Get.to(const ReferralRecord());
                               },
                               child: Text(
