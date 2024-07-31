@@ -14,7 +14,7 @@ void bankTransferPopup(
   BuildContext context,
 ) {
   showModalBottomSheet(
-       enableDrag: false,
+    enableDrag: false,
     isDismissible: false,
     barrierColor: Colors.transparent,
     isScrollControlled: true,
@@ -136,11 +136,20 @@ void bankTransferPopup(
                   ),
                   GestureDetector(
                     onTap: () async {
-                      await GlobalService.sharedPreferencesManager
-                          .setIsFirstTimeSignUp(value: false)
-                          .then(
-                            (value) => context.go('/firstpage'),
-                          );
+                      Navigator.pop(context);
+                      // print('got here');
+                      // await GlobalService.sharedPreferencesManager
+                      //     .setIsFirstTimeSignUp(value: false)
+                      //     .then(
+                      //       (value) => GlobalService.sharedPreferencesManager
+                      //           .setHasCompletedHalfPopup(value: true),
+                      //     )
+                      //     .then(
+                      //       (value) => context.go('/firstpage'),
+                      //     )
+                      //     .catchError((error) {
+                      //   print('Error setting values: $error');
+                      // });
                     },
                     child: const Icon(
                       Icons.close,

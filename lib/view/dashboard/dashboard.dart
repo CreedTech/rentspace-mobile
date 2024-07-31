@@ -110,6 +110,8 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   }
 
   Future<void> popupDisplayFunction() async {
+
+
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       isFirstTimeSignUp = prefs.getBool('IS_FIRST_TIME_SIGN_UP') ?? true;
@@ -117,9 +119,10 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           prefs.getBool('HAS_COMPLETED_HALF_POPUP') ?? false;
     });
 
+
     if (rentController.rentModel!.rents!.isEmpty) {
       if (isFirstTimeSignUp == true && hasCompletedFirstPopup != true) {
-        await Future.delayed(const Duration(seconds: 10));
+        await Future.delayed(const Duration(seconds: 5));
         showModalBottomSheet(
           enableDrag: false,
           isDismissible: false,
@@ -155,6 +158,11 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
                           onTap: () async {
                             await GlobalService.sharedPreferencesManager
                                 .setIsFirstTimeSignUp(value: false)
+                                .then(
+                                  (value) => GlobalService
+                                      .sharedPreferencesManager
+                                      .setHasCompletedHalfPopup(value: true),
+                                )
                                 .then(
                                   (value) => Navigator.pop(context),
                                 );
@@ -369,14 +377,19 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
           },
         );
       }
-      if (hasCompletedFirstPopup != true) {
-        await Future.delayed(const Duration(seconds: 10));
-        fundWalletPopup(context);
+      if (isFirstTimeSignUp == false && hasCompletedFirstPopup != true) {
+        await Future.delayed(const Duration(seconds: 5));
+        if (mounted) {
+          fundWalletPopup(context);
+        } else {
+        }
       }
     }
     if (isFirstTimeSignUp == false && hasCompletedFirstPopup == true) {
       await Future.delayed(const Duration(seconds: 2));
-      showRandomPopup(context);
+      if (mounted) {
+        showRandomPopup(context);
+      }
     }
   }
 
@@ -1448,6 +1461,7 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
       await userController.fetchData();
       await walletController.fetchWallet();
       await rentController.fetchRent();
+      popupDisplayFunction();
       if (userController.userModel!.userDetails![0].withdrawalAccount != null) {
         ref
             .read(taskProvider.notifier)
@@ -1459,7 +1473,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
             .completeTask('Add your profile picture');
       }
       // userController.userModel!.userDetails![0].
-      popupDisplayFunction();
 
       setState(() {}); // Move setState inside fetchData
     }

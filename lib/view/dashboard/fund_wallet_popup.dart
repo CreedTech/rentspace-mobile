@@ -136,9 +136,12 @@ void fundWalletPopup(
                       await GlobalService.sharedPreferencesManager
                           .setIsFirstTimeSignUp(value: false)
                           .then(
+                            (value) => GlobalService.sharedPreferencesManager
+                                .setHasCompletedHalfPopup(value: true),
+                          )
+                          .then(
                             (value) => context.go('/firstpage'),
                           );
-                      // Navigator.pop(context);
                     },
                     child: const Icon(
                       Icons.close,
