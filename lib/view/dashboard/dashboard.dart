@@ -383,7 +383,6 @@ class _DashboardConsumerState extends ConsumerState<Dashboard> {
   void showRandomPopup(BuildContext context) {
     final random = Random();
     final popupChoice = random.nextInt(2); // Generates 0 or 1
-    print(popupChoice);
 
     if (popupChoice == 0) {
       if (rentController.rentModel!.rents!.isEmpty) {
