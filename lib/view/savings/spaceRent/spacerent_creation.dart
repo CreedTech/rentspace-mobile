@@ -66,31 +66,11 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   final TextEditingController _intervalController = TextEditingController();
   final TextEditingController _durationController = TextEditingController();
 
-  // final UserController userController = Get.find();
-  // final WalletController walletController = Get.find();
   DateTime _endDate = DateTime.now();
   List<String> intervalLabels = ['Weekly', 'Monthly'];
   List<String> durations = ['5 months', '6 months', '7 months', '8 months'];
 
   bool idSelected = false;
-
-  // int _daysInMonth(int month, int year) {
-  //   switch (month) {
-  //     case 2: // February
-  //       if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-  //         return 29; // Leap year
-  //       } else {
-  //         return 28;
-  //       }
-  //     case 4: // April
-  //     case 6: // June
-  //     case 9: // September
-  //     case 11: // November
-  //       return 30;
-  //     default:
-  //       return 31;
-  //   }
-  // }
 
   int _calculateMonthsDifference(DateTime startDate, int duration) {
     DateTime endDate =
@@ -138,8 +118,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
   @override
   initState() {
     super.initState();
-    // walletController = Get.find();
-    // Get.lazyPut(() => UserController());
     getConnectivity();
     fetchUserData();
     numberInDays = 0;
@@ -327,14 +305,6 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
         _dailyValue = ((rent) / _calculateDaysDifference());
       });
     }
-
-    // int calculateDaysInMonths(DateTime startDate, int months) {
-    //   int daysInMonths = 0;
-    //   for (int i = 0; i < months; i++) {
-    //     daysInMonths += _daysInMonth(startDate.month + i, startDate.year);
-    //   }
-    //   return daysInMonths;
-    // }
 
     Future<void> selectEndDate(BuildContext context) async {
       final DateTime now = DateTime.now();
@@ -708,6 +678,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
       ),
       maxLines: 1,
     );
+
     final durationSelect = TextFormField(
       onTap: () {
         showModalBottomSheet(
@@ -1075,6 +1046,7 @@ class _SpaceRentCreationState extends ConsumerState<SpaceRentCreation> {
                                   paymentCount: paymentCount,
                                   rentName: _rentNameController.text,
                                   duration: _duration,
+                                  fromPopup: false,
                                 ),
                               ),
                             );

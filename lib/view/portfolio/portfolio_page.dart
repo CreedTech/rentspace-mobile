@@ -343,10 +343,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           child: ListTile(
                             minLeadingWidth: 0,
                             // shape: ShapeBorder,
-                            leading: Image.asset(
-                              'assets/icons/money_box.png',
-                              width: 42.5,
-                              height: 42.5,
+                            leading: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(10),
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? const Color(0xffEEF8FF).withOpacity(0.1)
+                                    : const Color(0xffEEF8FF),
+                              ),
+                              child: Image.asset(
+                                'assets/icons/money_icon.png',
+                                width: 19.5,
+                                height: 19.5,
+                                color: brandTwo,
+                              ),
                             ),
                             title: Text(
                               'Ask for Loan',
@@ -687,10 +699,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             ),
                             child: ListTile(
                               // shape: ShapeBorder,
-                              leading: Image.asset(
-                                'assets/icons/wallet_box.png',
-                                width: 42.5,
-                                height: 42.5,
+                              leading: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? const Color(0xffEEF8FF).withOpacity(0.1)
+                                      : const Color(0xffEEF8FF),
+                                ),
+                                child: Image.asset(
+                                  'assets/icons/wallet.png',
+                                  width: 19.5,
+                                  height: 19.5,
+                                  color: brandTwo,
+                                ),
                               ),
                               title: Text(
                                 'Make Loan Payment',
@@ -854,10 +878,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             ),
                             child: ListTile(
                               // shape: ShapeBorder,
-                              leading: Image.asset(
-                                'assets/icons/portfolio_box.png',
-                                width: 42.5,
-                                height: 42.5,
+                              leading: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? const Color(0xffEEF8FF).withOpacity(0.1)
+                                      : const Color(0xffEEF8FF),
+                                ),
+                                child: Image.asset(
+                                  'assets/icons/portfolio.png',
+                                  width: 19.5,
+                                  height: 19.5,
+                                  color: brandTwo,
+                                ),
                               ),
                               title: Text(
                                 'Portfolio Overview',
@@ -903,10 +939,23 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             ),
                             child: ListTile(
                               // shape: ShapeBorder,
-                              leading: Image.asset(
-                                'assets/icons/credit_box.png',
-                                width: 42.5,
-                                height: 42.5,
+                              // shape: ShapeBorder,
+                              leading: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? const Color(0xffEEF8FF).withOpacity(0.1)
+                                      : const Color(0xffEEF8FF),
+                                ),
+                                child: Image.asset(
+                                  'assets/icons/credit_icon.png',
+                                  width: 19.5,
+                                  height: 19.5,
+                                  // color: brandTwo,
+                                ),
                               ),
                               title: Text(
                                 'Credit Score',

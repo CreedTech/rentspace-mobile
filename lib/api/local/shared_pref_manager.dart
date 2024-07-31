@@ -23,6 +23,26 @@ class SharedPreferencesManager {
     return _prefs.setBool(HAS_SEEN_ONBOARDING, value);
   }
 
+  Future<bool> isFirstTimeSignUp() async {
+    // final _prefs = await SharedPreferences.getInstance();
+    return _prefs.getBool('IS_FIRST_TIME_SIGN_UP') ?? true;
+  }
+
+  Future<bool> setIsFirstTimeSignUp({required bool value}) async {
+    // final _prefs = await SharedPreferences.getInstance();
+    return _prefs.setBool('IS_FIRST_TIME_SIGN_UP', value);
+  }
+
+  Future<bool> hasCompletedHalfPopup() async {
+    // final _prefs = await SharedPreferences.getInstance();
+    return _prefs.getBool('HAS_COMPLETED_HALF_POPUP') ?? false;
+  }
+
+  Future<bool> setHasCompletedHalfPopup({required bool value}) async {
+    // final _prefs = await SharedPreferences.getInstance();
+    return _prefs.setBool('HAS_COMPLETED_HALF_POPUP', value);
+  }
+
   Future<bool> userAllowedNotifications({required bool value}) async {
     // final _prefs = await SharedPreferences.getInstance();
     return _prefs.setBool('USER_ALLOWED_NOTIFICATIONS', value);
