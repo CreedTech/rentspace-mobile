@@ -18,20 +18,23 @@ import '../../../controller/auth/user_controller.dart';
 import '../../../controller/wallet/wallet_controller.dart';
 
 class SpaceRentConfirmationPage extends ConsumerStatefulWidget {
-  const SpaceRentConfirmationPage(
-      {super.key,
-      required this.rentValue,
-      required this.savingsValue,
-      required this.startDate,
-      required this.receivalDate,
-      required this.durationType,
-      required this.paymentCount,
-      required this.rentName,
-      required this.duration});
+  const SpaceRentConfirmationPage({
+    super.key,
+    required this.rentValue,
+    required this.savingsValue,
+    required this.startDate,
+    required this.receivalDate,
+    required this.durationType,
+    required this.paymentCount,
+    required this.rentName,
+    required this.duration,
+    this.fromPopup = false,
+  });
   final num rentValue, savingsValue;
   final String startDate, durationType, paymentCount, rentName;
   final int duration;
   final DateTime receivalDate;
+  final bool fromPopup;
 
   @override
   ConsumerState<SpaceRentConfirmationPage> createState() =>
@@ -701,19 +704,18 @@ class _SpaceRentConfirmationPageState
                                                         final hasSufficientBalance =
                                                             checkSufficientBalance();
 
-                                                        (widget
-                                                                    .startDate ==
+                                                        (widget.startDate ==
                                                                 formattedCurrentDate)
                                                             ? (hasSufficientBalance)
-                                                                ? rentState.createRent(
+                                                                ? rentState
+                                                                    .createRent(
                                                                     context,
                                                                     widget
                                                                         .rentName,
                                                                     DateFormat(
                                                                             'dd/MM/yyyy')
                                                                         .format(
-                                                                            widget
-                                                                                .receivalDate),
+                                                                            widget.receivalDate),
                                                                     widget
                                                                         .durationType,
                                                                     widget
@@ -725,10 +727,14 @@ class _SpaceRentConfirmationPageState
                                                                     widget
                                                                         .startDate,
                                                                     widget
-                                                                        .duration)
+                                                                        .duration,
+                                                                    widget
+                                                                        .fromPopup,
+                                                                  )
                                                                 : insufficientFundsDialog(
                                                                     context)
-                                                            : rentState.createRent(
+                                                            : rentState
+                                                                .createRent(
                                                                 context,
                                                                 widget.rentName,
                                                                 DateFormat(
@@ -745,8 +751,10 @@ class _SpaceRentConfirmationPageState
                                                                     .paymentCount,
                                                                 widget
                                                                     .startDate,
+                                                                widget.duration,
                                                                 widget
-                                                                    .duration);
+                                                                    .fromPopup,
+                                                              );
                                                       }).catchError(
                                                         (error) {
                                                           setState(() {

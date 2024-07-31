@@ -31,8 +31,17 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
   final WalletController walletController = Get.find();
   AppController(this.appRepository) : super(const AsyncLoading());
 
-  Future createRent(BuildContext context, rentName, dueDate, interval,
-      intervalAmount, amount, paymentCount, date, duration) async {
+  Future createRent(
+      BuildContext context,
+      rentName,
+      dueDate,
+      interval,
+      intervalAmount,
+      amount,
+      paymentCount,
+      date,
+      duration,
+      bool fromPopup) async {
     isLoading = true;
     if (rentName.isEmpty ||
         rentName == '' ||
@@ -89,14 +98,16 @@ class AppController extends StateNotifier<AsyncValue<bool>> {
             context,
             MaterialPageRoute(
               builder: (context) => SpaceRentSuccessPage(
-                  rentValue: amount,
-                  savingsValue: intervalAmount,
-                  startDate: date,
-                  durationType: interval,
-                  paymentCount: paymentCount,
-                  rentName: rentName,
-                  duration: duration,
-                  receivalDate: dueDate),
+                rentValue: amount,
+                savingsValue: intervalAmount,
+                startDate: date,
+                durationType: interval,
+                paymentCount: paymentCount,
+                rentName: rentName,
+                duration: duration,
+                receivalDate: dueDate,
+                fromPopup: fromPopup,
+              ),
             ),
           );
         }

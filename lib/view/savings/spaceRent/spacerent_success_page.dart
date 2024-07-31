@@ -5,23 +5,28 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:rentspace/constants/colors.dart';
+import 'package:rentspace/view/dashboard/fund_wallet_popup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../onboarding/FirstPage.dart';
+import '../../../api/global_services.dart';
 
 class SpaceRentSuccessPage extends StatefulWidget {
-  const SpaceRentSuccessPage(
-      {super.key,
-      required this.rentValue,
-      required this.savingsValue,
-      required this.startDate,
-      required this.durationType,
-      required this.paymentCount,
-      required this.rentName,
-      required this.duration,
-      required this.receivalDate});
+  const SpaceRentSuccessPage({
+    super.key,
+    required this.rentValue,
+    required this.savingsValue,
+    required this.startDate,
+    required this.durationType,
+    required this.paymentCount,
+    required this.rentName,
+    required this.duration,
+    required this.receivalDate,
+    this.fromPopup = false,
+  });
   final num rentValue, savingsValue;
   final String startDate, durationType, paymentCount, rentName, receivalDate;
   final int duration;
+  final bool fromPopup;
 
   @override
   State<SpaceRentSuccessPage> createState() => _SpaceRentSuccessPageState();
@@ -202,13 +207,18 @@ class _SpaceRentSuccessPageState extends State<SpaceRentSuccessPage> {
                                   ),
                                 ),
                               ),
-                              onPressed: () {
-                                while (context.canPop()) {
-                                  context.pop();
+                              onPressed: () async {
+                                if (widget.fromPopup == true) {
+                                  await GlobalService.sharedPreferencesManager
+                                      .setHasCompletedHalfPopup(value: true);
+                                  fundWalletPopup(context);
+                                } else {
+                                  while (context.canPop()) {
+                                    context.pop();
+                                  }
+                                  // Navigate to the first page
+                                  context.go('/firstpage');
                                 }
-                                // Navigate to the first page
-                                context.go('/firstpage');
-                                // Get.offAll(const FirstPage());
                               },
                               child: Text(
                                 'Continue',

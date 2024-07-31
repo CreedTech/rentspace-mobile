@@ -3,9 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rentspace/constants/colors.dart';
-import 'package:get/get.dart';
-
-import 'package:rentspace/view/wallet_funding/bank_transfer.dart';
 
 class FundWallet extends StatefulWidget {
   const FundWallet({super.key});
@@ -78,10 +75,21 @@ class _FundWalletState extends State<FundWallet> {
                       10,
                     ),
                   ),
-                  leading: Image.asset(
-                    'assets/icons/send_box_icon.png',
-                    width: 42,
-                    height: 42,
+                  leading: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? const Color(0xffEEF8FF).withOpacity(0.1)
+                          : const Color(0xffEEF8FF),
+                    ),
+                    child: Image.asset(
+                      'assets/icons/send.png',
+                      width: 19.5,
+                      height: 19.5,
+                      // color: brandTwo,
+                    ),
                   ),
                   title: Text(
                     'Bank Transfer',
@@ -116,10 +124,21 @@ class _FundWalletState extends State<FundWallet> {
                       10,
                     ),
                   ),
-                  leading: Image.asset(
-                    'assets/icons/ussd_box_icon.png',
-                    width: 42,
-                    height: 42,
+                  leading: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? const Color(0xffEEF8FF).withOpacity(0.1)
+                          : const Color(0xffEEF8FF),
+                    ),
+                    child: Image.asset(
+                      'assets/icons/ussd_icon.png',
+                      width: 19.5,
+                      height: 19.5,
+                      // color: brandTwo,
+                    ),
                   ),
                   title: Text(
                     'USSD',
@@ -159,11 +178,6 @@ class _FundWalletState extends State<FundWallet> {
                       ),
                     ],
                   ),
-                  // trailing: const Icon(
-                  //   Icons.keyboard_arrow_right_outlined,
-                  //   size: 20,
-                  //   color: Theme.of(context).colorScheme.primary,
-                  // ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -176,10 +190,20 @@ class _FundWalletState extends State<FundWallet> {
                       10,
                     ),
                   ),
-                  leading: Image.asset(
-                    'assets/icons/card_box_icon.png',
-                    width: 42,
-                    height: 42,
+                  leading: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? const Color(0xffEEF8FF).withOpacity(0.1)
+                          : const Color(0xffEEF8FF),
+                    ),
+                    child: Image.asset(
+                      'assets/icons/card_icon.png',
+                      width: 19.5,
+                      height: 19.5,
+                    ),
                   ),
                   title: Text(
                     'Card',

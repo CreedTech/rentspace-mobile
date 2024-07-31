@@ -254,7 +254,10 @@ class _SavingsPageState extends State<SavingsPage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(10),
-                              color: const Color(0xffEEF8FF),
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? const Color(0xffEEF8FF).withOpacity(0.1)
+                                  : const Color(0xffEEF8FF),
                             ),
                             child: Image.asset(
                               'assets/icons/space_rent.png',
@@ -322,7 +325,10 @@ class _SavingsPageState extends State<SavingsPage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(10),
-                              color: const Color(0xffEEF8FF),
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? const Color(0xffEEF8FF).withOpacity(0.1)
+                                  : const Color(0xffEEF8FF),
                             ),
                             child: Image.asset(
                               'assets/icons/lock_deposit_icon.png',
